@@ -1,9 +1,11 @@
 // assets
-import { DashboardOutlined } from '@ant-design/icons';
+import { DashboardOutlined, PlayCircleOutlined } from '@ant-design/icons';
+
 
 // icons
 const icons = {
-    DashboardOutlined
+    DashboardOutlined,
+    PlayCircleOutlined,
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -20,7 +22,23 @@ const dashboard = {
             url: '/dashboard/default',
             icon: icons.DashboardOutlined,
             breadcrumbs: false
-        }
+        },
+        {
+            id: 'exercise1',
+            title: 'Numeros',
+            type: 'item',
+            url: '/exercise1',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'exercise2',
+            title: 'Flechas',
+            type: 'item',
+            url: '/exercise2',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
     ]
 };
 

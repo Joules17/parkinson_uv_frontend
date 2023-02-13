@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
+import { CardMedia } from "@material-ui/core";
 
 // project import
 import Highlighter from './third-party/Highlighter';
@@ -31,6 +32,7 @@ const MainCard = forwardRef(
             shadow,
             sx = {},
             title,
+            imgUrl,
             codeHighlight,
             ...others
         },
@@ -61,6 +63,7 @@ const MainCard = forwardRef(
                     }
                 }}
             >
+                
                 {/* card header and action */}
                 {!darkTitle && title && (
                     <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />
@@ -68,7 +71,8 @@ const MainCard = forwardRef(
                 {darkTitle && title && (
                     <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />
                 )}
-
+                {/* Image */}
+                {imgUrl && <CardMedia style={{ height: "100px" }} component='img' image={imgUrl} title={title} alt='Image'/>} 
                 {/* content & header divider */}
                 {title && divider && <Divider />}
 
@@ -101,6 +105,7 @@ MainCard.propTypes = {
     shadow: PropTypes.string,
     sx: PropTypes.object,
     title: PropTypes.string,
+    imgUrl: PropTypes.string,
     codeHighlight: PropTypes.bool,
     content: PropTypes.bool,
     children: PropTypes.node

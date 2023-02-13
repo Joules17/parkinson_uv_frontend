@@ -26,6 +26,7 @@ import ReportAreaChart from './ReportAreaChart';
 import SalesColumnChart from './SalesColumnChart';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+import ExerciseBttn from 'components/cards/exercises/ExerciseBttn';
 
 // assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
@@ -76,6 +77,17 @@ const DashboardDefault = () => {
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             {/* row 1 */}
+            <Grid item xs={12} sx={{ mb: -2.25 }}>
+                <Typography variant="h5">Ejercicios</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+                <ExerciseBttn type='Memoria' name='Numeros' imgUrl='https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg'/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+                <ExerciseBttn type='Memoria' name='Flechas' imgUrl='https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360'/>
+            </Grid>
+
+            {/* row 2 */}
             <Grid item xs={12} sx={{ mb: -2.25 }}>
                 <Typography variant="h5">Dashboard</Typography>
             </Grid>
