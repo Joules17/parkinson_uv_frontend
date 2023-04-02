@@ -39,6 +39,14 @@ const dashboard = {
             icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },
+        {
+            id: 'exercise3',
+            title: 'Frutas Locas',
+            type: 'item',
+            url: '/exercise3',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
     ]
 };
 

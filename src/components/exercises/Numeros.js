@@ -1,20 +1,27 @@
-// material-ui
-import { Typography } from '@mui/material';
+// React
+import  { useEffect, useRef } from "react";
 
-// project import
-import MainCard from 'components/MainCard';
+// phaser library
+import Phaser from "phaser";
+
+// phaser scenes
+import NumerosMain from 'components/exercises/scenes/NumerosMain'
 
 // ==============================|| SAMPLE PAGE ||============================== //
+const GameNumbers = () => {
+  const gameContainer = useRef(null);
 
-const Game = () => (
-    <MainCard title="Sample Card">
-        <Typography variant="body2">
-            Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif
-            ad minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in
-            reprehended in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa
-            qui officiate descent molls anim id est labours.
-        </Typography>
-    </MainCard>
-);
+  useEffect(() => {
+    new Phaser.Game({
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      parent: gameContainer.current,
+      scene: [NumerosMain],
+    });
+  }, []);
 
-export default Game;
+  return <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}} ref={gameContainer} />;
+};
+
+export default GameNumbers;
