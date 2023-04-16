@@ -1,0 +1,101 @@
+// phaser library
+import Phaser from 'phaser';
+
+export default class SteroidFruit extends Phaser.Physics.Arcade.Sprite {
+    constructor (config) {
+        super(config.scene, config.posx, config.posy, config.key);
+        this.selected = config.selected;
+        
+        // Añade fisicas de la escena
+        config.scene.physics.world.enable(this);
+        config.scene.add.existing(this);
+
+        // agregamos interactive a este tipo de Sprite 
+        this.setInteractive(); 
+
+        // Listeners: 
+        // get closer if over
+        this.on('pointerover', () => {
+            this.scene.tweens.add({
+                targets: this,
+                scaleX: 0.3,
+                scaleY: 0.3,
+                duration: 100, 
+                ease: 'Power2'
+            });
+        });
+
+        // get fuhrer if out 
+        this.on('pointerout', () => {
+            this.scene.tweens.add({
+                targets: this, 
+                scaleX: 0.2, 
+                scaleY: 0.2,
+                duration: 100, 
+                ease: 'Power2'
+            });
+        });
+
+        // if clicked 
+        this.on('pointerdown', () => {
+            this.shake(this.selected, this.scene)
+        });
+    }
+
+    // events on Fruit 
+    shake(selected, scene) {
+        // animacion
+        var to_color = selected ? 0x00ff00 : 0xff0000;
+        const startColor  = Phaser.Display.Color.ValueToColor(0xffffff) // blanco
+        const endColor = Phaser.Display.Color.ValueToColor(to_color) // rojo
+
+        this.scene.tweens.addCounter({
+            from: 0,
+            to: 100,
+            duration: 100,
+            repeat: 2,
+            yoyo: true,
+            onUpdate: tween => {
+                const value = tween.getValue()
+                const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
+                    startColor,
+                    endColor,
+                    100,
+                    value
+                )
+
+                const color = Phaser.Display.Color.GetColor(
+                    colorObject.r,
+                    colorObject.g,
+                    colorObject.b,
+                )
+                this.setTint(color)
+            },
+            onComplete: function () {
+                if (scene.key == 'rondas') {
+                    if (selected) {
+                        console.log('Fruta correcta')
+                        scene.counter = 0; 
+                        scene.setScore(1)
+                    } else {
+                        console.log('Fruta incorrecta')
+                        scene.numberErrors -= 1; 
+                    }
+
+                } else {
+                    if (selected) {
+                        console.log('Fruta correcta')
+                        scene.counter = 0; 
+                        scene.setScore(1)
+                    } else {
+                        console.log('Fruta incorrecta')
+                        scene.counter = 0; 
+                        scene.setScore(-1)
+                    }
+                }
+               
+              }
+        })
+    }
+
+}

@@ -7,6 +7,8 @@ import Phaser from "phaser";
 // phaser scenes
 import FrutasInit from 'components/exercises/Frutas/scenes/FrutasInit'
 import FrutasMenu from 'components/exercises/Frutas/scenes/FrutasMenu'
+import FrutasLoby from 'components/exercises/Frutas/scenes/FrutasLoby'
+import rondas from 'components/exercises/Frutas/scenes/rondas'
 
 // ==============================|| FRUITS GAMES ||============================== //
 const GameFruits = () => {
@@ -16,11 +18,11 @@ const GameFruits = () => {
 
   useEffect(() => {
     setCargado(true)
-    console.log('its me again')
+    // console.log('its me again')
   }, []);
 
   useEffect(() => {
-    console.log('acabe de agregar algo a phaser')
+    // console.log('acabe de agregar algo a phaser')
     if (cargado && cantGame === 0) {
       new Phaser.Game({
         type: Phaser.AUTO,
@@ -29,28 +31,27 @@ const GameFruits = () => {
         physics: {
           default: 'arcade',
           arcade: {
-              debug: true,
+              debug: false,
           },
         },
+        scale: {
+          mode: Phaser.Scale.NONE,
+          autoCenter: Phaser.Scale.NO_CENTER,
+        },
         parent: gameContainer.current,
-        scene: [FrutasInit, FrutasMenu],
+        scene: [/*,FrutasInit  FrutasMenu, FrutasLoby*/rondas],
       });
       setCantGame(cantGame+1);
-    } else {
-      console.log('No se crea')
     }
-  }, [cargado, cantGame])
+  }, [cantGame, cargado])
 
   if (cargado) {
-    
     return (
       <div>
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}} ref={gameContainer} />
       </div>
       )
-  } else {
-    console.log('No ha cargado');
-  }
+  } 
 };
 
 export default GameFruits;
