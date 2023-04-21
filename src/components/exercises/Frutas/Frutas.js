@@ -39,7 +39,7 @@ const GameFruits = () => {
           autoCenter: Phaser.Scale.NO_CENTER,
         },
         parent: gameContainer.current,
-        scene: [/*,FrutasInit  FrutasMenu, FrutasLoby*/rondas],
+        scene: [FrutasInit, FrutasMenu, FrutasLoby, rondas],
       });
       setCantGame(cantGame+1);
     }

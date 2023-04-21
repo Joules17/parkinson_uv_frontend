@@ -1,15 +1,7 @@
 // custom classes imported
-// import Frutita from './Frutita.js' 
-// import SteroidFruit from './SteroidFruit';
 import SteroidObject from './Steroid_Object';
 
-
-// object_options
-import object_list from './object_list'
-
-// assets imports 
-
-let ruta_base = '../assets'
+import object_list from './object_list';
 
 export default class TableroRenewed {
     // Nota: Key: Skin: Imagen a la que hace referencia la fruta
@@ -24,76 +16,67 @@ export default class TableroRenewed {
         this.padding = config.padding; 
         this.spriteWidth = config.spriteWidth; 
         this.spriteHeight = config.spriteHeight; 
-        this.type_order = config.type_order; 
+        this.category = config.category; 
+        this.actual = config.actual; 
         this.color_wished = config.color_wished; 
         
         this.objects = object_list;
 
+        this.sprite_group = this.scene.add.group(); 
         // this.preload();
         this.crear_matriz();
     }
 
-    preload() {
-        // imagenes a cargar
-        // busca cada categoria: Fruta, Comida, Casa...
-        for (let categoria in this.objects) {
-            // busca cada subcategoria para cargar su correspondiente imagen
-            // console.log(`Elementos en la categoría ${categoria}:`)
-            for (let subcategoria in this.objects[categoria]) {
-                // console.log(`- ${subcategoria}:`);
-                this.scene.load.image(this.objects[categoria][subcategoria]["key"], ruta_base + this.objects[categoria][subcategoria]["key"] + ".png")
-                // console.log(this.objects[categoria][subcategoria]["key"], ruta_base + this.objects[categoria][subcategoria]["key"] + ".png")
-            }
-        }
-    }
-
-    gen_fruits(type, color, object_list, numberDistinct, numberObjects) {
+    gen_fruits(category, color, object_list, numberDistinct, numberObjects) {
       // Ciclo para buscar categoria 
       let finalMatrix = []; 
+      let mergeCategory = []; 
 
-      for (let categoria in object_list) {
-        if (type == categoria) {
-          if (color == undefined) {
-            // se obtiene el subdiccionario a trabajar
-            let obj_subdict = Object.values(object_list[categoria]).slice(0, numberDistinct); 
-            
-            // se saca la fruta correcta
-            let correct_fruit = obj_subdict.splice(Math.floor(Math.random() * obj_subdict.length), 1)[0];
-            
-            finalMatrix.push([correct_fruit, true])
-            
-            // rellenamos finalMatrix con las frutas restantes de obj_subdict siempre y cuando estos objetos puedan repetirse 
-            // 1 + n x 2 <= numberObjects
-            // funcion para quitar frutas opcionales y que concuerde que 1 + nx2 <= numberObjects 
-            while (! ((1 + obj_subdict.length * 2) <= numberObjects)) {
-                // console.log("procedo a quitar una fruta ")
-                obj_subdict.splice(Math.floor(Math.random() * obj_subdict.length), 1);
-            }
-
-            for (let i in obj_subdict) {
-                finalMatrix.push([obj_subdict[i], false])
-                finalMatrix.push([obj_subdict[i], false])
-            }
-
-            while(finalMatrix.length < numberObjects) {
-                finalMatrix.push([obj_subdict[Math.floor(Math.random() * obj_subdict.length)], false])
-            }
-
-            finalMatrix = finalMatrix.sort(() => Math.random() - 0.5);
-
-            // console.log(finalMatrix)
-            // console.log('Final Matrix se ha llenado y reorganizado correctamente')
-            return finalMatrix
-          }
+      for (let i = 0; i < category.length; i++) {
+        if (color == undefined) {
+          // console.log(Object.values(object_list[category[i]]), 'AQUI' ,category[i])
+          mergeCategory = mergeCategory.concat(Object.values(object_list[category[i]]));
         }
       }
+      // console.log(typeof mergeCategory, mergeCategory)
+      // revolvemos mergeCategory 
+      mergeCategory.sort(() => Math.random() - 0.5)
+
+      // se obtiene el subdiccionario a trabajar
+      let obj_subdict = mergeCategory.slice(0, numberDistinct); 
+
+      // se saca la fruta correcta
+      let correct_fruit = obj_subdict.splice(Math.floor(Math.random() * obj_subdict.length), 1)[0];
+      finalMatrix.push([correct_fruit, true])
+
+      // rellenamos finalMatrix con las frutas restantes de obj_subdict siempre y cuando estos objetos puedan repetirse 
+      // 1 + n x 2 <= numberObjects
+      // funcion para quitar frutas opcionales y que concuerde que 1 + nx2 <= numberObjects 
+      while (! ((1 + obj_subdict.length * 2) <= numberObjects)) {
+        // console.log("procedo a quitar una fruta ")
+        obj_subdict.splice(Math.floor(Math.random() * obj_subdict.length), 1);
+      }
+
+      for (let i in obj_subdict) {
+          finalMatrix.push([obj_subdict[i], false])
+          finalMatrix.push([obj_subdict[i], false])
+      }
+
+      while(finalMatrix.length < numberObjects) {
+        finalMatrix.push([obj_subdict[Math.floor(Math.random() * obj_subdict.length)], false])
+      }
+
+      finalMatrix = finalMatrix.sort(() => Math.random() - 0.5);
+
+      // console.log(finalMatrix)
+      // console.log('Final Matrix se ha llenado y reorganizado correctamente')
+      return finalMatrix
     }
     
 
     crear_matriz() {
-        let matrizOrden = this.gen_fruits(this.type_order, this.color_wished, this.objects, this.numberDistinct, this.numberObjects);
+        let matrizOrden = this.gen_fruits(this.category, this.color_wished, this.objects, this.numberDistinct, this.numberObjects);
         // console.log(matrizOrden)
-        let spriteGroup = this.scene.add.group();
 
         if (this.number_rows*this.number_cols < this.numberObjects) {
           console.log('Algunos elementos no saldran debido a sus dimensiones')
@@ -112,12 +95,13 @@ export default class TableroRenewed {
                   key: objetoSacado[0]["key"], 
                   selected: objetoSacado[1] 
                 });
-                objtSprt.setScale(0.2); 
-                spriteGroup.add(objtSprt); 
+                objtSprt.setScale(0.1); 
+                this.sprite_group.add(objtSprt); 
               }
             }
         }
-      
-        console.log('Los objetos ya estan a disposicion')
+
+        this.sprite_group.setVisible(this.actual)
+        // console.log('Los objetos ya estan a disposicion')
     }
 }

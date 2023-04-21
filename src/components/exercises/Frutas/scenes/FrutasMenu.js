@@ -13,6 +13,8 @@ import banana from '../assets/frutas/banana.png'
 import manzana from '../assets/frutas/manzana.png'
 import fullscreen from '../assets/img/fullscreen.png'
 
+import hover from '../assets/music/hover.mp3'
+import correct from '../assets/music/correct.wav'
 
 export default class FrutasMenu extends Phaser.Scene {
   constructor() {
@@ -46,12 +48,19 @@ export default class FrutasMenu extends Phaser.Scene {
     this.load.image('bananaImg', banana)
     this.load.image('manzanaImg', manzana)
     this.load.image('fullscreenImg', fullscreen)
+
+    // audio
+    this.load.audio('hover', hover);
+    this.load.audio('correct', correct);
+
+    //
     this.waveOffset = 0;
   }
 
   create() {
     this.cameras.main.setBackgroundColor('#3f1651');
 
+    this.flag = false; 
     // botones; start
 
     this.start_button = this.add.text(290, 380, "Iniciar", {
@@ -117,6 +126,7 @@ export default class FrutasMenu extends Phaser.Scene {
     // Eventos
 
     this.start_button.on('pointerdown', () => {
+      this.sound.play('correct')
       this.pressed = true
       this.olas.children.iterate(ball => {
         this.move_upside(ball, 800, 3000, this)
@@ -127,6 +137,7 @@ export default class FrutasMenu extends Phaser.Scene {
 
     this.start_button.on('pointerover', () => {
       this.start_button.setColor('#ffffff')
+      this.sound.play('hover')
       this.tweens.add({
         targets: this.start_button,
         scaleX: 1.1,
@@ -185,6 +196,10 @@ export default class FrutasMenu extends Phaser.Scene {
         child.y = child.originalY + Math.sin(child.x / 40 + this.waveOffset) * 20;
       });
     }
+    if (this.flag) {
+      this.flag = false; 
+      this.scene.start('FrutasLoby')
+    }
   }
 
   // Customs functions
@@ -199,7 +214,7 @@ export default class FrutasMenu extends Phaser.Scene {
       yoyo: false, 
       repeat: 0, 
       onComplete: function () {
-        escena.scene.start('FrutasLoby')
+        escena.flag = true; 
       }
     });
   }

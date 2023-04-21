@@ -4,10 +4,16 @@ import '../styles.css'
 
 // custom classes imported: 
 import Frutita from '../sprites/base/Frutita.js' 
-import Tablero from '../sprites/base/Tablero.js'
+import TableroRenewed from '../sprites/base/TableroRenewed';
 
 // assets imports
 import PalmeraImg from '../assets/img/palmera.png'
+import object_list from '../sprites/base/object_list';
+
+// import sounds 
+import good from '../assets/music/correct.wav'
+import bad from '../assets/music/bad.wav'
+import hover from '../assets/music/hover.mp3'
 
 export default class FrutasLoby extends Phaser.Scene {
   constructor() {
@@ -29,10 +35,40 @@ export default class FrutasLoby extends Phaser.Scene {
     this.victory_message = undefined; 
     this.victory_explained = undefined; 
     this.button_continue = undefined; 
+
+    // tablero ejemplo config 
+    this.tablero_config = {
+      scene: this, 
+      pos_initx: 100,
+      pos_inity: 230, 
+      numberObjects: 10, 
+      numberDistinct: 5, 
+      number_cols: 5, 
+      number_rows: 2, 
+      padding: 100, 
+      spriteWidth: 40, 
+      spriteHeight: 5, 
+      category: ["frutas", "comida"], 
+      actual: true, // propiedad visible del tablero 
+      color_wished: undefined
+    } 
   }
 
   preload() {
+    // images
     this.load.image('palmeraImg', PalmeraImg)
+    for (let categoria in object_list) {
+      // busca cada subcategoria para cargar su correspondiente imagen
+      // console.log(`Elementos en la categoría ${categoria}:`)
+      for (let subcategoria in object_list[categoria]) {
+          this.load.image(object_list[categoria][subcategoria]["key"], object_list[categoria][subcategoria]["imagen"])
+      }
+    }
+
+    // audio
+    this.load.audio('bad', bad)
+    this.load.audio('good', good)
+    this.load.audio('hover', hover)
   }
 
   create() {
@@ -79,11 +115,13 @@ export default class FrutasLoby extends Phaser.Scene {
     
     this.button_continue.on('pointerdown', () => {
       if (this.victory_message.visible && this.button_continue.visible) {
+        this.sound.play('good')
         this.scene.start('rondas')
       }
     })
 
     this.button_continue.on('pointerover', () => {
+      this.sound.play('hover')
       this.tweens.add({
         targets: this.button_continue,
         scaleX: 1.1,
@@ -166,9 +204,9 @@ export default class FrutasLoby extends Phaser.Scene {
       ease: 'Power2',
       onComplete: function () {
         if (!scene.eventFinished) {
-          scene.tablero_ejemplo = new Tablero({scene: scene, pos_initx: 200, pos_inity: 280, pos_finx: 600, pos_finy: 300, numberFruits: 3})
+          scene.tablero_ejemplo = new TableroRenewed(scene.tablero_config)
           scene.eventFinished = true;
-          scene.explanatory_text = scene.add.text(80, 400, "¡Haz click en la fruta diferente a las demas!", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
+          scene.explanatory_text = scene.add.text(80, 400, "¡Haz click en la fruta que no se repita!", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
         } 
       }
     }); 
@@ -180,7 +218,7 @@ export default class FrutasLoby extends Phaser.Scene {
       index: text.length, 
       ease: 'Linear',
       duration: text.length * vel,
-      onUpdate: function (tween, target) {
+      onUpdate: function (target) {
         textGlobal.setText(text.substr(0, target.index)); 
       }
     }); 

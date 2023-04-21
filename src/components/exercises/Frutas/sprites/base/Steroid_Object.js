@@ -16,10 +16,11 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         // Listeners: 
         // get closer if over
         this.on('pointerover', () => {
+            this.scene.sound.play('hover'); 
             this.scene.tweens.add({
                 targets: this,
-                scaleX: 0.3,
-                scaleY: 0.3,
+                scaleX: 0.2,
+                scaleY: 0.2,
                 duration: 100, 
                 ease: 'Power2'
             });
@@ -29,8 +30,8 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         this.on('pointerout', () => {
             this.scene.tweens.add({
                 targets: this, 
-                scaleX: 0.2, 
-                scaleY: 0.2,
+                scaleX: 0.1, 
+                scaleY: 0.1,
                 duration: 100, 
                 ease: 'Power2'
             });
@@ -49,6 +50,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         const startColor  = Phaser.Display.Color.ValueToColor(0xffffff) // blanco
         const endColor = Phaser.Display.Color.ValueToColor(to_color) // rojo
 
+        let self = this.scene; 
+        
+        scene.sound.play(selected ? 'good' : 'bad' ); 
         this.scene.tweens.addCounter({
             from: 0,
             to: 100,
@@ -72,14 +76,17 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                 this.setTint(color)
             },
             onComplete: function () {
-                if (scene.key == 'rondas') {
+                if (self.scene.key == 'rondas') {
                     if (selected) {
                         console.log('Objeto correcto')
-                        scene.counter = 0; 
-                        scene.setScore(1)
+                        scene.numberVictory += 1; 
+                        scene.current_number += 1; 
+                        scene.setStatus(true)
+                        
                     } else {
                         console.log('Objeto incorrecto')
                         scene.numberErrors -= 1; 
+                        scene.setStatus(false)
                     }
 
                 } else {
