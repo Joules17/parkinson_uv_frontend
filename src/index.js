@@ -2,6 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
+// auth 0 
+import { Auth0ProviderWithHistory  } from 'Auth0/Auth0ProviderWithHistory';
+
 // scroll bar
 import 'simplebar/src/simplebar.css';
 
@@ -20,11 +23,14 @@ import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
+
 root.render(
     <StrictMode>
         <ReduxProvider store={store}>
-            <BrowserRouter basename="/free">
-                <App />
+            <BrowserRouter basename="/">
+                <Auth0ProviderWithHistory>
+                    <App />
+                </Auth0ProviderWithHistory>
             </BrowserRouter>
         </ReduxProvider>
     </StrictMode>
