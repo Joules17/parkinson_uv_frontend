@@ -2,7 +2,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Typography from '../components/Typography';
 import Typed from 'react-typed';
 import Sally from './img_aux/sittedsaly.svg'; 
 
@@ -27,10 +26,12 @@ export default function ProductHero() {
                 showCursor={false}
 
               />
-              <div style = {{ marginTop: '4rem'}}>
+              <div style = {{ marginTop: '4rem' }}>
               <Typed
                 startDelay={2500} // Espera 500ms antes de empezar el segundo Typed
-                strings={['Tu espacio virtual de entrenamiento y estimulación cognitiva.', 'Tu herramienta de gestión y preparación de ejercicios!', 'Una herramienta por y para pacientes con EP.']}
+                strings={['Tu espacio virtual de entrenamiento y estimulación cognitiva.', 
+                          'Tu herramienta de gestión y preparación de ejercicios!', 
+                          'Una herramienta por y para pacientes con EP.']}
                 typeSpeed={60}
                 backSpeed={30}
                 style={{ fontSize: '2rem'}}

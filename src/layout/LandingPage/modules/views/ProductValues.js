@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
@@ -14,11 +13,12 @@ const item = {
   px: 5,
 };
 
+
 function ProductValues() {
   return (
     <Box
       component="section"
-      sx={{ display: 'flex', overflow: 'hidden', background: '#000'}}
+      sx={{ display: 'flex', overflow: 'hidden', background: '#000', mt: '-123px'}}
     >
       <Container sx={{ mt: 15, mb: 15, display: 'flex', position: 'relative'}}>
         <Box

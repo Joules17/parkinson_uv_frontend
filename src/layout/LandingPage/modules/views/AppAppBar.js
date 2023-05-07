@@ -1,15 +1,11 @@
-// import * as React from 'react';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Link as LinkRouter } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button, Toolbar, AppBar } from '@mui/material'; 
-import DropdownLogin from '../components/LogComponents/DropdownLogin';
-import DropdownRegister from '../components/LogComponents/DropdownRegister';
 
 // assets imports 
 import brain_icon from './img_aux/brainy.svg'; 
-import LoginButton from '../components/LogComponents/LoginButton';
 const rightLink = {
   fontSize: 16,
   color: 'common.white',
@@ -18,17 +14,17 @@ const rightLink = {
 
 function AppAppBar() {
   const [navbar, setNavbar] = useState(false)
-  const { isAuthenticated, logout } = useAuth0()
-
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth0(); 
+  // console.log(loginWithRedirect)
   const changeBackground = () => {
-    window.scrollY >= 100 ? setNavbar(true) : setNavbar(false)
+    window.scrollY >= 150 ? setNavbar(true) : setNavbar(false)
   }
 
   window.addEventListener('scroll', changeBackground)
 
   return (
     <div>
-      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: navbar ? "#ffffff" : 'transparent', boxShadow: navbar ?  '5px 0px 27px -5px rgba(0, 0, 0, 0.3) !important' : undefined }} >
+      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: navbar ? "#ffffff" : 'transparent' }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }} />
           <Button
@@ -43,8 +39,35 @@ function AppAppBar() {
           </Button>
           {!isAuthenticated && 
             <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <DropdownRegister/>
-              <DropdownLogin/>
+              <Button
+                color="inherit"
+                variant="h6"
+                underline="none"
+                component = {LinkRouter}
+                onClick = {() => {
+                  loginWithRedirect({
+                    screen_hint: 'signup', 
+                    appState: {
+                      returnTo: '/register'
+                    }
+                  })
+                }}
+                sx={{rightLink, fontSize: 18, color: "#000000"}}
+                >
+                  {'Registrarse'}
+              </Button>
+              <Button
+                color="inherit"
+                variant="h6"
+                underline="none"
+                component = {LinkRouter}
+                onClick = {() => {
+                  loginWithRedirect()
+                }}
+                sx={{rightLink, fontSize: 18, color: "#000000"}}
+                >
+                  {'Iniciar Sesión'}
+              </Button>
             </Box>
           }
           {
