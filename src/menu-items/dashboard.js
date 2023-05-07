@@ -1,11 +1,13 @@
 // assets
-import { DashboardOutlined, PlayCircleOutlined } from '@ant-design/icons';
+import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
 
 // icons
 const icons = {
     DashboardOutlined,
     PlayCircleOutlined,
+    UserOutlined,
+    UnorderedListOutlined,
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -21,6 +23,30 @@ const dashboard = {
             type: 'item',
             url: '/dashboard/default',
             icon: icons.DashboardOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'pacient',
+            title: 'Pacientes',
+            type: 'item',
+            url: '/patients-page',
+            icon: icons.UserOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'library',
+            title: 'Biblioteca',
+            type: 'item',
+            url: '/exercise2',
+            icon: icons.UnorderedListOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'games',
+            title: 'Games',
+            type: 'item',
+            url: '/games-page',
+            icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },
         {

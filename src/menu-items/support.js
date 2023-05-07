@@ -1,10 +1,10 @@
 // assets
-import { ChromeOutlined, QuestionOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SettingOutlined  } from '@ant-design/icons';
 
 // icons
 const icons = {
-    ChromeOutlined,
-    QuestionOutlined
+    LogoutOutlined,
+    SettingOutlined
 };
 
 // ==============================|| MENU ITEMS - SAMPLE PAGE & DOCUMENTATION ||============================== //
@@ -15,18 +15,18 @@ const support = {
     type: 'group',
     children: [
         {
-            id: 'sample-page',
-            title: 'Sample Page',
+            id: 'configuration',
+            title: 'Configuración',
             type: 'item',
             url: '/sample-page',
-            icon: icons.ChromeOutlined
+            icon: icons.SettingOutlined
         },
         {
-            id: 'documentation',
-            title: 'Documentation',
+            id: 'logOut',
+            title: 'Salir',
             type: 'item',
             url: 'https://codedthemes.gitbook.io/mantis-react/',
-            icon: icons.QuestionOutlined,
+            icon: icons.LogoutOutlined,
             external: true,
             target: true
         }
