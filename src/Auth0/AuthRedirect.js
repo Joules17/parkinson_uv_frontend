@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 // import { useNavigate } from 'react-router'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useExternalApi } from '../hooks/accountResponse'
@@ -14,7 +14,7 @@ export default function AuthRedirect ({ Component, tipo }) {
             if (user) {
                 getInfoAccount(user.sub).then((data) => {
                     // eslint-disable-next-line
-                    if (data.user_type.localeCompare('noregistro') !== 0) {
+                    if (data.id_type.toString().localeCompare('3') !== 0) {
                         console.log("Te metiste de forma equivocada")
                         logout({
                             returnTo: window.location.origin

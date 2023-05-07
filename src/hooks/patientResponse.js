@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEnv } from '../context/env.context'
+import { useEnv } from 'context/env.context'
 
 export const useExternalApi = () => {
 
@@ -21,10 +21,10 @@ export const useExternalApi = () => {
         }
     }
 
-    const getUser = async (id, setUser) => {
+    const getPatient = async (id, setPatient) => {
 
         const config = {
-            url: `${apiServerUrl}/api/user/retrieve/${id}`,
+            url: `${apiServerUrl}/api/patient/retrieve/${id}`,
             method: 'GET',
             headers: {},
             data: {}
@@ -33,46 +33,51 @@ export const useExternalApi = () => {
         const data = await makeRequest({config})
 
         // console.log(data)
-        setUser(data)
+        setPatient(data)
 
     }
 
-    const createUser = async (datos, id) => {
+    const createPatient = async (datos, id, email) => {
 
         const config = {
-            url: `${apiServerUrl}/api/user/create`,
+            url: `${apiServerUrl}/api/patient/create`,
             method: 'POST',
             headers: {
             },
             data: {
                 "user_id": id,
-                "user_type": 3,
-                "name": datos.nombre,
-                "city": datos.ciudad,
-                "birth_date": datos.fecha,
-                "sex": datos.sexo
+                "id_type": 2,
+                "name": datos.name,
+                "lastname": datos.lastname,
+                "email": email, 
+                "cell": datos.cell, 
+                "age" : datos.age, 
+                "gender" : datos.gender, 
+                "id_parkinson_phase" : 1,
+                "id_therapist" : 111
             }
         }
 
         const data = await makeRequest({config})
-
         console.log(data)
-
     }
 
-    const updateUser = async (datos, id, tipo, setMensaje) => {
+    const updatePatient = async (datos, id, tipo, setMensaje) => {
 
         const config = {
-            url: `${apiServerUrl}/api/user/update/${id}`,
+            url: `${apiServerUrl}/api/patient/update/${id}`,
             method: 'PUT',
             headers: {
             },
             data: {
-                "user_type": tipo,
-                "name": datos.nombre,
-                "city": datos.ciudad,
-                "birth_date": datos.fecha,
-                "sex": datos.sexo
+                "id_type": 2,
+                "name": datos.name,
+                "lastname": datos.lastname,
+                "cell": datos.cell, 
+                "age" : datos.age, 
+                "gender" : datos.gender, 
+                "id_parkinson_phase" : datos.id_parkinson_phase,
+                "id_therapist" : datos.id_therapist
             }
         }
         const data = await makeRequest({config})
@@ -80,10 +85,9 @@ export const useExternalApi = () => {
         console.log(data)
         
         setMensaje('Se ha actualizado')
-
     }
 
-    const createAccount = async (datos, id, email, setMensaje) => {
+    const createPatientAccount = async (datos, id, email, setMensaje) => {
 
         const config = {
             url: `${apiServerUrl}/api/account/create`,
@@ -91,7 +95,7 @@ export const useExternalApi = () => {
             headers: {},
             data: {
                 "user_id": id,
-                "user_type": 3,
+                "id_type": 2,
                 "password": "basic",
                 "email": email,
                 "user_status": true
@@ -102,17 +106,15 @@ export const useExternalApi = () => {
 
         console.log(data)
 
-        createUser(datos, id)
-
+        createPatient(datos, id, email)
         setMensaje('Registrado correctamente')
-
     }
     
     return {
-        getUser,
-        createAccount,
-        createUser,
-        updateUser
+        getPatient,
+        createPatientAccount,
+        createPatient,
+        updatePatient
     }
 }
 

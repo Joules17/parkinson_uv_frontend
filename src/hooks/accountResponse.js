@@ -2,8 +2,6 @@ import axios from 'axios'
 import { useEnv } from '../context/env.context'
 
 export const useExternalApi = () => {
-
-    
     const { apiServerUrl } = useEnv()
 
     const makeRequest = async (options) => {
