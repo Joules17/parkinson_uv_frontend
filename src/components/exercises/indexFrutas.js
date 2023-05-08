@@ -18,7 +18,7 @@ const IndexFruits = () => {
     }, []);
 
     return(
-        <div>
+        <div style={{ flex: 1}}>
         <MainCard title="Actividad: Frutas Locas">
             <Typography variant="body2">
                 Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif
@@ -29,10 +29,9 @@ const IndexFruits = () => {
         </MainCard>
         
         {cargado && (
-        <Box style={{ height: '100%', margin: 'auto' }} direction="column" alignItems="center" justifyContent="center">
-            <GameFruits />
-        </Box>
-        
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <GameFruits />
+            </Box>
         )}
         </div>
         )

@@ -7,6 +7,9 @@ import FrutasMenu from 'components/exercises/Frutas/scenes/FrutasMenu'
 import FrutasLoby from 'components/exercises/Frutas/scenes/FrutasLoby'
 import rondas from 'components/exercises/Frutas/scenes/rondas'
 
+//css
+import 'components/exercises/Frutas/styles.css'
+
 class GameFruits extends Component {
   componentDidMount() {
     const config = {
@@ -21,7 +24,7 @@ class GameFruits extends Component {
         },
         scale: {
           mode: Phaser.Scale.NONE,
-          autoCenter: Phaser.Scale.NO_CENTER,
+          autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
         },
         scene: [FrutasInit, FrutasMenu , FrutasLoby, rondas],
   }
