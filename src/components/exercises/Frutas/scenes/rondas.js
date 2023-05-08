@@ -85,7 +85,6 @@ export default class rondas extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(0xffffff);
-    this.timer_circle = this.add.circle(750, 800, 100, 0x007f00)
     this.blockdown = this.add.rectangle(0, 800, 1800, 200,  0x3f1651, 1);
     this.blockup = this.add.rectangle(0, 0, 1800, 100,  0x3f1651, 1); 
 
@@ -96,7 +95,6 @@ export default class rondas extends Phaser.Scene {
     this.texto_tiempototal.setVisible(false); 
     
     this.move_y(this.blockdown, 150, 1000, this); 
-    this.move_y(this.timer_circle, 150, 1000, this)
     this.tablero = new TableroRenewed(this.tablero_config); 
     this.create_rondas(this.numberFases);   
   }
@@ -172,9 +170,6 @@ export default class rondas extends Phaser.Scene {
   addTime(){
     this.gameTimeSec += 1;
     this.tiempo_por_ronda += 1;
-    //console.log(this.tiempo_por_ronda)
-    //console.log(this.gameTimeSec)
-    //console.log(this.gameTimeMin)
     if (this.gameTimeSec > 59) {
         this.gameTimeSec = 0
         this.gameTimeMin += 1

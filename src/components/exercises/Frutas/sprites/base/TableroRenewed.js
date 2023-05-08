@@ -95,7 +95,7 @@ export default class TableroRenewed {
                   key: objetoSacado[0]["key"], 
                   selected: objetoSacado[1] 
                 });
-                objtSprt.setScale(0.1); 
+                objtSprt.setScale(0.15); 
                 this.sprite_group.add(objtSprt); 
               }
             }

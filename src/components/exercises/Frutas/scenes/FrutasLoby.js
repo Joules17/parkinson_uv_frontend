@@ -17,30 +17,38 @@ import hover from '../assets/music/hover.mp3'
 
 export default class FrutasLoby extends Phaser.Scene {
   constructor() {
-    super({key: 'FrutasLoby', backgroundColor: 0xfff89f5b});
+    super({key: 'FrutasLoby', backgroundColor: '#3f1651'});
     this.eventFinished = false;
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
     this.button = undefined; 
-    this.welcome_title = undefined; 
+    this.welcome_title = undefined;
+    
+    // paneles
     this.panel = undefined; 
+    this.panelTitle = undefined; 
+
+    // texto
     this.ready_text = undefined; 
     this.explanatory_text = undefined; 
-    this.palmeraDer = undefined; 
-    this.tablero_ejemplo = undefined;
-    this.score = 0; // se torna 1 cuando hizo click correctamente y -1 cuando no 
-    this.counter = 0; 
     this.error_message = undefined; 
     this.error_detailed = undefined; 
     this.victory_message = undefined; 
     this.victory_explained = undefined; 
-    this.button_continue = undefined; 
 
+    // otros 
+    this.palmeraDer = undefined; 
+    this.tablero_ejemplo = undefined;
+    this.score = 0; // se torna 1 cuando hizo click correctamente y -1 cuando no 
+    this.counter = 0; 
+    
+    this.button_continue = undefined; 
+    
     // tablero ejemplo config 
     this.tablero_config = {
       scene: this, 
       pos_initx: 100,
-      pos_inity: 230, 
+      pos_inity: 260, 
       numberObjects: 10, 
       numberDistinct: 5, 
       number_cols: 5, 
@@ -48,7 +56,7 @@ export default class FrutasLoby extends Phaser.Scene {
       padding: 100, 
       spriteWidth: 40, 
       spriteHeight: 5, 
-      category: ["frutas", "comida"], 
+      category: ["frutas", "comida", "casa"], 
       actual: true, // propiedad visible del tablero 
       color_wished: undefined
     } 
@@ -81,9 +89,13 @@ export default class FrutasLoby extends Phaser.Scene {
     // panel 
     this.panel = this.add.graphics();
     this.panel.fillStyle(0xffffff, 1);
-    this.panel.fillRect(0, 150, 1800, 350);
+    this.panel.fillRect(0, 140, 1800, 600);
     this.panel.setAlpha(0);
-    //---------
+
+    this.panelTitle = this.add.graphics(); 
+    this.panelTitle.fillStyle(0x000000, 1); 
+    this.panelTitle.fillRect(-10, 125, 1800, 50); 
+    this.panelTitle.setAlpha(0);
 
     // palmera
     this.palmeraDer = new Frutita({scene: this, posx: 795, posy: 150, key: 'palmeraImg'})
@@ -91,23 +103,23 @@ export default class FrutasLoby extends Phaser.Scene {
     this.palmeraDer.setAlpha(0)
     this.palmeraDer.dance_function(3, 2000)
   
-    this.ready_text = this.add.text(180,160, "aprendamos a Como jugar:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
+    this.ready_text = this.add.text(180,140, "aprendamos a Como jugar:", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(25)
     this.ready_text.setAlpha(0)
 
     // messages
-    this.error_message = this.add.text(80, 450, "Error", { fontFamily : 'ARCO', fill: "#FF0000"}).setFontSize(20)
-    this.error_detailed = this.add.text(160, 450, 'recuerda que debes seleccionar la fruta distinta',{ fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
-    this.victory_message = this.add.text(60, 450, "EXCELENTE", { fontFamily : 'ARCO', fill: "#006400"}).setFontSize(20)
-    this.victory_explained =  this.add.text(190, 450, 'has entendido el ejercicio, ¡haz click en jugar!',{ fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
+    this.error_message = this.add.text(80, 500, "Error", { fontFamily : 'ARCO', fill: "#FF0000"}).setFontSize(20)
+    this.error_detailed = this.add.text(160, 500, 'recuerda que debes seleccionar el objeto distinto',{ fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
+    this.victory_message = this.add.text(60, 500, "EXCELENTE", { fontFamily : 'ARCO', fill: "#006400"}).setFontSize(20)
+    this.victory_explained =  this.add.text(190, 500, 'has entendido el ejercicio, ¡haz click en jugar!',{ fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
     this.error_message.setVisible(false)
     this.error_detailed.setVisible(false)
     this.victory_explained.setVisible(false)
     this.victory_message.setVisible(false)
     
     // prettier button 
-    this.button_continue = this.add.text(350, 530, "jugar", {
+    this.button_continue = this.add.text(350, 550, "jugar", {
       fontFamily: 'ARCO', 
-      fill: '#ffffff',
+      fill: '#3f1651'
     }).setFontSize(30)
 
     this.button_continue.setInteractive();
@@ -177,6 +189,7 @@ export default class FrutasLoby extends Phaser.Scene {
       repeat: 0,
       onComplete: function () {
         scene.aparecer(scene.panel, scene)
+        scene.aparecer(scene.panelTitle, scene)
         scene.aparecer(scene.ready_text, scene)
         scene.aparecer(scene.palmeraDer, scene)
       }
@@ -206,7 +219,7 @@ export default class FrutasLoby extends Phaser.Scene {
         if (!scene.eventFinished) {
           scene.tablero_ejemplo = new TableroRenewed(scene.tablero_config)
           scene.eventFinished = true;
-          scene.explanatory_text = scene.add.text(80, 400, "¡Haz click en la fruta que no se repita!", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
+          scene.explanatory_text = scene.add.text(90, 450, "¡Haz click en el objeto que no se repita!", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
         } 
       }
     }); 

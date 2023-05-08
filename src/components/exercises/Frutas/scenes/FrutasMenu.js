@@ -36,6 +36,7 @@ export default class FrutasMenu extends Phaser.Scene {
     this.waveOffset = undefined;
     this.olas = undefined; 
     this.juice_rectangle = undefined; 
+    this.patron = undefined; 
 
     // variables 
     this.pressed = false; 
@@ -59,9 +60,11 @@ export default class FrutasMenu extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor('#3f1651');
-
+    
+    // 
     this.flag = false; 
     // botones; start
+    
 
     this.start_button = this.add.text(290, 380, "Iniciar", {
       fontFamily: 'ARCO', 
@@ -123,6 +126,7 @@ export default class FrutasMenu extends Phaser.Scene {
       // ball.setScale(0.1);
     })
 
+    
     // Eventos
 
     this.start_button.on('pointerdown', () => {

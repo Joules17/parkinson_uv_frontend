@@ -13,6 +13,7 @@ const item = {
 
 <meta charset="utf-8"></meta>
 export default function ProductHero() {
+
   return (
     <Box component="section" sx={{ display: 'flex', overflow: 'hidden' }}>
       <Container sx={{ mt: 15, display: 'flex', position: 'relative'}}>
@@ -48,8 +49,7 @@ export default function ProductHero() {
                   src = {Sally}
                   alt = 'mainLanding' 
                   sx = {{width: '100%', height: 'auto', marginLeft: '10rem'}}
-                />
-                
+                /> 
               </Box>
           </Grid>
         </Grid>
