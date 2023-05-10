@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import Phaser from "phaser";
 
 // Escenas
 import FrutasInit from 'components/exercises/Frutas/scenes/FrutasInit'
 import FrutasMenu from 'components/exercises/Frutas/scenes/FrutasMenu'
 import FrutasLoby from 'components/exercises/Frutas/scenes/FrutasLoby'
+import finDelJuego from 'components/exercises/Frutas/scenes/finDelJuego'
 import rondas from 'components/exercises/Frutas/scenes/rondas'
 
 //css
@@ -26,7 +27,7 @@ class GameFruits extends Component {
           mode: Phaser.Scale.NONE,
           autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
         },
-        scene: [FrutasInit, FrutasMenu , FrutasLoby, rondas],
+        scene: [FrutasInit, FrutasMenu , FrutasLoby, rondas, finDelJuego],
   }
 
   this.game = new Phaser.Game(config);

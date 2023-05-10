@@ -6,8 +6,8 @@ import object_list from './object_list';
 export default class TableroRenewed {
     // Nota: Key: Skin: Imagen a la que hace referencia la fruta
     constructor(config) {
-        this.scene = config.scene, 
-        this.pos_initx = config.pos_initx; 
+        this.scene = config.scene; 
+        this.game_width = config.game_width; 
         this.pos_inity = config.pos_inity; 
         this.numberObjects = config.numberObjects;
         this.numberDistinct = config.numberDistinct; 
@@ -23,7 +23,7 @@ export default class TableroRenewed {
         this.objects = object_list;
 
         this.sprite_group = this.scene.add.group(); 
-        // this.preload();
+        // this.preload(); 
         this.crear_matriz();
     }
 
@@ -78,13 +78,18 @@ export default class TableroRenewed {
         let matrizOrden = this.gen_fruits(this.category, this.color_wished, this.objects, this.numberDistinct, this.numberObjects);
         // console.log(matrizOrden)
 
+        // calculo de pos_initx 
+        const row_size =  (this.spriteWidth + this.padding) * this.number_cols 
+        const pos_initx = (this.game_width - row_size) / 2;
+        
         if (this.number_rows*this.number_cols < this.numberObjects) {
           console.log('Algunos elementos no saldran debido a sus dimensiones')
         }
+
         for (let y = 0; y < this.number_rows; y++) {
             for (let x = 0; x < this.number_cols; x++) {
               if (matrizOrden.length > 0 ) {
-                const posx_gen = (this.pos_initx + (x * (this.spriteWidth + this.padding))) + (y % 2) * ((this.spriteWidth + this.padding) / 2); 
+                const posx_gen = (pos_initx + (x * (this.spriteWidth + this.padding))) + (y % 2) * ((this.spriteWidth + this.padding) / 2); 
                 const posy_gen = (this.pos_inity + (y * (this.spriteHeight + this.padding)) + (this.spriteHeight / 2));
                 
                 let objetoSacado = matrizOrden.shift(); 

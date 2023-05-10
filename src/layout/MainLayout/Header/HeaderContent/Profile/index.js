@@ -1,5 +1,8 @@
-import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+
+// auth 0 
+import { useAuth0 } from '@auth0/auth0-react'; 
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -28,6 +31,7 @@ import SettingTab from './SettingTab';
 // assets
 import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { isError } from 'lodash';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -54,6 +58,7 @@ function a11yProps(index) {
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
 const Profile = () => {
+    const { user } = useAuth0()
     const theme = useTheme();
 
     const handleLogout = async () => {
@@ -97,8 +102,8 @@ const Profile = () => {
                 onClick={handleToggle}
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-                    <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
-                    <Typography variant="subtitle1">John Doe</Typography>
+                    <Avatar alt={'hola'} src={avatar1} sx={{ width: 32, height: 32 }} />
+                    <Typography variant="subtitle1">{user.name}</Typography>
                 </Stack>
             </ButtonBase>
             <Popper

@@ -14,7 +14,7 @@ const icons = {
 
 const dashboard = {
     id: 'group-dashboard',
-    title: 'Navigation',
+    title: 'Navegacion',
     type: 'group',
     children: [
         {
