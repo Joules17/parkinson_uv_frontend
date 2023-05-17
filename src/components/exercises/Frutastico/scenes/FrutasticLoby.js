@@ -1,0 +1,268 @@
+// phaser library
+import Phaser from 'phaser';
+import '../styles.css'
+
+// custom classes
+import Board from '../sprites/Board'
+
+// import sounds 
+import good from '../assets/music/correct.wav'
+import bad from '../assets/music/bad.wav'
+import hover from '../assets/music/hover.mp3'
+
+// assets imports 
+import bushes from '../assets/img/bushes.png'
+import bushes2 from '../assets/img/bushes2.png'
+import monkey from '../assets/img/monkey.png'
+import object_list from '../sprites/object_list'; 
+
+export default class FrutasticLoby extends Phaser.Scene {
+  constructor() {
+    super({key: 'FrutasticLoby', backgroundColor: '#3f1651'});
+
+    // dimensions
+    this.worldSizeWidth = 800;
+    this.worldSizeHeigth = 600;
+
+    // text
+    this.title = undefined; 
+    this.explanation = undefined; 
+    this.explanation2 = undefined; 
+    this.good_description = undefined; 
+    this.bad_description = undefined;
+    this.mensaje_final = undefined; 
+
+    // figures
+    this.panel = undefined; 
+    this.divider = undefined; 
+    this.panel_explanation = undefined; 
+    this.bushes_sprite = undefined; 
+    this.bushes_sprite2 = undefined;
+    this.panel_round = undefined; 
+
+    // board variables 
+    this.board = undefined; 
+    this.tablero_actual = undefined; 
+    this.lista_tablero = undefined; 
+    this.flag = false; 
+    this.fin_del_lobby = false; 
+    this.score = undefined;
+    this.counter = undefined; 
+
+    // button 
+    this.go_button = undefined;
+
+    // board config example 
+    this.board_config = {
+      scene: this, 
+      game_width: 900, 
+      pos_inity: 350, 
+      number_objects : 5,
+      number_cols: [1, 2, 2, 2, 3, 5, 5, 5, 5, 5], 
+      number_rows: [1, 2, 2, 4, 3, 4, 4, 4, 4, 4],
+      padding: 100, 
+      spriteWidth: 40, 
+      spriteHeight: 5,  
+      sprite_scale: 0.15,
+      category: ["frutas", "comida", "casa"],
+      actual: false, // propiedad visible del tablero, 
+      color_wished: undefined
+    }
+    
+  }
+
+  preload() {
+    // images
+    this.load.image('bushes', bushes);
+    this.load.image('bushes2', bushes2);
+    this.load.image('monkey', monkey);
+
+    for (let categoria in object_list) {
+      // busca cada subcategoria para cargar su correspondiente imagen
+      // console.log(`Elementos en la categoría ${categoria}:`)
+      for (let subcategoria in object_list[categoria]) {
+          this.load.image(object_list[categoria][subcategoria]["key"], object_list[categoria][subcategoria]["imagen"])
+      }
+    }
+
+    // audio
+    this.load.audio('bad', bad)
+    this.load.audio('good', good)
+    this.load.audio('hover', hover)
+  }
+
+  create() {
+    this.cameras.main.setBackgroundColor(0x3f1651);
+
+    // paneles ------------------------------------------------------------------------------------------------------------
+
+    this.panel = this.add.graphics();
+    this.panel.fillStyle(0xf89f5b, 1);
+    this.panel.fillRect(0, 0, 1800, 100);
+
+    this.panel_explanation = this.add.graphics();
+    this.panel_explanation.fillStyle(0xffffff, 1);
+    this.panel_explanation.fillRoundedRect(200, 140, 550, 70, 10);
+    this.panel_explanation.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
+    this.panel_explanation.strokeRoundedRect(200, 140, 550, 70, 10); // Dibuja el borde
+    
+    
+    this.panel_round = this.add.graphics();
+    this.panel_round.fillStyle(0xffffff, 1);
+    this.panel_round.fillRoundedRect(50, 250, 700, 300, 10);
+    this.panel_round.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
+    this.panel_round.strokeRoundedRect(50, 250, 700, 300, 10); // Dibuja el borde
+    this.panel_round.setAlpha(0); 
+
+    this.divider = this.add.graphics(); 
+    this.divider.lineStyle(4, 0x000000, 1);
+    this.divider.beginPath();
+    this.divider.moveTo(0, 100);
+    this.divider.lineTo(800, 100);
+    this.divider.strokePath();
+
+    // Figuras de fondo ------------------------------------------------------------------------------------------------------------
+    this.bushes_sprite = this.add.sprite(100, 550, 'bushes').setScale(0.12)
+    this.bushes_sprite2 = this.add.sprite(600, 550, 'bushes2').setScale(0.12)
+    this.monkey = this.add.sprite(100, 180, 'monkey').setScale(0.15)
+     
+    // titulo ------------------------------------------------------------------------------------------------------------
+    this.title = this.add.text(200, 20, 'TUTORIAL',  { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(70)
+    this.explanation = this.add.text(240, 160, 'Mira las frutas a continuacion',  { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(25)
+    this.explanation2 = this.add.text(240, 155, "Selecciona la fruta nueva, \nsi solo hay una, ¡haz click en ella!",  { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
+    this.explanation2.setVisible(false)
+
+    this.good_description = this.add.text(240, 155, '¡Excelente! Sigue asi, si necesitas\nayuda, haz click en el monito',  { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(20)
+    this.bad_description = this.add.text(230, 160, "Error: Recuerda que debes seleccionar\n¡La fruta nueva! Haz click en el monito para mas ayuda",  { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(15)   
+    this.good_description.setVisible(false)
+    this.bad_description.setVisible(false)
+
+    this.mensaje_final = this.add.text(100, 350, '¡Muy bien! Ya estas listo, ', { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(40)
+    this.mensaje_final.setVisible(false); 
+
+    // button ------------------------------------------------------------------------------------------------------------
+    this.go_button = this.add.text(190, 400, "HAZ CLICK AQUI", {
+      fontFamily: 'ARCO', 
+      fill: '#f89f5b',
+    }).setFontSize(50); 
+    this.go_button.setInteractive();
+    this.go_button.setVisible(false); 
+
+    // board ------------------------------------------------------------------------------------------------------------
+    this.board = new Board(this.board_config);
+    this.lista_tablero = this.board.get_matrices(); 
+    
+    // transitions ------------------------------------------------------------------------------------------------------------
+    this.move_upside(this.bushes_sprite, -60, 2000, this)
+    this.move_upside(this.bushes_sprite2, -60, 2000, this)
+    // events ------------------------------------------------------------------------------------------------------------
+    this.go_button.on('pointerdown', () => {
+      this.sound.play('good')
+      this.scene.start('FrutasticRondas'); 
+    });
+
+    this.go_button.on('pointerover', () => {
+      this.sound.play('hover')
+      this.tweens.add({
+        targets: this.go_button,
+        scaleX: 1.1,
+        scaleY: 1.1,
+        duration: 100, 
+        ease: 'Power2'
+      });
+    });
+
+    this.go_button.on('pointerout', () => {
+      this.tweens.add({
+        targets: this.go_button,
+        scaleX: 1,
+        scaleY: 1,
+        duration: 100, 
+        ease: 'Power2'
+      });
+    });
+
+  }
+  update () {
+    if (this.flag) {
+      if (!(this.tablero_actual === undefined)) {
+        this.tablero_actual.setVisible(false); 
+      }
+      this.pon_tablero(); 
+    }
+    if (this.fin_del_lobby) {
+      console.log('el loby tutorial termino correctamente')
+      this.mensaje_final.setVisible(true);
+      this.go_button.setVisible(true);
+      // this.scene.start('FrutasticRondas')
+      this.fin_del_lobby = false; 
+    }
+    if (this.score == -1 && this.counter == 0) {
+      this.bad_description.setVisible(true)
+      this.good_description.setVisible(false)
+      this.explanation2.setVisible(false)
+    }
+    if (this.score == 1 && this.counter == 0) {
+      this.bad_description.setVisible(false)
+      this.good_description.setVisible(true)
+      this.explanation2.setVisible(false)
+    }
+    
+    
+  }
+
+  // Customs functions
+  move_upside(spt, position, duration, scene) {
+    spt.originalY = spt.originalY - position
+    this.tweens.add({
+      targets: spt, 
+      y: spt.y - position,
+      duration: duration, 
+      ease: 'Power2',
+      yoyo: false, 
+      repeat: 0,
+      onComplete: function () {
+        scene.aparecer(scene.panel_round, scene);
+      }
+    });  
+  }
+
+  aparecer (obj, scene) {    
+    this.tweens.add({
+      targets: obj,
+      alpha: 1, 
+      duration: 1000, 
+      ease: 'Power2',
+      onComplete: function () {
+        scene.explanation.setVisible(false); 
+        scene.explanation2.setVisible(true); 
+        scene.flag = true; 
+      }
+    }); 
+  }
+
+  pon_tablero() {
+    if (this.lista_tablero.length != 0) {
+      this.tablero_actual = this.lista_tablero.shift();
+      // console.log('tablero actual: ', this.tablero_actual)  
+      this.tablero_actual.setVisible(true); 
+      this.flag = false; 
+    } else {
+      this.fin_del_lobby = true; 
+      this.flag = false; 
+    }
+  }
+
+  getScore() {
+    return this.score; 
+  }
+
+  setScore(val) {
+    this.score = val; 
+  }
+
+  setStatus(val) {
+    this.flag = val; 
+  }
+
+}

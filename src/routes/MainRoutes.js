@@ -16,6 +16,8 @@ const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
 // Phaser Games
 const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumeros'))); 
 const IndexFruits = Loadable(lazy(() => import ('components/exercises/indexFrutas')));
+const IndexFrutastic = Loadable(lazy(() =>  import('components/exercises/indexFrutastic'))); 
+const IndexArtic = Loadable(lazy(() => import('components/exercises/indexArtic')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -57,6 +59,14 @@ const MainRoutes = {
         {
             path: 'exercise3',
             element: <IndexFruits />
+        },
+        {
+            path: 'exercise4',
+            element: <IndexFrutastic />
+        },
+        {
+            path: 'exercise5',
+            element: <IndexArtic />
         },
         {
             path: 'sample-page',

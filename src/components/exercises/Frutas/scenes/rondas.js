@@ -66,7 +66,7 @@ export default class rondas extends Phaser.Scene {
       padding: 100, 
       spriteWidth: 40, 
       spriteHeight: 10, 
-      category: ["frutas"], 
+      category: ["comida"], 
       actual: false,
       color_wished: undefined
     } 
@@ -169,7 +169,17 @@ export default class rondas extends Phaser.Scene {
       yoyo: false, 
       repeat: 0, 
       onComplete: function () {
+        var lapiz = scene.add.graphics(); 
         scene.text_numberrondas.setVisible(true)
+        lapiz.lineStyle(4, 0x000000, 1);
+        lapiz.beginPath();
+        lapiz.moveTo(0, 550);
+        lapiz.lineTo(800, 550);
+        lapiz.strokePath();
+        lapiz.beginPath();
+        lapiz.moveTo(0, 50);
+        lapiz.lineTo(800, 50);
+        lapiz.strokePath();
         scene.texto_tiempototal.setVisible(true)
         scene.time.addEvent({ delay: 1000, callback:scene.addTime, callbackScope: scene, loop: true });
       }

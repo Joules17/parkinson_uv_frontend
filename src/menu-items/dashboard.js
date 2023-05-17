@@ -73,6 +73,22 @@ const dashboard = {
             icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },
+        {
+            id: 'exercise4',
+            title: 'Frutastico',
+            type: 'item',
+            url: '/exercise4',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'exercise5',
+            title: 'Flechas Articas',
+            type: 'item',
+            url: '/exercise5',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
     ]
 };
 

@@ -14,7 +14,7 @@ export default function AuthRedirect ({ Component, tipo }) {
             if (user) {
                 getInfoAccount(user.sub).then((data) => {
                     // eslint-disable-next-line
-                    if (data.id_type.toString() === '3') {
+                    if (data.id_type.toString() !== '3') {
                         console.log("Te metiste de forma equivocada")
                         logout({
                             returnTo: window.location.origin
