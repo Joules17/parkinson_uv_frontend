@@ -33,6 +33,7 @@ export const useExternalApi = () => {
         }
 
         const data = await makeRequest({config})
+        console.log(data)
 
         return data
     }

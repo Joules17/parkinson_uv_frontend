@@ -14,7 +14,7 @@ const icons = {
 
 const dashboard = {
     id: 'group-dashboard',
-    title: 'Navigation',
+    title: 'Navegacion',
     type: 'group',
     children: [
         {
@@ -70,6 +70,22 @@ const dashboard = {
             title: 'Frutas Locas',
             type: 'item',
             url: '/exercise3',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'exercise4',
+            title: 'Frutastico',
+            type: 'item',
+            url: '/exercise4',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'exercise5',
+            title: 'Flechas Articas',
+            type: 'item',
+            url: '/exercise5',
             icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },

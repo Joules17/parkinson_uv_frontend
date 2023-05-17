@@ -47,7 +47,7 @@ export default class FrutasLoby extends Phaser.Scene {
     // tablero ejemplo config 
     this.tablero_config = {
       scene: this, 
-      pos_initx: 100,
+      game_width: 900,
       pos_inity: 260, 
       numberObjects: 10, 
       numberDistinct: 5, 

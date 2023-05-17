@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
+import ProtectedRoute from 'Auth0/ProtectedRoute'; 
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -15,6 +16,8 @@ const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
 // Phaser Games
 const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumbers'))); 
 const IndexFruits = Loadable(lazy(() => import ('components/exercises/indexFrutas')));
+const IndexFrutastic = Loadable(lazy(() =>  import('components/exercises/indexFrutastic'))); 
+const IndexArtic = Loadable(lazy(() => import('components/exercises/indexArtic')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -26,7 +29,7 @@ const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons'
 
 const MainRoutes = {
     path: '/',
-    element: <MainLayout />,
+    element: <ProtectedRoute component = {MainLayout}/>,
     children: [
         {
             path: '/',
@@ -56,6 +59,14 @@ const MainRoutes = {
         {
             path: 'exercise3',
             element: <IndexFruits />
+        },
+        {
+            path: 'exercise4',
+            element: <IndexFrutastic />
+        },
+        {
+            path: 'exercise5',
+            element: <IndexArtic />
         },
         {
             path: 'sample-page',

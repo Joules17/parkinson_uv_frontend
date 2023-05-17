@@ -13,6 +13,16 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         // agregamos interactive a este tipo de Sprite 
         this.setInteractive(); 
 
+        // bailar!
+        const randomOption = Math.random();
+        let orientation = undefined; 
+        if (randomOption >= 0.5) {
+            orientation = 1; 
+        } else {
+            orientation = -1; 
+        }
+        this.dance_function(orientation*10, 1000); 
+
         // Listeners: 
         // get closer if over
         this.on('pointerover', () => {
@@ -103,6 +113,19 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                
               }
         })
+    }
+
+    dance_function(angle, duration) {
+        var rotaIzq = this.scene.tweens.add({
+            targets: this,
+            angle: '-=' + angle, 
+            duration: duration, 
+            yoyo: true, 
+            repeat: -1,
+            ease: 'Linear'
+        }); 
+
+        return rotaIzq;
     }
 
 }

@@ -13,13 +13,22 @@ import good from '../assets/music/correct.wav'
 import bad from '../assets/music/bad.wav'
 import hover from '../assets/music/hover.mp3'
 
+
+const log = {
+  info: {
+    numero_rondas: undefined, 
+    tiempo_rondas: undefined,
+    tiempo_total: undefined, 
+  }
+}
+
 export default class rondas extends Phaser.Scene {
   constructor() {
     super({key: 'rondas', backgroundColor: 0xffffff});
     this.blockup, this.blockdown = undefined;
     
     // config rondas 
-    this.numberFases = 30;
+    this.numberFases = 10;
     this.tableroActual = undefined; 
     
     // texto 
@@ -48,7 +57,7 @@ export default class rondas extends Phaser.Scene {
     // config imported by apiRest
     this.tablero_config = {
       scene: this, 
-      pos_initx: 100,
+      game_width: 900,
       pos_inity: 100, 
       numberObjects: 10, 
       numberDistinct: 3, 
@@ -57,7 +66,7 @@ export default class rondas extends Phaser.Scene {
       padding: 100, 
       spriteWidth: 40, 
       spriteHeight: 10, 
-      category: ["frutas"], 
+      category: ["comida"], 
       actual: false,
       color_wished: undefined
     } 
@@ -113,8 +122,8 @@ export default class rondas extends Phaser.Scene {
     } 
     if (this.fin_del_juego) {
       console.log('El juego termino correctamente')
-      console.log('Tiempos de reaccion', this.tiempo_rondas)
-      console.log('Tiempo general', this.texto_tiempototal.text)
+      this.setLog(this.tiempo_rondas, this.texto_tiempototal.text, this.numberFases)
+      this.scene.start('finDelJuego', log)
       this.fin_del_juego = false; 
     }
   }
@@ -161,7 +170,17 @@ export default class rondas extends Phaser.Scene {
       yoyo: false, 
       repeat: 0, 
       onComplete: function () {
+        var lapiz = scene.add.graphics(); 
         scene.text_numberrondas.setVisible(true)
+        lapiz.lineStyle(4, 0x000000, 1);
+        lapiz.beginPath();
+        lapiz.moveTo(0, 550);
+        lapiz.lineTo(800, 550);
+        lapiz.strokePath();
+        lapiz.beginPath();
+        lapiz.moveTo(0, 50);
+        lapiz.lineTo(800, 50);
+        lapiz.strokePath();
         scene.texto_tiempototal.setVisible(true)
         scene.time.addEvent({ delay: 1000, callback:scene.addTime, callbackScope: scene, loop: true });
       }
@@ -182,5 +201,12 @@ export default class rondas extends Phaser.Scene {
   // setters
   setStatus(val) {
     this.flag = val; 
+  }
+
+  // logs
+  setLog(tiempo_rondas, tiempo_total, number_rondas) {
+    log.info.numero_rondas = number_rondas; 
+    log.info.tiempo_rondas = tiempo_rondas;
+    log.info.tiempo_total = tiempo_total;
   }
 }

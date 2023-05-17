@@ -1,8 +1,14 @@
-import { useState } from 'react';
-import Box from '@mui/material/Box';
+import { useState, useEffect } from 'react';
 import { Link as LinkRouter } from 'react-router-dom';
+
+// auth 0 
 import { useAuth0 } from '@auth0/auth0-react'
-import { Button, Toolbar, AppBar } from '@mui/material'; 
+
+// hooks
+import { useExternalApi } from 'hooks/accountResponse'
+
+// mui 
+import { Button, Toolbar, AppBar, Box } from '@mui/material'; 
 
 // assets imports 
 import brain_icon from './img_aux/brainy.svg'; 
@@ -14,7 +20,20 @@ const rightLink = {
 
 function AppAppBar() {
   const [navbar, setNavbar] = useState(false)
-  const { isAuthenticated, logout, loginWithRedirect } = useAuth0(); 
+  const { getInfoAccount } = useExternalApi()
+  const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0(); 
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getInfoAccount(user.sub).then((data) => { 
+        // eslint-disable-next-line
+        console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type)
+        window.localStorage.setItem('tipo', data.id_type)
+      })
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
+
   // console.log(loginWithRedirect)
   const changeBackground = () => {
     window.scrollY >= 150 ? setNavbar(true) : setNavbar(false)
