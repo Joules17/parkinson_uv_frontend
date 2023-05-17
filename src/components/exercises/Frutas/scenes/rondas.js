@@ -101,6 +101,7 @@ export default class rondas extends Phaser.Scene {
 
    
   update () {
+    console.log(this.flag)
     if (this.flag) {
       if (!(this.tableroActual === undefined)) {
         this.tableroActual.sprite_group.setVisible(false)

@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import Phaser from "phaser";
 
 // Escenas
-import FrutasInit from 'components/exercises/Frutas/scenes/FrutasInit'
-import FrutasMenu from 'components/exercises/Frutas/scenes/FrutasMenu'
-import FrutasLoby from 'components/exercises/Frutas/scenes/FrutasLoby'
-import rondas from 'components/exercises/Frutas/scenes/rondas'
+import NumbersInit from 'components/exercises/Numbers/scenes/NumbersInit'
+import NumbersMenu from 'components/exercises/Numbers/scenes/NumbersMenu'
+import NumbersLoby from 'components/exercises/Numbers/scenes/NumbersLoby'
+import rondas from 'components/exercises/Numbers/scenes/rondas'
 
 //css
 import 'components/exercises/Frutas/styles.css'
 
-class Numbers extends Component {
+class GameNumbers extends Component {
   componentDidMount() {
     const config = {
       type: Phaser.AUTO,
@@ -26,7 +26,7 @@ class Numbers extends Component {
           mode: Phaser.Scale.NONE,
           autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
         },
-        scene: [FrutasInit, FrutasMenu , FrutasLoby, rondas],
+        scene: [NumbersInit, NumbersMenu, NumbersLoby, rondas],
   }
 
   this.game = new Phaser.Game(config);
@@ -44,4 +44,4 @@ class Numbers extends Component {
   }
 }
 
-export default Numbers;
+export default GameNumbers;

@@ -75,6 +75,7 @@ export default class TableroRenewed {
     
 
     crear_matriz() {
+      console.log("genera sprt")
         let matrizOrden = this.gen_fruits(this.category, this.color_wished, this.objects, this.numberDistinct, this.numberObjects);
         // console.log(matrizOrden)
 

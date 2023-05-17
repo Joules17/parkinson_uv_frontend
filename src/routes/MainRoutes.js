@@ -13,7 +13,7 @@ const PatientsPage = Loadable(lazy(() => import('pages/patients/PatientsPage')))
 const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
 
 // Phaser Games
-const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumeros'))); 
+const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumbers'))); 
 const IndexFruits = Loadable(lazy(() => import ('components/exercises/indexFrutas')));
 
 // render - utilities
