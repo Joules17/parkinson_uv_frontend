@@ -24,7 +24,7 @@ export const useExternalApi = () => {
     const getPatient = async (id, setPatient) => {
 
         const config = {
-            url: `${apiServerUrl}/api/patient/retrieve/${id}`,
+            url: `${apiServerUrl}/api/patient/retreive/${id}`,
             method: 'GET',
             headers: {},
             data: {}
@@ -62,7 +62,7 @@ export const useExternalApi = () => {
         console.log(data)
     }
 
-    const updatePatient = async (datos, id, tipo, setMensaje) => {
+    const updatePatient = async (datos, id, setMensaje) => {
 
         const config = {
             url: `${apiServerUrl}/api/patient/update/${id}`,
@@ -76,6 +76,7 @@ export const useExternalApi = () => {
                 "cell": datos.cell, 
                 "age" : datos.age, 
                 "gender" : datos.gender, 
+                "email" : datos.email,
                 "id_parkinson_phase" : datos.id_parkinson_phase,
                 "id_therapist" : datos.id_therapist
             }

@@ -28,7 +28,7 @@ export default class rondas extends Phaser.Scene {
     this.blockup, this.blockdown = undefined;
     
     // config rondas 
-    this.numberFases = 10;
+    this.numberFases = 20;
     this.tableroActual = undefined; 
     
     // texto 
@@ -53,20 +53,21 @@ export default class rondas extends Phaser.Scene {
     this.flag = false; 
     this.fin = false; 
     this.lista_tablero  = [];
+    this.limit = 22; 
     
     // config imported by apiRest
     this.tablero_config = {
       scene: this, 
-      game_width: 900,
-      pos_inity: 100, 
-      numberObjects: 10, 
+      game_width: 670,
+      game_height: 400,
+      pos_initx: 50,
+      pos_inity: 70, 
+      numberObjects: 5, 
       numberDistinct: 3, 
-      number_cols: 3, 
-      number_rows: 4, 
-      padding: 100, 
+      padding: 40, 
       spriteWidth: 40, 
       spriteHeight: 10, 
-      category: ["comida"], 
+      category: ["comida", "casa", "frutas"], 
       actual: false,
       color_wished: undefined
     } 
@@ -104,13 +105,12 @@ export default class rondas extends Phaser.Scene {
     this.texto_tiempototal.setVisible(false); 
     
     this.move_y(this.blockdown, 150, 1000, this); 
-    this.tablero = new TableroRenewed(this.tablero_config); 
     this.create_rondas(this.numberFases);   
   }
 
    
   update () {
-    console.log(this.flag)
+    // console.log(this.flag)
     if (this.flag) {
       if (!(this.tableroActual === undefined)) {
         this.tableroActual.sprite_group.setVisible(false)
@@ -136,14 +136,6 @@ export default class rondas extends Phaser.Scene {
       if (this.tablero_config.numberObjects < this.limite) {
         this.tablero_config.numberObjects += 1;
         this.tablero_config.numberDistinct += 1;
-        if (this.tablero_config.numberObjects > this.tablero_config.number_cols*this.tablero_config.number_rows) {
-          if (this.tablero_config.number_rows < 4) {
-            this.tablero_config.number_rows += 1; 
-          }
-          if (this.tablero_config.number_cols < 5) {
-            this.tablero_config.number_cols += 1; 
-          }
-        } 
       }
     }
     this.flag = true; 

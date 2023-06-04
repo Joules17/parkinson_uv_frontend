@@ -55,15 +55,15 @@ export default class FrutasticLoby extends Phaser.Scene {
     // board config example 
     this.board_config = {
       scene: this, 
-      game_width: 900, 
-      pos_inity: 350, 
+      game_width: 380,
+      game_height: 200, 
+      pos_inity: 280, 
+      pos_initx: 120,
       number_objects : 5,
-      number_cols: [1, 2, 2, 2, 3, 5, 5, 5, 5, 5], 
-      number_rows: [1, 2, 2, 4, 3, 4, 4, 4, 4, 4],
-      padding: 100, 
+      padding: 50, 
       spriteWidth: 40, 
       spriteHeight: 5,  
-      sprite_scale: 0.15,
+      sprite_scale: 0.17,
       category: ["frutas", "comida", "casa"],
       actual: false, // propiedad visible del tablero, 
       color_wished: undefined
@@ -151,6 +151,7 @@ export default class FrutasticLoby extends Phaser.Scene {
     // board ------------------------------------------------------------------------------------------------------------
     this.board = new Board(this.board_config);
     this.lista_tablero = this.board.get_matrices(); 
+    console.log('tableros creados', this.lista_tablero);
     
     // transitions ------------------------------------------------------------------------------------------------------------
     this.move_upside(this.bushes_sprite, -60, 2000, this)

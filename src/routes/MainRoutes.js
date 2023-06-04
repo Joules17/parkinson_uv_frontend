@@ -12,12 +12,14 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const PatientsPage = Loadable(lazy(() => import('pages/patients/PatientsPage')));
 const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
+const Profile = Loadable(lazy(() => import('pages/account/Profile')));
 
 // Phaser Games
 const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumbers'))); 
 const IndexFruits = Loadable(lazy(() => import ('components/exercises/indexFrutas')));
 const IndexFrutastic = Loadable(lazy(() =>  import('components/exercises/indexFrutastic'))); 
 const IndexArtic = Loadable(lazy(() => import('components/exercises/indexArtic')));
+const IndexDomino = Loadable(lazy(() => import('components/exercises/indexDomino')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -69,6 +71,10 @@ const MainRoutes = {
             element: <IndexArtic />
         },
         {
+            path: 'exercise6',
+            element: <IndexDomino />
+        },
+        {
             path: 'sample-page',
             element: <SamplePage />
         },
@@ -91,6 +97,10 @@ const MainRoutes = {
         {
             path: 'icons/ant',
             element: <AntIcons />
+        }, 
+        {
+            path: 'my-profile', 
+            element: <Profile /> 
         }
     ]
 };
