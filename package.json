@@ -29,6 +29,8 @@
         "lodash": "^4.17.21",
         "phaser": "^3.55.2",
         "prop-types": "^15.8.1",
+        "random-spanish-words": "^2.0.0",
+        "random-words": "^1.3.0",
         "react": "^18.2.0",
         "react-apexcharts": "^1.4.0",
         "react-copy-to-clipboard": "^5.1.0",

@@ -165,31 +165,15 @@ export default class FrutasMenu extends Phaser.Scene {
 
     // fullscreen sujeto a cambios 
     this.fullscreen_button.on('pointerdown', function () {
-      if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
+      if (this.game.scale.isFullscreen) {
+        // exit fullscreen mode
+        this.game.scale.stopFullscreen();
       } else {
-          this.scale.startFullscreen();
+        // start fullscreen mode
+
+        this.game.scale.startFullscreen();
       }
-      
-      const resize = (scene, gameSize) => {
-        const { width, height } = gameSize;
-    
-        if (this.scale.isFullscreen) {
-          this.cameras.resize(width, height);
-        } else {
-          const gameWidth = 800;
-          const gameHeight = 600;
-    
-          const scaleX = width / gameWidth;
-          const scaleY = height / gameHeight;
-          const scale = Math.min(scaleX, scaleY);
-    
-          this.cameras.resize(gameWidth * scale, gameHeight * scale);
-        }
-      };
-    
-      resize({ width: window.innerWidth, height: window.innerHeight });
-  }, this.game)
+    }, this);
 
     this.fullscreen_button.on('pointerover', () => {
       this.tweens.add({
@@ -210,7 +194,6 @@ export default class FrutasMenu extends Phaser.Scene {
         ease: 'Power2'
       });
     });
-  
   }
 
   update () {

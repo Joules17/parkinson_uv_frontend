@@ -98,6 +98,14 @@ const dashboard = {
             breadcrumbs: false
         },
         {
+            id: 'exercise7',
+            title: 'Letra Aventura', 
+            type: 'item',
+            url: '/exercise7',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
             id: 'profile',
             title: 'Mi Perfil',
             type: 'item',

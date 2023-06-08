@@ -2,7 +2,11 @@ import { Component } from "react";
 import Phaser from "phaser";
 
 // Escenas
-
+import LetrasInit from 'components/exercises/LetraAventura/scenes/LetrasInit';
+import LetrasMenu from 'components/exercises/LetraAventura/scenes/LetrasMenu';
+import LetrasTuto from 'components/exercises/LetraAventura/scenes/LetrasTuto';
+import LetrasGame from 'components/exercises/LetraAventura/scenes/LetrasGame'; 
+import LetrasOver from 'components/exercises/LetraAventura/scenes/LetrasOver'; 
 //css
 import 'components/exercises/LetraAventura/styles.css'
 
@@ -22,7 +26,7 @@ class GameLetras extends Component {
           mode: Phaser.Scale.NONE,
           autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
         },
-        scene: [ArticInit, ArticMenu, ArticGame, ArticOver],
+        scene: [LetrasInit, LetrasMenu, LetrasTuto, LetrasGame, LetrasOver],
   }
 
   this.game = new Phaser.Game(config);
@@ -40,4 +44,4 @@ class GameLetras extends Component {
   }
 }
 
-export default GameArtic;
+export default GameLetras;

@@ -20,6 +20,7 @@ const IndexFruits = Loadable(lazy(() => import ('components/exercises/indexFruta
 const IndexFrutastic = Loadable(lazy(() =>  import('components/exercises/indexFrutastic'))); 
 const IndexArtic = Loadable(lazy(() => import('components/exercises/indexArtic')));
 const IndexDomino = Loadable(lazy(() => import('components/exercises/indexDomino')));
+const IndexLetras = Loadable(lazy(() => import('components/exercises/indexLetras')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -73,6 +74,10 @@ const MainRoutes = {
         {
             path: 'exercise6',
             element: <IndexDomino />
+        },
+        {
+            path: 'exercise7',
+            element: <IndexLetras />
         },
         {
             path: 'sample-page',
