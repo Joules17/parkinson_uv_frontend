@@ -20,7 +20,8 @@ export default class FrutasMenu extends Phaser.Scene {
   constructor() {
     super({key: 'FrutasMenu', backgroundColor: '#3f1651'});
     this.worldSizeWidth = 800;
-    this.worldSizeHeigth = 600;
+    this.worldSizeHeight = 600;
+    // camera config 
     
     // botones
     this.start_button, this.fullscreen_button = undefined; 
@@ -164,12 +165,15 @@ export default class FrutasMenu extends Phaser.Scene {
 
     // fullscreen sujeto a cambios 
     this.fullscreen_button.on('pointerdown', function () {
-      if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
+      if (this.game.scale.isFullscreen) {
+        // exit fullscreen mode
+        this.game.scale.stopFullscreen();
       } else {
-          this.scale.startFullscreen();
+        // start fullscreen mode
+
+        this.game.scale.startFullscreen();
       }
-  }, this.game)
+    }, this);
 
     this.fullscreen_button.on('pointerover', () => {
       this.tweens.add({
@@ -190,7 +194,6 @@ export default class FrutasMenu extends Phaser.Scene {
         ease: 'Power2'
       });
     });
-  
   }
 
   update () {

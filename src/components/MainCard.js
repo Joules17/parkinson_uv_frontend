@@ -33,6 +33,7 @@ const MainCard = forwardRef(
             sx = {},
             title,
             imgUrl,
+            imageHeight,
             codeHighlight,
             ...others
         },
@@ -72,7 +73,7 @@ const MainCard = forwardRef(
                     <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />
                 )}
                 {/* Image */}
-                {imgUrl && <CardMedia style={{ height: "100px" }} component='img' image={imgUrl} title={title} alt='Image'/>} 
+                {imgUrl && <CardMedia style={{ height: imageHeight }} component='img' image={imgUrl} title={title} alt='Image'/>} 
                 {/* content & header divider */}
                 {title && divider && <Divider />}
 
@@ -106,6 +107,7 @@ MainCard.propTypes = {
     sx: PropTypes.object,
     title: PropTypes.string,
     imgUrl: PropTypes.string,
+    imageHeight: PropTypes.string,
     codeHighlight: PropTypes.bool,
     content: PropTypes.bool,
     children: PropTypes.node

@@ -47,15 +47,15 @@ export default class FrutasLoby extends Phaser.Scene {
     // tablero ejemplo config 
     this.tablero_config = {
       scene: this, 
-      game_width: 900,
-      pos_inity: 260, 
-      numberObjects: 10, 
-      numberDistinct: 5, 
-      number_cols: 5, 
-      number_rows: 2, 
-      padding: 100, 
+      game_width: 620,
+      game_height: 100,
+      pos_initx: 80,
+      pos_inity: 250,
+      numberObjects: 6, 
+      numberDistinct: 3, 
+      padding: 10, 
       spriteWidth: 40, 
-      spriteHeight: 5, 
+      spriteHeight: 20, 
       category: ["frutas", "comida", "casa"], 
       actual: true, // propiedad visible del tablero 
       color_wished: undefined

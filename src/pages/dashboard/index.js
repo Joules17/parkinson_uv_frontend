@@ -77,10 +77,10 @@ const DashboardDefault = () => {
                 <Typography variant="h5">Ejercicios</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <ExerciseBttn type='Memoria' name='Numeros' imgUrl='https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg'/>
+                <ExerciseBttn type={'Memoria'} name={'Numeros'} imgUrl={'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg'} imageHeight = {'100px'}/>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <ExerciseBttn type='Memoria' name='Flechas' imgUrl='https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360'/>
+                <ExerciseBttn type={'Memoria'} name={'Flechas'} imgUrl={'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360'} imageHeight = {'100px'}/>
             </Grid>
 
             {/* row 2 */}

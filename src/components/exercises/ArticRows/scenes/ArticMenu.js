@@ -8,7 +8,7 @@ import '../styles.css'
 import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png'
 import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg'
 
-import derecha from 'components/exercises/ArticRows/assets/img/arrow/good_right.png'
+import derecha from 'components/exercises/ArticRows/assets/img/arrow/good/good_right.png'
 
 // audio 
 import start_button from 'components/exercises/ArticRows/assets/music/start_button.mp3'
@@ -170,7 +170,7 @@ export default class ArticMenu extends Phaser.Scene {
     btn.alpha = 1;
   }
   // ------------------------------------------------------------------------------------------------------------------------------
-  animation_movement(sprt, direction_x) {
+  animation_movement(sprt) {
     // var orientation_x = (direction_x === 'izquierda') ? -1 : 1; 
     this.tweens.add({
       targets: sprt,

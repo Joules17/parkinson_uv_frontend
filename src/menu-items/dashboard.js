@@ -89,6 +89,30 @@ const dashboard = {
             icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },
+        {
+            id: 'exercise6',
+            title: 'Purple Domino', 
+            type: 'item',
+            url: '/exercise6',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'exercise7',
+            title: 'Letra Aventura', 
+            type: 'item',
+            url: '/exercise7',
+            icon: icons.PlayCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'profile',
+            title: 'Mi Perfil',
+            type: 'item',
+            url: '/my-profile',
+            icon: icons.UserOutlined,
+            breadcrumbs: false
+        },
     ]
 };
 

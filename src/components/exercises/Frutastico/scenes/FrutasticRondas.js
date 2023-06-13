@@ -56,22 +56,22 @@ export default class FrutasticRondas extends Phaser.Scene {
     // variables 
     this.flag_init = undefined; 
     this.error_flag = false; 
-    this.number_rounds = 22; 
+    this.number_rounds = 20; 
     this.current_number = 1; 
     this.number_errors = 0; 
 
     // config imported by apiRest
     this.tablero_config = {
       scene: this, 
-      game_width: 900,
-      pos_inity: 100, 
+      game_width: 500,
+      game_height: 420,
+      pos_initx: 80,
+      pos_inity: 50, 
       number_objects: this.number_rounds, 
-      number_cols: [1, 2, 2, 2, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], // number_object == length 
-      number_rows: [1, 2, 2, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4], 
-      padding: 100, 
-      spriteWidth: 40, 
-      spriteHeight: 10, 
-      sprite_scale: 0.2,
+      padding: 30, 
+      spriteWidth: 5, 
+      spriteHeight: 5, 
+      sprite_scale: 0.17,
       category: ["frutas", "casa", "comida", "animals"], 
       actual: false, // propiedad visible del tablero
       color_wished: undefined
@@ -199,7 +199,7 @@ export default class FrutasticRondas extends Phaser.Scene {
 
   pon_tablero() {
     if (this.lista_tablero.length != 0) {
-      this.tablero_actual = this.lista_tablero.shift();
+      this.tablero_actual = this.lista_tablero.shift(); 
       this.tablero_actual.setVisible(true); 
       this.flag_game = false; 
     } else {

@@ -22,6 +22,8 @@ function AppAppBar() {
   const [navbar, setNavbar] = useState(false)
   const { getInfoAccount } = useExternalApi()
   const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0(); 
+  // aux var for logging
+  const [logged, setLogged] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -29,6 +31,7 @@ function AppAppBar() {
         // eslint-disable-next-line
         console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type)
         window.localStorage.setItem('tipo', data.id_type)
+        setLogged(true)
       })
     }
     // eslint-disable-next-line
@@ -97,6 +100,7 @@ function AppAppBar() {
                 variant="h6"
                 underline="none"
                 component = {LinkRouter}
+                disabled = {!logged}
                 to = {'dashboard'}
                 sx={{rightLink, fontSize: 18, color: "#000000"}}
                 >

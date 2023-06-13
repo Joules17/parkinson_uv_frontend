@@ -5,7 +5,7 @@ import Phaser from "phaser";
 import ArticInit from 'components/exercises/ArticRows/scenes/ArticInit'
 import ArticMenu from 'components/exercises/ArticRows/scenes/ArticMenu'
 import ArticGame from 'components/exercises/ArticRows/scenes/ArticGame'
-
+import ArticOver from 'components/exercises/ArticRows/scenes/ArticOver'
 //css
 import 'components/exercises/ArticRows/styles.css'
 
@@ -25,7 +25,7 @@ class GameArtic extends Component {
           mode: Phaser.Scale.NONE,
           autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
         },
-        scene: [ArticInit, ArticMenu, ArticGame],
+        scene: [ArticInit, ArticMenu, ArticGame, ArticOver],
   }
 
   this.game = new Phaser.Game(config);

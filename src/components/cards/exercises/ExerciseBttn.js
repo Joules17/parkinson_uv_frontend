@@ -11,8 +11,8 @@ import MainCard from 'components/MainCard';
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
-const ExerciseBttn = ({ type, name, imgUrl }) => (
-    <MainCard imgUrl={imgUrl} contentSX={{ p: 2.25 }}>
+const ExerciseBttn = ({ type, name, imgUrl, imageHeight }) => (
+    <MainCard imgUrl={imgUrl} imageHeight= {imageHeight} contentSX={{ p: 2.25 }}>
         <Stack spacing={0.5}>
             <Typography variant="h6" color="textSecondary">
                 {type}
@@ -32,6 +32,7 @@ ExerciseBttn.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
     imgUrl: PropTypes.string,
+    imageHeight: PropTypes.string
 };
 
 ExerciseBttn.defaultProps = {

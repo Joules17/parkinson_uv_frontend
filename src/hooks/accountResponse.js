@@ -38,7 +38,22 @@ export const useExternalApi = () => {
         return data
     }
 
+    const getAccount = async (id, setAccount) => {
+        const config = {
+            url: `${apiServerUrl}/api/account/retreive/${id}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+
+        // console.log(data)
+        setAccount(data)
+    }
+
     return {
-        getInfoAccount
+        getInfoAccount, 
+        getAccount
     }
 }
