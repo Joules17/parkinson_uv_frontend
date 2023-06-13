@@ -11,7 +11,7 @@ import OrderTable from './components/OrdersTable';
 // ==============================|| PATIENTS PAGE ||============================== //
 
 const PatientsPage = () => (
-    <MainCard title="Pacientes" darkTitle="true">
+    <MainCard title="Pacientes" darkTitle>
         <Grid item xs={12} md={7} lg={8}>
             <MainCard sx={{ mt: 2 }} content={false}>
                 <OrderTable />

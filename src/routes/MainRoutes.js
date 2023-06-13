@@ -11,7 +11,9 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 // render - Pages
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const PatientsPage = Loadable(lazy(() => import('pages/patients/PatientsPage')));
+const LibraryPage = Loadable(lazy(() => import('pages/library/Library')));
 const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
+const RunListGames = Loadable(lazy(() => import('pages/runListGame/runListGame')));
 
 // Phaser Games
 const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumbers'))); 
@@ -77,8 +79,16 @@ const MainRoutes = {
             element: <PatientsPage />
         },
         {
+            path: 'library-page',
+            element: <LibraryPage />
+        },
+        {
             path: 'games-page',
             element: <GamesPage />
+        },
+        {
+            path: 'run-list-games',
+            element: <RunListGames />
         },
         {
             path: 'shadow',

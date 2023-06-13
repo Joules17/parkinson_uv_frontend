@@ -56,7 +56,7 @@ export default class FrutasticRondas extends Phaser.Scene {
     // variables 
     this.flag_init = undefined; 
     this.error_flag = false; 
-    this.number_rounds = 5; 
+    this.number_rounds = 22; 
     this.current_number = 1; 
     this.number_errors = 0; 
 
