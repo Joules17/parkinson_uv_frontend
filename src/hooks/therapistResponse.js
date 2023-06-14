@@ -23,7 +23,7 @@ export const useExternalApi = () => {
 
     // Creates ----------------------------------------------------------------
 
-    const createTherapistAccount = async (datos, id, email, setMensaje) => {
+    const createTherapistAccount = async (datos, id, email, picture, setMensaje) => {
 
         const config = {
             url: `${apiServerUrl}/api/account/create`,
@@ -32,6 +32,9 @@ export const useExternalApi = () => {
             data: {
                 "user_id": id,
                 "id_type": 1,
+                "document_type" : datos.document_type,
+                "document_id" : datos.document_id,
+                "user_picture" : picture,
                 "password": "basic",
                 "email": email,
                 "user_status": true
@@ -81,6 +84,33 @@ export const useExternalApi = () => {
         setTherapist(data)
     }
 
+    const getTherapistDetailed = async (id, setTherapist) => {
+        const config = {
+            url: `${apiServerUrl}/api/therapist/retreive/detailed/${id}`,
+            method: 'GET',
+            headers: {}, 
+            data: {}
+        }
+        
+        const data = await makeRequest({config})
+        
+        // console.log(data)
+        setTherapist(data)
+    }
+
+    const getTherapistPatients = async (id_therapist, setPatients) => {
+        const config = {
+            url: `${apiServerUrl}/api/patient/retreive/therapist/${id_therapist}/`, 
+            method: 'GET', 
+            headers: {}, 
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+        // console.log(data)
+        setPatients(data)
+    }
+
     const updateTherapist = async (datos, id, setMensaje) => {
         const config = {
             url: `${apiServerUrl}/api/therapist/update/${id}`,
@@ -103,6 +133,8 @@ export const useExternalApi = () => {
         createTherapistAccount, 
         createTherapist, 
         getTherapist, 
-        updateTherapist
+        getTherapistPatients,
+        updateTherapist, 
+        getTherapistDetailed
     }
 }

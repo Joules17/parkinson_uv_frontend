@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
 const ProfilePatientForm = ({ userCharged, handleExit, onSubmit }) => {
+    console.log(userCharged)
     // hook functions  ---------------------------------------------------
     const { handleSubmit: registerSubmit, register: registro } = useForm();
 

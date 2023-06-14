@@ -1,7 +1,6 @@
 // assets
 import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
-
 // icons
 const icons = {
     DashboardOutlined,
@@ -10,9 +9,9 @@ const icons = {
     UnorderedListOutlined,
 };
 
-// ==============================|| MENU ITEMS - DASHBOARD ||============================== //
+// ==============================|| MENU ITEMS - DASHBOARD ||============================== // 
 
-const dashboard = {
+const dashboard_doctor = {
     id: 'group-dashboard',
     title: 'Navegacion',
     type: 'group',
@@ -116,4 +115,4 @@ const dashboard = {
     ]
 };
 
-export default dashboard;
+export default dashboard_doctor;

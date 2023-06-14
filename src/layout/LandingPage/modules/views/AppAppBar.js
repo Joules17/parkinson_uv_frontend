@@ -29,7 +29,7 @@ function AppAppBar() {
     if (isAuthenticated) {
       getInfoAccount(user.sub).then((data) => { 
         // eslint-disable-next-line
-        console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type)
+        console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type, user.picture)
         window.localStorage.setItem('tipo', data.id_type)
         setLogged(true)
       })
