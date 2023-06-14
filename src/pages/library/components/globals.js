@@ -17,7 +17,7 @@ export const lista_juegos = [
             },
             {
                 id_game: "02",
-                name: "Numeros",
+                name: "Flechas Articas",
                 nivel: 4,
                 dominio: "Atención",
                 settings: {
@@ -25,7 +25,29 @@ export const lista_juegos = [
                 },
                 urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
                 played: false
-            }
+            },
+            {
+                id_game: "03",
+                name: "Frutastico",
+                nivel: 4,
+                dominio: "Atención",
+                settings: {
+                    rondas: 3
+                },
+                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                played: false
+            },
+            {
+                id_game: "04",
+                name: "Purple Domino",
+                nivel: 4,
+                dominio: "Atención",
+                settings: {
+                    rondas: 3
+                },
+                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                played: false
+            },
         ]
 
     },

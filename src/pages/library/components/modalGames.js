@@ -20,6 +20,7 @@ const ModalGames = ({ list, open, handleClose }) => {
   };
 
   const initListGames = () => {
+    console.log(list)
     dispatch(setGameList({ "gamesList": list }));
   }
 
