@@ -99,7 +99,7 @@ MainCard.propTypes = {
     border: PropTypes.bool,
     boxShadow: PropTypes.bool,
     contentSX: PropTypes.object,
-    darkTitle: PropTypes.bool,
+    darkTitle: PropTypes.string,
     divider: PropTypes.bool,
     elevation: PropTypes.number,
     secondary: PropTypes.node,

@@ -99,7 +99,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
 };
 
 Breadcrumbs.propTypes = {
-    navigation: PropTypes.object,
+    navigation: PropTypes.array,
     title: PropTypes.bool
 };
 

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
-import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Avatar } from '@mui/material';
 
 // third-party
 import NumberFormat from 'react-number-format';
@@ -14,19 +14,6 @@ import Dot from 'components/@extended/Dot';
 function createData(trackingNo, name, fat, carbs, protein) {
     return { trackingNo, name, fat, carbs, protein };
 }
-
-// const rows = [
-//     createData(84564564, 'Camera Lens', 40, 2, 40570),
-//     createData(98764564, 'Laptop', 300, 0, 180139),
-//     createData(98756325, 'Mobile', 355, 1, 90989),
-//     createData(98652366, 'Handset', 50, 1, 10239),
-//     createData(13286564, 'Computer Accessories', 100, 1, 83348),
-//     createData(86739658, 'TV', 99, 0, 410780),
-//     createData(13256498, 'Keyboard', 125, 2, 70999),
-//     createData(98753263, 'Mouse', 89, 2, 10570),
-//     createData(98753275, 'Desktop', 185, 1, 98063),
-//     createData(98753291, 'Chair', 100, 0, 14001)
-// ];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -58,10 +45,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
+        id: 'pfp',
+        align: 'center',
+        disablePadding: false,
+        label: ''
+    },
+    {
+        id: 'tipo_id',
+        align: 'center',
+        disablePadding: false,
+        label: 'Tipo ID'
+    },
+    {
         id: 'id',
         align: 'center',
         disablePadding: false,
-        label: 'Número Documento'
+        label: 'Documento'
     },
     {
         id: 'name',
@@ -82,16 +81,22 @@ const headCells = [
         label: 'Género'
     },
     {
-        id: 'contact',
-        align: 'center',
-        disablePadding: false,
-        label: 'Contacto'
+        id: 'parkinson', 
+        align: 'center', 
+        disablePadding: false, 
+        label: 'Fase de Parkinson'
     },
     {
-        id: 'observations',
+        id: 'assign',
         align: 'center',
         disablePadding: false,
-        label: 'Observaciones'
+        label: 'Asignacion'
+    },
+    {
+        id: 'status',
+        align: 'center',
+        disablePadding: false,
+        label: 'Estado'
     }
 ];
 
@@ -123,28 +128,16 @@ OrderTableHead.propTypes = {
 
 // ==============================|| ORDER TABLE - STATUS ||============================== //
 
-const OrderStatus = ({ status }) => {
+const AssignStatus = ({ value }) => {
     let color;
     let title;
-
-    switch (status) {
-        case 0:
-            color = 'warning';
-            title = 'Pending';
-            break;
-        case 1:
-            color = 'success';
-            title = 'Approved';
-            break;
-        case 2:
-            color = 'error';
-            title = 'Rejected';
-            break;
-        default:
-            color = 'primary';
-            title = 'None';
+    if (value === '111') {
+        color = 'warning'; 
+        title = 'No Asignado'
+    } else {
+        color = 'success'; 
+        title = 'Asignado'
     }
-
     return (
         <Stack direction="row" spacing={1} alignItems="center">
             <Dot color={color} />
@@ -153,13 +146,76 @@ const OrderStatus = ({ status }) => {
     );
 };
 
-OrderStatus.propTypes = {
-    status: PropTypes.number
+AssignStatus.propTypes = {
+    value: PropTypes.string
 };
+
+// ==============================|| SET - STATUS ||============================== //
+
+const SetStatus = ({ value }) => {
+    let color;
+    let title;
+    
+    if (value) {
+        color = 'success'; 
+        title = 'Activo'
+    } else {
+        color = 'error'; 
+        title = 'Inactivo'
+    }
+    return (
+        <Stack direction="row" spacing={1} alignItems="center">
+            <Dot color={color} />
+            <Typography>{title}</Typography>
+        </Stack>
+    );
+};
+
+SetStatus.propTypes = {
+    value: PropTypes.bool
+};
+// ==============================|| CALCULATE AGE ||============================== //
+
+const CalculateAge = ({value}) => {
+    var fechaActual = new Date();
+    var fechaNac = new Date(value);
+    var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+
+    var mesActual = fechaActual.getMonth();
+    var mesNac = fechaNac.getMonth();
+
+    // Verificar si aún no se ha cumplido el cumpleaños en el mes actual
+    if (mesActual < mesNac) {
+        edad--;
+    }
+    // Verificar si se ha cumplido el cumpleaños pero no el día
+    else if (mesActual === mesNac) {
+        var diaActual = fechaActual.getDate();
+        var diaNac = fechaNac.getDate();
+        if (diaActual < diaNac) {
+        edad--;
+        }
+    }
+
+    return edad;
+};
+
+CalculateAge.propTypes = {
+    value: PropTypes.string
+}; 
+
+// aux function 
+function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+};  
+capitalizeFirstLetter.propTypes = {
+    word: PropTypes.string
+}; 
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable() {
+export default function OrderTable({ list }) {
+    console.log('hola', list)
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
     const [selected] = useState([]);
@@ -190,8 +246,8 @@ export default function OrderTable() {
                     }}
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
-                    {/* <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                     <TableBody>
+                        {stableSort(list, getComparator(order, orderBy)).map((row, index) => {
                             const isItemSelected = isSelected(row.trackingNo);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -202,28 +258,29 @@ export default function OrderTable() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.trackingNo}
+                                    key={row.user_id}
                                     selected={isItemSelected}
                                 >
-                                    <TableCell component="th" id={labelId} scope="row" align="left">
-                                        <Link color="secondary" component={RouterLink} to="">
-                                            {row.trackingNo}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
-                                    <TableCell align="left">
-                                        <OrderStatus status={row.carbs} />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                                    </TableCell>
+                                    <TableCell align="center"><Avatar alt="pfp" src={row.user_picture}/></TableCell>
+                                    <TableCell align="center">{row.document_type}</TableCell>
+                                    <TableCell align="left">{row.document_id}</TableCell>
+                                    <TableCell align="left">{row.name + " " +row.lastname}</TableCell>
+                                    <TableCell align="center"><CalculateAge value = {row.age}/></TableCell>
+                                    <TableCell align="left">{capitalizeFirstLetter(row.gender)}</TableCell>
+                                    <TableCell align="left">{row.id_parkinson_phase_id}</TableCell>
+                                    <TableCell align="left"><AssignStatus value = {row.id_therapist_id}/></TableCell>
+                                    <TableCell align="left"><SetStatus value = {row.user_status}/></TableCell>
                                 </TableRow>
                             );
                         })}
-                    </TableBody> */}
+                    </TableBody> 
                 </Table>
             </TableContainer>
         </Box>
     );
 }
+
+
+OrderTable.propTypes = {
+    list: PropTypes.array
+};

@@ -52,8 +52,23 @@ export const useExternalApi = () => {
         setAccount(data)
     }
 
+    const updateStatusAccount = async (id, status) => {
+        const config = {
+            url: `${apiServerUrl}/api/account/update/status/${id}`,
+            method: 'PUT',
+            headers: {
+            },
+            data: {
+                "user_status": status
+            }
+        }
+        const data = await makeRequest({config})
+        console.log(data)
+    }
+
     return {
         getInfoAccount, 
-        getAccount
+        getAccount,
+        updateStatusAccount
     }
 }

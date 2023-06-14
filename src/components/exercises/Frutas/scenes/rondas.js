@@ -95,6 +95,8 @@ export default class rondas extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(0xffffff);
+    this.initializer(); 
+
     this.blockdown = this.add.rectangle(0, 800, 1800, 200,  0x3f1651, 1);
     this.blockup = this.add.rectangle(0, 0, 1800, 100,  0x3f1651, 1); 
 
@@ -129,6 +131,22 @@ export default class rondas extends Phaser.Scene {
   }
 
   // Customs functions
+  initializer () {
+    var gameContainer = document.getElementById('phaser-game-container');
+    gameContainer.style.width = '800px';
+    gameContainer.style.height = '600px';
+      
+    // Restablecer el tamaño y ubicación del componente del juego
+    var gameComponent = this.game.canvas;
+    gameComponent.style.width = '800px';
+    gameComponent.style.height = '600px';
+  
+    // Restablecer el centrado del contenedor del juego
+    gameContainer.style.display = 'flex';
+    gameContainer.style.alignItems = 'center';
+    gameContainer.style.justifyContent = 'center';
+  }
+  
   create_rondas(numFases) {
     // creacion de tableros / rondas
     for (let i = 0; i < numFases; i++) {

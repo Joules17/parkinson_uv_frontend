@@ -50,7 +50,7 @@ export default class LetrasGame extends Phaser.Scene {
         this.tiempo_por_ronda = 0; // en segundos
 
         // vars
-        this.number_rounds = 1;
+        this.number_rounds = 20;
         this.tableros = [];
         this.tablero_actual = undefined;
         this.flag = undefined;
