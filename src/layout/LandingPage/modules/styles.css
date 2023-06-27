@@ -1,0 +1,91 @@
+.scroll-transition {
+  transition: top 0.3s;
+}
+
+.scroll-active {
+  top: 100vh;
+}
+
+.rounded-image {
+  border-radius: 10px; /* Ajusta el valor según tus necesidades */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.logos {
+  overflow: hidden;
+  padding: 60px 0;
+  background: #2c6dee;
+  white-space: nowrap;
+  position: relative;
+}
+
+.logos:before,
+.logos:after {
+  position: absolute;
+  top: 0;
+  width: 400px;
+  height: 100%;
+  content: "";
+  z-index: 2;
+}
+
+.logos:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), #2c6dee);
+}
+
+.logos:after {
+  right: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #2c6dee);
+}
+
+.logos:hover .logos-slide {
+  animation-play-state: paused;
+}
+
+.logos-slide {
+  display: inline-block;
+  animation: 35s slide infinite linear;
+}
+
+.logos-slide img {
+  height: 200px;
+  margin: 0 40px;
+}
+
+.box-img {
+  -webkit-mask: 
+    linear-gradient(to top,  transparent 2%, #fff 2% 95%, transparent 98%),
+    linear-gradient(to left, transparent 2%, #fff 2% 95%, transparent 98%);
+  -webkit-mask-size:110% 110%;
+  -webkit-mask-position:center;
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-composite: source-in;
+  
+  
+  mask: 
+    linear-gradient(to top,  transparent 2%, #fff 2% 95%, transparent 98%),
+    linear-gradient(to left, transparent 2%, #fff 2% 95%, transparent 98%);
+  mask-size: 110% 110%;
+  mask-position: center;
+  mask-repeat:no-repeat;
+  mask-composite: intersect;
+}

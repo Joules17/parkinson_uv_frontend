@@ -61,7 +61,7 @@ export default class FrutasMenu extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.initializer(); 
+        // this.initializer(); 
 
         //
         this.flag = false;
@@ -179,7 +179,7 @@ export default class FrutasMenu extends Phaser.Scene {
             },
             this
         );
-
+        /*
         this.game.scale.on('enterfullscreen', function () {
           // Obtener el contenedor del juego
           var gameContainer = document.getElementById('phaser-game-container');
@@ -224,6 +224,7 @@ export default class FrutasMenu extends Phaser.Scene {
           gameContainer.style.alignItems = 'center';
           gameContainer.style.justifyContent = 'center';
         }, this);
+        */
 
         this.fullscreen_button.on('pointerover', () => {
             this.tweens.add({

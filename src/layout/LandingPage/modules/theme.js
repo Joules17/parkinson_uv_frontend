@@ -38,9 +38,11 @@ const rawTheme = createTheme({
       dark: green[700],
     },
     background: {
-      main: '#ff00cc',
-      mainGradient: "linear-gradient(to right, #ff00cc, #333399)",
-    }
+      main: '#ffffff',
+    }, 
+    alternate: {
+      main: 'transparent',
+    },
   },
   typography: {
     fontFamily: "'Public Sans', sans-serif",

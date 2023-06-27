@@ -27,6 +27,9 @@ const rawTheme = createTheme({
       main: green[500],
       dark: green[700],
     },
+    alternate: {
+      main: 'transparent',
+    },
   },
   typography: {
     fontFamily: "'Public Sans', sans-serif",

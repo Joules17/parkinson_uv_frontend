@@ -81,7 +81,7 @@ export default class FrutasLoby extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(0xfff89f5b);
-    this.initializer(); 
+    // this.initializer(); 
     // -----------------------
     this.welcome_title = this.add.text(170,1000, "TUTORIAL", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(70)
     this.move_upside(this.welcome_title, 970, 1000, this)
@@ -197,7 +197,7 @@ export default class FrutasLoby extends Phaser.Scene {
   }
 
   // get missclick and set missclick
-
+  /*
   initializer () {
     var gameContainer = document.getElementById('phaser-game-container');
     gameContainer.style.width = '800px';
@@ -213,6 +213,7 @@ export default class FrutasLoby extends Phaser.Scene {
     gameContainer.style.alignItems = 'center';
     gameContainer.style.justifyContent = 'center';
   }
+  */
 
   getScore() {
     return this.score;
