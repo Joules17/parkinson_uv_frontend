@@ -18,6 +18,7 @@ const Library = () => {
 
     const handleCloseModal = () => {
         setOpen(false);
+        setOpen(false); //ELIMINAR ES UNA PRUEBA
     };
 
     const handleListItemClick = (event, list) => {
