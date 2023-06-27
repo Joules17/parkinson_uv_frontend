@@ -15,6 +15,7 @@ export default class level {
         this.sprite_height = config.sprite_height;
         this.sprite_scale = config.sprite_scale;  
         this.actual = config.actual; 
+        this.tuto_option = config.tuto_option; 
 
         this.arrows = arrow_list; 
         this.number_arrows = undefined; 
@@ -33,8 +34,7 @@ export default class level {
         this.option_list = ['right', 'up', 'left', 'down']; 
         this.tricky_list = ['good', 'bad']; 
 
-        this.gen_env();
-
+        this.gen_env(); 
     }
 
     checkOverlap(spriteA, spriteB) {
@@ -159,8 +159,12 @@ export default class level {
 
     gen_env() {
         var chosen_option = Math.floor(Math.random() * this.option_list.length);
-        var tricky_option = Math.floor(Math.random() * this.tricky_list.length);
-        
+        var tricky_option; 
+        if (this.tuto_option === undefined) {
+            tricky_option = Math.floor(Math.random() * this.tricky_list.length);
+        } else {
+            tricky_option = this.tuto_option
+        }        
         var correct_option = undefined; 
         if (this.tricky_list[tricky_option] === 'good') {
             correct_option = this.option_list[chosen_option];

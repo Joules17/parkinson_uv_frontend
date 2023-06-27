@@ -15,6 +15,7 @@ class Numbers extends Component {
     componentDidMount() {
         const config = {
             type: Phaser.AUTO,
+            parent: 'phaser-game-container',
             width: 800,
             height: 600,
             physics: {
@@ -24,13 +25,15 @@ class Numbers extends Component {
                 }
             },
             scale: {
-                mode: Phaser.Scale.NONE,
-                autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizontal
             },
             scene: [FrutasInit, FrutasMenu, FrutasLoby, rondas, finDelJuego]
         };
 
         this.game = new Phaser.Game(config);
+        
+        
     }
 
     componentWillUnmount() {
@@ -39,7 +42,7 @@ class Numbers extends Component {
     }
 
     render() {
-        return <div id="phaser-game-container" />;
+        return <div id="phaser-game-container" style = {{width: '800px', height: '600px'}} />;
     }
 }
 

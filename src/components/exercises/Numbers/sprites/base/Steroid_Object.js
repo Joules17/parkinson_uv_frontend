@@ -55,8 +55,8 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                 this.panel.clear();
                 this.scene.tweens.add({
                     targets: circle,
-                    scaleX: 1,
-                    scaleY: 1,
+                    scaleX: 1.1,
+                    scaleY: 1.1,
                     duration: 100,
                     ease: 'Power2'
                 });

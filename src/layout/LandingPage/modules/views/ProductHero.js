@@ -1,59 +1,52 @@
-/* eslint-disable global-require */
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Typed from 'react-typed';
-import Sally from './img_aux/sittedsaly.svg'; 
+import { Box, Typography, Container, Card, CardContent, Button } from '@mui/material';
 
-const item = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
+// project import beta:
+import ParticlesComponent from 'layout/LandingPage/modules/components/Particles';
 
-<meta charset="utf-8"></meta>
 export default function ProductHero() {
-
-  return (
-    <Box component="section" sx={{ display: 'flex', overflow: 'hidden' }}>
-      <Container sx={{ mt: 15, display: 'flex', position: 'relative'}}>
-        <Grid container spacing = {2}>
-          <Grid item xs = {12} md = {6}>
-            <Box sx = {{...item, marginTop: '5rem'}}>
-              <Typed
-                strings={['Bienvenido a ParkinsonUV,']}
-                typeSpeed={40}
-                style={{ fontWeight: 'bold', fontSize: '3rem'}}
-                showCursor={false}
-
-              />
-              <div style = {{ marginTop: '4rem' }}>
-              <Typed
-                startDelay={2500} // Espera 500ms antes de empezar el segundo Typed
-                strings={['Tu espacio virtual de entrenamiento y estimulación cognitiva.', 
-                          'Tu herramienta de gestión y preparación de ejercicios!', 
-                          'Una herramienta por y para pacientes con EP.']}
-                typeSpeed={60}
-                backSpeed={30}
-                style={{ fontSize: '2rem'}}
-                showCursor={true}
-                loop
-              />
-              </div>
-            </Box>
-          </Grid>
-          <Grid item xs = {12} md = {6}>
-            <Box sx = {item}>
-              <Box  
-                  component = 'img'
-                  src = {Sally}
-                  alt = 'mainLanding' 
-                  sx = {{width: '100%', height: 'auto', marginLeft: '10rem'}}
-                /> 
-              </Box>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  );
+    return (
+        <Box component="section" sx={{ display: 'flex', overflow: 'hidden', marginTop: '80px', mb: '15rem' }}>
+            <Container maxWidth="sm">
+                <ParticlesComponent />
+                <Card elevation={0} sx={{ boxShadow: 'none', backgroundColor: '#ffffff', position: 'relative', zIndex: 1 }}>
+                    <CardContent sx={{ backgroundColor: '#ffffff' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                            <Typography
+                                component="h1"
+                                variant="h1"
+                                align="center"
+                                color="#191919"
+                                sx={{ mt: 4, fontSize: '3rem', lineHeight: 1.2 }}
+                            >
+                                Tu centro virtual de
+                                <br />
+                                <span
+                                    style={{
+                                        background: 'linear-gradient(to right, #0072FF, #00C6FF)',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent'
+                                    }}
+                                >
+                                    estimulación cognitiva
+                                </span>
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                            <Typography variant="h5" align="center" color="textSecondary">
+                                Una herramienta para la terapia cognitiva de pacientes con Parkinson
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                            <Button variant="contained" sx={{ mr: '2rem', fontSize: '1rem' }}>
+                                Iniciar
+                            </Button>
+                            <Button variant="outlined" sx={{ fontSize: '1rem' }}>
+                                Conocer más
+                            </Button>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Container>
+        </Box>
+    );
 }

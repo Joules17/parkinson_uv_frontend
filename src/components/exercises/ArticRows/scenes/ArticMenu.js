@@ -41,7 +41,7 @@ export default class ArticMenu extends Phaser.Scene {
     this.cursors = undefined; 
     
     // options - scenes selected
-    this.scene_options = ['ArticGame', 'ArticTutorial']
+    this.scene_options = ['ArticGame', 'ArticTuto']
     this.selected = 0; 
   }
 
@@ -181,4 +181,5 @@ export default class ArticMenu extends Phaser.Scene {
       repeat: -1
     });
   }
+
 }

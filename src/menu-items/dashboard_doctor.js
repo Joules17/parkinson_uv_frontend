@@ -36,7 +36,7 @@ const dashboard_doctor = {
             id: 'library',
             title: 'Biblioteca',
             type: 'item',
-            url: '/library-page',
+            url: '/exercise2',
             icon: icons.UnorderedListOutlined,
             breadcrumbs: false
         },

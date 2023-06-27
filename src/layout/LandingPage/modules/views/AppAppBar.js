@@ -46,7 +46,7 @@ function AppAppBar() {
 
   return (
     <div>
-      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: navbar ? "#ffffff" : 'transparent' }} >
+      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: "#ffffff" }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }} />
           <Button
