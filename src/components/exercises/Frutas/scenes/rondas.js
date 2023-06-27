@@ -95,7 +95,7 @@ export default class rondas extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(0xffffff);
-    this.initializer(); 
+    // this.initializer(); 
 
     this.blockdown = this.add.rectangle(0, 800, 1800, 200,  0x3f1651, 1);
     this.blockup = this.add.rectangle(0, 0, 1800, 100,  0x3f1651, 1); 

@@ -80,7 +80,8 @@ export default class ArticGame extends Phaser.Scene {
             spriteHeigth: 400,
             sprite_scale: 0.6,
             spritePadding: 10,
-            actual: false
+            actual: false, 
+            tuto_option: undefined
         };
         this.level_config_2 = {
             scene: this,
@@ -93,7 +94,8 @@ export default class ArticGame extends Phaser.Scene {
             sprite_height: 50,
             sprite_scale: 0.3,
             spritePadding: 10,
-            actual: false
+            actual: false,
+            tuto_option: undefined
         };
 
         this.level_config_3 = {
@@ -107,7 +109,8 @@ export default class ArticGame extends Phaser.Scene {
             sprite_height: 50,
             sprite_scale: 0.19,
             spritePadding: 10,
-            actual: false
+            actual: false,
+            tuto_option: undefined
         };
     }
 
