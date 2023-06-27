@@ -4,9 +4,9 @@ name: Node - SSH deploy
 on:
     # Triggers the workflow on push or pull request events but only for the master branch
     push:
-        branches: [main]
+        branches: [master]
     pull_request:
-        branches: [main]
+        branches: [master]
 
 jobs:
     SFTP-deploy:
@@ -30,7 +30,13 @@ jobs:
             - name: 📂 Deploy to Server
               uses: easingthemes/ssh-deploy@v2.1.5
               env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+                  REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+                  REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
+                  REACT_APP_API_SERVER_URL: ${{ secrets.REACT_APP_API_SERVER_UR }}
+                  REACT_APP_AUTH0_AUDIENCE: https://dev-urpwjajvkrsjwg6l.us.auth0.com/api/v2/
+                  REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
+                  REACT_APP_VERSION:  v1.1.0
+                  GENERATE_SOURCEMAP: false
                   # ARGS: "-rltgoDzvO --delete"
                   SOURCE: 'build/'
                   REMOTE_HOST: 192.34.62.123
