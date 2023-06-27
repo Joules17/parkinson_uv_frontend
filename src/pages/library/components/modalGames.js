@@ -9,6 +9,7 @@ import { setGameList } from 'store/reducers/gamesListSlice';
 const ModalGames = ({ list, open, handleClose }) => {
   const gameListState = useSelector((state) => state.gamesList);
   const dispatch = useDispatch();
+  const [modifiedList, setModifiedList] = useState(list);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const handleItemClick = (id) => {
@@ -19,9 +20,13 @@ const ModalGames = ({ list, open, handleClose }) => {
     }
   };
 
+  const handleListUpdate = (updatedList) => {
+    setModifiedList(updatedList);
+  };
+
   const initListGames = () => {
-    console.log(list)
-    dispatch(setGameList({ "gamesList": list }));
+    dispatch(setGameList({ "gamesList": modifiedList }));
+    
   }
 
   const style = {
@@ -71,7 +76,7 @@ const ModalGames = ({ list, open, handleClose }) => {
                   {expandedItem === game.id_game ? <UpOutlined /> : <DownOutlined />}
                 </ListItemButton>
                 <Collapse in={expandedItem === game.id_game} timeout="auto" unmountOnExit>
-                  <SettingsGameForm typeForm={game.name} />
+                  <SettingsGameForm typeForm={game.name} list={list} onListUpdate={handleListUpdate}/>
                 </Collapse>
                 <Divider />
               </>
