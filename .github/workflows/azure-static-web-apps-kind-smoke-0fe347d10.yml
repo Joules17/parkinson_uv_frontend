@@ -26,3 +26,9 @@ jobs:
           output_location: "build"
         env:
           CI: false
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
+          REACT_APP_API_SERVER_URL: ${{ secrets.REACT_APP_API_SERVER_URL }}
+          REACT_APP_AUTH0_AUDIENCE: ${{ secrets.REACT_APP_AUTH0_AUDIENCE }}
+          REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
+          REACT_APP_VERSION:  v1.1.0
