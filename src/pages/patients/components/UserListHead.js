@@ -28,7 +28,7 @@ UserListHead.propTypes = {
 };
 
 // ============================================================= UserListHead =============================================================
-export default function UserListHead({ order, orderBy, rowCount, headLabel, numSelected, loading, onRequestSort, onSelectAllClick }) {
+export default function UserListHead({ order, orderBy, rowCount, headLabel, numSelected, onRequestSort, onSelectAllClick }) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };

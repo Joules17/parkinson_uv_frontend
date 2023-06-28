@@ -60,6 +60,6 @@ export default function SetStatus ({ user_id, value, setList, setLoading}) {
 SetStatus.propTypes = {
     value: PropTypes.bool,
     user_id: PropTypes.string, 
-    serList: PropTypes.func, 
+    setList: PropTypes.func, 
     setLoading: PropTypes.func
 };

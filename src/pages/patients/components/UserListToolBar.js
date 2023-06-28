@@ -6,7 +6,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment, Button } from '@mui/material';
 
 // assets
-import { SearchOutlined, UserDeleteOutlined, FilterOutlined, UserOutlined } from '@ant-design/icons';
+import { SearchOutlined, UserDeleteOutlined, UserOutlined } from '@ant-design/icons';
 
 // ============================================================================== //
 const StyledRoot = styled(Toolbar)(({ theme }) => ({
