@@ -29,9 +29,9 @@ import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
+// import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { isError } from 'lodash';
+// import { isError } from 'lodash';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {

@@ -1,6 +1,5 @@
 // phaser library
 import Phaser from 'phaser';
-import { useState } from 'react';
 
 export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
     constructor(config) {
@@ -75,12 +74,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
     // events on Fruit 
     shake(selected, scene, find, circle) {
         // animacion
-        var to_color = selected == find ? 0x00ff00 : 0xff0000;
+        // var to_color = selected == find ? 0x00ff00 : 0xff0000;
         const initialX = circle.x;
         const initialY = circle.y;
-        const startColor = Phaser.Display.Color.ValueToColor(0xffffff) // blanco
-        const endColor = Phaser.Display.Color.ValueToColor(to_color) // rojo
-
         let self = this.scene;
 
         scene.sound.play(selected == find ? 'good' : 'bad');

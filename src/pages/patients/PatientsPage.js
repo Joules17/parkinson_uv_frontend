@@ -32,9 +32,10 @@ const PatientsPage = () => {
     const { getTherapist, getTherapistPatients } = useTherapistResponse()
 
     // inicializador -----------------------------------------------------
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
     useEffect(() => {
         getTherapist(user.sub, setUserCharged); 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const PatientsPage = () => {
                 setLoading('Usuarios')
             })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userCharged])
 
     if (!(patientsLIST === undefined)) {
