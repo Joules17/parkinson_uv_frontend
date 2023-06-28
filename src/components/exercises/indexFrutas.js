@@ -12,7 +12,6 @@ import GameFruits from 'components/exercises/Frutas/GameFruits'
 
 const IndexFruits = () => {
     const [cargado, setCargado] = useState(false);
-
     useEffect(() => {
         setCargado(true);
     }, []);

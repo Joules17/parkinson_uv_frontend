@@ -1,6 +1,6 @@
 // material-ui
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+// import Button from '@mui/material/Button';
+// import Modal from '@mui/material/Modal';
 import { Card, CardContent, CardMedia, Typography, Divider, Stack } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
