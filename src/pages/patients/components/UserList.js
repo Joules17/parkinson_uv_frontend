@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { filter } from 'lodash';
 
 // mui
-import { Card, Table, Stack, Paper, Avatar, Popover, Checkbox, TableRow, MenuItem, TableBody, TableCell, Typography, IconButton, TableContainer, TablePagination } from '@mui/material';
+import { Card, Table, Stack, Paper, Avatar, Checkbox, TableRow, TableBody, TableCell, Typography, IconButton, TableContainer, TablePagination } from '@mui/material';
 
 // ================================== PROJECTS IMPORTS ====================================
 // Project Import
@@ -64,7 +64,7 @@ function applySortFilter(array, comparator, query) {
 
 export default function UserList({ list, setList, loading, setLoading}) {
     //useStates
-    const [open, setOpen] = useState(null);
+    /* const [open, setOpen] = useState(null);*/
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
     // selected names - Hook by template
@@ -72,12 +72,12 @@ export default function UserList({ list, setList, loading, setLoading}) {
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [userrow, setUserrow] = useState({});
+    /* const [userrow, setUserrow] = useState({}); */
 
     //
     const handleOpenMenu = (event, row) => {
-        setOpen(event.currentTarget);
-        setUserrow(row);
+        // setOpen(event.currentTarget);
+        // setUserrow(row);
     };
 
     /*

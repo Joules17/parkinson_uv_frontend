@@ -72,11 +72,6 @@
             "react-app/jest"
         ]
     },
-    "babel": {
-        "presets": [
-            "@babel/preset-react"
-        ]
-    },
     "browserslist": {
         "production": [
             ">0.2%",
@@ -90,20 +85,14 @@
         ]
     },
     "devDependencies": {
-        "@babel/core": "^7.19.1",
-        "@babel/eslint-parser": "^7.19.1",
-        "eslint": "^8.23.1",
-        "eslint-config-airbnb-typescript": "^17.0.0",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-config-react-app": "7.0.1",
-        "eslint-import-resolver-typescript": "3.5.1",
-        "eslint-plugin-flowtype": "^8.0.3",
+        "eslint": "^8.42.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jsx-a11y": "6.6.1",
-        "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-react": "^7.31.8",
-        "eslint-plugin-react-hooks": "4.6.0",
-        "phaser-plugin-virtual-gamepad": "^1.0.0",
-        "prettier": "2.7.1"
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-n": "^15.2.0",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.4.0"
     }
 }
