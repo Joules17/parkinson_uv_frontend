@@ -1,6 +1,6 @@
 // import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 // auth 0 
 import { Auth0ProviderWithHistory  } from 'Auth0/Auth0ProviderWithHistory';
@@ -26,11 +26,11 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 
 root.render(
         <ReduxProvider store={store}>
-            <BrowserRouter basename="/">
+            <Router basename="/">
                 <Auth0ProviderWithHistory>
                     <App />
                 </Auth0ProviderWithHistory>
-            </BrowserRouter>
+            </Router>
         </ReduxProvider>
 );
 
