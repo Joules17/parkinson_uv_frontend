@@ -8,18 +8,40 @@ import PropTypes from 'prop-types';
 import { filter } from 'lodash';
 
 // mui
-import { Card, Table, Stack, Paper, Avatar, Checkbox, TableRow, TableBody, TableCell, Typography, IconButton, TableContainer, TablePagination } from '@mui/material';
+import {
+    Card,
+    Table,
+    Stack,
+    Avatar,
+    Checkbox,
+    TableRow,
+    TableBody,
+    TableCell,
+    Typography,
+    IconButton,
+    TableContainer,
+    TablePagination,
+    Select, 
+    MenuItem
+} from '@mui/material';
+
+// auth0
+import { useAuth0 } from '@auth0/auth0-react'
 
 // ================================== PROJECTS IMPORTS ====================================
 // Project Import
 import UserListHead from './UserListHead';
 import UserListToolbar from './UserListToolBar';
 
-// Aux functions and components 
+// Aux functions and components
 import SetStatus from './SetStatus';
 import AssignStatus from './AssignStatus';
 import CalculateAge from '../functions/calculateAge';
 import capitalizeFirstLetter from '../functions/capitalizeFirstLetter';
+
+// hooks
+import { useExternalApi as usePatientResponse } from 'hooks/patientResponse'
+import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse'
 
 // ================================== HEADER TABLE ========================================
 const TABLE_HEAD = [
@@ -33,6 +55,16 @@ const TABLE_HEAD = [
     { id: 'status', label: 'Estado', alignRight: 'false' }
 ];
 
+// ================================== OPTIONS =============================================
+
+const PARKINSON_OPTIONS = [
+    { id: 1, phase: "NoAsignado" }, 
+    { id: 2, phase: "1" },  
+    { id: 3, phase: "2" },  
+    { id: 4, phase: "3" },  
+    { id: 5, phase: "4" },  
+    { id: 6, phase: "5" }, 
+]
 // ================================== COMPARATORS ====================================
 
 function descendingComparator(a, b, orderBy) {
@@ -62,7 +94,12 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserList({ list, setList, loading, setLoading}) {
+export default function UserList({ list, setList, loading, setLoading }) {
+    // auth 0
+    const { user } = useAuth0()
+    // api 
+    const { updatePatientAssignee } = usePatientResponse()
+    const { getTherapistPatients } = useTherapistResponse()
     //useStates
     /* const [open, setOpen] = useState(null);*/
     const [page, setPage] = useState(0);
@@ -75,10 +112,12 @@ export default function UserList({ list, setList, loading, setLoading}) {
     /* const [userrow, setUserrow] = useState({}); */
 
     //
+    /*
     const handleOpenMenu = (event, row) => {
         // setOpen(event.currentTarget);
         // setUserrow(row);
     };
+    */
 
     /*
     const handleCloseMenu = () => {
@@ -130,12 +169,25 @@ export default function UserList({ list, setList, loading, setLoading}) {
         setFilterName(event.target.value);
     };
 
+    function handleParkinsonPhaseChange(key, therapist_id, patient_id) { 
+        console.log('esta llegando esto:', key, therapist_id, patient_id)
+        let datos = {
+            "id_parkinson_phase": key, 
+            "id_therapist": therapist_id
+        }
+        updatePatientAssignee(patient_id, datos)
+            .then(() => {
+                getTherapistPatients(user.sub, setList)
+                setLoading('Usuarios')
+            })
+    };  
+
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
     const filteredUsers = applySortFilter(list, getComparator(order, orderBy), filterName);
     const isNotFound = !filteredUsers.length && !!filterName;
     return (
         <Card>
-            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} loading = {loading} />
+            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} loading={loading} />
             <TableContainer sx={{ minWidth: 800 }}>
                 <Table>
                     <UserListHead
@@ -158,7 +210,6 @@ export default function UserList({ list, setList, loading, setLoading}) {
                                 lastname,
                                 age,
                                 gender,
-                                parkinson_phase,
                                 id_parkinson_phase_id,
                                 id_therapist_id,
                                 user_status
@@ -190,14 +241,26 @@ export default function UserList({ list, setList, loading, setLoading}) {
 
                                     <TableCell align="left">{capitalizeFirstLetter(gender)}</TableCell>
 
-                                    <TableCell align="left">{parkinson_phase}</TableCell>
-
                                     <TableCell align="left">
-                                        <AssignStatus user_id = {user_id} value={id_therapist_id} parkinson_phase = {id_parkinson_phase_id} setList = {setList} setLoading = {setLoading} />
+                                    <Select value={id_parkinson_phase_id} onChange={(event) => {handleParkinsonPhaseChange( event.target.value, id_therapist_id, user_id)}}>
+                                        {PARKINSON_OPTIONS.map((item) => (
+                                            <MenuItem key = {item.id} value={item.id} >{item.phase}</MenuItem>
+                                    ))}
+                                    </Select>
                                     </TableCell>
 
                                     <TableCell align="left">
-                                        <SetStatus user_id = {user_id} value={user_status} setList = {setList} setLoading = {setLoading}/>
+                                        <AssignStatus
+                                            user_id={user_id}
+                                            value={id_therapist_id}
+                                            parkinson_phase={id_parkinson_phase_id}
+                                            setList={setList}
+                                            setLoading={setLoading}
+                                        />
+                                    </TableCell>
+
+                                    <TableCell align="left">
+                                        <SetStatus user_id={user_id} value={user_status} setList={setList} setLoading={setLoading} />
                                     </TableCell>
 
                                     <TableCell align="right">
@@ -224,22 +287,16 @@ export default function UserList({ list, setList, loading, setLoading}) {
                     {isNotFound && (
                         <TableBody>
                             <TableRow>
-                                <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                                    <Paper
-                                        sx={{
-                                            textAlign: 'center'
-                                        }}
-                                    >
-                                        <Typography variant="h6" paragraph>
-                                            No encontrado
-                                        </Typography>
+                                <TableCell align="center" colSpan={9} sx={{ py: 3 }}>
+                                    <Typography variant="h6" paragraph>
+                                        No encontrado
+                                    </Typography>
 
-                                        <Typography variant="body2">
-                                            No hay resultados para &nbsp;
-                                            <strong>&quot;{filterName}&quot;</strong>.
-                                            <br /> Verifique o utilice palabras completas
-                                        </Typography>
-                                    </Paper>
+                                    <Typography variant="body2">
+                                        No hay resultados para &nbsp;
+                                        <strong>&quot;{filterName}&quot;</strong>.
+                                        <br /> Verifique o utilice palabras completas
+                                    </Typography>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -261,8 +318,8 @@ export default function UserList({ list, setList, loading, setLoading}) {
 }
 
 UserList.propTypes = {
-    list: PropTypes.array, 
-    setList: PropTypes.func, 
-    loading: PropTypes.string, 
+    list: PropTypes.array,
+    setList: PropTypes.func,
+    loading: PropTypes.string,
     setLoading: PropTypes.func
 };

@@ -117,7 +117,7 @@ export const useExternalApi = () => {
 
         console.log(data)
     }
-
+    
     const createPatientAccount = async (datos, id, email, picture, setMensaje) => {
 
         const config = {
