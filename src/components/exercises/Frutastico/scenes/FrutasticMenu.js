@@ -2,7 +2,8 @@
 import Phaser from 'phaser';
 import '../styles.css'
 
-// custom classes imported: 
+// custom classes imported:
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import bushes from '../assets/img/bushes.png'
@@ -22,32 +23,32 @@ export default class FrutasticMenu extends Phaser.Scene {
     this.worldSizeHeigth = 600;
 
     // figuras
-    this.circle = undefined; 
-    this.panelTitle = undefined; 
-    this.bushes_sprite = undefined; 
-    this.bushes_sprite2 = undefined; 
+    this.circle = undefined;
+    this.panelTitle = undefined;
+    this.bushes_sprite = undefined;
+    this.bushes_sprite2 = undefined;
 
-    // textos 
-    this.title = undefined; 
-    
-    // button 
+    // textos
+    this.title = undefined;
+
+    // button
     this.start_button = undefined;
 
     // grupos
-    this.frutas_lluviosas = undefined; 
+    this.frutas_lluviosas = undefined;
 
-    // skins 
+    // skins
     this.skins = ['coco', 'mango', 'banana', 'manzana']
   }
 
   preload() {
-    // images 
+    // images
     this.load.image('bushes', bushes);
     this.load.image('bushes2', bushes2);
-    this.load.image('coco', coco); 
-    this.load.image('mango', mango); 
-    this.load.image('banana', banana); 
-    this.load.image('manzana', manzana); 
+    this.load.image('coco', coco);
+    this.load.image('mango', mango);
+    this.load.image('banana', banana);
+    this.load.image('manzana', manzana);
 
     // audio
     this.load.audio('hover', hover);
@@ -63,28 +64,29 @@ export default class FrutasticMenu extends Phaser.Scene {
 
     // Textos ------------------------------------------------------------------------------------------------------------
     this.title = this.add.text(80,200, "FRUTAS EN FUGA", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(70)
-    
-    // botones 
+
+    // botones
     this.start_button = this.add.text(290, 320, "Iniciar", {
-      fontFamily: 'ARCO', 
+      fontFamily: 'ARCO',
       fill: '#f89f5b',
-    }).setFontSize(50); 
+    }).setFontSize(50);
 
-    
+    // fullScreenButton
+    new FullScreenBttn(this, 770, 30, 'fullsceenImg');
 
-    this.start_button.setInteractive(); 
+    this.start_button.setInteractive();
 
     // Frutas lluviosas ------------------------------------------------------------------------------------------------------------
     this.frutas_lluviosas = this.physics.add.group();
 
     // ------------------------------------------------------------------------------------------------------------
     // Eventos
-    // caida de las frutas 
+    // caida de las frutas
     this.timer = this.time.addEvent({
       delay: 200,
         callback: function() {
             var randind = Math.floor(Math.random() * this.skins.length)
-            var fruit = this.add.sprite(Math.random() * 800, -50, this.skins[randind]).setScale(0.1); 
+            var fruit = this.add.sprite(Math.random() * 800, -50, this.skins[randind]).setScale(0.1);
             this.frutas_lluviosas.add(fruit);
             fruit.setDepth(-1)
             fruit.body.velocity.y = (100 + Math.random() * 100);
@@ -93,7 +95,7 @@ export default class FrutasticMenu extends Phaser.Scene {
         loop: true
     });
 
-    // entered buttons 
+    // entered buttons
     this.start_button.on('pointerdown', () => {
       this.sound.play('correct')
       this.scene.start('FrutasticLoby')
@@ -106,7 +108,7 @@ export default class FrutasticMenu extends Phaser.Scene {
         targets: this.start_button,
         scaleX: 1.1,
         scaleY: 1.1,
-        duration: 100, 
+        duration: 100,
         ease: 'Power2'
       });
     });
@@ -117,7 +119,7 @@ export default class FrutasticMenu extends Phaser.Scene {
         targets: this.start_button,
         scaleX: 1,
         scaleY: 1,
-        duration: 100, 
+        duration: 100,
         ease: 'Power2'
       });
     });
@@ -126,10 +128,10 @@ export default class FrutasticMenu extends Phaser.Scene {
   update () {
     for(let i = 0; i < this.frutas_lluviosas.getChildren().length; i++) {
       if (this.frutas_lluviosas.getChildren()[i].y > 600) {
-        this.frutas_lluviosas.getChildren()[i].destroy(true); 
+        this.frutas_lluviosas.getChildren()[i].destroy(true);
       }
     }
-    
+
   }
 
   // Customs functions

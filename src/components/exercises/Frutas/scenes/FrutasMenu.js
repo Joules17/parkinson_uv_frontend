@@ -4,6 +4,7 @@ import '../styles.css';
 
 // custom classes imported:
 import Frutita from '../sprites/base/Frutita.js';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import PalmeraImg from '../assets/img/palmera.png';
@@ -61,7 +62,7 @@ export default class FrutasMenu extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor('#3f1651');
-        // this.initializer(); 
+        // this.initializer();
 
         //
         this.flag = false;
@@ -90,11 +91,7 @@ export default class FrutasMenu extends Phaser.Scene {
         // -----------------------
 
         // botones fullscreen
-
-        this.fullscreen_button = this.add.sprite(770, 30, 'fullscreenImg');
-        this.fullscreen_button.setInteractive();
-        this.fullscreen_button.setScale(0.03);
-
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg')
         // -------------------------
 
         this.title = this.add.text(125, 250, 'Frutas Locas', { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(70);
@@ -164,87 +161,6 @@ export default class FrutasMenu extends Phaser.Scene {
             });
         });
 
-        // fullscreen sujeto a cambios
-        this.fullscreen_button.on(
-            'pointerdown',
-            function () {
-                if (this.game.scale.isFullscreen) {
-                    // exit fullscreen mode
-                    this.game.scale.stopFullscreen();
-                } else {
-                    // start fullscreen mode
-
-                    this.game.scale.startFullscreen();
-                }
-            },
-            this
-        );
-        /*
-        this.game.scale.on('enterfullscreen', function () {
-          // Obtener el contenedor del juego
-          var gameContainer = document.getElementById('phaser-game-container');
-
-          // Establecer el tamaño del contenedor al tamaño de la ventana
-          gameContainer.style.width = window.innerWidth + 'px';
-          gameContainer.style.height = window.innerHeight + 'px';
-
-          // Calcular el factor de escalado
-          var scaleX = window.innerWidth / 800;
-          var scaleY = window.innerHeight / 600;
-          var scale = Math.min(scaleX, scaleY);
-
-          // Aplicar el escalado al componente del juego
-          var gameComponent = this.game.canvas;
-          gameComponent.style.width = 800 * scale + 'px';
-          gameComponent.style.height = 600 * scale + 'px';
-
-          // Centrar el contenedor del juego
-          gameContainer.style.display = 'flex';
-          gameContainer.style.alignItems = 'center';
-          gameContainer.style.justifyContent = 'center';
-
-          // Ajustar el posicionamiento del componente del juego
-          var offsetX = (window.innerWidth - gameComponent.offsetWidth) / 2;
-          gameComponent.style.marginLeft = offsetX + 'px';
-        }, this);
-        
-        this.game.scale.on('leavefullscreen', function () {
-          // Restablecer el tamaño del contenedor a sus dimensiones originales
-          var gameContainer = document.getElementById('phaser-game-container');
-          gameContainer.style.width = '800px';
-          gameContainer.style.height = '600px';
-        
-          // Restablecer el tamaño y ubicación del componente del juego
-          var gameComponent = this.game.canvas;
-          gameComponent.style.width = '800px';
-          gameComponent.style.height = '600px';
-        
-          // Restablecer el centrado del contenedor del juego
-          gameContainer.style.display = 'flex';
-          gameContainer.style.alignItems = 'center';
-          gameContainer.style.justifyContent = 'center';
-        }, this);
-        */
-
-        this.fullscreen_button.on('pointerover', () => {
-            this.tweens.add({
-                targets: this.fullscreen_button,
-                scaleX: 0.04,
-                scaleY: 0.04,
-                duration: 100,
-                ease: 'Power2'
-            });
-        });
-
-        this.fullscreen_button.on('pointerout', () => {
-            this.tweens.add({
-                targets: this.fullscreen_button,
-                scaleX: 0.03,
-                scaleY: 0.03,
-                duration: 100,
-                ease: 'Power2'
-            });
-        });
     }
 
     update() {
@@ -266,12 +182,12 @@ export default class FrutasMenu extends Phaser.Scene {
       var gameContainer = document.getElementById('phaser-game-container');
       gameContainer.style.width = '800px';
       gameContainer.style.height = '600px';
-        
+
       // Restablecer el tamaño y ubicación del componente del juego
       var gameComponent = this.game.canvas;
       gameComponent.style.width = '800px';
       gameComponent.style.height = '600px';
-    
+
       // Restablecer el centrado del contenedor del juego
       gameContainer.style.display = 'flex';
       gameContainer.style.alignItems = 'center';

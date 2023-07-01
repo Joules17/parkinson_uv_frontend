@@ -26,7 +26,7 @@ const IndexFruits = () => {
                 qui officiate descent molls anim id est labours.
             </Typography>
         </MainCard>
-        
+
         {cargado && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <GameFruits />
@@ -34,7 +34,7 @@ const IndexFruits = () => {
         )}
         </div>
         )
-    
-    
+
+
     }
 export default IndexFruits;
