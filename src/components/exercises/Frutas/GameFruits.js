@@ -12,6 +12,7 @@ import rondas from 'components/exercises/Frutas/scenes/rondas';
 import 'components/exercises/Frutas/styles.css';
 
 class Numbers extends Component {
+    
     componentDidMount() {
         const config = {
             type: Phaser.AUTO,
@@ -32,17 +33,38 @@ class Numbers extends Component {
         };
 
         this.game = new Phaser.Game(config);
-        
+        this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
+        this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
         
     }
 
     componentWillUnmount() {
-        // destruir el juego al desmontar el componente
+        this.game.scale.off('enterfullscreen', this.handleEnterFullScreen, this);
+        this.game.scale.off('leavefullscreen', this.handleLeaveFullScreen, this);
         this.game.destroy(true);
+      }
+    
+    handleEnterFullScreen() {
+        const gameContainer = document.getElementById('phaser-game-container');
+        gameContainer.style.width = window.innerWidth + 'px';
+        gameContainer.style.height = window.innerHeight + 'px';
+        gameContainer.style.justifyContent = 'center';
+        gameContainer.style.alignItems = 'center';
+        console.log(gameContainer)
+    }
+    
+    handleLeaveFullScreen() {
+        const gameContainer = document.getElementById('phaser-game-container');
+
+        // Restablecer las dimensiones del contenedor
+        gameContainer.style.width = `${this.game.config.width}px`;
+        gameContainer.style.height = `${this.game.config.height}px`;
+        console.log(gameContainer)
+        this.game.scale.resize(this.game.config.width, this.game.config.height);
     }
 
     render() {
-        return <div id="phaser-game-container" style = {{width: '800px', height: '600px'}} />;
+        return <div id="phaser-game-container" style = {{ height: '600px', width: '800px'}} />;
     }
 }
 
