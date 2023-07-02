@@ -1,8 +1,4 @@
-// import { useTheme } from '@mui/material/styles';
-
 const Logo = () => {
-    // const theme = useTheme();
-
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <svg width="40" height="40" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">

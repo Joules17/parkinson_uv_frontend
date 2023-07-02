@@ -172,7 +172,6 @@ export default class ArticMenu extends Phaser.Scene {
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   animation_movement(sprt) {
-    // var orientation_x = (direction_x === 'izquierda') ? -1 : 1; 
     this.tweens.add({
       targets: sprt,
       x: '-=30',

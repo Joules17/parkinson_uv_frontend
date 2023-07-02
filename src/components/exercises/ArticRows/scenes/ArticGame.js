@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import level from '../sprites/level';
+import Level from '../sprites/Level';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
@@ -224,15 +224,15 @@ export default class ArticGame extends Phaser.Scene {
     // creacion de niveles / rondas
     createRounds() {
         for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[0]));
+            this.tableros.push(new Level(this.levels_global[0]));
         }
         this.tableros.push('medium');
         for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[1]));
+            this.tableros.push(new Level(this.levels_global[1]));
         }
         this.tableros.push('hard');
         for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[2]));
+            this.tableros.push(new Level(this.levels_global[2]));
         }
         this.flag = true;
     }

@@ -31,8 +31,8 @@ export default class ArticOver extends Phaser.Scene {
         this.tiempo_total = data.info.tiempo_total;
         let arreglo = data.info.tiempo_rondas;
         let sum = 0;
-        for (let i = 0; i < arreglo.length; i++) {
-            sum = sum + arreglo[i];
+        for (const elemento of arreglo) {
+            sum = sum + elemento;
         }
         let promedio = sum / arreglo.length;
         this.tiempo_rondas = promedio.toString();

@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import level from 'components/exercises/LetraAventura/sprites/level';
+import Level from 'components/exercises/LetraAventura/sprites/Level';
 import keyboard from 'components/exercises/LetraAventura/sprites/keyboard';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 // assets imports
@@ -167,7 +167,7 @@ export default class LetrasGame extends Phaser.Scene {
     // create rounds
     create_rounds() {
         for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.level_config));
+            this.tableros.push(new Level(this.level_config));
         }
         this.flag = true;
     }
