@@ -5,10 +5,11 @@ import '../styles.css';
 // custom classes imported:
 import level from 'components/exercises/LetraAventura/sprites/level';
 import keyboard from 'components/exercises/LetraAventura/sprites/keyboard';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 // assets imports
 import bg from 'components/exercises/LetraAventura/assets/images/bg_game.png';
 import piece from 'components/exercises/LetraAventura/assets/images/piece_paper_2.png';
-
+import fullscreen from '../assets/images/fullscreen.png';
 // music
 import typing from 'components/exercises/LetraAventura/assets/music/type.mp3';
 import fail from 'components/exercises/LetraAventura/assets/music/fail.mp3';
@@ -104,6 +105,7 @@ export default class LetrasGame extends Phaser.Scene {
     preload() {
         this.load.image('bg', bg);
         this.load.image('piece', piece);
+        this.load.image('fullscreenImg', fullscreen);
         // sprites
         for (let tipo in letter_list) {
             for (let dir in letter_list[tipo]) {
@@ -138,7 +140,8 @@ export default class LetrasGame extends Phaser.Scene {
         this.keyboard = new keyboard(this, 800, 30, 460, 35, this.alphabet, { fontFamily: 'ComicSans', fill: '#000000' }, (key) => {
             this.comprobar(key);
         });
-
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
         // time
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
     }

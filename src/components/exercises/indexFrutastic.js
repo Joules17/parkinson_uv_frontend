@@ -27,7 +27,7 @@ const IndexFrutastic = () => {
                 qui officiate descent molls anim id est labours.
             </Typography>
         </MainCard>
-        
+
         {cargado && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <GameFrutastic />
@@ -35,7 +35,7 @@ const IndexFrutastic = () => {
         )}
         </div>
         )
-    
-    
+
+
     }
 export default IndexFrutastic;

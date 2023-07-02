@@ -4,12 +4,14 @@ import '../styles.css'
 
 // custom classes imported: 
 import level from '../sprites/level';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png';
 import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
 import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
 import glass from 'components/exercises/ArticRows/assets/img/glass.png';
+import fullscreen from '../assets/img/fullscreen.png';
 
 import arrow_list from '../sprites/arrow_list';
 
@@ -97,6 +99,7 @@ export default class ArticTuto extends Phaser.Scene {
         this.load.image('sky', nightsky);
         this.load.image('rain', raindrop);
         this.load.image('keycap', keycap);
+        this.load.image('fullscreenImg', fullscreen);
         // sprites
         for (let tipo in arrow_list) {
             // busca cada tipo para cargar su correspondiente imagen
@@ -143,6 +146,9 @@ export default class ArticTuto extends Phaser.Scene {
         this.conversation_panel.lineStyle(2, 0xffffff);
         this.conversation_panel.fillRoundedRect(50, 530, 700, 60, 5); // Crea el rectángulo con bordes curvos
         this.conversation_panel.strokeRoundedRect(50, 530, 700, 60, 5); // Dibuja los bordes negros
+
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
         // text ------------------------------------------------------------------------------------------------------------------------
         this.title = this.add.text(280, 20, 'TUTORIAL', { fontFamily: 'StayPixelRegular', fill: '#ffffff' }).setFontSize(70);

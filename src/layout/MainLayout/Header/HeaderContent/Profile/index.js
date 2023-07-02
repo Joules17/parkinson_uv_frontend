@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// auth 0 
-import { useAuth0 } from '@auth0/auth0-react'; 
+// auth 0
+import { useAuth0 } from '@auth0/auth0-react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -88,7 +88,7 @@ const Profile = () => {
 
     const iconBackColorOpen = 'grey.300';
 
-    const tipo = window.localStorage.getItem('tipo'); 
+    const tipo = window.localStorage.getItem('tipo');
     return (
         <Box sx={{ flexShrink: 0, ml: 0.75 }}>
             <ButtonBase
@@ -151,7 +151,7 @@ const Profile = () => {
                                                         <Stack>
                                                             <Typography variant="h6">{user.name}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                {tipo === '1' ? 'Terapeuta' : 'Paciente'} 
+                                                                {tipo === '1' ? 'Terapeuta' : 'Paciente'}
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

@@ -3,11 +3,13 @@ import Phaser from 'phaser';
 import '../styles.css'
 
 // custom classes imported:
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg'
 import curtain from 'components/exercises/DominoGame/assets/images/curtain.png'
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png'
+import fullscreen from '../assets/images/fullscreen.png';
 // audio
 import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
 import correct from 'components/exercises/DominoGame/assets/music/correct.wav'
@@ -33,9 +35,11 @@ export default class DominoMenu extends Phaser.Scene {
 
     preload () {
         // images
-        this.load.image('bg', bg)
-        this.load.image('curtain', curtain)
-        this.load.image('up_curtain', up_curtain)
+        this.load.image('bg', bg);
+        this.load.image('curtain', curtain);
+        this.load.image('up_curtain', up_curtain);
+        this.load.image('fullscreenImg', fullscreen);
+        
         // audio 
         this.load.audio('hover', hover);
         this.load.audio('correct', correct);
@@ -84,8 +88,9 @@ export default class DominoMenu extends Phaser.Scene {
     this.start_button.setInteractive(); 
     this.tuto_button.setInteractive(); 
     // --------------------------------------------------------------
-    // listeners
-
+    // fullScreenButton
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+    
     // entered buttons 
     // start_button 
     this.start_button.on('pointerdown', () => {

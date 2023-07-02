@@ -2,9 +2,13 @@
 import Phaser from 'phaser';
 import '../styles.css'
 
+// custom classes imported: 
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+
 // assets import
 import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
 import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
+import fullscreen from '../assets/img/fullscreen.png';
 
 export default class ArticOver extends Phaser.Scene {
     constructor () {
@@ -38,6 +42,7 @@ export default class ArticOver extends Phaser.Scene {
     preload() {
         this.load.image('nightsky', nightsky);
         this.load.image('snowflake', snowflake);
+        this.load.image('fullscreenImg', fullscreen);
     }
 
     create() {
@@ -65,7 +70,8 @@ export default class ArticOver extends Phaser.Scene {
         this.number_errores_msg = this.add.text(100, 450, "Numero de errores: ", { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
         this.number_errores_log = this.add.text(400, 450, this.number_errores, { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
 
-        // -------------------------
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
     }
 
