@@ -8,8 +8,8 @@ const ProfileTherapistCard = ({ LABELS, userCharged }) => {
     console.log(userCharged);
     return (
         <Grid container spacing={2} sx={{ justifyContent: 'center', marginTop: '20px' }}>
-            {LABELS.map((label, index) => (
-                <Grid item xs={12} sm={3} key={index}>
+            {LABELS.map((label) => (
+                <Grid item xs={12} sm={3} key={label}>
                     <Typography variant="h4" color="inherit" sx={{ marginLeft: '10px' }}>
                         {label}
                     </Typography>
