@@ -4,9 +4,10 @@ import '../styles.css'
 
 // custom classes imported: 
 import TableroRenewed from '../sprites/base/TableroRenewed';
-
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // import sounds 
+import fullscreen from '../assets/img/fullscreen.png'
 import good from '../assets/music/correct.wav'
 import bad from '../assets/music/bad.wav'
 import hover from '../assets/music/hover.mp3'
@@ -61,6 +62,8 @@ export default class rondas extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image('fullscreenImg', fullscreen)
+
     // audio 
     this.load.audio('bad', bad)
     this.load.audio('good', good)
@@ -82,6 +85,8 @@ export default class rondas extends Phaser.Scene {
     this.move_y(this.blockup, -50, 1000, this);
 
     this.create_ronda(this.numberFases);
+    // fullScreenButton ---------------------------------------------------------------------------------------------------
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
   }
 
   update() {

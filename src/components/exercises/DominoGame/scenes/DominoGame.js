@@ -4,11 +4,12 @@ import '../styles.css';
 
 // custom classes imported:
 import level from 'components/exercises/DominoGame/sprites/level.js'
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg';
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png';
-
+import fullscreen from '../assets/images/fullscreen.png';
 // sounds
 import hover from 'components/exercises/DominoGame/assets/music/hover.mp3';
 import correct from 'components/exercises/DominoGame/assets/music/correct.wav';
@@ -79,6 +80,7 @@ export default class DominoGame extends Phaser.Scene {
         // images
         this.load.image('bg', bg); 
         this.load.image('up_curtain', up_curtain);
+        this.load.image('fullscreenImg', fullscreen);
         // audio 
         this.load.audio('hover', hover)
         this.load.audio('correct', correct)
@@ -163,6 +165,10 @@ export default class DominoGame extends Phaser.Scene {
             .text(660, 560, 'Errores: ' + this.errores, { fontFamily: 'Atarian', fill: '#ffffff' })
             .setFontSize(30);
         // ----------------------------------------------------------------------------------------------------------
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+    
+        
         // listeners
         this.text_yes.on('pointerover', () => {
             this.sound.play('hover')

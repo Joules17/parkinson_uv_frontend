@@ -4,6 +4,7 @@ import '../styles.css'
 
 // custom classes imported: 
 import Frutita from '../sprites/base/Frutita.js' 
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import fullscreen from '../assets/img/fullscreen.png'
@@ -51,14 +52,6 @@ export default class NumbersMenu extends Phaser.Scene {
 
     this.start_button.setInteractive();
 
-    // botones fullscreen
-
-    this.fullscreen_button = this.add.sprite(770, 30, 'fullscreenImg'); 
-    this.fullscreen_button.setInteractive(); 
-    this.fullscreen_button.setScale(0.03)
-
-    // -------------------------
-
     this.title = this.add.text(190,190, "ENCUENTRA", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(120)
     this.title2 = this.add.text(190,290, "EL NUMERO", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(128)
 
@@ -68,6 +61,9 @@ export default class NumbersMenu extends Phaser.Scene {
     this.lupa.setScale(0.2)
 
     this.lupa.dance_function(15, 1000)
+    
+    // fullScreenButton ---------------------------------------------------------------------------------------------------
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     
     // Eventos
 
@@ -98,36 +94,6 @@ export default class NumbersMenu extends Phaser.Scene {
         ease: 'Power2'
       });
     });
-
-    // fullscreen sujeto a cambios 
-    this.fullscreen_button.on('pointerdown', function () {
-      if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
-      } else {
-          this.scale.startFullscreen();
-      }
-  }, this.game)
-
-    this.fullscreen_button.on('pointerover', () => {
-      this.tweens.add({
-        targets: this.fullscreen_button,
-        scaleX: 0.04,
-        scaleY: 0.04,
-        duration: 100, 
-        ease: 'Power2'
-      });
-    });
-
-    this.fullscreen_button.on('pointerout', () => {
-      this.tweens.add({
-        targets: this.fullscreen_button,
-        scaleX: 0.03,
-        scaleY: 0.03,
-        duration: 100, 
-        ease: 'Power2'
-      });
-    });
-  
   }
 
   update () {

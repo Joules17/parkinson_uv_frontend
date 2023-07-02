@@ -3,10 +3,12 @@ import Phaser from 'phaser';
 import '../styles.css'
 
 // custom classes imported: 
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png'
 import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg'
+import fullscreen from '../assets/img/fullscreen.png';
 
 import derecha from 'components/exercises/ArticRows/assets/img/arrow/good/good_right.png'
 
@@ -50,7 +52,7 @@ export default class ArticMenu extends Phaser.Scene {
     this.load.image('sky', nightsky);
     this.load.image('rain', raindrop);
     this.load.image('derecha', derecha); 
-    // sprites
+    this.load.image('fullscreenImg', fullscreen);
 
     // audio 
     this.load.audio('start_button', start_button);
@@ -81,6 +83,9 @@ export default class ArticMenu extends Phaser.Scene {
 
     // text ------------------------------------------------------------------------------------------------------------------------
     this.title = this.add.text(180,200, "Flechas Articas", { fontFamily : 'StayPixelRegular', fill: '#ffffff'}).setFontSize(70)
+    
+    // fullScreenButton
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     
     // buttons ---------------------------------------------------------------------------------------------------------------------
     this.start_button = this.add.text(340, 320, "Jugar", {

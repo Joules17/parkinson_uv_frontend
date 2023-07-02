@@ -4,6 +4,7 @@ import '../styles.css';
 
 // custom classes imported:
 import level from '../sprites/level';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png';
@@ -11,6 +12,7 @@ import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
 import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
 import glass from 'components/exercises/ArticRows/assets/img/glass.png';
 import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
+import fullscreen from '../assets/img/fullscreen.png';
 
 import arrow_list from '../sprites/arrow_list';
 
@@ -118,7 +120,8 @@ export default class ArticGame extends Phaser.Scene {
         // images
         this.load.image('sky', nightsky);
         this.load.image('rain', raindrop);
-        this.load.image('snowflake', snowflake)
+        this.load.image('snowflake', snowflake);
+        this.load.image('fullscreenImg', fullscreen);
 
         // sprites
         for (let tipo in arrow_list) {
@@ -176,6 +179,9 @@ export default class ArticGame extends Phaser.Scene {
 
         // time
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
+        
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     }
 
     update() {
