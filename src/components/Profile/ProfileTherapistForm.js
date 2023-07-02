@@ -16,7 +16,7 @@ const ProfileTherapistForm = ({ LABELS, FIELDS, userCharged, handleExit, onSubmi
             <form onSubmit={onSubmit}>
                 <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
                 {LABELS.map((label, index) => (
-                        <Grid item xs={12} sm={3} key={index} fullWidth>
+                        <Grid item xs={12} sm={3} key={label} fullWidth>
                             <TextField
                                 label={label}
                                 defaultValue={userCharged[FIELDS[index]]}

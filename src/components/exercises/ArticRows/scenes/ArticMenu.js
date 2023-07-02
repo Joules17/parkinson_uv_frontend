@@ -140,16 +140,12 @@ export default class ArticMenu extends Phaser.Scene {
     })
   }
 
-  update () {
-    
-  }
-
   // Customs functions ------------------------------------------------------------------------------------------------------------------------------
   setSelected(index) {
-    var oposite = (index === 0) ? 1 : 0;
+    let oposite = (index === 0) ? 1 : 0;
     this.selected = index; 
     this.pointer_out(this.list_buttons[oposite])
-    var posy = (index === 0) ? 345 : 405;
+    let posy = (index === 0) ? 345 : 405;
     this.r_arrow.y = posy; 
     this.pointer_over(this.list_buttons[index])
   }

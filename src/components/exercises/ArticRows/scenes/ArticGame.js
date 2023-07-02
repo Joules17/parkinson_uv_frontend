@@ -50,7 +50,8 @@ export default class ArticGame extends Phaser.Scene {
         this.cursors = undefined;
 
         // texto
-        this.text_numberrondas, (this.texto_tiempototal = undefined);
+        this.text_numberrondas = undefined; 
+        this.texto_tiempototal = undefined;
         this.current_number = 1;
         // timers
         this.gameTimeSec = 0;
@@ -187,7 +188,7 @@ export default class ArticGame extends Phaser.Scene {
     update() {
         // juego comienza -- juego en espera de accion
         if (this.flag) {
-            if (!(this.tablero_actual === undefined)) {
+            if (this.tablero_actual !== undefined) {
                 if (!(this.tablero_actual === 'medium' || this.tablero_actual === 'hard')) {
                     this.tablero_actual.set_active(false);
                     this.tiempo_rondas.push(this.tiempo_por_ronda);

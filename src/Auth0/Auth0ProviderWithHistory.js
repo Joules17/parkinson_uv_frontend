@@ -15,12 +15,6 @@ export const Auth0ProviderWithHistory = ({ children }) => {
         navigate(appState?.returnTo || '/')
     }
 
-    /*
-    if (!(domain && clientId && audience)) {
-        return null
-    }
-    */
-
     return (
         <Auth0Provider
         domain={domain}

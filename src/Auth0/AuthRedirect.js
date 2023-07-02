@@ -20,13 +20,6 @@ export default function AuthRedirect ({ Component, tipo }) {
                             returnTo: window.location.origin
                         })
                     }
-                    /*
-                    if (data.user_type.localeCompare('noregistro') !== 0 || tipo.localeCompare(window.localStorage.getItem('tipo')) !== 0) {
-                        logout({
-                            returnTo: window.location.origin
-                        })
-                    }
-                    */
                 })
             } else {
                 logout({
