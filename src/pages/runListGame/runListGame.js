@@ -14,6 +14,7 @@ import GameNumbers from 'components/exercises/Numbers/GameNumbers';
 import GameArtic from 'components/exercises/ArticRows/GameArtic';
 import GameFrutastic from 'components/exercises/Frutastico/GameFrutastic';
 import GameDomino from 'components/exercises/DominoGame/GameDomino'
+import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -75,6 +76,8 @@ const RunListGames = () => {
                 return <GameFrutastic settings={startGame.settings}/>;
             case "Purple Domino":
                 return <GameDomino settings={startGame.settings}/>;
+            case "Letra Aventura":
+                return <GameLetras settings={startGame.settings}/>;
             default:
                 return null;
         }

@@ -21,6 +21,7 @@ export default class ArticInit extends Phaser.Scene {
     } 
 
     pass () {
-        this.scene.start('ArticMenu')
+        const settings = this.sys.settings.data.settings;
+        this.scene.start('ArticMenu', {settings})
     }
 }

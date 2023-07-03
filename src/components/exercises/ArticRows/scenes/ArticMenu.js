@@ -152,7 +152,8 @@ export default class ArticMenu extends Phaser.Scene {
   // ------------------------------------------------------------------------------------------------------------------------------
   letsPlay() { 
     this.sound.play('start_button')
-    this.scene.start(this.scene_options[this.selected])
+    const settings = this.sys.settings.data.settings;
+    this.scene.start(this.scene_options[this.selected], {settings})
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   pointer_over (btn) {

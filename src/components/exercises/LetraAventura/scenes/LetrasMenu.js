@@ -33,6 +33,7 @@ export default class LetrasMenu extends Phaser.Scene {
     }
 
     create() {
+        const settings = this.sys.settings.data.settings;
         this.anims.create({
             key: 'bd_anim',
             frames: this.anims.generateFrameNumbers('bd_spritesheet', { start: 0, end: 5 }),
@@ -58,7 +59,7 @@ export default class LetrasMenu extends Phaser.Scene {
         // title listeners
         this.title.on('pointerdown', () => {
             this.sound.play('flip_round')
-            this.scene.start('LetrasGame');
+            this.scene.start('LetrasGame', {settings});
         });
         this.title.on('pointerover', () => {
             this.title.setColor('#FF0000')
@@ -72,7 +73,7 @@ export default class LetrasMenu extends Phaser.Scene {
         // tutorial listeners
         this.tutorial.on('pointerdown', () => {
             this.sound.play('flip_round')
-            this.scene.start('LetrasTutorial')
+            this.scene.start('LetrasTutorial', {settings})
         }); 
         this.tutorial.on('pointerover', () => {
             this.tutorial.setColor('#FF0000')
