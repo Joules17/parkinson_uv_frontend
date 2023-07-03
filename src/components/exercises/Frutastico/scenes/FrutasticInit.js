@@ -36,6 +36,6 @@ export default class FrutasticInit extends Phaser.Scene {
     } 
 
     pass () {
-        this.scene.start('FrutasticMenu')
+        this.scene.start('FrutasticRondas')
     }
 }
