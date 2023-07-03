@@ -12,7 +12,6 @@ import GameFruits from 'components/exercises/Frutas/GameFruits'
 
 const IndexFruits = () => {
     const [cargado, setCargado] = useState(false);
-
     useEffect(() => {
         setCargado(true);
     }, []);
@@ -27,7 +26,7 @@ const IndexFruits = () => {
                 qui officiate descent molls anim id est labours.
             </Typography>
         </MainCard>
-        
+
         {cargado && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <GameFruits settings={null}/>
@@ -35,7 +34,7 @@ const IndexFruits = () => {
         )}
         </div>
         )
-    
-    
+
+
     }
 export default IndexFruits;

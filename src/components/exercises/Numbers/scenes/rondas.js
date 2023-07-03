@@ -4,9 +4,10 @@ import '../styles.css'
 
 // custom classes imported: 
 import TableroRenewed from '../sprites/base/TableroRenewed';
-
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // import sounds 
+import fullscreen from '../assets/img/fullscreen.png'
 import good from '../assets/music/correct.wav'
 import bad from '../assets/music/bad.wav'
 import hover from '../assets/music/hover.mp3'
@@ -61,6 +62,8 @@ export default class rondas extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image('fullscreenImg', fullscreen)
+
     // audio 
     this.load.audio('bad', bad)
     this.load.audio('good', good)
@@ -69,7 +72,6 @@ export default class rondas extends Phaser.Scene {
   }
 
   create() {
-
     this.cameras.main.setBackgroundColor(0xffffff);
     this.blockup = this.add.rectangle(0, 0, 1800, 100, 0x0024ad, 1);
 
@@ -78,10 +80,13 @@ export default class rondas extends Phaser.Scene {
     this.texto_tiempototal = this.add.text(710, 10, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40)
     this.text_numberrondas.setVisible(false);
     this.texto_tiempototal.setVisible(false);
+
     this.tablero = new TableroRenewed(this.tablero_config);
     this.move_y(this.blockup, -50, 1000, this);
 
     this.create_ronda(this.numberFases);
+    // fullScreenButton ---------------------------------------------------------------------------------------------------
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
   }
 
   update() {
@@ -103,12 +108,6 @@ export default class rondas extends Phaser.Scene {
 
   // Customs functions
   create_ronda() {
-    if (this.tableroActual && this.tableroActual.sprite_group) {
-      this.tableroActual.sprite_group.setVisible(true);
-      this.tableroActual.sprite_group.setActive(true);
-      this.tableroActual.sprite_group.destroy(true);
-    }
-  
     // creacion de tableros / rondas
     // if (this.current_number < this.numberFases) {
       this.flag = true;

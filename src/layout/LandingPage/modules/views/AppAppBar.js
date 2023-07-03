@@ -29,7 +29,7 @@ function AppAppBar() {
     if (isAuthenticated) {
       getInfoAccount(user.sub).then((data) => { 
         // eslint-disable-next-line
-        console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type)
+        console.log('Hola ', user.name, ' tu tipo sera guardado:', data.id_type, user.picture)
         window.localStorage.setItem('tipo', data.id_type)
         setLogged(true)
       })
@@ -46,7 +46,7 @@ function AppAppBar() {
 
   return (
     <div>
-      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: navbar ? "#ffffff" : 'transparent' }} >
+      <AppBar position= 'fixed' elevation = { navbar ? 5 : 0} style = {{ backgroundColor: "#ffffff" }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }} />
           <Button

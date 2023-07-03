@@ -6,10 +6,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 // project import
 import MainCard from 'components/MainCard';
 
-// assets
-// import { RiseOutlined, FallOutlined } from '@ant-design/icons';
-
-// ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
+// ==============================|| EXERCISSE BUTTONS ||============================== //
 
 const ExerciseBttn = ({ type, name, imgUrl, imageHeight }) => (
     <MainCard imgUrl={imgUrl} imageHeight= {imageHeight} contentSX={{ p: 2.25 }}>

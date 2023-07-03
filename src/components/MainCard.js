@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
-import { CardMedia } from "@material-ui/core";
+import CardMedia from "@mui/material/CardMedia";
 
 // project import
 import Highlighter from './third-party/Highlighter';
@@ -99,7 +99,7 @@ MainCard.propTypes = {
     border: PropTypes.bool,
     boxShadow: PropTypes.bool,
     contentSX: PropTypes.object,
-    darkTitle: PropTypes.bool,
+    darkTitle: PropTypes.string,
     divider: PropTypes.bool,
     elevation: PropTypes.number,
     secondary: PropTypes.node,

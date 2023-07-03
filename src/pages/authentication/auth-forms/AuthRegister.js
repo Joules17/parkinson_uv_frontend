@@ -53,6 +53,12 @@ const generos = [
     { value: 'no binario', label: 'No binario' },
   ];
 
+const tipos_id = [
+    { value: 'C.C.', label: 'C.C.'}, 
+    { value: 'T.I.', label: 'T.I.'},
+    { value: 'Pas', label: 'Pasaporte'},
+]; 
+
 const AuthRegister = () => {
     const [level, setLevel] = useState();
     const [levelTherapist, setLevelTherapist] = useState();
@@ -123,6 +129,8 @@ const AuthRegister = () => {
             {tipo == 'paciente' && 
                 <Formik
                 initialValues={{
+                    document_type: '', 
+                    document_id: '',
                     name: '',
                     lastname: '',
                     gender: '',
@@ -132,6 +140,8 @@ const AuthRegister = () => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
+                    document_type: Yup.string().max(20).required('Necesitamos saber tu tipo de id'), 
+                    document_id: Yup.string().max(200).required('Necesitamos saber tu numero de indentificacion'),
                     name: Yup.string().max(255).required('Recuerda poner tu nombre'),
                     lastname: Yup.string().max(255).required('Necesitamos tu apellido'),
                     gender: Yup.string().max(20).required('Necesitamos saber tu genero'),
@@ -144,7 +154,7 @@ const AuthRegister = () => {
                         console.log('Datos a registrar del paciente: ', values)
                         setStatus({ success: false });
                         setSubmitting(false);
-                        createPatientAccount(values, user.sub, user.email, setMensaje)
+                        createPatientAccount(values, user.sub, user.email, user.picture, setMensaje)
                         setTimeout(() => {
                             nav(`/`)
                         }, 2000)
@@ -159,6 +169,58 @@ const AuthRegister = () => {
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
+                        <Grid item xs={12} md={4}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="document_type-signup">Tipo ID</InputLabel>
+                                    <Select
+                                        labelId="document_type-label"
+                                        id = "document_type-select"
+                                        value = {values.document_type}
+                                        type="document_type"
+                                        onChange={(e) => {
+                                            handleChange(e, "document_type");
+                                          }}
+                                        label = "Tipo ID"
+                                        name="document_type"
+                                        onBlur={handleBlur}
+                                        placeholder="C.C."
+                                        fullWidth
+                                        error={Boolean(touched.document_type && errors.document_type)}
+                                    >
+                                        {tipos_id.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>))}
+                                    </Select>
+                                    {touched.document_type && errors.document_type && (
+                                        <FormHelperText error id="helper-text-document_type-signup">
+                                            {errors.document_type}
+                                        </FormHelperText>
+                                    )}
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} md = {8}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="document_id-signup">Num. Documento</InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        error={Boolean(touched.document_id && errors.document_id)}
+                                        id="document_id-signup"
+                                        type="document_id"
+                                        value={values.document_id}
+                                        name="document_id"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="1110042636"
+                                        inputProps={{}}
+                                    />
+                                    {touched.document_id && errors.document_id && (
+                                        <FormHelperText error id="helper-text-cell-document_id">
+                                            {errors.document_id}
+                                        </FormHelperText>
+                                    )}
+                                </Stack>
+                            </Grid>
                             <Grid item xs={12} md={6}>
                                 <Stack spacing={1}>
                                     <InputLabel htmlFor="name-signup">Nombre*</InputLabel>
@@ -368,12 +430,16 @@ const AuthRegister = () => {
             {tipo == 'terapeuta' &&
                 <Formik
                 initialValues={{
+                    document_type: '', 
+                    document_id: '', 
                     name: '',
                     lastname: '',
                     gender: '',
                     cell: ''
                 }}
                 validationSchema={Yup.object().shape({
+                    document_type: Yup.string().max(20).required('Recuerda poner tu tipo de id'),
+                    document_id: Yup.string().max(255).required('Recuerda poner tu identificacion'),
                     name: Yup.string().max(255).required('Recuerda poner tu nombre'),
                     lastname: Yup.string().max(255).required('Necesitamos tu apellido'),
                     cell: Yup.string().max(200).required('Necesitamos un telefono')
@@ -382,7 +448,7 @@ const AuthRegister = () => {
                     try {
                         setStatus({ success: false });
                         setSubmitting(false);
-                        createTherapistAccount(values, user.sub, user.email, setMensaje)
+                        createTherapistAccount(values, user.sub, user.email, user.picture, setMensaje)
                         setTimeout(() => {
                             nav(`/`)
                         }, 2000)
@@ -397,6 +463,58 @@ const AuthRegister = () => {
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
+                            <Grid item xs={12} md={4}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="document_type-signup">Tipo ID</InputLabel>
+                                    <Select
+                                        labelId="document_type-label"
+                                        id = "document_type-select"
+                                        value = {values.document_type}
+                                        type="document_type"
+                                        onChange={(e) => {
+                                            handleChange(e, "document_type");
+                                          }}
+                                        label = "Tipo ID"
+                                        name="document_type"
+                                        onBlur={handleBlur}
+                                        placeholder="C.C."
+                                        fullWidth
+                                        error={Boolean(touched.document_type && errors.document_type)}
+                                    >
+                                        {tipos_id.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>))}
+                                    </Select>
+                                    {touched.document_type && errors.document_type && (
+                                        <FormHelperText error id="helper-text-document_type-signup">
+                                            {errors.document_type}
+                                        </FormHelperText>
+                                    )}
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} md = {8}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="document_id-signup">Num. Documento</InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        error={Boolean(touched.document_id && errors.document_id)}
+                                        id="document_id-signup"
+                                        type="document_id"
+                                        value={values.document_id}
+                                        name="document_id"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        placeholder="1110042636"
+                                        inputProps={{}}
+                                    />
+                                    {touched.document_id && errors.document_id && (
+                                        <FormHelperText error id="helper-text-cell-document_id">
+                                            {errors.document_id}
+                                        </FormHelperText>
+                                    )}
+                                </Stack>
+                            </Grid>
                             <Grid item xs={12} >
                                 <Stack spacing={1}>
                                     <InputLabel htmlFor="name-signup">Nombre*</InputLabel>

@@ -1,83 +1,48 @@
-// import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import Typography from '../components/Typography';
+import { Box, Typography, Container, Grid } from '@mui/material';
 
-// media
-import mercadoLibre from './img_aux/ally_logo/mercado-libre-logo.png'
-import amazon from './img_aux/ally_logo/amazon.png'
-import user from './img_aux/avatar_18.jpg'
-import processor from './img_aux/processor.jpg'
+// assets
+import fundacion_img from './assets/logos/fundacion_img.jpg';
 
-const item = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
-
-function ProductHowItWorks() {
+function ProductAllies() {
   return (
     <Box
-      component="section"
-      sx={{ display: 'flex', bgcolor: '#fff', overflow: 'hidden'}}
+      sx={{
+        backgroundColor: '#f1f5f9',
+        borderTopLeftRadius: '80px',
+        padding: '80px 0',
+      }}
     >
-      <Container
-        sx={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography variant="h4" marked="center" component="h2">
-          NUESTROS ALIADOS
-        </Typography>
-        <div>
-          <Container sx={{ display: 'flex', position: 'relative', mb: 5 }}>
-          <Grid container spacing = {5} mb = {10}>
-            <Grid item xs = {12} md = {4} mt = {10}>
-            <Box sx = {item}>
-                <Card elevation = {15} sx = {{maxWidth: 370 }}>
-                  <CardHeader avatar = {<Avatar id = 'avatar' src = {user}  style = {{ width: '60px', height: '60px' }}/> }  title = {<Typography variant = 'h6'> Nuestros proveedores </Typography>} subheader= 'Publicado por Scrappy'/>
-                  <CardMedia component = 'img' height = '100' image = {processor} alt = 'mejores'/>
-                  <CardContent>
-                    <Typography>
-                      Buscamos productos de fuentes confiables como Amazon y MercadoLibre para que las mejores ofertas siempre estén al alcance de un solo click
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid>
-            <Grid item xs = {12} md = {4} mt = {15}>
-              <Box sx = {item}>
-                  <Box
-                    component="img"
-                    src={amazon}
-                    alt="join"
-                  />
-              </Box>
-            </Grid>
-            <Grid item xs = {12} md = {4} mt = {15}>
-              <Box sx = {item}>
-                  <Box
-                    component="img"
-                    src={mercadoLibre}
-                    alt="join"
-                  />
-              </Box>
-            </Grid>
+      <Container maxWidth="md">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <div className="box-img" style={{ position: 'relative' }}>
+              <img
+                src={fundacion_img}
+                alt="Descripción de la imagen"
+                style={{
+                  width: '100%',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), transparent)',
+                  maskImage: 'linear-gradient(to right, transparent, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), transparent)',
+                }}
+              />
+            </div>
           </Grid>
-        </Container>
-        </div>
+          <Grid item xs={12} sm={6} sx = {{ mt: '1rem'}}>
+            <Box sx={{ marginLeft: '20px' }}>
+              <Typography variant="h1" sx = {{ mb: '1rem'}}>
+                Fundación Parkinson de Colombia
+              </Typography>
+              <Typography variant="h6">
+                La Fundación Parkinson de Colombia es una organización sin ánimo de lucro encaminada a ayudar a los pacientes con Enfermedad de Parkinson y sus familiares.
+                Fundada el 6 de Abril de 2004, nace como una entidad de puertas abiertas que busca integrar los esfuerzos individuales y de diferentes organizaciones sociales, solidarias con ésta causa.
+                Somos la primera institución especializada en la educación, soporte, rehabilitación y mejoramiento de la Calidad de Vida de pacientes con Enfermedad de Parkinson en Colombia.
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
 }
 
-export default ProductHowItWorks;
+export default ProductAllies;

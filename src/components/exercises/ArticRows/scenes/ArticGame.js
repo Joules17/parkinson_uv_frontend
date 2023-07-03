@@ -3,7 +3,8 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import level from '../sprites/level';
+import Level from '../sprites/Level';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png';
@@ -11,6 +12,7 @@ import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
 import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
 import glass from 'components/exercises/ArticRows/assets/img/glass.png';
 import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
+import fullscreen from '../assets/img/fullscreen.png';
 
 import arrow_list from '../sprites/arrow_list';
 
@@ -48,7 +50,8 @@ export default class ArticGame extends Phaser.Scene {
         this.cursors = undefined;
 
         // texto
-        this.text_numberrondas, (this.texto_tiempototal = undefined);
+        this.text_numberrondas = undefined; 
+        this.texto_tiempototal = undefined;
         this.current_number = 1;
         // timers
         this.gameTimeSec = 0;
@@ -57,7 +60,10 @@ export default class ArticGame extends Phaser.Scene {
         this.tiempo_por_ronda = 0; // en segundos
 
         // variables
-        this.number_rounds = 30; // numero de rondas
+        this.first_rounds = 30; 
+        this.second_rounds = 20; 
+        this.third_rounds = 30; 
+        this.number_rounds = this.first_rounds + this.second_rounds + this.third_rounds; // numero de rondas
         this.tableros = []; // lista de tableros
         this.tablero_actual = undefined; // tablero actual
         this.flag = undefined;
@@ -80,7 +86,8 @@ export default class ArticGame extends Phaser.Scene {
             spriteHeigth: 400,
             sprite_scale: 0.6,
             spritePadding: 10,
-            actual: false
+            actual: false, 
+            tuto_option: undefined
         };
         this.level_config_2 = {
             scene: this,
@@ -93,7 +100,8 @@ export default class ArticGame extends Phaser.Scene {
             sprite_height: 50,
             sprite_scale: 0.3,
             spritePadding: 10,
-            actual: false
+            actual: false,
+            tuto_option: undefined
         };
 
         this.level_config_3 = {
@@ -107,7 +115,8 @@ export default class ArticGame extends Phaser.Scene {
             sprite_height: 50,
             sprite_scale: 0.19,
             spritePadding: 10,
-            actual: false
+            actual: false,
+            tuto_option: undefined
         };
     }
 
@@ -115,7 +124,8 @@ export default class ArticGame extends Phaser.Scene {
         // images
         this.load.image('sky', nightsky);
         this.load.image('rain', raindrop);
-        this.load.image('snowflake', snowflake)
+        this.load.image('snowflake', snowflake);
+        this.load.image('fullscreenImg', fullscreen);
 
         // sprites
         for (let tipo in arrow_list) {
@@ -173,12 +183,15 @@ export default class ArticGame extends Phaser.Scene {
 
         // time
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
+        
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     }
 
     update() {
         // juego comienza -- juego en espera de accion
         if (this.flag) {
-            if (!(this.tablero_actual === undefined)) {
+            if (this.tablero_actual !== undefined) {
                 if (!(this.tablero_actual === 'medium' || this.tablero_actual === 'hard')) {
                     this.tablero_actual.set_active(false);
                     this.tiempo_rondas.push(this.tiempo_por_ronda);
@@ -213,16 +226,16 @@ export default class ArticGame extends Phaser.Scene {
     // Customs functions ------------------------------------------------------------------------------------------------------------------------------
     // creacion de niveles / rondas
     createRounds() {
-        for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[0]));
+        for (let i = 0; i < this.first_rounds; i++) {
+            this.tableros.push(new Level(this.levels_global[0]));
         }
         this.tableros.push('medium');
-        for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[1]));
+        for (let i = 0; i < this.second_rounds; i++) {
+            this.tableros.push(new Level(this.levels_global[1]));
         }
         this.tableros.push('hard');
-        for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_global[2]));
+        for (let i = 0; i < this.third_rounds; i++) {
+            this.tableros.push(new Level(this.levels_global[2]));
         }
         this.flag = true;
     }

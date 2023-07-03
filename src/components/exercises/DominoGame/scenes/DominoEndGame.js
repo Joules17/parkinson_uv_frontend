@@ -2,11 +2,15 @@
 import Phaser from 'phaser';
 import '../styles.css';
 
+// custom classes imported
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+
 // assets imports
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg';
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png';
-
+import fullscreen from '../assets/images/fullscreen.png';
 // sounds 
+
 // import sounds here 
 
 
@@ -51,6 +55,7 @@ export default class DominoEndGame extends Phaser.Scene {
         // images 
         this.load.image('bg', bg);
         this.load.image('up_curtain', up_curtain);
+        this.load.image('fullscreenImg', fullscreen);
 
     }
 
@@ -80,5 +85,7 @@ export default class DominoEndGame extends Phaser.Scene {
         this.errores = this.add.text(390, 420, this.number_errores, { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' })
         this.number_rondas = this.add.text(300, 470, 'NUMERO DE RONDAS', { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
         this.number_rondas = this.add.text(390, 500, this.num_rondas, { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' })
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     }
 }

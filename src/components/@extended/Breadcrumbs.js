@@ -1,58 +1,46 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
-// material-ui
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import { Grid, Typography } from '@mui/material';
-
-// project imports
 import MainCard from '../MainCard';
-
-// ==============================|| BREADCRUMBS ||============================== //
 
 const Breadcrumbs = ({ navigation, title, ...others }) => {
     const location = useLocation();
     const [main, setMain] = useState();
     const [item, setItem] = useState();
 
-    // set active item state
     const getCollapse = (menu) => {
-        if (menu.children) {
-            menu.children.filter((collapse) => {
-                if (collapse.type && collapse.type === 'collapse') {
+        if (menu.type === 'collapse') {
+            menu.children.forEach((collapse) => {
+                if (collapse.type === 'collapse') {
                     getCollapse(collapse);
-                } else if (collapse.type && collapse.type === 'item') {
-                    if (location.pathname === collapse.url) {
-                        setMain(menu);
-                        setItem(collapse);
-                    }
+                } else if (collapse.type === 'item' && location.pathname === collapse.url) {
+                    setMain(menu);
+                    setItem(collapse);
                 }
-                return false;
             });
         }
     };
 
     useEffect(() => {
-        navigation?.items?.map((menu) => {
-            if (menu.type && menu.type === 'group') {
+        navigation?.items?.forEach((menu) => {
+            if (menu.type === 'group') {
                 getCollapse(menu);
             }
-            return false;
         });
-    });
+        // eslint-disable-next-line
+    }, [navigation, location.pathname]);
 
-    // only used for component demo breadcrumbs
     if (location.pathname === '/breadcrumbs') {
         location.pathname = '/dashboard/analytics';
     }
 
-    let mainContent;
-    let itemContent;
+    let mainContent = null;
+    let itemContent = null;
     let breadcrumbContent = <Typography />;
     let itemTitle = '';
 
-    // collapse item
     if (main && main.type === 'collapse') {
         mainContent = (
             <Typography component={Link} to={document.location.pathname} variant="h6" sx={{ textDecoration: 'none' }} color="textSecondary">
@@ -61,7 +49,6 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
         );
     }
 
-    // items
     if (item && item.type === 'item') {
         itemTitle = item.title;
         itemContent = (
@@ -70,7 +57,6 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
             </Typography>
         );
 
-        // main
         if (item.breadcrumbs !== false) {
             breadcrumbContent = (
                 <MainCard border={false} sx={{ mb: 3, bgcolor: 'transparent' }} {...others} content={false}>
@@ -99,7 +85,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
 };
 
 Breadcrumbs.propTypes = {
-    navigation: PropTypes.object,
+    navigation: PropTypes.array,
     title: PropTypes.bool
 };
 

@@ -1,11 +1,14 @@
 import Phaser from 'phaser';
 import '../styles.css';
 
+// custom classes imported:
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+
 // assets
 import bd_spritesheet from 'components/exercises/LetraAventura/assets/images/sprite_sheet_small.png';
 import paper from 'components/exercises/LetraAventura/assets/images/paper.png';
 import flip_round from 'components/exercises/LetraAventura/assets/music/flip_round.mp3'
-
+import fullscreen from '../assets/images/fullscreen.png';
 export default class LetrasMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'LetrasMenu', backgroundColor: '#3f1651' });
@@ -24,7 +27,7 @@ export default class LetrasMenu extends Phaser.Scene {
     preload() {
         this.load.spritesheet('bd_spritesheet', bd_spritesheet, { frameWidth: 800, frameHeight: 600 });
         this.load.image('paper', paper);
-
+        this.load.image('fullscreenImg', fullscreen);
         // audio 
         this.load.audio('flip_round', flip_round); 
     }
@@ -45,6 +48,9 @@ export default class LetrasMenu extends Phaser.Scene {
         this.tuto_image = this.add.image(520, 530, 'paper').setScale(0.1);
         this.tutorial = this.add.text(450, 505, 'Tutorial', { fontFamily: 'ComicSans', fontSize: 40, color: '#000000' });
 
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        
         // interactive
         this.title.setInteractive();
         this.tutorial.setInteractive();

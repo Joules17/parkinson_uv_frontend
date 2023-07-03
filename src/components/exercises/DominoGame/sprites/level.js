@@ -1,7 +1,7 @@
 // custom classes
 import steroid_object from './steroid_object'
 
-export default class level {
+export default class Level {
     constructor(config) {
         this.scene = config.scene;
         this.posx = config.posx; 

@@ -4,8 +4,10 @@ import '../styles.css'
 
 // custom classes imported: 
 import TableroRenewed from '../sprites/base/TableroRenewed';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
+import fullscreen from '../assets/img/fullscreen.png'
 import flecha from '../assets/design/flecha.png'
 
 // import sounds 
@@ -57,6 +59,7 @@ export default class NumbersLoby extends Phaser.Scene {
   preload() {
     // images
     this.load.image('flechaImg', flecha)
+    this.load.image('fullscreenImg', fullscreen)
 
     // audio
     this.load.audio('bad', bad)
@@ -87,6 +90,9 @@ export default class NumbersLoby extends Phaser.Scene {
     this.victory_explained.setVisible(false)
     this.victory_message.setVisible(false)
 
+    // fullScreenButton ---------------------------------------------------------------------------------------------------
+    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+    
     // prettier button 
     this.button_continue = this.add.text(355, 545, "jugar", {
       fontFamily: 'TROUBLE',

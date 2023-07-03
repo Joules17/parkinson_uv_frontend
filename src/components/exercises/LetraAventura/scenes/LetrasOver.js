@@ -2,8 +2,12 @@
 import Phaser from 'phaser'; 
 import '../styles.css'; 
 
+// custom classes imported:
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+
 // assets imports 
 import bg from 'components/exercises/LetraAventura/assets/images/bg_game.png';
+import fullscreen from '../assets/images/fullscreen.png';
 
 // audio 
 import win from 'components/exercises/LetraAventura/assets/music/win.mp3'; 
@@ -33,7 +37,8 @@ export default class LetrasOver extends Phaser.Scene {
 
     preload () {
         // images
-        this.load.image('bg', bg)
+        this.load.image('bg', bg); 
+        this.load.image('fullscreenImg', fullscreen);
 
         // audio 
         this.load.audio('win', win)
@@ -51,6 +56,9 @@ export default class LetrasOver extends Phaser.Scene {
 
         // -----------------------------------------------------
         this.aparecer(this.panel_results, this)
+        
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     }
 
     update () {

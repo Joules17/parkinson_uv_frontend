@@ -37,6 +37,20 @@ export const useExternalApi = () => {
 
     }
 
+    const getPatientDetailed = async (id, setPatient) => {
+        const config = {
+            url: `${apiServerUrl}/api/patient/retreive/detailed/${id}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+
+        // console.log(data)
+        setPatient(data)
+    }
+
     const createPatient = async (datos, id, email) => {
 
         const config = {
@@ -88,7 +102,23 @@ export const useExternalApi = () => {
         setMensaje('Se ha actualizado')
     }
 
-    const createPatientAccount = async (datos, id, email, setMensaje) => {
+    const updatePatientAssignee = async (id, datos) => {
+        const config = {
+            url: `${apiServerUrl}/api/patient/update/assignee/${id}`,
+            method: 'PUT',
+            headers: {
+            },
+            data: {
+                "id_parkinson_phase": datos.id_parkinson_phase,
+                "id_therapist": datos.id_therapist
+            }
+        }
+        const data = await makeRequest({config})
+
+        console.log(data)
+    }
+    
+    const createPatientAccount = async (datos, id, email, picture, setMensaje) => {
 
         const config = {
             url: `${apiServerUrl}/api/account/create`,
@@ -97,6 +127,9 @@ export const useExternalApi = () => {
             data: {
                 "user_id": id,
                 "id_type": 2,
+                "document_id" : datos.document_id, 
+                "document_type" : datos.document_type, 
+                "user_picture" : picture, 
                 "password": "basic",
                 "email": email,
                 "user_status": true
@@ -115,7 +148,9 @@ export const useExternalApi = () => {
         getPatient,
         createPatientAccount,
         createPatient,
-        updatePatient
+        updatePatient, 
+        updatePatientAssignee, 
+        getPatientDetailed
     }
 }
 

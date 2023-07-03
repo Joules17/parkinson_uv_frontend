@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// auth 0 
-import { useAuth0 } from '@auth0/auth0-react'; 
+// auth 0
+import { useAuth0 } from '@auth0/auth0-react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -29,8 +29,9 @@ import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
 // assets
+// import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { isError } from 'lodash';
+// import { isError } from 'lodash';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -87,7 +88,7 @@ const Profile = () => {
 
     const iconBackColorOpen = 'grey.300';
 
-    const tipo = window.localStorage.getItem('tipo'); 
+    const tipo = window.localStorage.getItem('tipo');
     return (
         <Box sx={{ flexShrink: 0, ml: 0.75 }}>
             <ButtonBase
@@ -150,7 +151,7 @@ const Profile = () => {
                                                         <Stack>
                                                             <Typography variant="h6">{user.name}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                {tipo === '1' ? 'Terapeuta' : 'Paciente'} 
+                                                                {tipo === '1' ? 'Terapeuta' : 'Paciente'}
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

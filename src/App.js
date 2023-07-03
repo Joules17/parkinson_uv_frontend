@@ -11,7 +11,6 @@ import ScrollTop from 'components/ScrollTop';
 
 export default function App() {
     const [userType, setUserType] = useState('')
-    
     return(
         <UserContext.Provider value = {[userType, setUserType]}>
             <ThemeCustomization>
