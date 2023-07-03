@@ -60,7 +60,10 @@ export default class ArticGame extends Phaser.Scene {
         this.tiempo_por_ronda = 0; // en segundos
 
         // variables
-        this.number_rounds = 30; // numero de rondas
+        this.first_rounds = 30; 
+        this.second_rounds = 20; 
+        this.third_rounds = 30; 
+        this.number_rounds = this.first_rounds + this.second_rounds + this.third_rounds; // numero de rondas
         this.tableros = []; // lista de tableros
         this.tablero_actual = undefined; // tablero actual
         this.flag = undefined;
@@ -223,15 +226,15 @@ export default class ArticGame extends Phaser.Scene {
     // Customs functions ------------------------------------------------------------------------------------------------------------------------------
     // creacion de niveles / rondas
     createRounds() {
-        for (let i = 0; i < this.number_rounds; i++) {
+        for (let i = 0; i < this.first_rounds; i++) {
             this.tableros.push(new Level(this.levels_global[0]));
         }
         this.tableros.push('medium');
-        for (let i = 0; i < this.number_rounds; i++) {
+        for (let i = 0; i < this.second_rounds; i++) {
             this.tableros.push(new Level(this.levels_global[1]));
         }
         this.tableros.push('hard');
-        for (let i = 0; i < this.number_rounds; i++) {
+        for (let i = 0; i < this.third_rounds; i++) {
             this.tableros.push(new Level(this.levels_global[2]));
         }
         this.flag = true;
