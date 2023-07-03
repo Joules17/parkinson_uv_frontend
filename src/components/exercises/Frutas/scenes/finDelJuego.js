@@ -1,6 +1,7 @@
 // phaser library
 import Phaser from 'phaser';
 import '../styles.css'
+import FullScreenBttn from 'components/Factory/FullScreenBttn';
 
 export default class finDelJuego extends Phaser.Scene {
 

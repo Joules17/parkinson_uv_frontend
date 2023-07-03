@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import Level from 'components/exercises/LetraAventura/sprites/Level';
+import Level from 'components/exercises/LetraAventura/sprites/level.js';
 import keyboard from 'components/exercises/LetraAventura/sprites/keyboard';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 // assets imports

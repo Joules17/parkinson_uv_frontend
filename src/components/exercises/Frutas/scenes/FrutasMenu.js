@@ -171,8 +171,9 @@ export default class FrutasMenu extends Phaser.Scene {
             });
         }
         if (this.flag) {
+            const settings = this.sys.settings.data.settings;
             this.flag = false;
-            this.scene.start('FrutasLoby');
+            this.scene.start('FrutasLoby', {settings});
         }
     }
 

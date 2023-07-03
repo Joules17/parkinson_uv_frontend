@@ -19,6 +19,4 @@ const gamesListSlice = createSlice({
 
 export const { setGameList, resetGameList } = gamesListSlice.actions;
 
-export const selectGameList = (state) => state.gameList;
-
 export default gamesListSlice.reducer;

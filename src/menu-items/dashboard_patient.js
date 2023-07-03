@@ -28,7 +28,7 @@ const dashboard_patient = {
             id: 'library',
             title: 'Biblioteca',
             type: 'item',
-            url: '/exercise2',
+            url: '/library-page',
             icon: icons.UnorderedListOutlined,
             breadcrumbs: false
         },

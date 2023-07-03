@@ -12,6 +12,7 @@ import 'components/exercises/ArticRows/styles.css'
 
 class GameArtic extends Component {
   componentDidMount() {
+    const { settings } = this.props;
     const config = {
       type: Phaser.AUTO,
       parent: 'phaser-game-container',

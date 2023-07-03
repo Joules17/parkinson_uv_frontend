@@ -92,6 +92,9 @@ export default class rondas extends Phaser.Scene {
     }
 
     create() {
+        const settings = this.sys.settings.data.settings;
+        this.numberFases = settings.rondas
+        this.limite = settings.rondas
         this.cameras.main.setBackgroundColor(0xffffff);
         // this.initializer();
 

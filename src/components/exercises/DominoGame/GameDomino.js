@@ -13,6 +13,7 @@ import 'components/exercises/DominoGame/styles.css'
 
 class Domino extends Component {
     componentDidMount() {
+        const { settings } = this.props;
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-game-container',

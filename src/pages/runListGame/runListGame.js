@@ -33,12 +33,14 @@ const RunListGames = () => {
 
     // useEffect(() => {
     //     setStartGame(games[0])
+    
     // }, [games]);
-
-    const cards = gameListState.gamesList.juegos.map((juego) => ({
+    console.log(gameListState?.gamesList.juegos)
+    const cards = gameListState?.gamesList.juegos.map((juego) => ({
         image: juego.urlImage,
         title: juego.name,
-        description: juego.dominio
+        description: juego.dominio,
+        settings: juego.settings
     }));
     const responsive = {
         superLargeDesktop: {
@@ -62,17 +64,17 @@ const RunListGames = () => {
 
 
     const renderGame = () => {
-        switch (startGame) {
+        switch (startGame.title) {
             case "Frutas":
-                return <GameFruits />;
+                return <GameFruits settings={startGame.settings}/>;
             case "Numeros":
-                return <GameNumbers />;
+                return <GameNumbers settings={startGame.settings}/>;
             case "Flechas Articas":
-                return <GameArtic />;
+                return <GameArtic settings={startGame.settings}/>;
             case "Frutastico":
-                return <GameFrutastic />;
+                return <GameFrutastic settings={startGame.settings}/>;
             case "Purple Domino":
-                return <GameDomino />;
+                return <GameDomino settings={startGame.settings}/>;
             default:
                 return null;
         }
@@ -82,7 +84,7 @@ const RunListGames = () => {
     const renderCard = (card, index) => {
         return (
             <Card key={index} sx={{ maxWidth: 230 }}>
-                <CardActionArea onClick={() => setStartGame(card.title)}>
+                <CardActionArea onClick={() => setStartGame({title: card.title, settings: card.settings})}>
                     <CardMedia
                         component="img"
                         height="90"
@@ -115,7 +117,9 @@ const RunListGames = () => {
                 <Carousel responsive={responsive}>
                     {cards.map((card, index) => renderCard(card, index))}
                 </Carousel>
-                {renderGame()}
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {renderGame()}
+                </div>
             </Stack>
         </MainCard>
     )
