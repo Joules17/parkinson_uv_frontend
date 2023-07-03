@@ -40,7 +40,6 @@ export default class DominoGame extends Phaser.Scene {
         this.right_side_base = undefined;
         this.right_rectangle = undefined; 
         this.bottom_panel = undefined; 
-        this.panel_question = undefined; 
 
         this.circle_yes = undefined; 
         this.circle_no = undefined; 
@@ -118,12 +117,6 @@ export default class DominoGame extends Phaser.Scene {
         this.bottom_panel = this.add.graphics(); 
         this.bottom_panel.fillStyle(0x000000, 0.8); 
         this.bottom_panel.fillRect(0, 550, 800, 50)
-        // ----------------------------------------------------------------------------------------------------------
-        this.panel_question = this.add.graphics(); 
-        this.panel_question.fillStyle(0x032670, 1);
-        this.panel_question.lineStyle(1, 0xffffff); 
-        this.panel_question.fillRoundedRect(100, 10, 600, 70, 5)
-        this.panel_question.strokeRoundedRect(100, 10, 600, 70, 5)
         
         // yes circle 
         this.circle_yes = this.add.graphics();

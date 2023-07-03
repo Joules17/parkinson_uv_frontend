@@ -15,7 +15,6 @@ export default class Level {
         // vars
         this.side_option = ['right', 'left'];
         this.answer_option = ['yes', 'no'];
-        this.question_option = ['¿Es una letra?', '¿Es un numero?']
         this.object_option = undefined;
         this.correct_option = undefined; 
 
@@ -26,7 +25,6 @@ export default class Level {
     gen_env() {
         var side = this.side_option[Math.floor(Math.random() * this.side_option.length)];
         this.correct_option = this.answer_option[Math.floor(Math.random() * this.answer_option.length)];
-        var question = this.question_option[Math.floor(Math.random() *  this.question_option.length)]; 
         var content, gen_x, gen_y, color; 
         gen_y = (this.game_height / 2) + 40
         if (side === 'right') {
@@ -50,7 +48,6 @@ export default class Level {
             posx: gen_x, 
             posy: gen_y,
             key: content,
-            question: question,
             original_scale: this.sprite_scale,
             correct_option: this.correct_option,
             color: color, 
