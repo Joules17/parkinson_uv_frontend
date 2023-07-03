@@ -117,7 +117,9 @@ const RunListGames = () => {
                 <Carousel responsive={responsive}>
                     {cards.map((card, index) => renderCard(card, index))}
                 </Carousel>
-                {renderGame()}
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {renderGame()}
+                </div>
             </Stack>
         </MainCard>
     )

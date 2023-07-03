@@ -17,7 +17,6 @@ export default class FrutasInit extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000, 3000, "", { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(20)
-        const settings = this.sys.settings.data.settings;
         // Musica ---------------
         /*
         let musica; 
