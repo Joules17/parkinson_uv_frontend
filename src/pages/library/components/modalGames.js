@@ -8,6 +8,7 @@ import { setGameList } from 'store/reducers/gamesListSlice';
 
 const ModalGames = ({ list, open, handleClose }) => {
   const gameListState = useSelector((state) => state.gamesList);
+  console.log(list)
   const dispatch = useDispatch();
   const [modifiedList, setModifiedList] = useState(null);
   const [expandedItem, setExpandedItem] = useState(null);
