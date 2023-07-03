@@ -57,26 +57,33 @@ export default class FrutasticRondas extends Phaser.Scene {
         // variables
         this.flag_init = undefined;
         this.error_flag = false;
-        this.number_rounds = 20;
+        this.number_rounds = [5, 6, 10, 6];
+        this.current_level = 1; 
         this.current_number = 1;
         this.number_errors = 0;
 
         // config imported by apiRest
-        this.tablero_config = {
-            scene: this,
-            game_width: 500,
-            game_height: 420,
-            pos_initx: 80,
-            pos_inity: 50,
-            number_objects: this.number_rounds,
-            padding: 30,
-            spriteWidth: 5,
-            spriteHeight: 5,
-            sprite_scale: 0.17,
-            category: ['frutas', 'casa', 'comida', 'animals'],
-            actual: false, // propiedad visible del tablero
-            color_wished: undefined
-        };
+        this.tableros_config = []
+
+        for (let i = 0; i < this.number_rounds.length; i++) {
+            this.tableros_config.push(
+                {
+                    scene: this,
+                    game_width: 500,
+                    game_height: 420,
+                    pos_initx: 80,
+                    pos_inity: 50,
+                    number_objects: this.number_rounds[i],
+                    padding: 30,
+                    spriteWidth: 5,
+                    spriteHeight: 5,
+                    sprite_scale: 0.17,
+                    category: ['frutas', 'casa', 'comida', 'animals'],
+                    actual: false,
+                    color_wished: undefined
+                }
+            );
+        }
     }
 
     preload() {
@@ -132,7 +139,7 @@ export default class FrutasticRondas extends Phaser.Scene {
 
         // text
         this.text_numberrondas = this.add
-            .text(120, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'ARCO', fill: '#000000' })
+            .text(120, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1], { fontFamily: 'ARCO', fill: '#000000' })
             .setFontSize(25);
         this.texto_tiempototal = this.add
             .text(21, 538, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'ARCO', fill: '#000000' })
@@ -140,6 +147,10 @@ export default class FrutasticRondas extends Phaser.Scene {
         this.texto_errores = this.add
             .text(350, 540, 'ERRORES: ' + this.number_errors, { fontFamily: 'ARCO', fill: '#000000' })
             .setFontSize(25);
+        this.texto_niveles = this.add
+            .text(570, 540, 'Nivel: ' + this.current_level + '/' + this.number_rounds.length, { fontFamily: 'ARCO', fill: '#000000'})
+            .setFontSize(25);
+        this.texto_niveles.setVisible(false); 
         this.texto_errores.setVisible(false);
         this.texto_tiempototal.setVisible(false);
         this.text_numberrondas.setVisible(false);
@@ -149,9 +160,16 @@ export default class FrutasticRondas extends Phaser.Scene {
         this.aparecer(this.circle_round, this);
 
         // board ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-        this.board = new Board(this.tablero_config);
-        this.lista_tablero = this.board.get_matrices();
-
+        this.lista_tablero = [];
+        let board;
+        for (let i = 0; i < this.tableros_config.length;  i++) {
+            board = new Board(this.tableros_config[i])
+            if (i !== 0) {
+                this.lista_tablero.push('cambio'); 
+            }
+            this.lista_tablero.push(...board.get_matrices());
+        }
+        console.log(this.lista_tablero)
         // fullScreenButton ---------------------------------------------------------------------------------------------------
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     }
@@ -162,17 +180,19 @@ export default class FrutasticRondas extends Phaser.Scene {
             this.texto_tiempototal.setVisible(true);
             this.text_numberrondas.setVisible(true);
             this.texto_errores.setVisible(true);
+            this.texto_niveles.setVisible(true); 
             this.flag_init = false;
             this.flag_game = true;
         } else if (this.flag_game) {
-            if (!(this.tablero_actual === undefined)) {
+            if ((this.tablero_actual !== undefined) && (this.tablero_actual !== 'cambio') ) {
                 this.tablero_actual.setVisible(false);
 
                 // time ---------------------------------------------------------------------------------------------------------------------------------------------------------------
                 this.tiempo_rondas.push(this.tiempo_por_ronda);
                 this.tiempo_por_ronda = 0;
                 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-                this.text_numberrondas.setText('Rondas: ' + this.current_number + '/' + this.number_rounds);
+                this.text_numberrondas.setText('Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1]);
+                this.texto_niveles.setText('Nivel: ' + this.current_level + '/' + this.number_rounds.length)
             }
             this.pon_tablero();
         }
@@ -204,8 +224,16 @@ export default class FrutasticRondas extends Phaser.Scene {
     pon_tablero() {
         if (this.lista_tablero.length != 0) {
             this.tablero_actual = this.lista_tablero.shift();
-            this.tablero_actual.setVisible(true);
-            this.flag_game = false;
+            if (this.tablero_actual === 'cambio') {
+                this.current_level += 1;
+                this.current_number = 1;
+                this.text_numberrondas.setText('Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1]);
+                this.texto_niveles.setText('Nivel: ' + this.current_level + '/' + this.number_rounds.length) 
+            } else {
+                this.tablero_actual.setVisible(true);
+                this.flag_game = false;
+            }
+            
         } else {
             this.fin_del_juego = true;
             this.flag_game = false;
