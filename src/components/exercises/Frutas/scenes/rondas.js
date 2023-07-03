@@ -28,7 +28,6 @@ export default class rondas extends Phaser.Scene {
   constructor() {
     super({ key: 'rondas', backgroundColor: 0xffffff });
     this.blockup, this.blockdown = undefined;
-
     // config rondas 
     this.numberFases = 20;
     this.tableroActual = undefined;
@@ -55,7 +54,6 @@ export default class rondas extends Phaser.Scene {
     this.flag = false;
     this.fin = false;
     this.lista_tablero = [];
-    this.limit = 22;
 
     // config imported by apiRest
     this.tablero_config = {
@@ -96,6 +94,9 @@ export default class rondas extends Phaser.Scene {
   }
 
   create() {
+    const settings = this.sys.settings.data.settings;
+    this.numberFases = settings.rondas
+    this.limite = settings.rondas
     this.cameras.main.setBackgroundColor(0xffffff);
     this.blockdown = this.add.rectangle(0, 800, 1800, 200, 0x3f1651, 1);
     this.blockup = this.add.rectangle(0, 0, 1800, 100, 0x3f1651, 1);

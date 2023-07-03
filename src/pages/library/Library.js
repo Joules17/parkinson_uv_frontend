@@ -7,12 +7,15 @@ import { lista_juegos } from './components/globals';
 import Divider from '@mui/material/Divider';
 import MainCard from 'components/MainCard';
 import ModalGames from './components/modalGames';
+import { useDispatch } from 'react-redux';
+import { setGameList } from 'store/reducers/gamesListSlice';
 
 // import OrderTable from './components/OrdersTable';
 
 // ==============================|| LIBRARY PAGE ||============================== //
 
 const Library = () => {
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [list, setList] = useState({})
 
@@ -23,6 +26,7 @@ const Library = () => {
 
     const handleListItemClick = (event, list) => {
         setList(list);
+        dispatch(setGameList({ "gamesList": list }))
         setOpen(true);
     };
 

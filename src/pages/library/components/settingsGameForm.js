@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, TextField, MenuItem, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const SettingsGameForm = ({ typeForm, list, onListUpdate }) => {
-
-   const [modifiedList, setModifiedList] = useState(list);
+   const gameListState = useSelector((state) => state.gamesList);
+   const [modifiedList, setModifiedList] = useState(gameListState.gamesList);
    const rounds = Array.from({ length: 12 }, (_, index) => ({
       value: index + 1,
       label: (index + 1).toString(),
@@ -15,16 +16,14 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate }) => {
    ]
 
    const selectedGame = modifiedList.juegos.find((juego) => juego.name === typeForm);
-   const defaultRounds = selectedGame ? selectedGame.settings.rondas : 1;
+   const valueRounds = selectedGame ? selectedGame.settings.rondas : 1;
+   
 
    const handleRoundsChange = (event) => {
       const selectedRounds = event.target.value;
       const updatedList = JSON.parse(JSON.stringify(modifiedList));
-      console.log(updatedList)
       updatedList.juegos.forEach((juego) => {
          if (juego.name === typeForm) {
-            console.log("hola")
-            console.log(juego.settings)
             juego.settings.rondas = selectedRounds;
          }
       });
@@ -32,10 +31,6 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate }) => {
    };
 
    const handleFormSubmit = () => {
-      // Realiza las modificaciones en modifiedList según tus necesidades
-      // ...
-
-      // Llama a la función de devolución de llamada para pasar la lista modificada a ModalGames
       onListUpdate(modifiedList);
    };
 
@@ -55,7 +50,7 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate }) => {
                   select
                   label="Número de rondas"
                   defaultValue="1"
-                  value={defaultRounds}
+                  value={valueRounds}
                   InputLabelProps={{
                      style: { fontSize: '18.5px' } // Ajusta el tamaño de fuente según tus necesidades
                   }}

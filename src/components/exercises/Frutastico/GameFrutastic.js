@@ -14,6 +14,7 @@ import 'components/exercises/Frutastico/styles.css'
 
 class GameFrutastic extends Component {
   componentDidMount() {
+    const { settings } = this.props;
     const config = {
       type: Phaser.AUTO,
         width: 800,

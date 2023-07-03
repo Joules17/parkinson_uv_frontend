@@ -127,8 +127,9 @@ export default class FrutasLoby extends Phaser.Scene {
     
     this.button_continue.on('pointerdown', () => {
       if (this.victory_message.visible && this.button_continue.visible) {
+        const settings = this.sys.settings.data.settings;
         this.sound.play('good')
-        this.scene.start('rondas')
+        this.scene.start('rondas', {settings})
       }
     })
 

@@ -11,8 +11,10 @@ import rondas from 'components/exercises/Frutas/scenes/rondas';
 //css
 import 'components/exercises/Frutas/styles.css';
 
-class Numbers extends Component {
+class Numbers extends Component{
+    
     componentDidMount() {
+        const { settings } = this.props;
         const config = {
             type: Phaser.AUTO,
             width: 800,
@@ -31,6 +33,7 @@ class Numbers extends Component {
         };
 
         this.game = new Phaser.Game(config);
+        this.game.scene.start('FrutasInit', {settings});
     }
 
     componentWillUnmount() {

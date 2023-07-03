@@ -61,7 +61,6 @@ export default class FrutasMenu extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor('#3f1651');
-    
     // 
     this.flag = false; 
     // botones; start
@@ -205,7 +204,8 @@ export default class FrutasMenu extends Phaser.Scene {
     }
     if (this.flag) {
       this.flag = false; 
-      this.scene.start('FrutasLoby')
+      const settings = this.sys.settings.data.settings;
+      this.scene.start('FrutasLoby', {settings})
     }
   }
 

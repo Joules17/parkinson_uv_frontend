@@ -11,26 +11,27 @@ import 'components/exercises/ArticRows/styles.css'
 
 class GameArtic extends Component {
   componentDidMount() {
+    const { settings } = this.props;
     const config = {
       type: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        physics: {
-          default: 'arcade',
-          arcade: {
-            debug: false,
-          },
+      width: 800,
+      height: 600,
+      physics: {
+        default: 'arcade',
+        arcade: {
+          debug: false,
         },
-        scale: {
-          mode: Phaser.Scale.NONE,
-          autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
-        },
-        scene: [ArticInit, ArticMenu, ArticGame, ArticOver],
+      },
+      scale: {
+        mode: Phaser.Scale.NONE,
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+      },
+      scene: [ArticInit, ArticMenu, ArticGame, ArticOver],
+    }
+
+    this.game = new Phaser.Game(config);
   }
 
-  this.game = new Phaser.Game(config);
-  }
-  
   componentWillUnmount() {
     // destruir el juego al desmontar el componente
     this.game.destroy(true);
