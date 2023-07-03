@@ -57,26 +57,32 @@ export default class FrutasticRondas extends Phaser.Scene {
         // variables
         this.flag_init = undefined;
         this.error_flag = false;
-        this.number_rounds = 20;
+        this.number_rounds = [20, 15, 10, 20];
         this.current_number = 1;
         this.number_errors = 0;
 
         // config imported by apiRest
-        this.tablero_config = {
-            scene: this,
-            game_width: 500,
-            game_height: 420,
-            pos_initx: 80,
-            pos_inity: 50,
-            number_objects: this.number_rounds,
-            padding: 30,
-            spriteWidth: 5,
-            spriteHeight: 5,
-            sprite_scale: 0.17,
-            category: ['frutas', 'casa', 'comida', 'animals'],
-            actual: false, // propiedad visible del tablero
-            color_wished: undefined
-        };
+        this.tableros_config = []
+
+        for (let num in this.number_rounds) {
+            this.tableros_config.push(
+                {
+                    scene: this,
+                    game_width: 500,
+                    game_height: 420,
+                    pos_initx: 80,
+                    pos_inity: 50,
+                    number_objects: num,
+                    padding: 30,
+                    spriteWidth: 5,
+                    spriteHeight: 5,
+                    sprite_scale: 0.17,
+                    category: ['frutas', 'casa', 'comida', 'animals'],
+                    actual: false,
+                    color_wished: undefined
+                }
+            );
+        }
     }
 
     preload() {
@@ -149,8 +155,12 @@ export default class FrutasticRondas extends Phaser.Scene {
         this.aparecer(this.circle_round, this);
 
         // board ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-        this.board = new Board(this.tablero_config);
-        this.lista_tablero = this.board.get_matrices();
+        this.lista_tablero = [];
+        let board;
+        for (let elem in this.tableros_config) {
+            board = new Board(elem)
+            this.lista_tablero.push(...board.get_matrices());
+        }
 
         // fullScreenButton ---------------------------------------------------------------------------------------------------
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
