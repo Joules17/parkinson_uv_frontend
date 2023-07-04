@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import level from 'components/exercises/DominoGame/sprites/level.js'
+import Level from 'components/exercises/DominoGame/sprites/Level.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
@@ -249,7 +249,7 @@ export default class DominoGame extends Phaser.Scene {
 
     create_rounds() {
         for (let i = 0; i < this.number_rounds; i++) {
-            this.tableros.push(new level(this.levels_config)); 
+            this.tableros.push(new Level(this.levels_config)); 
         }
         this.flag = true; 
     }
