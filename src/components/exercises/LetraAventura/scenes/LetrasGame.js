@@ -121,6 +121,8 @@ export default class LetrasGame extends Phaser.Scene {
     }
 
     create() {
+        const settings = this.sys.settings.data.settings;
+        this.number_rounds = settings.rondas
         // bg image
         this.bg = this.add.image(400, 300, 'bg');
 

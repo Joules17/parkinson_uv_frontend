@@ -63,6 +63,7 @@ export default class ArticGame extends Phaser.Scene {
         this.first_rounds = 30; 
         this.second_rounds = 20; 
         this.third_rounds = 30; 
+        // Pendiente definir los settings de este juego
         this.number_rounds = this.first_rounds + this.second_rounds + this.third_rounds; // numero de rondas
         this.tableros = []; // lista de tableros
         this.tablero_actual = undefined; // tablero actual

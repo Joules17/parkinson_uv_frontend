@@ -48,6 +48,17 @@ export const lista_juegos = [
                 urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
                 played: false
             },
+            {
+                id_game: "05",
+                name: "Letra Aventura",
+                nivel: 4,
+                dominio: "Atención",
+                settings: {
+                    rondas: 3
+                },
+                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                played: false
+            },
         ]
 
     },

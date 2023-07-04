@@ -95,7 +95,8 @@ export default class DominoMenu extends Phaser.Scene {
     // start_button 
     this.start_button.on('pointerdown', () => {
         this.sound.play('correct')
-        this.scene.start('DominoGame')
+        const settings = this.sys.settings.data.settings;
+        this.scene.start('DominoGame', {settings})
     }); 
 
     this.start_button.on('pointerover', () => {
@@ -144,7 +145,8 @@ export default class DominoMenu extends Phaser.Scene {
     }); 
     this.tuto_button.on('pointerdown', () => {
         this.sound.play('correct')
-        this.scene.start('DominoTutorial')
+        const settings = this.sys.settings.data.settings;
+        this.scene.start('DominoTutorial', {settings})
     }); 
     }
 }

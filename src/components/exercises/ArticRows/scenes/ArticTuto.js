@@ -172,7 +172,8 @@ export default class ArticTuto extends Phaser.Scene {
         this.play_button.setInteractive(); 
         this.play_button.on('pointerdown', () => {
           this.sound.play('start_button')
-          this.scene.start('ArticGame')
+          const settings = this.sys.settings.data.settings;
+          this.scene.start('ArticGame', {settings})
         }); 
   
         this.play_button.on('pointerover', () => {
