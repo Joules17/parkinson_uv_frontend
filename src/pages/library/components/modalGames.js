@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Modal, List, ListItemText, Box, Divider, ListItemAvatar, Avatar, Typography, Collapse, ListItemButton } from '@mui/material';
 import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import SettingsGameForm from './settingsGameForm';
@@ -27,7 +27,7 @@ const ModalGames = ({ list, open, handleClose }) => {
   };
 
   const initListGames = () => {
-    dispatch(setGameList({ "gamesList": modifiedList? modifiedList : list  })) 
+    dispatch(setGameList({ "gamesList": modifiedList? modifiedList : list  }))
   }
 
   const style = {

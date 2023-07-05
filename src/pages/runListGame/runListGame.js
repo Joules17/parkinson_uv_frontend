@@ -1,6 +1,4 @@
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Stack, CardActionArea } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import { lista_juegos } from 'pages/library/components/globals';
 import 'react-multi-carousel/lib/styles.css';
@@ -34,7 +32,7 @@ const RunListGames = () => {
 
     // useEffect(() => {
     //     setStartGame(games[0])
-    
+
     // }, [games]);
     console.log(gameListState?.gamesList.juegos)
     const cards = gameListState?.gamesList.juegos.map((juego) => ({
