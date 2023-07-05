@@ -36,9 +36,9 @@ export default class Level {
     create_tablero () {
         let palabra = this.create_word();
         console.log(palabra)
-        var len = palabra.length;
-        var total_width = len * this.letter_width;
-        var offset = (this.game_width - total_width) / 2;
+        const len = palabra.length;
+        const total_width = len * this.letter_width;
+        const offset = (this.game_width - total_width) / 2;
 
         // creacion de la palabra secreta y de las cards
         for (let i = 0; i < len; i++) {
@@ -64,17 +64,17 @@ export default class Level {
     }
 
     set_visible (val) {
-        for (let i = 0; i < this.letters_generated.length; i++) {
-            this.letters_generated[i].setVisible(val);
+        for (let elem of this.letters_generated) {
+            elem.setVisible(val);
         }
-        for (let i = 0; i < this.letter_space.length; i++) {
-            this.letter_space[i].set_visible(val);
+        for (let elem of this.letter_space) {
+            elem.set_visible(val);
         }
     }
 
     set_hiden() {
-        for (let i = 0; i < this.letter_space.length; i++) {
-            this.letter_space[i].set_covered(false);
+        for (let elem of this.letter_space) {
+            elem.set_covered(false);
         }
     }
 }

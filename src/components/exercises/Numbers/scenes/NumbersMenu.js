@@ -2,8 +2,8 @@
 import Phaser from 'phaser';
 import '../styles.css'
 
-// custom classes imported: 
-import Frutita from '../sprites/base/Frutita.js' 
+// custom classes imported:
+import Frutita from '../sprites/base/Frutita.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
@@ -18,19 +18,20 @@ export default class NumbersMenu extends Phaser.Scene {
     super({key: 'NumbersMenu', backgroundColor: '#0024ad'});
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
-    
-    // botones
-    this.start_button, this.fullscreen_button = undefined; 
 
-    // titulo 
-    this.title = undefined; 
-    this.title2 = undefined; 
+    // botones
+    this.start_button = undefined;
+    this.fullscreen_button = undefined;
+
+    // titulo
+    this.title = undefined;
+    this.title2 = undefined;
 
     // sprites
-    this.lupa = undefined; 
+    this.lupa = undefined;
 
-    // variables 
-    this.pressed = false; 
+    // variables
+    this.pressed = false;
   }
 
   preload() {
@@ -46,9 +47,9 @@ export default class NumbersMenu extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#0024ad');
 
     this.start_button = this.add.text(320, 450, "INICIAR", {
-      fontFamily: 'TROUBLE', 
+      fontFamily: 'TROUBLE',
       fill: '#ffc115',
-    }).setFontSize(80); 
+    }).setFontSize(80);
 
     this.start_button.setInteractive();
 
@@ -61,10 +62,10 @@ export default class NumbersMenu extends Phaser.Scene {
     this.lupa.setScale(0.2)
 
     this.lupa.dance_function(15, 1000)
-    
+
     // fullScreenButton ---------------------------------------------------------------------------------------------------
     new FullScreenBttn(this, 770, 30, 'fullscreenImg');
-    
+
     // Eventos
 
     this.start_button.on('pointerdown', () => {
@@ -79,7 +80,7 @@ export default class NumbersMenu extends Phaser.Scene {
         targets: this.start_button,
         scaleX: 1.1,
         scaleY: 1.1,
-        duration: 100, 
+        duration: 100,
         ease: 'Power2'
       });
     });
@@ -90,7 +91,7 @@ export default class NumbersMenu extends Phaser.Scene {
         targets: this.start_button,
         scaleX: 1,
         scaleY: 1,
-        duration: 100, 
+        duration: 100,
         ease: 'Power2'
       });
     });
@@ -107,18 +108,18 @@ export default class NumbersMenu extends Phaser.Scene {
   move_upside(spt, position, duration, escena) {
     spt.originalY = spt.originalY - position
     this.tweens.add({
-      targets: spt, 
+      targets: spt,
       y: spt.y - position,
-      duration: duration, 
+      duration: duration,
       ease: 'Power2',
-      yoyo: false, 
-      repeat: 0, 
+      yoyo: false,
+      repeat: 0,
       onComplete: function () {
-        escena.flag = true; 
+        escena.flag = true;
       }
     });
   }
-  
+
   toggleFullscreen() {
     if (this.scale.isFullscreen) {
       this.scale.stopFullscreen();
