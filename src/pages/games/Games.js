@@ -1,7 +1,8 @@
 // material-ui
 // import Button from '@mui/material/Button';
 // import Modal from '@mui/material/Modal';
-import { Card, CardContent, CardMedia, Typography, Divider, Stack } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -9,41 +10,42 @@ import 'react-multi-carousel/lib/styles.css';
 import MainCard from 'components/MainCard';
 
 // ==============================|| GAMES PAGE ||============================== //
-const cards = [
+const cardsMemory = [
     {
         image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
-        title: 'Flechas',
+        title: 'Purple Domino',
         description: 'Descripción'
     },
     {
         image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
-        title: 'Números',
+        title: 'Frutastic',
+        description: 'Descripción'
+    }
+];
+
+const cardsAtention = [
+    {
+        image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
+        title: 'Flechas Articas',
         description: 'Descripción'
     },
     {
-        image: 'https://source.unsplash.com/featured/?forests',
-        title: 'Bosques',
-        description: 'Los bosques son misteriosos y hermosos.'
+        image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
+        title: 'Encuentra el número',
+        description: 'Descripción'
+    }
+];
+
+const cardsFunctions = [
+    {
+        image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
+        title: 'Letra Aventura',
+        description: 'Descripción'
     },
     {
-        image: 'https://source.unsplash.com/featured/?forests',
-        title: 'Bosques',
-        description: 'Los bosques son misteriosos y hermosos.'
-    },
-    {
-        image: 'https://source.unsplash.com/featured/?forests',
-        title: 'Bosques',
-        description: 'Los bosques son misteriosos y hermosos.'
-    },
-    {
-        image: 'https://source.unsplash.com/featured/?forests',
-        title: 'Bosques',
-        description: 'Los bosques son misteriosos y hermosos.'
-    },
-    {
-        image: 'https://source.unsplash.com/featured/?forests',
-        title: 'Bosques',
-        description: 'Los bosques son misteriosos y hermosos.'
+        image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
+        title: 'Frutas',
+        description: 'Descripción'
     }
 ];
 const responsive = {
@@ -66,56 +68,54 @@ const responsive = {
     }
 };
 
-const renderCard = (card, index) => {
+const CardComponent = ({ card }) => {
+    const navigate = useNavigate();
+
     return (
-        <Card key={index} sx={{ maxWidth: 230 }}>
-            <CardMedia
-                component="img"
-                height="150"
-                image={card.image}
-                alt={card.title}
-            />
-            <CardContent>
-                <Typography variant="h5">{card.title}</Typography>
-                <Typography variant="body2">{card.description}</Typography>
-            </CardContent>
+        <Card sx={{ maxWidth: 230 }}>
+            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}`)}>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    image={card.image}
+                    alt={card.title}
+                />
+                <CardContent>
+                    <Typography variant="h5">{card.title}</Typography>
+                    <Typography variant="body2">{card.description}</Typography>
+                </CardContent>
+            </CardActionArea>
         </Card>
     );
 };
 
 const Games = () => (
-    <MainCard title="Juegos" darkTitle="true">
+    <MainCard title="Juegos" darkTitle={true}>
         <Stack spacing={2}>
-
-
             <Typography variant="h5">Memoria</Typography>
             <Carousel responsive={responsive}>
-                {cards.map((card, index) => renderCard(card, index))}
+                {cardsMemory.map((card, index) => (
+                    <CardComponent key={index} card={card} />
+                ))}
             </Carousel>
-
             <Divider />
 
             <Typography variant="h5">Atención</Typography>
             <Carousel responsive={responsive}>
-                {cards.map((card, index) => renderCard(card, index))}
+                {cardsAtention.map((card, index) => (
+                    <CardComponent key={index} card={card} />
+                ))}
             </Carousel>
-
-            <Divider />
-
-            <Typography variant="h5">Habilidades visoconstructivas</Typography>
-            <Carousel responsive={responsive}>
-                {cards.map((card, index) => renderCard(card, index))}
-            </Carousel>
-
             <Divider />
 
             <Typography variant="h5">Funciones ejecutivas</Typography>
             <Carousel responsive={responsive}>
-                {cards.map((card, index) => renderCard(card, index))}
+                {cardsFunctions.map((card, index) => (
+                    <CardComponent key={index} card={card} />
+                ))}
             </Carousel>
         </Stack>
     </MainCard>
-
 );
 
 export default Games;

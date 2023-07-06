@@ -15,6 +15,7 @@ const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
 const Profile = Loadable(lazy(() => import('pages/account/Profile')));
 const LibraryPage = Loadable(lazy(() => import('pages/library/Library')));
 const RunListGames = Loadable(lazy(() => import('pages/runListGame/runListGame')));
+const RunGame = Loadable(lazy(() => import('pages/runGame/runGame')));
 
 // Phaser Games
 const IndexNumbers = Loadable(lazy(() => import('components/exercises/indexNumbers'))); 
@@ -92,6 +93,10 @@ const MainRoutes = {
         {
             path: 'run-list-games',
             element: <RunListGames />
+        },
+        {
+            path: 'run-game',
+            element: <RunGame />
         },
         {
             path: 'games-page',
