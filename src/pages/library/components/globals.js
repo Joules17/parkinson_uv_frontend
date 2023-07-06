@@ -89,3 +89,71 @@ export const lista_juegos = [
 
     }
 ]
+
+export const juegos = [
+    {
+        id_game: "01",
+        name: "Frutas",
+        nivel: 3,
+        dominio: "Memoria",
+        settings: {
+            rondas: 5,
+            objetos: "Frutas"
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        played: false
+    },
+    {
+        id_game: "02",
+        name: "Flechas Articas",
+        nivel: 4,
+        dominio: "Atención",
+        settings: {
+            rondas: 3
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        played: false
+    },
+    {
+        id_game: "03",
+        name: "Frutastico",
+        nivel: 4,
+        dominio: "Atención",
+        settings: {
+            rondas: 3
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        played: false
+    },
+    {
+        id_game: "04",
+        name: "Purple Domino",
+        nivel: 4,
+        dominio: "Atención",
+        settings: {
+            rondas: 3
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        played: false
+    },
+    {
+        id_game: "05",
+        name: "Letra Aventura",
+        nivel: 4,
+        dominio: "Atención",
+        settings: {
+            rondas: 3
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        played: false
+    },
+    {
+        id_game: "06",
+        name: "Numeros",
+        dominio: "Atención",
+        settings: {
+            rondas: 10
+        },
+        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360"
+    }
+]
