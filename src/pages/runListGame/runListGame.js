@@ -34,7 +34,6 @@ const RunListGames = () => {
     //     setStartGame(games[0])
 
     // }, [games]);
-    console.log(gameListState?.gamesList.juegos)
     const cards = gameListState?.gamesList.juegos.map((juego) => ({
         image: juego.urlImage,
         title: juego.name,
