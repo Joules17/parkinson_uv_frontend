@@ -6,17 +6,17 @@ import blue_island from '../assets/music/blue-island.mp3'
 
 // Clase no visible para cargar assets e inicializar el juego
 export default class FrutasInit extends Phaser.Scene {
-    constructor () {
-        super({key: 'FrutasInit', backgroundColor: '#3f1651'});
+    constructor() {
+        super({ key: 'FrutasInit', backgroundColor: '#3f1651' });
     }
 
     preload() {
         this.load.audio('main_music', blue_island)
     }
 
-    create () {
+    create() {
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000, 3000, "", { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(20)
         // Musica ---------------
         /*
         let musica; 
@@ -35,9 +35,10 @@ export default class FrutasInit extends Phaser.Scene {
         */
 
         this.pass()
-    } 
+    }
 
-    pass () {
-        this.scene.start('FrutasMenu')
+    pass() {
+        const settings = this.sys.settings.data.settings;
+        this.scene.start('FrutasMenu', {settings})
     }
 }

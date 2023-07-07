@@ -29,7 +29,7 @@ const IndexFruits = () => {
 
         {cargado && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <GameFruits />
+                <GameFruits settings={null}/>
             </Box>
         )}
         </div>

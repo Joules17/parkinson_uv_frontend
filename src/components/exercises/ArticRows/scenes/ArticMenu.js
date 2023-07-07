@@ -152,7 +152,8 @@ export default class ArticMenu extends Phaser.Scene {
   // ------------------------------------------------------------------------------------------------------------------------------
   letsPlay() { 
     this.sound.play('start_button')
-    this.scene.start(this.scene_options[this.selected])
+    const settings = this.sys.settings.data.settings;
+    this.scene.start(this.scene_options[this.selected], {settings})
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   pointer_over (btn) {
@@ -172,7 +173,6 @@ export default class ArticMenu extends Phaser.Scene {
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   animation_movement(sprt) {
-    // var orientation_x = (direction_x === 'izquierda') ? -1 : 1; 
     this.tweens.add({
       targets: sprt,
       x: '-=30',

@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 
 export default class Frutita extends Phaser.Physics.Arcade.Sprite {
-    // Nota: Key: Skin: Imagen a la que hace referencia la fruta 
+    // Nota: Key: Skin: Imagen a la que hace referencia la fruta
     constructor(config) {
         super(config.scene, config.posx, config.posy, config.key);
 
@@ -13,14 +13,14 @@ export default class Frutita extends Phaser.Physics.Arcade.Sprite {
     }
 
     dance_function(angle, duration) {
-        var rotaIzq = this.scene.tweens.add({
+        const rotaIzq = this.scene.tweens.add({
             targets: this,
-            angle: '-=' + angle, 
-            duration: duration, 
-            yoyo: true, 
+            angle: '-=' + angle,
+            duration: duration,
+            yoyo: true,
             repeat: -1,
             ease: 'Linear'
-        }); 
+        });
 
         return rotaIzq;
     }

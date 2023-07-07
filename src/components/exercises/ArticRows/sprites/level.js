@@ -3,7 +3,7 @@ import arrow_list from './arrow_list'
 // custom classes
 import steroid_arrow from './steroid_arrow'
 import steroid_group from './steroid_group'
-export default class level {
+export default class Level {
     constructor(config) {
         this.scene = config.scene; 
         this.difficulty = config.difficulty;

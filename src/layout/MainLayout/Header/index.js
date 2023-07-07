@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { AppBar, IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, IconButton, Toolbar, useMediaQuery, Box } from '@mui/material';
 
 // project import
 import AppBarStyled from './AppBarStyled';
@@ -22,18 +22,22 @@ const Header = ({ open, handleDrawerToggle }) => {
 
     // common header
     const mainHeader = (
-        <Toolbar>
-            <IconButton
-                disableRipple
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-                edge="start"
-                color="secondary"
-                sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
-            >
-                {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </IconButton>
-            <HeaderContent />
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box>
+                <IconButton
+                    disableRipple
+                    aria-label="open drawer"
+                    onClick={handleDrawerToggle}
+                    edge="start"
+                    color="secondary"
+                    sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+                >
+                    {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                </IconButton>
+            </Box>
+            <Box sx ={{ display: 'flex', alignItems: 'center' }}>
+                <HeaderContent />
+            </Box>
         </Toolbar>
     );
 

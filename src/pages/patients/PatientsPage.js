@@ -49,7 +49,6 @@ const PatientsPage = () => {
     }, [userCharged])
 
     if (!(patientsLIST === undefined)) {
-        console.log(patientsLIST)
         return (
             <MainCard title="Pacientes" darkTitle="true">
                 <Grid item xs={12} md={7} lg={8}>

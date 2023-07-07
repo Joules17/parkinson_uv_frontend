@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css'
 
 // custom classes imported: 
-import level from '../sprites/level';
+import Level from '../sprites/Level.js';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
@@ -172,7 +172,8 @@ export default class ArticTuto extends Phaser.Scene {
         this.play_button.setInteractive(); 
         this.play_button.on('pointerdown', () => {
           this.sound.play('start_button')
-          this.scene.start('ArticGame')
+          const settings = this.sys.settings.data.settings;
+          this.scene.start('ArticGame', {settings})
         }); 
   
         this.play_button.on('pointerover', () => {
@@ -199,7 +200,7 @@ export default class ArticTuto extends Phaser.Scene {
 
     update() {
       if (this.flag) {
-        if (!(this.tablero_actual === undefined)) {
+        if (this.tablero_actual !== undefined) {
             if (!(this.tablero_actual === 'bad_explanation' || this.tablero_actual === 'patron_explanation')) {
                 this.tablero_actual.set_active(false);
             }
@@ -235,15 +236,15 @@ export default class ArticTuto extends Phaser.Scene {
     createRounds() {
         this.contador += 1; 
         for (let i = 0; i < this.good_rounds; i++) {
-            this.tableros.push(new level(this.level_config_good));
+            this.tableros.push(new Level(this.level_config_good));
         }
         this.tableros.push('bad_explanation');
         for (let i = 0; i < this.bad_rounds; i++) {
-            this.tableros.push(new level(this.level_config_bad));
+            this.tableros.push(new Level(this.level_config_bad));
         }
         this.tableros.push('patron_explanation')
         for (let i = 0; i < this.bad_rounds; i++) {
-          this.tableros.push(new level(this.level_config_patron));
+          this.tableros.push(new Level(this.level_config_patron));
         }
         this.flag = true;
     }

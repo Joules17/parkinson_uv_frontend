@@ -14,6 +14,7 @@ import 'components/exercises/Frutastico/styles.css'
 
 class GameFrutastic extends Component {
   componentDidMount() {
+    const { settings } = this.props;
     const config = {
       type: Phaser.AUTO,
       parent: 'phaser-game-container',
@@ -33,6 +34,7 @@ class GameFrutastic extends Component {
     }
 
     this.game = new Phaser.Game(config);
+    this.game.scene.start('FrutasticInit', {settings});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

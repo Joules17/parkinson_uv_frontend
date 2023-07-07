@@ -215,7 +215,6 @@ capitalizeFirstLetter.propTypes = {
 // ==============================|| ORDER TABLE ||============================== //
 
 export default function OrderTable({ list }) {
-    console.log('hola', list)
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
     const [selected] = useState([]);
