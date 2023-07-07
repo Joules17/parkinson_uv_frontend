@@ -18,7 +18,7 @@ Desplegado en [ParkinsonUV](https://kind-smoke-0fe347d10.3.azurestaticapps.net)
 
 
 ## Autores
-👩‍💻  **Lina Marcela Duque Becerra- 1841**
+👩‍💻  **Lina Marcela Duque Becerra- 1841877-3743**
 
 👨‍💻  **Julian Andres Salamanca Tellez - 1841654-3743**
 
