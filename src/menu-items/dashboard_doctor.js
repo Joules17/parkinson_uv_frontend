@@ -49,62 +49,6 @@ const dashboard_doctor = {
             breadcrumbs: false
         },
         {
-            id: 'exercise1',
-            title: 'Numeros',
-            type: 'item',
-            url: '/exercise1',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise2',
-            title: 'Flechas',
-            type: 'item',
-            url: '/exercise2',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise3',
-            title: 'Frutas Locas',
-            type: 'item',
-            url: '/exercise3',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise4',
-            title: 'Frutastico',
-            type: 'item',
-            url: '/exercise4',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise5',
-            title: 'Flechas Articas',
-            type: 'item',
-            url: '/exercise5',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise6',
-            title: 'Purple Domino', 
-            type: 'item',
-            url: '/exercise6',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
-            id: 'exercise7',
-            title: 'Letra Aventura', 
-            type: 'item',
-            url: '/exercise7',
-            icon: icons.PlayCircleOutlined,
-            breadcrumbs: false
-        },
-        {
             id: 'profile',
             title: 'Mi Perfil',
             type: 'item',

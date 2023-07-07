@@ -74,7 +74,7 @@ const ModalSelectGames = ({ open, handleClose }) => {
                         )}
                     </div>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
-                        <Button variant="contained" >Guardar</Button>
+                        <Button variant="contained" onClick={handleClose}>Guardar</Button>
                     </Box>
                 </Box>
             </Modal>

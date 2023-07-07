@@ -14,6 +14,7 @@ const ModalNewList = ({ open, handleClose }) => {
     const { getTherapist, getTherapistPatients } = useTherapistResponse()
 
     const handleCloseModal = () => {
+        handleClose()
         setOpenNextModal(false);
     };
 
@@ -40,7 +41,7 @@ const ModalNewList = ({ open, handleClose }) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 800,
-        maxHeight: '90vh', // Altura máxima del contenido
+        maxHeight: '90%', // Altura máxima del contenido
         bgcolor: 'background.paper',
         borderRadius: '10px',
         border: '1px solid #fafafa',
@@ -71,7 +72,7 @@ const ModalNewList = ({ open, handleClose }) => {
                             label="Nombre"
                             margin="normal"
                         />
-                        <h3 style={{ margin: '10px' }}>Escoge los pacientes para compartir tu lista: </h3>
+                        <h3 style={{ paddingTop: '10px' }}>Escoge los juegos para tu lista: </h3>
                         <Box sx={{ maxHeight: '320px', overflow: 'auto' }}>
                             {juegos.map((game) => (
                                 <>

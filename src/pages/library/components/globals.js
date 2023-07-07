@@ -12,7 +12,7 @@ export const lista_juegos = [
                     rondas: 5,
                     objetos: "Frutas"
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                urlImage: "https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand",
                 played: false
             },
             {
@@ -23,7 +23,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 3
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                urlImage: "https://i.imgur.com/kH5I6T2_d.webp?maxwidth=760&fidelity=grand",
                 played: false
             },
             {
@@ -34,7 +34,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 3
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                urlImage: "https://i.imgur.com/aKpxz47_d.webp?maxwidth=760&fidelity=grand",
                 played: false
             },
             {
@@ -56,7 +56,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 3
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                urlImage: "https://i.imgur.com/CkG4TuB.png",
                 played: false
             },
         ]
@@ -83,7 +83,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 10
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360"
+                urlImage: "https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg"
             }
         ]
 
@@ -100,7 +100,7 @@ export const juegos = [
             rondas: 5,
             objetos: "Frutas"
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        urlImage: "https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand",
         played: false
     },
     {
@@ -111,7 +111,7 @@ export const juegos = [
         settings: {
             rondas: 3
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        urlImage: "https://i.imgur.com/kH5I6T2_d.webp?maxwidth=760&fidelity=grand",
         played: false
     },
     {
@@ -122,7 +122,7 @@ export const juegos = [
         settings: {
             rondas: 3
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        urlImage: "https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand",
         played: false
     },
     {
@@ -144,7 +144,7 @@ export const juegos = [
         settings: {
             rondas: 3
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        urlImage: "https://i.imgur.com/CkG4TuB.png",
         played: false
     },
     {
@@ -154,6 +154,6 @@ export const juegos = [
         settings: {
             rondas: 10
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360"
+        urlImage: "https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg"
     }
 ]

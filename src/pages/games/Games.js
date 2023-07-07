@@ -17,7 +17,7 @@ const cardsMemory = [
         description: 'Descripción'
     },
     {
-        image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
+        image: 'https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand',
         title: 'Frutastic',
         description: 'Descripción'
     }
@@ -25,7 +25,7 @@ const cardsMemory = [
 
 const cardsAtention = [
     {
-        image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
+        image: 'https://i.imgur.com/kH5I6T2_d.webp?maxwidth=760&fidelity=grand',
         title: 'Flechas Articas',
         description: 'Descripción'
     },
@@ -38,12 +38,12 @@ const cardsAtention = [
 
 const cardsFunctions = [
     {
-        image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
+        image: 'https://i.imgur.com/CkG4TuB.png',
         title: 'Letra Aventura',
         description: 'Descripción'
     },
     {
-        image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
+        image: 'https://i.imgur.com/aKpxz47_d.webp?maxwidth=760&fidelity=grand',
         title: 'Frutas',
         description: 'Descripción'
     }
