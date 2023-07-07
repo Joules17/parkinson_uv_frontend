@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css'
 
 // custom classes imported: 
-import Level from '../sprites/Level.js';
+import Level from '../sprites/levelObj.js';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
