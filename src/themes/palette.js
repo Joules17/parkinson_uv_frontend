@@ -26,7 +26,7 @@ const Palette = (mode) => {
         '#000000'
     ];
     const greyAscent = ['#fafafa', '#bfbfbf', '#434343', '#1f1f1f'];
-    const greyConstant = ['#fafafb', '#e6ebf1'];
+    const greyConstant = ['#ffffff', '#ffffff'];
 
     colors.grey = [...greyPrimary, ...greyAscent, ...greyConstant];
 
