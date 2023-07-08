@@ -130,7 +130,7 @@ export const useExternalApi = () => {
                 "document_id" : datos.document_id, 
                 "document_type" : datos.document_type, 
                 "user_picture" : picture, 
-                "password": "basic",
+                "password": datos.password,
                 "email": email,
                 "user_status": true
             }
