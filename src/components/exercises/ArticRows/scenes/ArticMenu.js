@@ -153,6 +153,7 @@ export default class ArticMenu extends Phaser.Scene {
   letsPlay() { 
     this.sound.play('start_button')
     const settings = this.sys.settings.data.settings;
+    console.log('CULOPATO', settings)
     this.scene.start(this.scene_options[this.selected], {settings})
   }
   // ------------------------------------------------------------------------------------------------------------------------------

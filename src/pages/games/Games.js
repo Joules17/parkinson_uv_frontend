@@ -18,7 +18,7 @@ const cardsMemory = [
     },
     {
         image: 'https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand',
-        title: 'Frutastic',
+        title: 'Frutastico',
         description: 'Descripción'
     }
 ];
@@ -73,7 +73,7 @@ const CardComponent = ({ card }) => {
 
     return (
         <Card sx={{ maxWidth: 230 }}>
-            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}`)}>
+            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}&description=${card.description}`)}>
                 <CardMedia
                     component="img"
                     height="150"

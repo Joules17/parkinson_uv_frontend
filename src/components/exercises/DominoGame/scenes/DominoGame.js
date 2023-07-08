@@ -200,9 +200,6 @@ export default class DominoGame extends Phaser.Scene {
                     this.incorrect_answer(); 
                 }
             }
-            else {
-                console.log('hola? ')
-            }
         }); 
 
         this.text_no.on('pointerdown', () => {

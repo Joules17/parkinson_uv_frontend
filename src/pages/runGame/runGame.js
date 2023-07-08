@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography, Stack, CardActionArea } from '@mui/material';
+import { Card, CardContent, CardMedia, Stack, CardActionArea, Box, Typography } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import { useLocation } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
@@ -20,13 +20,13 @@ const RunGame = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const game = queryParams.get('game');
+    const description = queryParams.get('description'); 
     const gameListState = useSelector((state) => state.gamesList);
     const [startGame, setStartGame] = useState({})
 
-    const settings = {settings: {
-        rondas: 5
-    }}
-
+    const settings = {
+        rondas: 2 
+    }
 
     const renderGame = () => {
         switch (game) {
@@ -48,13 +48,16 @@ const RunGame = () => {
     };
 
     return (
-        <MainCard title={game} darkTitle>
-            <Stack spacing={2}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style = {{ flex: 1 }}>
+            <MainCard title={game} darkTitle>
+                <Typography variant="h6" sx = {{ mb: '2rem'}}>
+                    {description}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     {renderGame()}
-                </div>
-            </Stack>
-        </MainCard>
+                </Box>
+            </MainCard>
+        </div>
     )
 
 };

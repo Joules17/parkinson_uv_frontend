@@ -38,8 +38,7 @@ export default class DominoEndGame extends Phaser.Scene {
     }
 
     init (data) {
-        console.log(data)
-        this.tiempo_total = data.info.tiempo_total
+        this.tiempo_total = data.info.tiempo_total.text
         let arreglo = data.info.tiempo_rondas;
         let sum = 0; 
         for (let i = 0; i < arreglo.length; i++) {
@@ -78,7 +77,7 @@ export default class DominoEndGame extends Phaser.Scene {
         this.title = this.add.text(300, 120, '¡Felicidades!', { fontFamily: 'Atarian', fontSize: 50, color: '#ffffff' });
         this.explanation = this.add.text(290, 180, ' --- RESULTADOS --- ', { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
         this.tiempo_total_text = this.add.text(330, 230, 'TIEMPO TOTAL', { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
-        this.tiempo_total_text= this.add.text(310, 260, this.tiempo_total, { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
+        this.tiempo_total_text= this.add.text(390, 260, this.tiempo_total, { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
         this.tiempo_por_ronda = this.add.text(260, 310, 'TIEMPO PROMEDIO POR RONDA', { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });
         this.tiempo_por_ronda = this.add.text(390, 340, this.tiempo_rondas, { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' })
         this.errores = this.add.text(350, 390, 'ERRORES', { fontFamily: 'Atarian', fontSize: 30, color: '#ffffff' });

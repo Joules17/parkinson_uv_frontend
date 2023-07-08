@@ -31,4 +31,4 @@ jobs:
           REACT_APP_API_SERVER_URL: ${{ secrets.REACT_APP_API_SERVER_URL }}
           REACT_APP_AUTH0_AUDIENCE: ${{ secrets.REACT_APP_AUTH0_AUDIENCE }}
           REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
-          REACT_APP_VERSION:  v1.1.0
+          REACT_APP_VERSION:  v1.2.0

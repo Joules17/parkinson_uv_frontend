@@ -35,7 +35,7 @@ export default class LetrasOver extends Phaser.Scene {
 
     init (data) {
         console.log(data)
-        this.tiempo_total = data.info.tiempo_total; 
+        this.tiempo_total = data.info.tiempo_total.text; 
         let arreglo = data.info.tiempo_rondas; 
         let sum = 0; 
         for (let i = 0; i < arreglo.length; i++) {
