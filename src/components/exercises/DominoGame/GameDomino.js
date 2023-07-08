@@ -33,7 +33,7 @@ class Domino extends Component {
         };
 
         this.game = new Phaser.Game(config);
-        this.game.scene.start('DominoInit', {settings});
+        this.game.scene.start('DominoMenu', settings);
         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

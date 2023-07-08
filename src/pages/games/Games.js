@@ -73,7 +73,7 @@ const CardComponent = ({ card }) => {
 
     return (
         <Card sx={{ maxWidth: 230 }}>
-            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}`)}>
+            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}&description=${card.description}`)}>
                 <CardMedia
                     component="img"
                     height="150"
