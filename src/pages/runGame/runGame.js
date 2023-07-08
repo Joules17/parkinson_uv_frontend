@@ -24,10 +24,9 @@ const RunGame = () => {
     const gameListState = useSelector((state) => state.gamesList);
     const [startGame, setStartGame] = useState({})
 
-    const settings = {settings: {
-        rondas: 5
-    }}
-
+    const settings = {
+        rondas: 2 
+    }
 
     const renderGame = () => {
         switch (game) {

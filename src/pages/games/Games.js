@@ -18,7 +18,7 @@ const cardsMemory = [
     },
     {
         image: 'https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand',
-        title: 'Frutastic',
+        title: 'Frutastico',
         description: 'Descripción'
     }
 ];

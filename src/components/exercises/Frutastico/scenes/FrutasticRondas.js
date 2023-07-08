@@ -242,6 +242,7 @@ export default class FrutasticRondas extends Phaser.Scene {
 
     addTime() {
         this.gameTimeSec += 1;
+        this.tiempo_por_ronda += 1; 
         if (this.gameTimeSec == 60) {
             this.gameTimeSec = 0;
             this.gameTimeMin += 1;

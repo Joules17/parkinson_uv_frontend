@@ -152,6 +152,7 @@ export default class LetrasGame extends Phaser.Scene {
         if (this.flag) {
             if (!(this.tablero_actual === undefined)) {
                 this.tablero_actual.set_visible(false);
+                console.log(this.tiempo_por_ronda)
                 this.tiempo_rondas.push(this.tiempo_por_ronda);
                 this.tiempo_por_ronda = 0;
             }
@@ -255,6 +256,7 @@ export default class LetrasGame extends Phaser.Scene {
     addTime() {
         if (this.time_flag) {
             this.gameTimeSec += 1;
+            this.tiempo_por_ronda += 1; 
             if (this.gameTimeSec >= 60) {
                 this.gameTimeSec = 0;
                 this.gameTimeMin += 1;
