@@ -4,14 +4,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 // material-ui
 import {
-    Box,
     Button,
-    FormControl,
     FormHelperText,
     Grid,
     Link,
-    IconButton,
-    InputAdornment,
     InputLabel,
     OutlinedInput,
     Stack,
@@ -42,8 +38,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // assets
-import { EyeOutlined, EyeInvisibleOutlined, CoffeeOutlined, UserOutlined} from '@ant-design/icons';
-
+import { CoffeeOutlined, UserOutlined} from '@ant-design/icons';
 
 // ============================|| FIREBASE - REGISTER ||============================ //
 
@@ -60,12 +55,7 @@ const tipos_id = [
 ]; 
 
 const AuthRegister = () => {
-    const [level, setLevel] = useState();
-    const [levelTherapist, setLevelTherapist] = useState();
     const [tipo, setTipo] = useState('paciente'); 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordTherapist, setShowPasswordTherapist] = useState(false);
-
     // API ------------------------------------------------------------
     const { user } = useAuth0(); 
     const nav = useNavigate()
@@ -79,17 +69,6 @@ const AuthRegister = () => {
     // -----------------------------------------------------------------
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleClickShowPasswordTherapist = () => {   
-        setShowPasswordTherapist(!showPasswordTherapist)
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
 
     const changePassword = (value) => {
         const temp = strengthIndicator(value);
@@ -343,57 +322,6 @@ const AuthRegister = () => {
                                     )}
                                 </Stack>
                             </Grid>
-                            
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-signup">Contraseña</InputLabel>
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.password && errors.password)}
-                                        id="password-signup"
-                                        type={showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        name="password"
-                                        onBlur={handleBlur}
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            changePassword(e.target.value);
-                                        }}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                    size="large"
-                                                >
-                                                    {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        placeholder="******"
-                                        inputProps={{}}
-                                    />
-                                    {touched.password && errors.password && (
-                                        <FormHelperText error id="helper-text-password-signup">
-                                            {errors.password}
-                                        </FormHelperText>
-                                    )}
-                                </Stack>
-                                <FormControl fullWidth sx={{ mt: 2 }}>
-                                    <Grid container spacing={2} alignItems="center">
-                                        <Grid item>
-                                            <Box sx={{ bgcolor: level?.color, width: 85, height: 8, borderRadius: '7px' }} />
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="subtitle1" fontSize="0.75rem">
-                                                {level?.label}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </FormControl>
-                            </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2">
                                     Al registrarse, usted acepta participar en el proyecto &nbsp;
@@ -579,56 +507,6 @@ const AuthRegister = () => {
                                         </FormHelperText>
                                     )}
                                 </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-signup">Contraseña</InputLabel>
-                                    <OutlinedInput
-                                        fullWidth
-                                        error={Boolean(touched.password && errors.password)}
-                                        id="password-signup"
-                                        type={showPasswordTherapist ? 'text' : 'password'}
-                                        value={values.password || ''} 
-                                        name="password"
-                                        onBlur={handleBlur}
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            changePasswordTherapist(e.target.value);
-                                        }}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPasswordTherapist}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                    size="large"
-                                                >
-                                                    {showPasswordTherapist ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        placeholder="******"
-                                        inputProps={{}}
-                                    />
-                                    {touched.password && errors.password && (
-                                        <FormHelperText error id="helper-text-password-signup">
-                                            {errors.password}
-                                        </FormHelperText>
-                                    )}
-                                </Stack>
-                                <FormControl fullWidth sx={{ mt: 2 }}>
-                                    <Grid container spacing={2} alignItems="center">
-                                        <Grid item>
-                                            <Box sx={{ bgcolor: levelTherapist?.color, width: 85, height: 8, borderRadius: '7px' }} />
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="subtitle1" fontSize="0.75rem">
-                                                {levelTherapist?.label}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </FormControl>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2">
