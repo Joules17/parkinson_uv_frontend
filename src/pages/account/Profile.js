@@ -1,6 +1,9 @@
 // react
 import { useEffect, useState } from 'react'; 
 
+// prop
+// import PropTypes from 'prop-types';
+
 // material-ui
 import { Typography, Stack, Grid, Avatar, Button } from '@mui/material';
 
@@ -151,5 +154,11 @@ const Profile = () => {
         ); 
     }
 }; 
+
+/*
+Profile.propTypes = {
+    user_id: PropTypes.string
+};
+*/
 
 export default Profile; 
