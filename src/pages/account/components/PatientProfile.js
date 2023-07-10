@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import MainCard from 'components/MainCard';
 import calcularEdad from 'components/handleAge';
 
-import ProfilePatientForm from 'components/Profile/ProfilePatientForm'; 
+import ProfilePatientForm from 'components/Profile/ProfilePatientForm';
 
 // material-ui
 import { Typography, Stack, Grid, Avatar, Button } from '@mui/material';
 
-const PatientProfile = ({user, img, handleEdit, editMode, handleExit, onSubmit}) => {
+const PatientProfile = ({ user, img, handleEdit, editMode, editable, handleExit, onSubmit }) => {
     return (
-        <MainCard imgUrl= {img} imageHeight="200px" contentSX={{ p: 2.25 }}>
+        <MainCard imgUrl={img} imageHeight="200px" contentSX={{ p: 2.25 }}>
             <Grid container alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
                 <Grid item sx={{ position: 'relative', zIndex: 2 }}>
                     <Avatar src={user.user_picture} sx={{ width: 100, height: 100, position: 'relative', top: '-40px' }} />
@@ -29,10 +29,10 @@ const PatientProfile = ({user, img, handleEdit, editMode, handleExit, onSubmit})
                 </Grid>
 
                 <Grid item>
-                    <Button
+                    {editable ? (<Button
                         disableElevation
                         color="primary"
-                        onClick={() => { editMode ? null : handleEdit()}}
+                        onClick={() => { editMode ? null : handleEdit() }}
                         variant="contained"
                         sx={{
                             position: 'relative',
@@ -41,7 +41,10 @@ const PatientProfile = ({user, img, handleEdit, editMode, handleExit, onSubmit})
                         }}
                     >
                         {editMode ? 'Editando...' : 'Editar'}
-                    </Button>
+                    </Button>) :
+                        null
+                    }
+
                 </Grid>
                 {editMode ? (
                     <ProfilePatientForm userCharged={user} handleExit={handleExit} onSubmit={onSubmit} />
@@ -160,11 +163,12 @@ const PatientProfile = ({user, img, handleEdit, editMode, handleExit, onSubmit})
 
 PatientProfile.propTypes = {
     user: PropTypes.object,
-    img: PropTypes.string, 
-    handleEdit: PropTypes.func, 
-    handleExit: PropTypes.func, 
-    editMode: PropTypes.bool, 
+    img: PropTypes.string,
+    handleEdit: PropTypes.func,
+    handleExit: PropTypes.func,
+    editMode: PropTypes.bool,
+    editable: PropTypes.bool,
     onSubmit: PropTypes.func
 };
 
-export default PatientProfile; 
+export default PatientProfile;

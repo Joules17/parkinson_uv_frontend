@@ -18,10 +18,9 @@ import {
     TableBody,
     TableCell,
     Typography,
-    IconButton,
     TableContainer,
     TablePagination,
-    Select, 
+    Select,
     MenuItem
 } from '@mui/material';
 
@@ -34,6 +33,7 @@ import UserListHead from './UserListHead';
 import UserListToolbar from './UserListToolBar';
 
 // Aux functions and components
+import ViewProfile from './ViewProfile';
 import SetStatus from './SetStatus';
 import AssignStatus from './AssignStatus';
 import CalculateAge from '../functions/calculateAge';
@@ -58,12 +58,12 @@ const TABLE_HEAD = [
 // ================================== OPTIONS =============================================
 
 const PARKINSON_OPTIONS = [
-    { id: 1, phase: "NoAsignado" }, 
-    { id: 2, phase: "1" },  
-    { id: 3, phase: "2" },  
-    { id: 4, phase: "3" },  
-    { id: 5, phase: "4" },  
-    { id: 6, phase: "5" }, 
+    { id: 1, phase: "NoAsignado" },
+    { id: 2, phase: "1" },
+    { id: 3, phase: "2" },
+    { id: 4, phase: "3" },
+    { id: 5, phase: "4" },
+    { id: 6, phase: "5" },
 ]
 // ================================== COMPARATORS ====================================
 
@@ -97,7 +97,7 @@ function applySortFilter(array, comparator, query) {
 export default function UserList({ list, setList, loading, setLoading }) {
     // auth 0
     const { user } = useAuth0()
-    // api 
+    // api
     const { updatePatientAssignee } = usePatientResponse()
     const { getTherapistPatients } = useTherapistResponse()
     //useStates
@@ -169,10 +169,10 @@ export default function UserList({ list, setList, loading, setLoading }) {
         setFilterName(event.target.value);
     };
 
-    function handleParkinsonPhaseChange(key, therapist_id, patient_id) { 
+    function handleParkinsonPhaseChange(key, therapist_id, patient_id) {
         console.log('esta llegando esto:', key, therapist_id, patient_id)
         let datos = {
-            "id_parkinson_phase": key, 
+            "id_parkinson_phase": key,
             "id_therapist": therapist_id
         }
         updatePatientAssignee(patient_id, datos)
@@ -180,7 +180,7 @@ export default function UserList({ list, setList, loading, setLoading }) {
                 getTherapistPatients(user.sub, setList)
                 setLoading('Usuarios')
             })
-    };  
+    };
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
     const filteredUsers = applySortFilter(list, getComparator(order, orderBy), filterName);
@@ -264,15 +264,7 @@ export default function UserList({ list, setList, loading, setLoading }) {
                                     </TableCell>
 
                                     <TableCell align="right">
-                                        <IconButton
-                                            size="large"
-                                            color="inherit"
-                                            onClick={(event) => {
-                                                handleOpenMenu(event, row);
-                                            }}
-                                        >
-                                            {/*<Iconify icon={'eva:more-vertical-fill'} />*/}
-                                        </IconButton>
+                                        <ViewProfile user_id = {user_id} tipo = {'2'}/>
                                     </TableCell>
                                 </TableRow>
                             );
