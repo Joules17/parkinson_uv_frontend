@@ -1,4 +1,4 @@
-// phaser library 
+// phaser library
 import Phaser from 'phaser';
 import '../styles.css'
 
@@ -21,15 +21,15 @@ export default class DominoMenu extends Phaser.Scene {
         this.worldSizeHeigth = 600;
 
         // panel title
-        this.panel_title = undefined; 
-        // buttons 
+        this.panel_title = undefined;
+        // buttons
         this.start_button, this.fullscreen_button, this.tuto_button = undefined;
 
-        // titulo 
-        this.title = undefined; 
+        // titulo
+        this.title = undefined;
 
         // variables
-        this.pressed = false; 
+        this.pressed = false;
 
     }
 
@@ -39,8 +39,8 @@ export default class DominoMenu extends Phaser.Scene {
         this.load.image('curtain', curtain);
         this.load.image('up_curtain', up_curtain);
         this.load.image('fullscreenImg', fullscreen);
-        
-        // audio 
+
+        // audio
         this.load.audio('hover', hover);
         this.load.audio('correct', correct);
     }
@@ -49,24 +49,24 @@ export default class DominoMenu extends Phaser.Scene {
     // bg
     this.bg = this.add.image(400, 300, 'bg').setScale(0.8);
 
-    // flag variables 
-    this.flag = false; 
+    // flag variables
+    this.flag = false;
 
     // --------------------------------------------------------------
-    // red curtains 
+    // red curtains
     this.curtain_right = this.add.image(800, 320, 'curtain').setScale(0.7)
     this.curtain_left = this.add.image(0, 320, 'curtain').setScale(0.7)
     this.curtain_right.flipX = true;
-    
+
     this.curtain_up = this.add.image(400, 80, 'up_curtain').setScale(1.16)
-    
+
     // --------------------------------------------------------------
-    // panel title 
-    this.panel_title = this.add.graphics(); 
+    // panel title
+    this.panel_title = this.add.graphics();
     this.panel_title.fillStyle(0x032670, 1);
-    this.panel_title.lineStyle(2, 0xffffff); 
+    this.panel_title.lineStyle(2, 0xffffff);
     this.panel_title.fillRoundedRect(100, 200, 600, 100, 5); // Crea el rectángulo con bordes curvos
-    this.panel_title.strokeRoundedRect(100, 200, 600, 100, 5); // Dibuja los bordes negros      
+    this.panel_title.strokeRoundedRect(100, 200, 600, 100, 5); // Dibuja los bordes negros
 
     // texts
     this.title = this.add.text(190, 210, 'PURPLE DOMINO', {
@@ -74,30 +74,30 @@ export default class DominoMenu extends Phaser.Scene {
         fill: '#ffffff',
     }).setFontSize(80);
     // --------------------------------------------------------------
-    // buttons 
+    // buttons
     this.start_button = this.add.text(340, 320, 'INICIAR', {
         fontFamily: 'Atarian',
         fill: '#ffffff',
-    }).setFontSize(50); 
+    }).setFontSize(50);
 
     this.tuto_button = this.add.text(340, 380, 'TUTORIAL', {
-        fontFamily: 'Atarian', 
-        fill: '#ffffff'  
-    }).setFontSize(50); 
+        fontFamily: 'Atarian',
+        fill: '#ffffff'
+    }).setFontSize(50);
 
-    this.start_button.setInteractive(); 
-    this.tuto_button.setInteractive(); 
+    this.start_button.setInteractive();
+    this.tuto_button.setInteractive();
     // --------------------------------------------------------------
     // fullScreenButton
     new FullScreenBttn(this, 770, 30, 'fullscreenImg');
-    
-    // entered buttons 
-    // start_button 
+
+    // entered buttons
+    // start_button
     this.start_button.on('pointerdown', () => {
         this.sound.play('correct')
         const settings = this.sys.settings.data.settings;
         this.scene.start('DominoGame', {settings})
-    }); 
+    });
 
     this.start_button.on('pointerover', () => {
         this.start_button.setColor('#000000')
@@ -107,8 +107,8 @@ export default class DominoMenu extends Phaser.Scene {
             scale: 1.1,
             duration: 100,
             ease: 'Power2'
-        }); 
-    }); 
+        });
+    });
 
     this.start_button.on('pointerout', () => {
         this.start_button.setColor('#ffffff')
@@ -116,10 +116,10 @@ export default class DominoMenu extends Phaser.Scene {
             targets: this.start_button,
             scaleX: 1,
             scaleY: 1,
-            duration: 100, 
+            duration: 100,
             ease: 'Power2'
           });
-    }); 
+    });
 
     // tuto_button
     this.tuto_button.on('pointerover', () => {
@@ -130,7 +130,7 @@ export default class DominoMenu extends Phaser.Scene {
             scale: 1.1,
             duration: 100,
             ease: 'Power2'
-        }); 
+        });
     });
 
     this.tuto_button.on('pointerout', () => {
@@ -139,14 +139,14 @@ export default class DominoMenu extends Phaser.Scene {
             targets: this.tuto_button,
             scaleX: 1,
             scaleY: 1,
-            duration: 100, 
+            duration: 100,
             ease: 'Power2'
           });
-    }); 
+    });
     this.tuto_button.on('pointerdown', () => {
         this.sound.play('correct')
         const settings = this.sys.settings.data.settings;
         this.scene.start('DominoTutorial', {settings})
-    }); 
+    });
     }
 }
