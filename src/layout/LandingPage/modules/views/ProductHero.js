@@ -10,7 +10,7 @@ export default function ProductHero() {
                 <ParticlesComponent />
                 <Card elevation={0} sx={{ boxShadow: 'none', backgroundColor: '#ffffff', position: 'relative', zIndex: 1 }}>
                     <CardContent sx={{ backgroundColor: '#ffffff' }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center'}}>
                             <Typography
                                 component="h1"
                                 variant="h1"

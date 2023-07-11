@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
-import Level from 'components/exercises/LetraAventura/sprites/level.js';
+import Level from 'components/exercises/LetraAventura/sprites/Level.js';
 import keyboard from 'components/exercises/LetraAventura/sprites/keyboard';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 // assets imports
@@ -117,7 +117,7 @@ export default class LetrasGame extends Phaser.Scene {
         this.load.audio('typing', typing);
         this.load.audio('fail', fail);
         this.load.audio('flip_round', flip_round);
-        this.load.audio('good', good); 
+        this.load.audio('good', good);
     }
 
     create() {
@@ -225,7 +225,7 @@ export default class LetrasGame extends Phaser.Scene {
             this.tablero_actual.letter_space.forEach((element) => {
                 aux.push(element.letter_text)
             })
-            this.time_flag = false; 
+            this.time_flag = false;
             var scene = this
             this.sound.play('good')
             console.log(aux)
@@ -237,7 +237,7 @@ export default class LetrasGame extends Phaser.Scene {
                 yoyo: true,
                 onComplete: function () {
                     // si, la palabra se ha descubierto
-                    scene.time_flag = true; 
+                    scene.time_flag = true;
                     scene.tablero_actual.set_hiden();
                     scene.current_number += 1;
                     scene.flag = true;
@@ -256,7 +256,7 @@ export default class LetrasGame extends Phaser.Scene {
     addTime() {
         if (this.time_flag) {
             this.gameTimeSec += 1;
-            this.tiempo_por_ronda += 1; 
+            this.tiempo_por_ronda += 1;
             if (this.gameTimeSec >= 60) {
                 this.gameTimeSec = 0;
                 this.gameTimeMin += 1;
@@ -265,11 +265,11 @@ export default class LetrasGame extends Phaser.Scene {
         }
     }
 
-    // logs 
+    // logs
     set_log(tiempo_rondas, tiempo_total, number_rondas, errores) {
-        log.info.tiempo_rondas = tiempo_rondas; 
-        log.info.tiempo_total = tiempo_total; 
-        log.info.number_rondas = number_rondas; 
-        log.info.errores = errores; 
+        log.info.tiempo_rondas = tiempo_rondas;
+        log.info.tiempo_total = tiempo_total;
+        log.info.number_rondas = number_rondas;
+        log.info.errores = errores;
     }
 }
