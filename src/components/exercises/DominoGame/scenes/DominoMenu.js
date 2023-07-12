@@ -6,6 +6,7 @@ import '../styles.css'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
+import bg_image from 'components/exercises/DominoGame/assets/images/bg_image.png'
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg'
 import curtain from 'components/exercises/DominoGame/assets/images/curtain.png'
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png'
@@ -36,6 +37,7 @@ export default class DominoMenu extends Phaser.Scene {
     preload () {
         // images
         this.load.image('bg', bg);
+        this.load.spritesheet('bg_image', bg_image, { frameWidth: 800, frameHeight: 600});
         this.load.image('curtain', curtain);
         this.load.image('up_curtain', up_curtain);
         this.load.image('fullscreenImg', fullscreen);
@@ -47,40 +49,37 @@ export default class DominoMenu extends Phaser.Scene {
 
     create () {
     // bg
-    this.bg = this.add.image(400, 300, 'bg').setScale(0.8);
+    this.anims.create({
+        key: 'bd_anim',
+        frames: this.anims.generateFrameNumbers('bg_image', { start: 0, end: 9 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    const sprite = this.add.sprite(400, 300, 'bg_image');
+    sprite.play('bd_anim');
+
 
     // flag variables
     this.flag = false;
 
-    // --------------------------------------------------------------
     // red curtains
-    this.curtain_right = this.add.image(800, 320, 'curtain').setScale(0.7)
-    this.curtain_left = this.add.image(0, 320, 'curtain').setScale(0.7)
+    this.curtain_right = this.add.image(800, 320, 'curtain')
+    this.curtain_left = this.add.image(0, 320, 'curtain')
     this.curtain_right.flipX = true;
 
-    this.curtain_up = this.add.image(400, 80, 'up_curtain').setScale(1.16)
-
-    // --------------------------------------------------------------
-    // panel title
-    this.panel_title = this.add.graphics();
-    this.panel_title.fillStyle(0x032670, 1);
-    this.panel_title.lineStyle(2, 0xffffff);
-    this.panel_title.fillRoundedRect(100, 200, 600, 100, 5); // Crea el rectángulo con bordes curvos
-    this.panel_title.strokeRoundedRect(100, 200, 600, 100, 5); // Dibuja los bordes negros
-
     // texts
-    this.title = this.add.text(190, 210, 'PURPLE DOMINO', {
+    this.title = this.add.text(190, 230, 'LETRAS VS NUMEROS', {
         fontFamily: 'Atarian',
-        fill: '#ffffff',
-    }).setFontSize(80);
+        fill: '#000000',
+    }).setFontSize(60);
     // --------------------------------------------------------------
     // buttons
-    this.start_button = this.add.text(340, 320, 'INICIAR', {
+    this.start_button = this.add.text(200, 400, 'INICIAR', {
         fontFamily: 'Atarian',
         fill: '#ffffff',
     }).setFontSize(50);
 
-    this.tuto_button = this.add.text(340, 380, 'TUTORIAL', {
+    this.tuto_button = this.add.text(450, 400, 'TUTORIAL', {
         fontFamily: 'Atarian',
         fill: '#ffffff'
     }).setFontSize(50);
