@@ -62,11 +62,6 @@ export default class DominoMenu extends Phaser.Scene {
     // flag variables
     this.flag = false;
 
-    // red curtains
-    this.curtain_right = this.add.image(800, 320, 'curtain')
-    this.curtain_left = this.add.image(0, 320, 'curtain')
-    this.curtain_right.flipX = true;
-
     // texts
     this.title = this.add.text(190, 230, 'LETRAS VS NUMEROS', {
         fontFamily: 'Atarian',
@@ -76,16 +71,22 @@ export default class DominoMenu extends Phaser.Scene {
     // buttons
     this.start_button = this.add.text(200, 400, 'INICIAR', {
         fontFamily: 'Atarian',
-        fill: '#ffffff',
+        fill: '#eb3724',
     }).setFontSize(50);
 
     this.tuto_button = this.add.text(450, 400, 'TUTORIAL', {
         fontFamily: 'Atarian',
-        fill: '#ffffff'
+        fill: '#eb3724'
     }).setFontSize(50);
 
     this.start_button.setInteractive();
     this.tuto_button.setInteractive();
+
+    // curtains 
+    // red curtains
+    this.curtain_right = this.add.image(900, 320, 'curtain').setScale(1.7)
+    this.curtain_left = this.add.image(-100, 320, 'curtain').setScale(1.7)
+    this.curtain_right.flipX = true;
     // --------------------------------------------------------------
     // fullScreenButton
     new FullScreenBttn(this, 770, 30, 'fullscreenImg');
@@ -94,8 +95,8 @@ export default class DominoMenu extends Phaser.Scene {
     // start_button
     this.start_button.on('pointerdown', () => {
         this.sound.play('correct')
-        const settings = this.sys.settings.data.settings;
-        this.scene.start('DominoGame', {settings})
+        this.move(this.curtain_right, 300, 2000, -1, this, 'game')
+        this.move(this.curtain_left, 300, 2000, 1, this, 'game')
     });
 
     this.start_button.on('pointerover', () => {
@@ -110,7 +111,7 @@ export default class DominoMenu extends Phaser.Scene {
     });
 
     this.start_button.on('pointerout', () => {
-        this.start_button.setColor('#ffffff')
+        this.start_button.setColor('#eb3724')
         this.tweens.add({
             targets: this.start_button,
             scaleX: 1,
@@ -133,7 +134,7 @@ export default class DominoMenu extends Phaser.Scene {
     });
 
     this.tuto_button.on('pointerout', () => {
-        this.tuto_button.setColor('#ffffff')
+        this.tuto_button.setColor('#eb3724')
         this.tweens.add({
             targets: this.tuto_button,
             scaleX: 1,
@@ -144,8 +145,40 @@ export default class DominoMenu extends Phaser.Scene {
     });
     this.tuto_button.on('pointerdown', () => {
         this.sound.play('correct')
-        const settings = this.sys.settings.data.settings;
-        this.scene.start('DominoTutorial', {settings})
+        this.move(this.curtain_right, 300, 2000, -1, this, 'tuto')
+        this.move(this.curtain_left, 300, 2000, 1, this, 'tuto')
     });
+    }
+
+    update () {
+        if(this.game_flag) {
+            const settings = this.sys.settings.data.settings;  
+            this.scene.start('DominoGame', {settings})
+            this.game_flag = false; 
+        }
+        if (this.tuto_flag) {
+            const settings = this.sys.settings.data.settings;  
+            this.scene.start('DominoTutorial', {settings})
+            this.tuto_flag = false; 
+        }
+    }
+
+    move(spt, position, duration, dir, escena, indicator) {
+        spt.originalY = spt.originalY - position;
+        this.tweens.add({
+            targets: spt,
+            x: spt.x + dir*position,
+            duration: duration,
+            ease: 'Power2',
+            yoyo: false,
+            repeat: 0,
+            onComplete: function () {
+                if (indicator === 'game') {
+                    escena.game_flag = true; 
+                } else {
+                    escena.tuto_flag = true; 
+                }
+            }
+        });
     }
 }
