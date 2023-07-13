@@ -18,7 +18,7 @@ const IndexDomino = () => {
 
     return (
         <div style={{ flex: 1}}>
-        <MainCard title="Actividad: Purple Domino">
+        <MainCard title="Actividad: Letras VS Numeros">
             <Typography variant="body2">
                 Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif
                 ad minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in

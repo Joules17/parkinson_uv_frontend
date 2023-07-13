@@ -71,7 +71,7 @@ const RunListGames = () => {
                 return <GameArtic settings={startGame.settings}/>;
             case "Frutastico":
                 return <GameFrutastic settings={startGame.settings}/>;
-            case "Purple Domino":
+            case "Letras VS Numeros":
                 return <GameDomino settings={startGame.settings}/>;
             case "Letra Aventura":
                 return <GameLetras settings={startGame.settings}/>;
