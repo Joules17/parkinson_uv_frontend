@@ -29,7 +29,7 @@ export default class Level {
             this.correct_option = this.answer_option[Math.floor(Math.random() * this.answer_option.length)];
         }
         var content, gen_x, gen_y, color;
-        gen_y = (this.game_height / 2) + 40
+        gen_y = (this.game_height / 2) + 15
         if (this.side_selected === 'right') {
             gen_x = this.posx + (this.game_width - (this.game_width / 4)) - 50;
             color = '#032670'; // blue
@@ -38,7 +38,7 @@ export default class Level {
                     ?  this.abecedario.charAt(Math.floor(Math.random() * this.abecedario.length))
                     : (Math.floor(Math.random() * 9) + 1).toString();
         } else {
-            gen_x = this.posx + (this.game_width / 4) - 50;
+            gen_x = this.posx + (this.game_width / 4) - 100;
             color = '#ffffff';
             content =
                 this.correct_option === 'yes'

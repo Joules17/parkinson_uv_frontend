@@ -7,6 +7,7 @@ import Level from 'components/exercises/DominoGame/sprites/levelObj.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
+import bg_game from 'components/exercises/DominoGame/assets/images/bg_game.jpg'; 
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg';
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png';
 import fullscreen from '../assets/images/fullscreen.png';
@@ -79,6 +80,7 @@ export default class DominoGame extends Phaser.Scene {
 
     preload() {
         // images
+        this.load.spritesheet('bg_game', bg_game, { frameWidth: 800, frameHeight: 600 }); 
         this.load.image('bg', bg);
         this.load.image('up_curtain', up_curtain);
         this.load.image('fullscreenImg', fullscreen);
@@ -92,46 +94,25 @@ export default class DominoGame extends Phaser.Scene {
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas
         // bg
-        this.bg = this.add.image(400, 300, 'bg').setScale(0.8);
-
+        this.anims.create({
+            key: 'bd_anim_game',
+            frames: this.anims.generateFrameNumbers('bg_game', { start: 0, end: 9 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        const sprite = this.add.sprite(400, 300, 'bg_game');
+        sprite.play('bd_anim_game');
         // panels / figures
-        this.up_curtain = this.add.image(400, 10, 'up_curtain').setScale(1.16)
-
-        // base
-        this.rectangle_base = this.add.graphics();
-        this.rectangle_base.fillStyle(0x00000, 1);
-        this.rectangle_base.lineStyle(2, 0x000000);
-        this.rectangle_base.fillRoundedRect(100, 95, 600, 320, 5); // Crea el rectángulo con bordes curvos
-        this.rectangle_base.strokeRoundedRect(100, 95, 600, 320, 5); // Dibuja los bordes negros
-
-        // left side
-        this.left_side_base = this.add.graphics();
-        this.left_side_base.fillStyle(0x714097, 1);
-        this.left_side_base.lineStyle(1, 0x000000);
-        this.left_side_base.fillRoundedRect(105, 100, 295, 310, 5); // Crea el rectángulo con bordes curvos
-        this.left_side_base.strokeRoundedRect(105, 100, 295, 310, 5); // Dibuja los bordes negros
-
-        // right side
-        this.right_side_base = this.add.graphics();
-        this.right_side_base.fillStyle(0xd8d8d8, 1);
-        this.right_side_base.lineStyle(1, 0x000000);
-        this.right_side_base.fillRoundedRect(405, 100, 290, 310, 5); // Crea el rectángulo con bordes curvos
-        this.right_side_base.strokeRoundedRect(405, 100, 290, 310, 5); // Dibuja los bordes negros
-
-        this.bottom_panel = this.add.graphics();
-        this.bottom_panel.fillStyle(0x000000, 0.8);
-        this.bottom_panel.fillRect(0, 550, 800, 50)
-
         // yes circle
         this.circle_yes = this.add.graphics();
         this.circle_yes.fillStyle(0x006400, 0.5);
-        this.circle_yes.fillCircle(480, 480, 60);
+        this.circle_yes.fillCircle(480, 490, 60);
 
         this.circle_yes.lineStyle(2, 0x004000);
-        this.circle_yes.strokeCircle(480, 480, 60);
+        this.circle_yes.strokeCircle(480, 490, 60);
         this.circle_yes.setDepth(1)
 
-        this.text_yes = this.add.text(480, 480, 'SI', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_yes = this.add.text(480, 490, 'SI', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
         this.text_yes.setOrigin(0.5);
         this.text_yes.setDepth(2)
         this.text_yes.setInteractive();
@@ -141,22 +122,22 @@ export default class DominoGame extends Phaser.Scene {
         // no circle
         this.circle_no = this.add.graphics();
         this.circle_no.fillStyle(0xFF0000, 0.5);
-        this.circle_no.fillCircle(320, 480, 60);
+        this.circle_no.fillCircle(320, 490, 60);
         this.circle_no.lineStyle(2, 0x800000);
-        this.circle_no.strokeCircle(320, 480, 60);
+        this.circle_no.strokeCircle(320, 490, 60);
         this.circle_no.setDepth(1)
 
-        this.text_no = this.add.text(325, 480, 'NO', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_no = this.add.text(325, 490, 'NO', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
         this.text_no.setOrigin(0.5);
         this.text_no.setDepth(2)
         this.text_no.setInteractive();
         // ----------------------------------------------------------------------------------------------------------
         // other texts
         this.text_numberrondas = this.add
-            .text(300, 560, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'Atarian', fill: '#ffffff' })
+            .text(340, 560, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'Atarian', fill: '#ffffff' })
             .setFontSize(30);
         this.texto_tiempototal = this.add
-            .text(25, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'Atarian', fill: '#ffffff' })
+            .text(60, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'Atarian', fill: '#000000' })
             .setFontSize(30);
         this.texto_numbererros = this.add
             .text(660, 560, 'Errores: ' + this.errores, { fontFamily: 'Atarian', fill: '#ffffff' })
@@ -164,7 +145,6 @@ export default class DominoGame extends Phaser.Scene {
         // ----------------------------------------------------------------------------------------------------------
         // fullScreenButton
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
-
 
         // listeners
         this.text_yes.on('pointerover', () => {

@@ -39,13 +39,13 @@ export const lista_juegos = [
             },
             {
                 id_game: "04",
-                name: "Purple Domino",
+                name: "Letras VS Numeros",
                 nivel: 4,
                 dominio: "Atención",
                 settings: {
                     rondas: 3
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+                urlImage: "https://i.imgur.com/dlovyLf.jpg",
                 played: false
             },
             {
@@ -74,7 +74,7 @@ export const lista_juegos = [
                     rondas: 10,
                     objetos: "Frutas"
                 },
-                urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360"
+                urlImage: "https://i.imgur.com/dlovyLf.jpg"
             },
             {
                 id_game: "04",
@@ -127,13 +127,13 @@ export const juegos = [
     },
     {
         id_game: "04",
-        name: "Purple Domino",
+        name: "Letras VS Numeros",
         nivel: 4,
         dominio: "Atención",
         settings: {
             rondas: 3
         },
-        urlImage: "https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360",
+        urlImage: "https://i.imgur.com/dlovyLf.jpg",
         played: false
     },
     {

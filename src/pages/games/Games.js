@@ -12,8 +12,8 @@ import MainCard from 'components/MainCard';
 // ==============================|| GAMES PAGE ||============================== //
 const cardsMemory = [
     {
-        image: 'https://img.freepik.com/free-vector/directional-arrows-set-many-colors-shapes_1017-26863.jpg?w=360',
-        title: 'Purple Domino',
+        image: 'https://i.imgur.com/dlovyLf.jpg',
+        title: 'Letras VS Numeros',
         description: 'Descripción'
     },
     {
@@ -30,7 +30,7 @@ const cardsAtention = [
         description: 'Descripción'
     },
     {
-        image: 'https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg',
+        image: 'https://i.imgur.com/ahCKyUm.png',
         title: 'Encuentra el número',
         description: 'Descripción'
     }
