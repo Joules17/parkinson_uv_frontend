@@ -2,7 +2,7 @@
 Este es el repositorio frontend del proyecto ParkinsonUV, el cual propone el desarrollo de una aplicación web que representará un gimnasio virtual de entrenamiento cognitivo para pacientes con EP al igual que una herramienta de gestión y preparación para el terapeutas. 
 
 ## Link de la aplicación
-Desplegado en [ParkinsonUV](https://kind-smoke-0fe347d10.3.azurestaticapps.net)
+Desplegado en [ParkinsonUV](https://www.parkinson-uv.me)
 
 ## Tecnologías y herramientas implementadas
 <div style="display: flex; justify-content: center;">
