@@ -2,8 +2,8 @@
 import { createRoot } from 'react-dom/client';
 import { HashRouter as Router } from 'react-router-dom';
 
-// auth 0 
-import { Auth0ProviderWithHistory  } from 'Auth0/Auth0ProviderWithHistory';
+// auth 0
+import { Auth0ProviderWithHistory } from 'Auth0/Auth0ProviderWithHistory';
 
 // scroll bar
 import 'simplebar/src/simplebar.css';
@@ -21,19 +21,17 @@ import reportWebVitals from './reportWebVitals';
 
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
-
-
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 
 root.render(
-        <ReduxProvider store={store}>
-            <Router basename="/">
-                <Auth0ProviderWithHistory>
-                    <App />
-                </Auth0ProviderWithHistory>
-            </Router>
-        </ReduxProvider>
+    <ReduxProvider store={store}>
+        <Router basename="/">
+            <Auth0ProviderWithHistory>
+                <App />
+            </Auth0ProviderWithHistory>
+        </Router>
+    </ReduxProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
