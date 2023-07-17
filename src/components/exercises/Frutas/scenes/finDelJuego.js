@@ -45,7 +45,7 @@ export default class finDelJuego extends Phaser.Scene {
     }
     let promedio = sum / arreglo.length;
 
-    this.tiempo_rondas = promedio.toString();
+    this.tiempo_rondas = promedio.toFixed(2).toString();
     this.number_rondas = data.info.numero_rondas.toString();
     }
 

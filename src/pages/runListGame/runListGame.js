@@ -63,7 +63,7 @@ const RunListGames = () => {
 
     const renderGame = () => {
         switch (startGame.title) {
-            case "Frutas":
+            case "Frutas Locas":
                 return <GameFruits settings={startGame.settings}/>;
             case "Numeros":
                 return <GameNumbers settings={startGame.settings}/>;

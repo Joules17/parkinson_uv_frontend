@@ -45,7 +45,7 @@ export default class DominoEndGame extends Phaser.Scene {
             sum = sum + arreglo[i];
         }
         let promedio = sum / arreglo.length;
-        this.tiempo_rondas = promedio.toString();
+        this.tiempo_rondas = promedio.toFixed(2).toString();
         this.number_errores = data.info.errores.toString();
         this.num_rondas = data.info.number_rondas.toString(); 
     }
