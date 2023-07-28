@@ -22,6 +22,6 @@ export default class DominoInit extends Phaser.Scene {
 
     pass () {
         const settings = this.sys.settings.data.settings;
-        this.scene.start('DominoMenu', {settings})
+        this.scene.start('DominoTutorial', {settings})
     }
 }

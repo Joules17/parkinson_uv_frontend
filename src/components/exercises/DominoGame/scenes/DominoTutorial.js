@@ -4,8 +4,11 @@ import '../styles.css'
 
 // custom classes imported:
 import Level from 'components/exercises/DominoGame/sprites/levelObj'
+import FullScreenBttn from 'components/Factory/FullScreenBttn';
 // assets imports
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg'
+import bg_tuto from 'components/exercises/DominoGame/assets/images/bg_tuto.png'; 
+import fullscreen from '../assets/images/fullscreen.png';
 
 // audio
 import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
@@ -28,30 +31,6 @@ export default class DominoTutorial extends Phaser.Scene {
         this.tableros = [];
         this.tablero_actual = undefined;
 
-        // panels
-        // base
-        /*
-        this.rectangle_base = this.add.graphics();
-        this.rectangle_base.fillStyle(0x00000, 1);
-        this.rectangle_base.lineStyle(2, 0x000000);
-        this.rectangle_base.fillRoundedRect(100, 95, 600, 320, 5);
-        this.rectangle_base.strokeRoundedRect(100, 95, 600, 320, 5);
-
-        // left side
-        this.left_side_base = this.add.graphics();
-        this.left_side_base.fillStyle(0x714097, 1);
-        this.left_side_base.lineStyle(1, 0x000000);
-        this.left_side_base.fillRoundedRect(105, 100, 295, 310, 5);
-        this.left_side_base.strokeRoundedRect(105, 100, 295, 310, 5);
-
-        // right side
-        this.right_side_base = this.add.graphics();
-        this.right_side_base.fillStyle(0xd8d8d8, 1);
-        this.right_side_base.lineStyle(1, 0x000000);
-        this.right_side_base.fillRoundedRect(405, 100, 290, 310, 5);
-        this.right_side_base.strokeRoundedRect(405, 100, 290, 310, 5);
-        */
-        // first tutorial config
         this.first_level_config = {
             scene: this,
             posx: 100,
@@ -119,38 +98,51 @@ export default class DominoTutorial extends Phaser.Scene {
 
     preload() {
         //images
-        this.load.image('bg', bg);
+        this.load.spritesheet('bg_tuto', bg_tuto, { frameWidth: 800, frameHeight: 600 }); 
+        this.load.image('fullscreenImg', fullscreen);
         // audio
         this.load.audio('hover', hover);
         this.load.audio('correct', correct);
     }
 
     create () {
-        this.bg = this.add.image(400, 300, 'bg').setScale(0.8);
+        this.anims.create({
+            key: 'bd_anim_game',
+            frames: this.anims.generateFrameNumbers('bg_tuto', { start: 0, end: 9 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        const sprite = this.add.sprite(400, 300, 'bg_tuto');
+        sprite.play('bd_anim_game');
+        
+        // fullScreenButton
+        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
+        
         // panel
         this.panel_title = this.add.graphics();
         this.panel_title.fillStyle(0x032670, 1);
         this.panel_title.lineStyle(2, 0xffffff);
-        this.panel_title.fillRoundedRect(100, 20, 600, 100, 5); // Crea el rectángulo con bordes curvos
-        this.panel_title.strokeRoundedRect(100, 20, 600, 100, 5); // Dibuja los bordes negros
+        this.panel_title.fillRoundedRect(10, 10, 200, 50, 5); // Crea el rectángulo con bordes curvos
+        this.panel_title.strokeRoundedRect(10, 10, 200, 50, 5); // Dibuja los bordes negros
 
         // text
-        this.title = this.add.text(280, 30, 'TUTORIAL', {
+        this.title = this.add.text(50, 15, 'TUTORIAL', {
             fontFamily: 'Atarian',
             fill: '#ffffff',
-        }).setFontSize(80);
+        }).setFontSize(40);
+        
+        // panel explanation 
+        this.panel_explanation = this.add.graphics(); 
+        this.panel_explanation.fillStyle(0x032670, 1);
+        this.panel_explanation.lineStyle(2, 0xffffff);
+        this.panel_explanation.fillRoundedRect(60, 530, 700, 60, 5); 
+        this.panel_explanation.strokeRoundedRect(60, 530, 700, 60, 5); 
+        this.text_explanation = this.add.text(80, 540, 'Bienvenido al tutorial', {
+            fontFamily: 'Atarian', 
+            fill: '#ffffff',
+        }).setFontSize(40); 
 
-        this.panel_explanation = this.add.graphics();
-        this.panel_title.fillStyle(0x032670, 1);
-        this.panel_title.lineStyle(2, 0xffffff);
-        this.panel_title.fillRoundedRect(100, 500, 600, 80, 5);
-        this.panel_title.strokeRoundedRect(100, 500, 600, 80, 5);
-
-        this.explanation = this.add.text(180, 520, '¿Hay una letra en la derecha? Haz click en Sí', {
-            fontFamily: 'Atarian',
-            fill: '#ffffff'
-        }).setFontSize(30);
         // create rounds
         this.create_rounds();
     }
@@ -160,7 +152,7 @@ export default class DominoTutorial extends Phaser.Scene {
             if (!(this.tablero_actual === undefined)) {
                 if (!(typeof(this.tablero_actual) === 'string')) {
                     this.tablero_actual.set_visible(false);
-                }
+                } 
                 this.pon_tablero();
             }
         }
