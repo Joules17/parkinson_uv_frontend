@@ -6,13 +6,13 @@ import '../styles.css'
 import Level from 'components/exercises/DominoGame/sprites/levelObj'
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
 // assets imports
-import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg'
 import bg_tuto from 'components/exercises/DominoGame/assets/images/bg_tuto.png'; 
 import fullscreen from '../assets/images/fullscreen.png';
 
 // audio
 import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
 import correct from 'components/exercises/DominoGame/assets/music/correct.wav'
+import bad from 'components/exercises/DominoGame/assets/music/bad.wav';
 
 export default class DominoTutorial extends Phaser.Scene {
     constructor() {
@@ -30,6 +30,7 @@ export default class DominoTutorial extends Phaser.Scene {
         // vars
         this.tableros = [];
         this.tablero_actual = undefined;
+        this.active_listener = false; 
 
         this.first_level_config = {
             scene: this,
@@ -101,19 +102,20 @@ export default class DominoTutorial extends Phaser.Scene {
         this.load.spritesheet('bg_tuto', bg_tuto, { frameWidth: 800, frameHeight: 600 }); 
         this.load.image('fullscreenImg', fullscreen);
         // audio
+        this.load.audio('bad', bad); 
         this.load.audio('hover', hover);
         this.load.audio('correct', correct);
     }
 
     create () {
         this.anims.create({
-            key: 'bd_anim_game',
+            key: 'bd_anim_tuto',
             frames: this.anims.generateFrameNumbers('bg_tuto', { start: 0, end: 9 }),
             frameRate: 10,
             repeat: -1
         });
         const sprite = this.add.sprite(400, 300, 'bg_tuto');
-        sprite.play('bd_anim_game');
+        sprite.play('bd_anim_tuto');
         
         // fullScreenButton
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
@@ -143,8 +145,119 @@ export default class DominoTutorial extends Phaser.Scene {
             fill: '#ffffff',
         }).setFontSize(40); 
 
+        // circles
+        // yes circle 
+        this.circle_yes = this.add.graphics(); 
+        this.circle_yes.fillStyle(0x006400, 0.5);
+        this.circle_yes.fillCircle(480, 475, 50);
+        this.circle_yes.lineStyle(2, 0x004000);
+        this.circle_yes.strokeCircle(480, 475, 50);
+        this.circle_yes.setDepth(1)
+
+        this.text_yes = this.add.text(480, 475, 'SI', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_yes.setOrigin(0.5);
+        this.text_yes.setDepth(2)
+        this.text_yes.setInteractive();
+
+        this.circle_yes.setAlpha(0); 
+        this.text_yes.setAlpha(0); 
+        
+        // no circle 
+        this.circle_no = this.add.graphics();
+        this.circle_no.fillStyle(0xFF0000, 0.5);
+        this.circle_no.fillCircle(320, 475, 50);
+        this.circle_no.lineStyle(2, 0x800000);
+        this.circle_no.strokeCircle(320, 475, 50);
+        this.circle_no.setDepth(1)
+
+        this.text_no = this.add.text(325, 475, 'NO', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_no.setOrigin(0.5);
+        this.text_no.setDepth(2)
+        this.text_no.setInteractive();
+
+        this.circle_no.setAlpha(0); 
+        this.text_no.setAlpha(0);
+
+        // button play 
+        this.play_button = this.add.text(650, 540, "JUGAR", {
+            fontFamily: 'Atarian',
+            fill: '#ffffff'
+        }).setFontSize(40)  
+
+        this.play_button.setInteractive(); 
+        this.play_button.setVisible(false); 
+
+        // listeners
+        this.text_yes.on('pointerover', () => {
+            this.sound.play('hover')
+        });
+
+        this.text_no.on('pointerover', () => {
+            this.sound.play('hover')
+        });
+
+        this.text_yes.on('pointerout', () => {
+            this.circle_yes.x = 0;
+        });
+
+        this.text_yes.on('pointerdown', () => {
+            if (this.active_listener) {
+                if (!(this.correct_actual_option === undefined)) {
+                    if (this.correct_actual_option === 'yes') {
+                        this.correct_answer();
+                    } else {
+                        this.incorrect_answer();
+                    }
+                }
+            }
+        });
+
+        this.text_no.on('pointerdown', () => {
+            if (this.active_listener) {
+                if (!(this.correct_actual_option === undefined)) {
+                    if (this.correct_actual_option === 'no') {
+                        this.correct_answer();
+                    } else {
+                        this.incorrect_answer();
+                    }
+                }
+            }
+        });
+
+        this.text_no.on('pointerout', () => {
+            this.circle_no.x = 0;
+        });
+
+        this.play_button.on('pointerdown', () => {
+              const settings = this.sys.settings.data.settings;
+              this.sound.play('correct')
+              this.scene.start('DominoGame', {settings})
+        }); 
+      
+        this.play_button.on('pointerover', () => {
+            this.sound.play('hover')
+            this.tweens.add({
+              targets: this.play_button,
+              scaleX: 1.1,
+              scaleY: 1.1,
+              duration: 100,
+              ease: 'Power2'
+            });
+        });
+      
+        this.play_button.on('pointerout', () => {
+            this.tweens.add({
+                targets: this.play_button,
+                scaleX: 1,
+                scaleY: 1,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
         // create rounds
         this.create_rounds();
+        this.aparecer_botones([this.circle_yes, this.circle_no, this.text_yes, this.text_no], this); 
     }
 
     update() {
@@ -153,8 +266,8 @@ export default class DominoTutorial extends Phaser.Scene {
                 if (!(typeof(this.tablero_actual) === 'string')) {
                     this.tablero_actual.set_visible(false);
                 } 
-                this.pon_tablero();
-            }
+            } 
+            this.pon_tablero();
         }
         if (this.fin_del_juego) {
             console.log('Tutorial acabado')
@@ -175,7 +288,7 @@ export default class DominoTutorial extends Phaser.Scene {
         for (let i = 0; i < 10; i++) {
             this.tableros.push(new Level(this.four_level_config));
         }
-        this.tableros.push('Izquierda es solo para numeros');
+        this.tableros.push('Izquierda es SI solo para numeros');
         for (let i = 0; i < 10; i++) {
             this.tableros.push(new Level(this.third_level_config));
         }
@@ -184,15 +297,34 @@ export default class DominoTutorial extends Phaser.Scene {
             this.tableros.push(new Level(this.fifth_level_config));
         }
         this.tableros.push('Has completado el tutorial, ¡estas listo!')
+        for (let i = 0; i < 100; i++) {
+            this.tableros.push(new Level(this.fifth_level_config));
+        }
 
         this.flag = true;
     }
 
+    incorrect_answer () {
+        this.sound.play('bad')
+    }
+
+    correct_answer() {
+        this.sound.play('correct')
+        this.flag = true; 
+    }
+
     pon_tablero () {
+        
         if (this.tableros.length != 0) {
             this.tablero_actual = this.tableros.shift();
             if (typeof(this.tablero_actual) === 'string') {
-                this.explanation.setText(this.tablero_actual)
+                this.text_explanation.setText(this.tablero_actual)
+                if (this.tablero_actual.length >= 50) {
+                    this.text_explanation.setFontSize(35)
+                }
+                if (this.tablero_actual === 'Has completado el tutorial, ¡estas listo!') {
+                    this.play_button.setVisible(true); 
+                }
             } else {
                 this.tablero_actual.set_visible(true);
                 this.correct_actual_option = this.tablero_actual.get_correct_option();
@@ -202,6 +334,22 @@ export default class DominoTutorial extends Phaser.Scene {
             this.fin_del_juego = true;
             this.flag = false;
         }
+    }
+
+    aparecer_botones (list, scene) {
+        this.tweens.add({
+            targets: list, 
+            alpha: 1, 
+            duration: 4000, 
+            ease: 'Power2', 
+            onComplete: function () {
+                if (!scene.eventFinished) {
+                    scene.text_explanation.setText('Oprima SI cuando las letras esten a la derecha')
+                    scene.active_listener = true; 
+                }
+            }
+
+        })
     }
 
 

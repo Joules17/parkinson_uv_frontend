@@ -8,7 +8,6 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import bg_game from 'components/exercises/DominoGame/assets/images/bg_game.jpg'; 
-import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg';
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png';
 import fullscreen from '../assets/images/fullscreen.png';
 // sounds
@@ -81,7 +80,6 @@ export default class DominoGame extends Phaser.Scene {
     preload() {
         // images
         this.load.spritesheet('bg_game', bg_game, { frameWidth: 800, frameHeight: 600 }); 
-        this.load.image('bg', bg);
         this.load.image('up_curtain', up_curtain);
         this.load.image('fullscreenImg', fullscreen);
         // audio
@@ -96,7 +94,7 @@ export default class DominoGame extends Phaser.Scene {
         // bg
         this.anims.create({
             key: 'bd_anim_game',
-            frames: this.anims.generateFrameNumbers('bg_game', { start: 0, end: 9 }),
+            frames: this.anims.generateFrameNumbers('bg_game', { start: 0, end: 4 }),
             frameRate: 10,
             repeat: -1
         });

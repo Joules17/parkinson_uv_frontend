@@ -72,14 +72,13 @@ export default class finDelJuego extends Phaser.Scene {
 
     // ---------------------
     // Mensajes
-    this.tiempo_total_msg = this.add.text(100, 150, "tiempo total:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
+    this.tiempo_total_msg = this.add.text(100, 150, "Tiempo total:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
     this.tiempo_total_log = this.add.text(500, 150, this.tiempo_total, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
-    this.tiempo_promedio_msg = this.add.text(100, 300, "tiempo promedio:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
+    this.tiempo_promedio_msg = this.add.text(100, 300, "Tiempo promedio:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
     this.tiempo_promedio_log = this.add.text(500, 300, this.tiempo_rondas, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
     this.number_rondas_msg = this.add.text(100, 450, "Numero rondas: ", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
     this.number_rondas_log = this.add.text(500, 450, this.number_rondas, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
     this.statsShow(this, false)
-
 
     // ---------------------
     this.aparecer(this.panelStats, this)

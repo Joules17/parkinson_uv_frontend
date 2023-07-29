@@ -16,12 +16,12 @@ export default class DominoInit extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'ComicSans', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "", { fontFamily : 'Atarian', fill: '#ffffff'}).setFontSize(20)
         this.pass()
     }
 
     pass () {
         const settings = this.sys.settings.data.settings;
-        this.scene.start('DominoTutorial', {settings})
+        this.scene.start('DominoMenu', {settings})
     }
 }
