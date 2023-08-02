@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Modal, TextField, Box, Divider, ListItemAvatar, ListItemButton, Avatar, Checkbox, ListItemText, Typography } from '@mui/material';
 import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import UserList from './tables/UserList';
@@ -22,18 +22,16 @@ const ModalNewList = ({ open, handleClose }) => {
         games: [],
     });
 
-    const resetState = () => {
-        setCheckedItems([]);
-        setNewList({
+    useEffect(() => {
+        if (open) {
+          setCheckedItems([]);
+          setNewList({
             name: '',
             games: [],
-        });
-    };
-
-    // Limpiar el estado cuando se monta el componente
-    useEffect(() => {
-        resetState();
-    }, []);
+          });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [open]);
 
     const handleNameChange = (event) => {
         setNewList({ ...newList, name: event.target.value });
@@ -52,7 +50,6 @@ const ModalNewList = ({ open, handleClose }) => {
     const handleCloseModal = () => {
         handleClose()
         setOpenNextModal(false);
-        resetState()
     };
 
     const handleToggle = (value) => () => {

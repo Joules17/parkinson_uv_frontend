@@ -10,6 +10,7 @@ import ModalGames from './modalGames';
 import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 
 const ModalSelectGames = ({ open, handleClose, newList }) => {
+    console.log(newList)
     const { createList } = useListResponse()
     const { user } = useAuth0()
     const [newListReady, setNewListReady] = useState(newList)
@@ -30,6 +31,10 @@ const ModalSelectGames = ({ open, handleClose, newList }) => {
     }, [])
 
     useEffect(() => {
+        setNewListReady(newList)
+    }, [newList])
+
+    useEffect(() => {
         // Asegúrate de que selectedPatients y userCharged no sean undefined antes de actualizar newListReady
         if (selectedPatients !== undefined && userCharged !== undefined) {
             // Agrega los campos id_therapist e id_patient al objeto newListReady
@@ -40,7 +45,7 @@ const ModalSelectGames = ({ open, handleClose, newList }) => {
             });
         }
         
-    }, [selectedPatients, userCharged]);
+    }, [selectedPatients, userCharged, newListReady]);
 
     useEffect(() => {
         if (!(userCharged === undefined)) {
