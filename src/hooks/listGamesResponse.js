@@ -60,9 +60,24 @@ export const useExternalApi = () => {
         console.log(data)
     }
 
+    const createList = async (datos) => {
+        const config = {
+            url: `${apiServerUrl}/api/list/create`,
+            method: 'POST',
+            headers: {},
+            data: datos
+        }
+
+        const data = await makeRequest({config})
+
+        console.log(data)
+        console.log('Registrado correctamente')
+    }
+
     return {
         getListGamesAll,
         getListGames,
-        updateSettingGameList
+        updateSettingGameList,
+        createList
     }
 }

@@ -7,9 +7,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ChargingCard from 'components/ChargingCard';
 import ModalGames from './modalGames';
 
+import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 
-const ModalSelectGames = ({ open, handleClose }) => {
+const ModalSelectGames = ({ open, handleClose, newList }) => {
+    const { createList } = useListResponse()
     const { user } = useAuth0()
+    const [newListReady, setNewListReady] = useState(newList)
+    const [selectedPatients, setSelectedPatients] = useState(undefined)
     const [patientsLIST, setPatientsLIST] = useState(undefined);
     const [userCharged, setUserCharged] = useState(undefined);
     const [isLoading, setLoading] = useState('Cargando Informacion...')
@@ -19,10 +23,24 @@ const ModalSelectGames = ({ open, handleClose }) => {
         setOpenModalGames(false);
     };
 
+
     useEffect(() => {
         getTherapist(user.sub, setUserCharged);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        // Asegúrate de que selectedPatients y userCharged no sean undefined antes de actualizar newListReady
+        if (selectedPatients !== undefined && userCharged !== undefined) {
+            // Agrega los campos id_therapist e id_patient al objeto newListReady
+            setNewListReady({
+                ...newListReady,
+                id_therapist: userCharged.user_id,
+                id_patient: selectedPatients,
+            });
+        }
+        
+    }, [selectedPatients, userCharged]);
 
     useEffect(() => {
         if (!(userCharged === undefined)) {
@@ -33,6 +51,10 @@ const ModalSelectGames = ({ open, handleClose }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userCharged])
+
+    const saveList = () => {
+        createList(newListReady)
+    }
 
     const style = {
         position: 'absolute',
@@ -69,12 +91,12 @@ const ModalSelectGames = ({ open, handleClose }) => {
                         ) : (
                             <div sx={{ maxHeight: '310px', overflow: 'auto' }}>
                                 {/* añadir espacio entre ambos grupos de componentes */}
-                                <UserList list={patientsLIST} setList={setPatientsLIST} loading={isLoading} setLoading={setLoading} />
+                                <UserList list={patientsLIST} setList={setPatientsLIST} loading={isLoading} setLoading={setLoading} getSelected={setSelectedPatients} />
                             </div>
                         )}
                     </div>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
-                        <Button variant="contained" onClick={handleClose}>Guardar</Button>
+                        <Button variant="contained" onClick={saveList}>Guardar</Button>
                     </Box>
                 </Box>
             </Modal>
