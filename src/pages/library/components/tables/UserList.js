@@ -1,5 +1,5 @@
 // react
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // proptypes
 import PropTypes from 'prop-types';
@@ -84,7 +84,7 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserList({ list, setList, loading, setLoading }) {
+export default function UserList({ list, setList, loading, setLoading, getSelected}) {
     // auth 0
     const { user } = useAuth0()
     // api 
@@ -96,25 +96,11 @@ export default function UserList({ list, setList, loading, setLoading }) {
     const [order, setOrder] = useState('asc');
     // selected names - Hook by template
     const [selected, setSelected] = useState([]);
+    const [selectedId, setSelectedId] = useState([]);
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    /* const [userrow, setUserrow] = useState({}); */
 
-    //
-    /*
-    const handleOpenMenu = (event, row) => {
-        // setOpen(event.currentTarget);
-        // setUserrow(row);
-    };
-    */
-
-    /*
-    const handleCloseMenu = () => {
-        setOpen(null);
-        setUserrow({});
-    };
-    */
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -130,7 +116,12 @@ export default function UserList({ list, setList, loading, setLoading }) {
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
+    useEffect(() => {
+        // Aquí se ejecutará getSelected cada vez que el estado "selected" cambie.
+        getSelected(selectedId);
+    }, [selectedId]);
+
+    const handleClick = (event, name, user_id) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
         if (selectedIndex === -1) {
@@ -142,7 +133,20 @@ export default function UserList({ list, setList, loading, setLoading }) {
         } else if (selectedIndex > 0) {
             newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
         }
+
+        const selectedIndexId = selected.indexOf(user_id);
+        let newSelectedId = [];
+        if (selectedIndex === -1) {
+            newSelectedId = newSelectedId.concat(selected, user_id);
+        } else if (selectedIndex === 0) {
+            newSelectedId = newSelectedId.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelectedId = newSelectedId.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelectedId = newSelectedId.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        }
         setSelected(newSelected);
+        setSelectedId(newSelectedId)
     };
 
     const handleChangePage = (event, newPage) => {
@@ -158,19 +162,6 @@ export default function UserList({ list, setList, loading, setLoading }) {
         setPage(0);
         setFilterName(event.target.value);
     };
-
-    function handleParkinsonPhaseChange(key, therapist_id, patient_id) { 
-        console.log('esta llegando esto:', key, therapist_id, patient_id)
-        let datos = {
-            "id_parkinson_phase": key, 
-            "id_therapist": therapist_id
-        }
-        updatePatientAssignee(patient_id, datos)
-            .then(() => {
-                getTherapistPatients(user.sub, setList)
-                setLoading('Usuarios')
-            })
-    };  
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
     const filteredUsers = applySortFilter(list, getComparator(order, orderBy), filterName);
@@ -204,7 +195,7 @@ export default function UserList({ list, setList, loading, setLoading }) {
                             return (
                                 <TableRow hover key={user_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                                     <TableCell padding="checkbox">
-                                        <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                                        <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name, user_id)} />
                                     </TableCell>
 
                                     <TableCell component="th" scope="row" padding="none">

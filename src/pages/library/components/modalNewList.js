@@ -8,18 +8,51 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { juegos, lista_juegos } from './globals';
 import ModalSelectGames from './modalSelectPatients';
 
+import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
+
 const ModalNewList = ({ open, handleClose }) => {
+    const { getGames } = useGameResponse();
+    const [games, setGames] = useState(undefined);
     const [openNextModal, setOpenNextModal] = useState(false);
     const [checkedItems, setCheckedItems] = React.useState([]);
     const { getTherapist, getTherapistPatients } = useTherapistResponse()
 
-    const handleCloseModal = () => {
-        handleClose()
-        setOpenNextModal(false);
+    const [newList, setNewList] = useState({
+        name: '',
+        games: [],
+    });
+
+    const resetState = () => {
+        setCheckedItems([]);
+        setNewList({
+            name: '',
+            games: [],
+        });
+    };
+
+    // Limpiar el estado cuando se monta el componente
+    useEffect(() => {
+        resetState();
+    }, []);
+
+    const handleNameChange = (event) => {
+        setNewList({ ...newList, name: event.target.value });
     };
 
     const handleListItemClick = (event) => {
+        setNewList({ ...newList, games: checkedItems });
         setOpenNextModal(true);
+    };
+
+    useEffect(() => {
+        getGames(setGames);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleCloseModal = () => {
+        handleClose()
+        setOpenNextModal(false);
+        resetState()
     };
 
     const handleToggle = (value) => () => {
@@ -51,7 +84,6 @@ const ModalNewList = ({ open, handleClose }) => {
         pb: 3,
         overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
     };
-
     return (
         <div>
             <Modal open={open} onClose={handleClose}>
@@ -71,19 +103,21 @@ const ModalNewList = ({ open, handleClose }) => {
                             id="outlined-required"
                             label="Nombre"
                             margin="normal"
+                            value={newList.name}
+                            onChange={handleNameChange} // Manejar cambios en el TextField
                         />
                         <h3 style={{ paddingTop: '10px' }}>Escoge los juegos para tu lista: </h3>
                         <Box sx={{ maxHeight: '320px', overflow: 'auto' }}>
-                            {juegos.map((game) => (
+                            {games?.map((game) => (
                                 <>
-                                    <ListItemButton key={game.id_game} onClick={handleToggle(game.id_game)}>
+                                    <ListItemButton key={game.id} onClick={handleToggle(game.id)}>
                                         <Checkbox
-                                            checked={checkedItems.indexOf(game.id_game) !== -1}
+                                            checked={checkedItems.indexOf(game.id) !== -1}
                                             tabIndex={-1}
                                             disableRipple
                                         />
                                         <ListItemAvatar>
-                                            <Avatar src={game.urlImage} />
+                                            <Avatar src={game.game_picture} />
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={
@@ -91,7 +125,7 @@ const ModalNewList = ({ open, handleClose }) => {
                                                     {game.name}
                                                 </Typography>
                                             }
-                                            secondary={`Dominio: ${game.dominio}`}
+                                            secondary={`Dominio: ${game.type}`}
                                         />
                                     </ListItemButton>
                                     <Divider />
@@ -102,7 +136,7 @@ const ModalNewList = ({ open, handleClose }) => {
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
                         <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Siguiente</Button>
                     </Box>
-                    <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} />
+                    <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} />
                 </Box>
             </Modal>
         </div>

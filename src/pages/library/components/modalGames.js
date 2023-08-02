@@ -46,7 +46,6 @@ const ModalGames = ({ list, open, handleClose}) => {
     pb: 3,
     overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
   };
-  console.log(list)
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
