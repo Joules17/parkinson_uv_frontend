@@ -33,7 +33,7 @@ export default class LetrasMenu extends Phaser.Scene {
     }
 
     create() {
-        const settings = this.sys.settings.data.settings;
+        const settings = this.sys.settings.data.setting;
         this.anims.create({
             key: 'bd_anim',
             frames: this.anims.generateFrameNumbers('bd_spritesheet', { start: 0, end: 5 }),
