@@ -38,7 +38,7 @@ export default class FrutasInit extends Phaser.Scene {
     }
 
     pass() {
-        const settings = this.sys.settings.data.settings;
+        const settings = this.sys.settings.data.setting;
         this.scene.start('FrutasMenu', {settings})
     }
 }

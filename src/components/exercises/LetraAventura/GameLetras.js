@@ -12,7 +12,7 @@ import 'components/exercises/LetraAventura/styles.css'
 
 class GameLetras extends Component {
   componentDidMount() {
-    const { settings } = this.props;
+    const { setting } = this.props;
     const config = {
       type: Phaser.AUTO,
       parent: 'phaser-game-container',
@@ -32,7 +32,7 @@ class GameLetras extends Component {
     }
 
     this.game = new Phaser.Game(config);
-    this.game.scene.start('LetrasMenu', {settings});
+    this.game.scene.start('LetrasMenu', {setting});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

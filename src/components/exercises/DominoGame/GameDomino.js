@@ -13,7 +13,7 @@ import 'components/exercises/DominoGame/styles.css'
 
 class Domino extends Component {
     componentDidMount() {
-        const { settings } = this.props;
+        const { setting } = this.props;
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-game-container',
@@ -33,7 +33,7 @@ class Domino extends Component {
         };
 
         this.game = new Phaser.Game(config);
-        this.game.scene.start('DominoInit', {settings});
+        this.game.scene.start('DominoInit', {setting});
         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 
