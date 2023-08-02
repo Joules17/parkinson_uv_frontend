@@ -70,21 +70,6 @@ const AuthRegister = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const changePassword = (value) => {
-        const temp = strengthIndicator(value);
-        setLevel(strengthColor(temp));
-    };
-
-    const changePasswordTherapist  = (value) => {
-        const temp = strengthIndicator(value);
-        setLevelTherapist(strengthColor(temp));
-    }
-
-
-    useEffect(() => {
-        changePassword('');
-        changePasswordTherapist(''); 
-    }, []);
 
     return (
         <>
@@ -125,8 +110,7 @@ const AuthRegister = () => {
                     lastname: Yup.string().max(255).required('Necesitamos tu apellido'),
                     gender: Yup.string().max(20).required('Necesitamos saber tu genero'),
                     cell: Yup.string().max(200).required('Necesitamos un telefono'),
-                    age: Yup.string().max(11).required('La fecha de nacimiento es obligatoria'),
-                    password: Yup.string().max(255).required('¡Necesitas una contraseña!')
+                    age: Yup.string().max(11).required('La fecha de nacimiento es obligatoria')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {

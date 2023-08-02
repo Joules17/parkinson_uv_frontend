@@ -31,7 +31,8 @@ import PatientProfile from './components/PatientProfile';
 
 const Profile = () => {
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
+    const { user_id_state, tipo_state } = location.state || {};
+    console.log('ME LLEGO ESTO, ', user_id_state, tipo_state)
 
     // auth 0 functions --------------------------------------------------
     const { user } = useAuth0()
@@ -69,13 +70,13 @@ const Profile = () => {
     // inicializador -----------------------------------------------------
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if (queryParams.get('user_id') === null && queryParams.get('tipo') === null) {
+        if (user_id_state === undefined && tipo_state === undefined) {
             setUser(user.sub)
             setTipo(window.localStorage.getItem('tipo'))
             setEditable(true)
         } else {
-            setUser(queryParams.get('user_id'))
-            setTipo(queryParams.get('tipo'))
+            setUser(user_id_state)
+            setTipo(tipo_state)
             setEditable(false)
         }
         // eslint-disable-next-line

@@ -12,10 +12,19 @@ import {  EyeOutlined } from '@ant-design/icons';
 
 export default function ViewProfile({user_id, tipo}) {
     const navigate = useNavigate();
+    const form = { user_id_state: user_id, tipo_state: tipo };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate('/my-profile', {
+        state: form
+        });
+    }
+
     return(
         <Stack direction = "row" spacing = {1} alignItems = "center">
             <Tooltip title = 'Ver Perfil' >
-                <IconButton onClick = {() => navigate(`/my-profile?user_id=${user_id}&tipo=${tipo}`)}>
+                <IconButton onClick = {handleSubmit}>
                     <EyeOutlined/>
                 </IconButton>
             </Tooltip>

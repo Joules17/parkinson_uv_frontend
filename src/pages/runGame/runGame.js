@@ -30,7 +30,7 @@ const RunGame = () => {
 
     const renderGame = () => {
         switch (game) {
-            case "Frutas":
+            case "Frutas Locas":
                 return <GameFruits settings={settings}/>;
             case "Encuentra el número":
                 return <GameNumbers settings={settings}/>;

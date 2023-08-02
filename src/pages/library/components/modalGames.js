@@ -19,7 +19,7 @@ const ModalGames = ({ list, open, handleClose }) => {
       setExpandedItem(id);
     }
   };
-
+  
   const handleListUpdate = (updatedList) => {
     setModifiedList(updatedList);
     dispatch(setGameList({ "gamesList": updatedList }))
@@ -45,7 +45,7 @@ const ModalGames = ({ list, open, handleClose }) => {
     pb: 3,
     overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
   };
-
+  console.log(list)
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
@@ -59,11 +59,11 @@ const ModalGames = ({ list, open, handleClose }) => {
           </Button>
           <h2>{list.name}</h2>
           <List alignItems="flex-start">
-            {list.juegos?.map((game) => (
+            {list.games?.map((game) => (
               <>
-                <ListItemButton key={game.id_game} onClick={() => handleItemClick(game.id_game)}>
+                <ListItemButton key={game.id} onClick={() => handleItemClick(game.id)}>
                   <ListItemAvatar>
-                    <Avatar src={game.urlImage} />
+                    <Avatar src={game.game_picture} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -71,12 +71,12 @@ const ModalGames = ({ list, open, handleClose }) => {
                         {game.name}
                       </Typography>
                     }
-                    secondary={`Dominio: ${game.dominio}`}
+                    secondary={`Dominio: ${game.id_type}`}
                   />
-                  {expandedItem === game.id_game ? <UpOutlined /> : <DownOutlined />}
+                  {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
                 </ListItemButton>
-                <Collapse in={expandedItem === game.id_game} timeout="auto" unmountOnExit>
-                  <SettingsGameForm typeForm={game.name} list={list} onListUpdate={handleListUpdate}/>
+                <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
+                  <SettingsGameForm typeForm={game.name} list={list} onListUpdate={handleListUpdate} idGame={game.id}/>
                 </Collapse>
                 <Divider />
               </>
@@ -84,7 +84,7 @@ const ModalGames = ({ list, open, handleClose }) => {
           </List>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
             <Link to="/run-list-games">
-              <Button variant="contained" onClick={initListGames}>Iniciar juegos</Button>
+              <Button variant="contained" onClick={initListGames}>Iniciar games</Button>
             </Link>
           </Box>
         </Box>
