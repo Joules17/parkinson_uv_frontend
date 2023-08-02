@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // material-ui
 import { Grid, ListItemButton, ListItemIcon, ListItemText, Button } from '@mui/material';
 import { BookOutlined, PlusCircleOutlined } from '@ant-design/icons';
@@ -11,21 +11,29 @@ import ModalNewList from './components/modalNewList';
 import { useDispatch } from 'react-redux';
 import { setGameList } from 'store/reducers/gamesListSlice';
 
-// import OrderTable from './components/OrdersTable';
+// import hook
+import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
+import ChargingCard from 'components/ChargingCard';
 
 // ==============================|| LIBRARY PAGE ||============================== //
 
 const Library = () => {
+    const { getListGames } = useListGameResponse();
     const dispatch = useDispatch();
+    const [listGames, setListGames] = useState(undefined);
     const [openModalGames, setOpenModalGames] = useState(false);
     const [openModalNewList, setOpenModalNewList] = useState(false);
     const [list, setList] = useState({})
+
+    useEffect(() => {
+        getListGames(setListGames);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleCloseModal = () => {
         setOpenModalGames(false);
         setOpenModalNewList(false)
     };
-
     const handleListItemClick = (event, list) => {
         setList(list);
         dispatch(setGameList({ "gamesList": list }))
@@ -39,29 +47,33 @@ const Library = () => {
                     variant="contained"
                     startIcon={<PlusCircleOutlined />}
                     style={{ marginRight: '10px', marginTop: '10px' }}
-                    onClick={() =>setOpenModalNewList(true)}
+                    onClick={() => setOpenModalNewList(true)}
                 >
                     Nueva lista
                 </Button>
             </div>
-            <Grid item xs={12} md={7} lg={8}>
-                <List component="nav">
-                    {lista_juegos.map((item) => (
-                        <>
-                            <ListItemButton
-                                key={item.id}
-                                onClick={(event) => handleListItemClick(event, item)}
-                            >
-                                <ListItemIcon>
-                                    <BookOutlined />
-                                </ListItemIcon>
-                                <ListItemText primary={item.name} />
-                            </ListItemButton>
-                            <Divider />
-                        </>
-                    ))}
-                </List>
-            </Grid>
+            {listGames ?
+                <Grid item xs={12} md={7} lg={8}>
+                    <List component="nav">
+                        {listGames?.map((item) => (
+                            <>
+                                <ListItemButton
+                                    key={item.id}
+                                    onClick={(event) => handleListItemClick(event, item)}
+                                >
+                                    <ListItemIcon>
+                                        <BookOutlined />
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.name} />
+                                </ListItemButton>
+                                <Divider />
+                            </>
+                        ))}
+                    </List>
+                </Grid> 
+                :
+                <ChargingCard />
+                }
             <ModalGames list={list} open={openModalGames} handleClose={handleCloseModal} />
             <ModalNewList open={openModalNewList} handleClose={handleCloseModal} />
         </MainCard>

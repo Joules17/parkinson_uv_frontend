@@ -27,18 +27,18 @@ const RunListGames = () => {
     }, []);
 
     useEffect(() => {
-        setGames(gameListState.gamesList.juegos)
+        setGames(gameListState.gamesList.games)
     }, [gameListState]);
 
     // useEffect(() => {
     //     setStartGame(games[0])
 
     // }, [games]);
-    const cards = gameListState?.gamesList.juegos.map((juego) => ({
-        image: juego.urlImage,
-        title: juego.name,
-        description: juego.dominio,
-        settings: juego.settings
+    const cards = gameListState?.gamesList.games.map((game) => ({
+        image: game.game_picture,
+        title: game.name,
+        description: game.dominio,
+        setting: game.setting
     }));
     const responsive = {
         superLargeDesktop: {
@@ -64,17 +64,17 @@ const RunListGames = () => {
     const renderGame = () => {
         switch (startGame.title) {
             case "Frutas Locas":
-                return <GameFruits settings={startGame.settings}/>;
+                return <GameFruits setting={startGame.setting}/>;
             case "Numeros":
-                return <GameNumbers settings={startGame.settings}/>;
+                return <GameNumbers setting={startGame.setting}/>;
             case "Flechas Articas":
-                return <GameArtic settings={startGame.settings}/>;
+                return <GameArtic setting={startGame.setting}/>;
             case "Frutastico":
-                return <GameFrutastic settings={startGame.settings}/>;
+                return <GameFrutastic setting={startGame.setting}/>;
             case "Letras VS Numeros":
-                return <GameDomino settings={startGame.settings}/>;
+                return <GameDomino setting={startGame.setting}/>;
             case "Letra Aventura":
-                return <GameLetras settings={startGame.settings}/>;
+                return <GameLetras setting={startGame.setting}/>;
             default:
                 return null;
         }
@@ -84,7 +84,7 @@ const RunListGames = () => {
     const renderCard = (card, index) => {
         return (
             <Card key={index} sx={{ maxWidth: 230 }}>
-                <CardActionArea onClick={() => setStartGame({title: card.title, settings: card.settings})}>
+                <CardActionArea onClick={() => setStartGame({title: card.title, setting: card.setting})}>
                     <CardMedia
                         component="img"
                         height="90"
@@ -101,8 +101,8 @@ const RunListGames = () => {
     };
 
     // useEffect(() => {
-    //     const firstUnplayedGame = lista_juegos[0].juegos.find(
-    //         (juego) => !juego.played
+    //     const firstUnplayedGame = lista_juegos[0].games.find(
+    //         (game) => !game.played
     //     );
 
     //     if (firstUnplayedGame) {
