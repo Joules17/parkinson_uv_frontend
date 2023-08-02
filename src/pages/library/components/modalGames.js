@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGameList } from 'store/reducers/gamesListSlice';
 
-const ModalGames = ({ list, open, handleClose }) => {
+
+const ModalGames = ({ list, open, handleClose}) => {
   const gameListState = useSelector((state) => state.gamesList);
   const dispatch = useDispatch();
   const [modifiedList, setModifiedList] = useState(null);
@@ -76,7 +77,7 @@ const ModalGames = ({ list, open, handleClose }) => {
                   {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
                 </ListItemButton>
                 <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
-                  <SettingsGameForm typeForm={game.name} list={list} onListUpdate={handleListUpdate} idGame={game.id}/>
+                  <SettingsGameForm typeForm={game.name} list={list} onListUpdate={handleListUpdate} idGame={game.id_game_list}/>
                 </Collapse>
                 <Divider />
               </>
