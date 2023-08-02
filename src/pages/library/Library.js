@@ -18,19 +18,24 @@ import ChargingCard from 'components/ChargingCard';
 // ==============================|| LIBRARY PAGE ||============================== //
 
 const Library = () => {
-    const { getListGames } = useListGameResponse();
+    const { getListGamesAll } = useListGameResponse();
     const dispatch = useDispatch();
+    const [onLoading, setOnLoading] = useState(true)
     const [listGames, setListGames] = useState(undefined);
     const [openModalGames, setOpenModalGames] = useState(false);
     const [openModalNewList, setOpenModalNewList] = useState(false);
     const [list, setList] = useState({})
 
     useEffect(() => {
-        getListGames(setListGames);
+        getListGamesAll((response) => {
+            setListGames(response);
+            setOnLoading(false); // Cambia onLoading a false después de actualizar listGames
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [onLoading]);
 
     const handleCloseModal = () => {
+        setOnLoading(true)
         setOpenModalGames(false);
         setOpenModalNewList(false)
     };
@@ -52,7 +57,7 @@ const Library = () => {
                     Nueva lista
                 </Button>
             </div>
-            {listGames ?
+            {!onLoading ?
                 <Grid item xs={12} md={7} lg={8}>
                     <List component="nav">
                         {listGames?.map((item) => (
@@ -74,7 +79,7 @@ const Library = () => {
                 :
                 <ChargingCard />
                 }
-            <ModalGames list={list} open={openModalGames} handleClose={handleCloseModal} />
+            <ModalGames list={list} open={openModalGames} handleClose={handleCloseModal} idList={list.id} />
             <ModalNewList open={openModalNewList} handleClose={handleCloseModal} />
         </MainCard>
     )
