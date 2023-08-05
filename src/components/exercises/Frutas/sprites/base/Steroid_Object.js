@@ -5,6 +5,7 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
     constructor (config) {
         super(config.scene, config.posx, config.posy, config.key);
         this.selected = config.selected;
+        this.active = true; 
         
         // Añade fisicas de la escena
         config.scene.physics.world.enable(this);
@@ -49,7 +50,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
 
         // if clicked 
         this.on('pointerdown', () => {
-            this.shake(this.selected, this.scene)
+            if (this.active) {
+                this.shake(this.selected, this.scene)
+            }
         });
     }
 
@@ -61,8 +64,13 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         const endColor = Phaser.Display.Color.ValueToColor(to_color) // rojo
 
         let self = this.scene; 
+        let obj = this; 
         
         scene.sound.play(selected ? 'good' : 'bad' ); 
+        if (selected) {
+            // no mas clicks
+            obj.active = false; 
+        }
         this.scene.tweens.addCounter({
             from: 0,
             to: 100,
@@ -92,7 +100,6 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                         scene.numberVictory += 1; 
                         scene.current_number += 1; 
                         scene.setStatus(true)
-                        
                     } else {
                         console.log('Objeto incorrecto')
                         scene.numberErrors -= 1; 
