@@ -83,7 +83,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 10
                 },
-                urlImage: "https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg"
+                urlImage: "https://i.imgur.com/ahCKyUm.png"
             }
         ]
 
@@ -154,6 +154,6 @@ export const juegos = [
         settings: {
             rondas: 10
         },
-        urlImage: "https://www.abc.com.py/resizer/6u4qUkJ3mI5HApG9SefulVR2iuA=/fit-in/770xorig/smart/filters:format(webp)/cloudfront-us-east-1.images.arcpublishing.com/abccolor/3HB7IYAJQREF5IGEQVZE24CY7E.jpg"
+        urlImage: "https://i.imgur.com/ahCKyUm.png"
     }
 ]
