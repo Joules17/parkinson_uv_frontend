@@ -19,7 +19,7 @@ export default class rondas extends Phaser.Scene {
     this.blockdown = undefined;
 
     // config rondas
-    this.numberFases = 30;
+    this.numberFases = undefined; 
     this.tableroActual = undefined;
 
     // texto
@@ -74,6 +74,8 @@ export default class rondas extends Phaser.Scene {
   }
 
   create() {
+    const settings = this.sys.settings.data.settings; 
+    this.numberFases = settings.rondas; 
     this.cameras.main.setBackgroundColor(0xffffff);
     this.blockup = this.add.rectangle(0, 0, 1800, 100, 0x0024ad, 1);
 
@@ -92,7 +94,6 @@ export default class rondas extends Phaser.Scene {
   }
 
   update() {
-    console.log(this.flag)
     if (this.flag) {
       this.tiempo_rondas.push(this.tiempo_por_ronda)
       this.tiempo_por_ronda = 0;

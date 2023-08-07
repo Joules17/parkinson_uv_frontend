@@ -105,7 +105,8 @@ export default class NumbersLoby extends Phaser.Scene {
     this.button_continue.on('pointerdown', () => {
       if (this.victory_message.visible && this.button_continue.visible) {
         this.sound.play('good')
-        this.scene.start('rondas')
+        const settings = this.sys.settings.data.settings; 
+        this.scene.start('rondas', {settings})
       }
     })
 

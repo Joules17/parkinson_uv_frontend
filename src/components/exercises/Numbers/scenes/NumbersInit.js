@@ -21,6 +21,7 @@ export default class NumbersInit extends Phaser.Scene {
     }
 
     pass () {
-        this.scene.start('NumbersMenu')
+        const settings = this.sys.settings.data.setting; 
+        this.scene.start('NumbersMenu', {settings} )
     }
 }
