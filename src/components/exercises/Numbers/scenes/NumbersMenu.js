@@ -99,7 +99,8 @@ export default class NumbersMenu extends Phaser.Scene {
 
   update () {
     if (this.pressed) {
-      this.scene.start('NumbersLoby')
+      const settings = this.sys.settings.data.settings; 
+      this.scene.start('NumbersLoby', {settings})
     }
   }
 

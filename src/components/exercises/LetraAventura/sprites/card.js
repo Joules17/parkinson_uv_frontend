@@ -38,8 +38,6 @@ export default class Card {
     set_visible(val) {
         this.visible = val; 
         this.card_graphics.setVisible(val)
-        console.log('estoy llegando?', val, this.card_graphics.active)
-        
     }
     
 }

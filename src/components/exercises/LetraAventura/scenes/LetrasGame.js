@@ -33,6 +33,7 @@ const log = {
 export default class LetrasGame extends Phaser.Scene {
     constructor() {
         super({ key: 'LetrasGame', backgroundColor: '#3f1651' });
+        this.write_flag = true; 
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
@@ -152,7 +153,6 @@ export default class LetrasGame extends Phaser.Scene {
         if (this.flag) {
             if (!(this.tablero_actual === undefined)) {
                 this.tablero_actual.set_visible(false);
-                console.log(this.tiempo_por_ronda)
                 this.tiempo_rondas.push(this.tiempo_por_ronda);
                 this.tiempo_por_ronda = 0;
             }
@@ -178,6 +178,7 @@ export default class LetrasGame extends Phaser.Scene {
     // pon_tablero
     pon_tablero() {
         this.sound.play('flip_round');
+        this.write_flag = true; 
         if (this.tableros.length != 0) {
             this.tablero_actual = this.tableros.shift();
             this.tablero_actual.set_visible(true);
@@ -197,7 +198,7 @@ export default class LetrasGame extends Phaser.Scene {
         }
     }
     // inspect
-    // revisa que todas las cards hallan sido reveladas
+    // revisa que todas las cards hayan sido reveladas
     inspection() {
         let aux = true;
         this.tablero_actual.letter_space.forEach((element) => {
@@ -222,6 +223,7 @@ export default class LetrasGame extends Phaser.Scene {
         // siguiente ronda?
         if (this.inspection()) {
             var aux = []
+            this.write_flag = false; 
             this.tablero_actual.letter_space.forEach((element) => {
                 aux.push(element.letter_text)
             })

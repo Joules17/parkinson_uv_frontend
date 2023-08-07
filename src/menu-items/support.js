@@ -23,9 +23,9 @@ const support = {
         },
         {
             id: 'logOut',
-            title: 'Salir',
+            title: 'Salir al Landing',
             type: 'item',
-            url: 'https://codedthemes.gitbook.io/mantis-react/',
+            url: 'https://www.parkinson-uv.me',
             icon: icons.LogoutOutlined,
             external: true,
             target: true

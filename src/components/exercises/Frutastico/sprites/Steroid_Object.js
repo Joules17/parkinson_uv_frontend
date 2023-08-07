@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
     constructor (config) {
         super(config.scene, config.posx, config.posy, config.key);
+        this.active = true; 
         this.original_scale = config.original_scale;
         this.setScale(this.original_scale)
         this.added_scale = this.original_scale + 0.05;
@@ -55,7 +56,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
 
         // if clicked 
         this.on('pointerdown', () => {
-            this.shake(this.selected, this.scene)
+            if (this.active) {
+                this.shake(this.selected, this.scene)
+            } 
         });
     }
 
@@ -71,8 +74,12 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         const endColor = Phaser.Display.Color.ValueToColor(to_color) // rojo
 
         let self = this.scene; 
+        let obj = this; 
         
         scene.sound.play(selected ? 'good' : 'bad' ); 
+        if (selected) {
+            obj.active = false; 
+        }
         this.scene.tweens.addCounter({
             from: 0,
             to: 100,

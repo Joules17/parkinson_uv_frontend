@@ -24,24 +24,24 @@ const RunGame = () => {
     const gameListState = useSelector((state) => state.gamesList);
     const [startGame, setStartGame] = useState({})
 
-    const settings = {
+    const setting = {
         rondas: 2 
     }
 
     const renderGame = () => {
         switch (game) {
             case "Frutas Locas":
-                return <GameFruits settings={settings}/>;
+                return <GameFruits setting={setting}/>;
             case "Encuentra el número":
-                return <GameNumbers settings={settings}/>;
+                return <GameNumbers setting={setting}/>;
             case "Flechas Articas":
-                return <GameArtic settings={settings}/>;
+                return <GameArtic setting={setting}/>;
             case "Frutastico":
-                return <GameFrutastic settings={settings}/>;
+                return <GameFrutastic setting={setting}/>;
             case "Letras VS Numeros":
-                return <GameDomino settings={settings}/>;
+                return <GameDomino setting={setting}/>;
             case "Letra Aventura":
-                return <GameLetras settings={settings}/>;
+                return <GameLetras setting={setting}/>;
             default:
                 return null;
         }

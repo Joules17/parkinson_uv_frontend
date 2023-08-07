@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
     constructor(config) {
         super(config.scene, config.posx, config.posy, config.key, config.color, config.number, config.find, config.flag);
+        this.active = true; 
         this.selected = config.selected;
         const circleRadius = 51;
 
@@ -64,7 +65,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
 
             // if clicked 
             circle.on('pointerdown', () => {
-                this.shake(this.selected, this.scene, config.find, circle)
+                if (this.active) {
+                    this.shake(this.selected, this.scene, config.find, circle)
+                }
             });
 
         }
@@ -78,9 +81,12 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         const initialX = circle.x;
         const initialY = circle.y;
         let self = this.scene;
+        let obj = this; 
 
         scene.sound.play(selected == find ? 'good' : 'bad');
-
+        if (selected) {
+            obj.active = false; 
+        }
         this.scene.tweens.addCounter({
             from: 0,
             to: 100,

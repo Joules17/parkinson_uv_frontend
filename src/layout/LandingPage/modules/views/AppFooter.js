@@ -63,10 +63,10 @@ function AppFooter() {
                         </Typography>
                         <ul>
                             <li>
-                                <Link href="https://www.parkinsoncolombia.org">Página Oficial</Link>
+                                <Link href="https://www.parkinsoncolombia.org" target="_blank" rel="noopener noreferrer">Página Oficial</Link>
                             </li>
                             <li>
-                                <Link href="/productos">Contáctenos</Link>
+                                <Link href="https://www.parkinsoncolombia.org/paginas/contactenos" target="_blank" rel="noopener noreferrer">Contáctenos</Link>
                             </li>
                             <li>
                                 <Typography color="#909fb4">
@@ -85,7 +85,7 @@ function AppFooter() {
                             </li>
                             <li>
                                 <Typography color="#909fb4">
-                                  (+572) 5542381 - 5542384
+                                  (2) 5542381 - 5542384
                                 </Typography>
                             </li>
                             <li>

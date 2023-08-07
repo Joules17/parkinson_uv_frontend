@@ -12,6 +12,7 @@ import 'components/exercises/Frutas/styles.css'
 
 class GameNumbers extends Component {
   componentDidMount() {
+    const { setting } = this.props; 
     const config = {
       type: Phaser.AUTO,
       parent: "phaser-game-container",
@@ -32,6 +33,7 @@ class GameNumbers extends Component {
 
 
     this.game = new Phaser.Game(config);
+    this.game.scene.start('NumbersInit', {setting}); 
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

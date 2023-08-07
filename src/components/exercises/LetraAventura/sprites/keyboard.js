@@ -60,7 +60,9 @@ export default class keyboard {
                     .setFontSize(this.keySize)
                     .setInteractive({ useHandCursor: true })
                     .on('pointerdown', () => {
-                        this.onKeyPress(key);
+                        if (this.scene.write_flag) {
+                            this.onKeyPress(key);
+                        }
                     })
                     .on('pointerover', () => {
                         button.setFill('#FF0000');
