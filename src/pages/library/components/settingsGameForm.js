@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, MenuItem, Box } from '@mui/material';
+import { Button, TextField, MenuItem, Box, FormControlLabel, FormGroup, Checkbox, FormLabel, FormControl } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 
@@ -61,22 +61,22 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
                   }}
                   value={valueRounds}
                   onChange={handleRoundsChange} />
-               {typeForm === "Frutas" && (
-                  <TextField
-                     id="outlined-select-currency"
-                     select
-                     label="Objetos"
-                     defaultValue="frutas"
-                     InputLabelProps={{
-                        style: { fontSize: '18.5px' }
-                     }}
-                  >
-                     {objetos.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                           {option.label}
-                        </MenuItem>
-                     ))}
-                  </TextField>
+               {/* Opciones de cada juego */}
+               {typeForm === "Frutas Locas" && (
+                  <FormControl>
+                     <FormLabel component='legend' >
+                        Objetos
+                     </FormLabel>
+                     <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
+                        {objetos.map((option) => (
+                           <FormControlLabel
+                              key={option.value}
+                              control={<Checkbox sx={{ ml: 1 }} />}
+                              label={option.label}
+                           />
+                        ))}
+                     </FormGroup>
+                  </FormControl>
                )}
             </div>
          </Box>
