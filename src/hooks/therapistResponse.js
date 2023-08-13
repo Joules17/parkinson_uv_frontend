@@ -128,12 +128,25 @@ export const useExternalApi = () => {
         setMensaje('Se ha actrualizado')
     }
 
+    const getActivitiesDetailed = async (id_therapist, setActivities) => {
+        const config = {
+            url: `${apiServerUrl}/api/activity/retreive/therapist/${id_therapist}/`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+        setActivities(data)
+    }
+
     return {
         createTherapistAccount, 
         createTherapist, 
         getTherapist, 
         getTherapistPatients,
         updateTherapist, 
-        getTherapistDetailed
+        getTherapistDetailed, 
+        getActivitiesDetailed
     }
 }
