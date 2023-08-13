@@ -8,10 +8,6 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
    const [newSettings, setNewSettings] = useState(undefined)
    const gameListState = useSelector((state) => state.gamesList);
    const [modifiedList, setModifiedList] = useState(gameListState.gamesList);
-   const rounds = Array.from({ length: 12 }, (_, index) => ({
-      value: index + 1,
-      label: (index + 1).toString(),
-   }));
    const objetos = [
       { value: "frutas", label: "Frutas" },
       { value: "comida", label: "Alimentos" },

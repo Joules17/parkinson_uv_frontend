@@ -1,5 +1,5 @@
 // assets
-import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined, AppstoreAddOutlined} from '@ant-design/icons';
 
 // icons
 const icons = {
@@ -7,6 +7,7 @@ const icons = {
     PlayCircleOutlined,
     UserOutlined,
     UnorderedListOutlined,
+    AppstoreAddOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== // 
@@ -40,6 +41,14 @@ const dashboard_doctor = {
             icon: icons.UnorderedListOutlined,
             breadcrumbs: false
         },
+        {
+            id: 'activities', 
+            title: 'Actividades', 
+            type: 'item',
+            url: '/activities-page',
+            icon: icons.AppstoreAddOutlined,
+            breadcrumbs: false
+        }, 
         {
             id: 'games',
             title: 'Games',
