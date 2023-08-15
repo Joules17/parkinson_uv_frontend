@@ -1,20 +1,71 @@
+// react
+import { useState, useEffect } from 'react'
+
 import {
-    Stack, Button, Grid, TextField, Typography
+    Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip
 } from '@mui/material';
 
 import { useForm } from 'react-hook-form';
 
+// auth0
+import { useAuth0 } from '@auth0/auth0-react'
+
+// import hook
+import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
+
+// project import
 import MainCard from 'components/MainCard';
+import ChargingCard from 'components/ChargingCard';
+
+// assets
+import { BookOutlined } from '@ant-design/icons';
+
+// avatar style
+const avatarSX = {
+    width: 36,
+    height: 36,
+    fontSize: '1rem'
+};
+
+// action style
+const actionSX = {
+    mt: 0.75,
+    ml: 1,
+    top: 'auto',
+    right: 'auto',
+    alignSelf: 'flex-start',
+    transform: 'none'
+};
 
 export default function NewActivityForm({ onSubmit, handleExit }) {
     const { handleSubmit: registerSubmit, register: registro, watch } = useForm();
+
+    // auth 0
+    const { user } = useAuth0()
+
+    const [listGames, setListGames] = useState(undefined);
+    const [onLoading, setOnLoading] = useState(true);
+    const [selectedList, setSelectedList] = useState(null);
     const description = watch('description', '');
+
+    const { getListGamesDetailed } = useListGameResponse();
+
+    // loading for lists 
+    useEffect(() => {
+        getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [onLoading]);
 
     const handleDescriptionChange = (event) => {
         if (event.target.value.length <= 200) {
             registro('description').onChange(event);
         }
     };
+
+    const handleListClick = (index) => {
+        setSelectedList(index)
+    }
+    console.log(listGames)
 
     return (
         <MainCard content={false}>
@@ -71,6 +122,73 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
             <Typography fontWeight="bold" fontSize="1 rem">
                 Asignación de Lista
             </Typography>
+            <Grid item xs={12} sx={{ marginTop: '20px', mb: '1rem' }}>
+                {onLoading ? <ChargingCard /> :
+                    <MainCard sx={{ mt: 2 }} content={false} >
+                        <List
+                            component='nav'
+                            sx={{
+                                px: 0,
+                                py: 0,
+                                '& .MuiListItemButton-root': {
+                                    py: 1.5,
+                                    '& .MuiAvatar-root': avatarSX,
+                                    '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                                }
+
+                            }}
+                            style={{ maxHeight: '200px', overflow: 'auto' }}
+                        >
+                            {listGames.map((elem, index) => (
+                                <Tooltip
+                                    title={
+                                        <Typography>
+                                            Número de juegos: {elem.games.length}
+                                            <br />
+                                            Lista de Juegos:
+                                            <br />
+                                            {elem.games.map(game => `[${game.id_type}] ${game.name}`).join(', ')}
+                                        </Typography>
+                                    }
+                                    key={index}
+                                >
+                                    <ListItemButton
+                                        divider
+                                        selected={index === selectedList}
+                                        onClick={() => handleListClick(index)}
+                                        sx={{
+                                            '&.Mui-selected': {
+                                                backgroundColor: '#74e0da',
+                                                '& .MuiListItemSecondaryAction-root': {
+                                                    backgroundColor: '#74e0da',
+                                                },
+                                            },
+                                            '& .MuiAvatar-root': avatarSX,
+                                            '& .MuiListItemSecondaryAction-root': {
+                                                ...actionSX,
+                                                position: 'relative',
+                                                backgroundColor: index === selectedList ? '#74e0da' : 'inherit',
+                                            },
+                                        }}
+                                    >
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ color: '#329dff', bgcolor: '#e6f7ff' }}>
+                                                <BookOutlined />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary={<Typography variant="subtitle1">{elem.name}</Typography>} />
+                                    </ListItemButton>
+                                </Tooltip>
+                            ))}
+                        </List>
+                    </MainCard>
+                }
+
+            </Grid>
+            <Typography fontWeight="bold" fontSize="1 rem">
+                Asignación de Pacientes
+            </Typography>
+            
         </MainCard>
     )
 }

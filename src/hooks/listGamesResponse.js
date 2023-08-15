@@ -34,6 +34,19 @@ export const useExternalApi = () => {
         setListGames(data)
     }
 
+    const getListGamesDetailed = async (id, setListGames) => {
+        const config = {
+            url: `${apiServerUrl}/api/list/retreive/therapist/${id}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+        const data = await makeRequest({config})
+
+        // 
+        setListGames(data)
+    }
+
     const getListGames = async (id, setListGames) => {
         const config = {
             url: `${apiServerUrl}/api/list/retreive/${id}`,
@@ -76,6 +89,7 @@ export const useExternalApi = () => {
 
     return {
         getListGamesAll,
+        getListGamesDetailed,
         getListGames,
         updateSettingGameList,
         createList

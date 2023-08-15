@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import { Grid, ListItemButton, ListItemIcon, ListItemText, Button } from '@mui/material';
 import { BookOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import List from '@mui/material/List';
-import { lista_juegos } from './components/globals';
+// import { lista_juegos } from './components/globals';
 import Divider from '@mui/material/Divider';
 import MainCard from 'components/MainCard';
 import ModalGames from './components/modalGames';
 import ModalNewList from './components/modalNewList';
 import { useDispatch } from 'react-redux';
 import { setGameList } from 'store/reducers/gamesListSlice';
+
+// auth0
+import { useAuth0 } from '@auth0/auth0-react'
 
 // import hook
 import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
@@ -18,19 +21,18 @@ import ChargingCard from 'components/ChargingCard';
 // ==============================|| LIBRARY PAGE ||============================== //
 
 const Library = () => {
-    const { getListGamesAll } = useListGameResponse();
+    const { getListGamesDetailed } = useListGameResponse();
     const dispatch = useDispatch();
     const [onLoading, setOnLoading] = useState(true)
     const [listGames, setListGames] = useState(undefined);
     const [openModalGames, setOpenModalGames] = useState(false);
     const [openModalNewList, setOpenModalNewList] = useState(false);
     const [list, setList] = useState({})
+    // auth 0
+    const { user } = useAuth0()
 
     useEffect(() => {
-        getListGamesAll((response) => {
-            setListGames(response);
-            setOnLoading(false); // Cambia onLoading a false después de actualizar listGames
-        });
+        getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onLoading]);
 
@@ -45,6 +47,7 @@ const Library = () => {
         setOpenModalGames(true);
     };
 
+    console.log('listGames', listGames)
     return (
         <MainCard title="Mi biblioteca" darkTitle>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
