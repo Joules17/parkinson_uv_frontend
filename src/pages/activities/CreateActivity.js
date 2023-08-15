@@ -41,9 +41,8 @@ export default function CreateActivity() {
         setOpenModal(false);
     };
 
-    const onSubmit = (data) => {
-        setMensaje('Actividad enviada');
-        console.log('Hola bebe')
+    const onSubmit = (selectedList, selectedPatients, data) => {
+        console.log('HOLA BEBE DIME SI CONMIGO QUIERE HACER TRAVESURAAA', selectedList, selectedPatients, data)
     };
 
     return (

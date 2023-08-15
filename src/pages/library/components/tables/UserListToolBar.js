@@ -34,7 +34,7 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 
 // ====================================================================================
 export default function UserListToolbar({ numSelected, filterName, onFilterName, loading }) {
-    console.log(loading)
+    // console.log(loading)
     return (
         <StyledRoot
             sx={{
