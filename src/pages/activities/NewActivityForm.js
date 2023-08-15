@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 
 import {
-    Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip
+    Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip, Button, Alert
 } from '@mui/material';
 
 import { useForm } from 'react-hook-form';
@@ -12,11 +12,12 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 // import hook
 import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
+import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
 
 // project import
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
-
+import UserList from 'pages/library/components/tables/UserList';
 // assets
 import { BookOutlined } from '@ant-design/icons';
 
@@ -39,22 +40,38 @@ const actionSX = {
 
 export default function NewActivityForm({ onSubmit, handleExit }) {
     const { handleSubmit: registerSubmit, register: registro, watch } = useForm();
+    const formData = watch(); // Obtiene los valores actuales del formulario
 
     // auth 0
     const { user } = useAuth0()
 
     const [listGames, setListGames] = useState(undefined);
     const [onLoading, setOnLoading] = useState(true);
+    const [onLoadingPatients, setOnLoadingPatients] = useState(true);
+    const [patientList, setPatientList] = useState(undefined);
+    const [selectedPatients, setSelectedPatients] = useState(undefined);
     const [selectedList, setSelectedList] = useState(null);
     const description = watch('description', '');
 
+    // errors
+    const [listError, setListError] = useState(true);
+    const [patientError, setPatientError] = useState(true);
+    const [formError, setFormError] = useState(true);
+
     const { getListGamesDetailed } = useListGameResponse();
+    const { getTherapistPatients } = useTherapistResponse();
 
     // loading for lists 
     useEffect(() => {
         getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onLoading]);
+
+    // loading for patients
+    useEffect(() => {
+        getTherapistPatients(user.sub, setPatientList).then(() => setOnLoadingPatients(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [onLoadingPatients]);
 
     const handleDescriptionChange = (event) => {
         if (event.target.value.length <= 200) {
@@ -65,7 +82,26 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
     const handleListClick = (index) => {
         setSelectedList(index)
     }
-    console.log(listGames)
+
+    const saveActivity = () => {
+        if (selectedList === null) {
+            setListError(true);
+        } else if (selectedPatients.length === 0) {
+            setPatientError(true);
+            setListError(false); 
+        } else if (!formData.name || !formData.last_scheduled_date || !formData.description || !formData.interval) {
+            setFormError(true); 
+            setPatientError(false); 
+            setListError(false); 
+        } else {
+            setListError(false);
+            setPatientError(false);
+            setFormError(false);
+            onSubmit(selectedList, selectedPatients, formData)
+            handleExit()
+        }
+
+    }
 
     return (
         <MainCard content={false}>
@@ -96,6 +132,7 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
                                 inputProps={{ maxLength: 3, min: 1, max: 100, step: 1 }}
                                 fullWidth
                                 type="number"
+                                {...registro('interval', { required: true })}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -188,7 +225,17 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
             <Typography fontWeight="bold" fontSize="1 rem">
                 Asignación de Pacientes
             </Typography>
-            
+            <Grid item xs={12} sx={{ marginTop: '20px', maxHeight: '310px', overflow: 'auto' }}>
+                {onLoadingPatients ? <ChargingCard /> :
+                    <UserList list={patientList} setList={setPatientList} loading={'cargando'} setLoading={setOnLoadingPatients} getSelected={setSelectedPatients} />
+                }
+            </Grid>
+            <Grid container justifyContent="center" item xs={12} sx={{ marginTop: '20px', mb: '1rem', maxHeight: '310px', overflow: 'auto' }}>
+                {listError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, selecciona una lista.</Alert></Grid>}
+                {patientError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, selecciona al menos un paciente.</Alert></Grid>}
+                {formError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, completa todos los campos del formulario.</Alert></Grid>}
+                <Button variant="contained" onClick={saveActivity}> Crear Actividad / Actividades</Button>
+            </Grid>
         </MainCard>
     )
 }
