@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // mui
 import {
-    Container, Stack, Typography, Grid, Button, Card, CardContent, CardMedia, CardActions, CardActionArea, List,
+    Container, Stack, Typography, Grid, Button, List,
     ListItemAvatar,
     ListItemButton,
     ListItemSecondaryAction,
@@ -13,6 +13,7 @@ import {
 
 // components
 // project import 
+import Dot from 'components/@extended/Dot';
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
 import NoActivities from './NoActivities';
@@ -25,7 +26,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useExternalApi } from 'hooks/therapistResponse';
 
 // assets
-import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -117,14 +118,11 @@ export default function ActivityPage() {
             <NoActivities />
         )
     }
-
-
-
-
+    console.log(listActivities)
     return (
         <MainCard title="Actividades" darkTitle="true">
             <Grid item xs={12} md={7} lg={8}>
-                <CreateActivity />
+                <CreateActivity setList = {setListActivities}/>
                 <Box sx={{ p: 3, pb: 3 }}>
                     <Stack spacing={2} >
                         <Typography variant="h5" >
@@ -145,78 +143,37 @@ export default function ActivityPage() {
                             }
                         }}
                     >
-                        <ListItemButton divider>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{
-                                        color: 'success.main',
-                                        bgcolor: 'success.lighter'
-                                    }}
-                                >
-                                    <GiftOutlined />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={<Typography variant="subtitle1">Order #002434</Typography>} secondary="Today, 2:00 AM" />
-                            <ListItemSecondaryAction>
-                                <Stack alignItems="flex-end">
-                                    <Typography variant="subtitle1" noWrap>
-                                        + $1,430
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        78%
-                                    </Typography>
-                                </Stack>
-                            </ListItemSecondaryAction>
-                        </ListItemButton>
-                        <ListItemButton divider>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{
-                                        color: 'primary.main',
-                                        bgcolor: 'primary.lighter'
-                                    }}
-                                >
-                                    <MessageOutlined />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={<Typography variant="subtitle1">Order #984947</Typography>}
-                                secondary="5 August, 1:45 PM"
-                            />
-                            <ListItemSecondaryAction>
-                                <Stack alignItems="flex-end">
-                                    <Typography variant="subtitle1" noWrap>
-                                        + $302
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        8%
-                                    </Typography>
-                                </Stack>
-                            </ListItemSecondaryAction>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{
-                                        color: 'error.main',
-                                        bgcolor: 'error.lighter'
-                                    }}
-                                >
-                                    <SettingOutlined />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={<Typography variant="subtitle1">Order #988784</Typography>} secondary="7 hours ago" />
-                            <ListItemSecondaryAction>
-                                <Stack alignItems="flex-end">
-                                    <Typography variant="subtitle1" noWrap>
-                                        + $682
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        16%
-                                    </Typography>
-                                </Stack>
-                            </ListItemSecondaryAction>
-                        </ListItemButton>
+                        {listActivities.map((elem, index) => (
+                            <ListItemButton divider key={index}>
+                                <ListItemAvatar>
+                                    <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
+                                        <Avatar
+                                            sx={{
+                                                color: elem.status === 'Realizado' ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
+                                                bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
+                                            }}
+                                        >
+                                            {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
+                                        </Avatar>
+                                        <Avatar alt={elem.therapist_name} src={elem.therapist_picture} />
+                                        <Avatar alt={elem.patient_name} src={elem.patient_picture} />
+                                    </AvatarGroup>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={<Typography variant="subtitle1"> Id No. {elem.id} - {elem.activity_name}</Typography>}
+                                    secondary={`Fecha de inicio: ${elem.start_date} - Fecha de Fin: ${elem.end_date}`}
+                                    sx={{ ml: '1rem' }} />
+                                <ListItemSecondaryAction>
+                                    <Stack direction="row" alignItems="center">
+                                        <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')}/>
+                                        <Typography variant="subtitle1" noWrap>
+                                            {elem.status}
+                                        </Typography>
+                                    </Stack>
+                                </ListItemSecondaryAction>
+                            </ListItemButton>
+
+                        ))}
                     </List>
                 </MainCard>
                 <Box sx={{ p: 3, pb: 3 }}>
@@ -229,6 +186,4 @@ export default function ActivityPage() {
             </Grid>
         </MainCard>
     )
-
-
 }

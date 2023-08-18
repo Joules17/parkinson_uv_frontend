@@ -5,12 +5,20 @@ import {
     Typography, Avatar, List, ListItemAvatar, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton
 } from '@mui/material';
 
+// auth 0 
+import { useAuth0 } from '@auth0/auth0-react';
+
+// import hooks 
+import { useExternalApi as useActivityResponse } from 'hooks/activitiesResponse';
+import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
+
 // project import 
 import MainCard from 'components/MainCard';
+import ChargingCard from 'components/ChargingCard';
 import NewActivityForm from './NewActivityForm';
 
 // assets
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, NotificationOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -29,9 +37,17 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function CreateActivity() {
+export default function CreateActivity({setList}) {
     const [openModal, setOpenModal] = useState(false);
     const [mensaje, setMensaje] = useState('Crear Actividad');
+    const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+    const [numberCreated, setNumberCreated] = useState(0); 
+    const [loadedCreated, setLoadedCreated] = useState(false);  
+    // api 
+    const { user } = useAuth0(); 
+    // hooks 
+    const { createActivity } = useActivityResponse();
+    const { getActivitiesDetailed } = useTherapistResponse(); 
 
     const handleButtonClick = () => {
         setOpenModal(true);
@@ -40,9 +56,26 @@ export default function CreateActivity() {
     const handleCloseModal = () => {
         setOpenModal(false);
     };
+    
+    const handleCloseSuccessDialog = () => {
+        setSuccessDialogOpen(false); 
+    }; 
 
-    const onSubmit = (selectedList, selectedPatients, data) => {
-        console.log('HOLA BEBE DIME SI CONMIGO QUIERE HACER TRAVESURAAA', selectedList, selectedPatients, data)
+    const onSubmit = async (selectedList, selectedPatients, data) => {
+        setSuccessDialogOpen(true);
+        console.log(selectedPatients, 'que hago con esto')
+        try {
+            /*
+            await Promise.all(
+                selectedPatients.map(async (patient) => {
+                    await createActivity(data, selectedList, patient, user.sub);
+                })
+            );
+            */
+           console.log(setList, 'que es ESTOOO')
+        } catch (error) {
+            console.error('Error al crear actividades:', error);
+        }
     };
 
     return (
@@ -92,6 +125,33 @@ export default function CreateActivity() {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            <Dialog open={successDialogOpen} onClose={handleCloseSuccessDialog}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography fontWeight="bold" fontSize="1.25rem">
+                        Notificación
+                    </Typography>
+                    <IconButton edge="end" color="inherit">
+                        <NotificationOutlined />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    {loadedCreated ? 
+                    <Typography>
+                        Se han creado {numberCreated} actividad(es) exitosamente. 
+                    </Typography>
+                    : 
+                    <ChargingCard />
+                    }
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseSuccessDialog} color="primary">
+                        Cerrar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            
         </MainCard>
     )
 }

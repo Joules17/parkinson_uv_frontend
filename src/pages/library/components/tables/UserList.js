@@ -33,11 +33,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 import UserListHead from './UserListHead';
 import UserListToolbar from './UserListToolBar';
 
-
-// hooks
-import { useExternalApi as usePatientResponse } from 'hooks/patientResponse'
-import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse'
-
 // ================================== HEADER TABLE ========================================
 const TABLE_HEAD = [
     { id: 'name', label: 'Nombre Completo', alignRight: 'false' },
@@ -87,9 +82,6 @@ function applySortFilter(array, comparator, query) {
 export default function UserList({ list, setList, loading, setLoading, getSelected}) {
     // auth 0
     const { user } = useAuth0()
-    // api 
-    const { updatePatientAssignee } = usePatientResponse()
-    const { getTherapistPatients } = useTherapistResponse()
     //useStates
     /* const [open, setOpen] = useState(null);*/
     const [page, setPage] = useState(0);
@@ -110,15 +102,19 @@ export default function UserList({ list, setList, loading, setLoading, getSelect
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
             const newSelecteds = list.map((n) => n.name);
+            const newSelectedsIds = list.map((n) => n.user_id);
             setSelected(newSelecteds);
+            setSelectedId(newSelectedsIds); 
             return;
         }
         setSelected([]);
+        setSelectedId([]); 
     };
 
     useEffect(() => {
         // Aquí se ejecutará getSelected cada vez que el estado "selected" cambie.
         getSelected(selectedId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId]);
 
     const handleClick = (event, name, user_id) => {
@@ -134,16 +130,16 @@ export default function UserList({ list, setList, loading, setLoading, getSelect
             newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
         }
 
-        const selectedIndexId = selected.indexOf(user_id);
+        const selectedIndexId = selectedId.indexOf(user_id);
         let newSelectedId = [];
-        if (selectedIndex === -1) {
-            newSelectedId = newSelectedId.concat(selected, user_id);
-        } else if (selectedIndex === 0) {
-            newSelectedId = newSelectedId.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelectedId = newSelectedId.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelectedId = newSelectedId.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        if (selectedIndexId === -1) {
+            newSelectedId = newSelectedId.concat(selectedId, user_id);
+        } else if (selectedIndexId === 0) {
+            newSelectedId = newSelectedId.concat(selectedId.slice(1));
+        } else if (selectedIndexId === selected.length - 1) {
+            newSelectedId = newSelectedId.concat(selectedId.slice(0, -1));
+        } else if (selectedIndexId > 0) {
+            newSelectedId = newSelectedId.concat(selectedId.slice(0, selectedIndexId), selectedId.slice(selectedIndexId + 1));
         }
         setSelected(newSelected);
         setSelectedId(newSelectedId)
