@@ -8,25 +8,32 @@ import {
     ListItemText,
     Avatar,
     AvatarGroup,
-    Box
+    Box,
+    Toolbar,
+    Menu,
+    MenuItem
 } from '@mui/material';
 
 // components
-// project import 
+// project import
 import Dot from 'components/@extended/Dot';
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
 import NoActivities from './NoActivities';
 import CreateActivity from './CreateActivity';
+import ActivitiesHead from './ActivitiesHead';
 
-// auth 0 imports 
+// filter
+import { filter } from 'lodash';
+
+// auth 0 imports
 import { useAuth0 } from '@auth0/auth0-react';
 
-// API 
+// API
 import { useExternalApi } from 'hooks/therapistResponse';
 
 // assets
-import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -45,7 +52,7 @@ const actionSX = {
     transform: 'none'
 };
 
-// aux functions for searching 
+// aux functions for searching
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) { return -1; }
     if (b[orderBy] > a[orderBy]) { return 1; }
@@ -56,10 +63,16 @@ function getComparator(order, orderBy) {
     return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator, query, orderBy) {
     let arrayRenew = array;
     if (query) {
-        arrayRenew = filter(array, (_activity) => _activity.activity_name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        arrayRenew = filter(array, (_activity) => {
+            return (
+                _activity.activity_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+                _activity.id.toString().indexOf(query) !== -1 ||
+                _activity.patient_name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+            );
+        });
     }
 
     const stabilizedThis = arrayRenew.map((el, index) => [el, index]);
@@ -68,23 +81,53 @@ function applySortFilter(array, comparator, query) {
         if (order !== 0) return order;
         return a[1] - b[1];
     });
+
+    if (orderBy === 'id') {
+        return stabilizedThis.map((el) => el[0]).sort((a, b) => comparator(a, b)); // Ordenar por ID
+    }
+
     return stabilizedThis.map((el) => el[0]);
 }
 
 
 export default function ActivityPage() {
-    // auth 0 functions 
+    // auth 0 functions
     const { user } = useAuth0()
-    const [openFilter, setOpenFilter] = useState(false);
     const [listActivities, setListActivities] = useState(undefined);
     const [isLoading, setIsLoading] = useState('Cargando...');
 
-    // paginations 
+    // menus
+    const [orderMenuAnchor, setOrderMenuAnchor] = useState(null);
+    const [searchMenuAnchor, setSearchMenuAnchor] = useState(null);
 
+    const handleOpenOrderMenu = (event) => {
+        setOrderMenuAnchor(event.currentTarget);
+    };
+
+    const handleCloseOrderMenu = () => {
+        setOrderMenuAnchor(null);
+    };
+
+    const handleOpenSearchMenu = (event) => {
+        setSearchMenuAnchor(event.currentTarget);
+    }
+
+    const handleCloseSearchMenu = () => {
+        setSearchMenuAnchor(null);
+    }
+
+    // -----------------------------------------------------------
+    const onOrderChange = (option) => {
+        setOrder(option)
+    }
+
+    const onSearchChange = (option) => {
+        setOrderBy(option)
+    }
     // filters
     const [filterName, setFilterName] = useState('');
 
-    // sorting 
+    // sorting
     const [order, setOrder] = useState('asc')
     const [orderBy, setOrderBy] = useState('activity_name')
 
@@ -92,7 +135,7 @@ export default function ActivityPage() {
         getActivitiesDetailed
     } = useExternalApi();
 
-    // useEffects 
+    // useEffects
     useEffect(() => {
         getActivitiesDetailed(user.sub, setListActivities).then(() => {
             setIsLoading('Actividades');
@@ -105,7 +148,7 @@ export default function ActivityPage() {
         setFilterName(e.target.value);
     }
 
-    // no activities? 
+    // no activities?
     if (listActivities === undefined) {
         console.log('Cargando...')
         return (
@@ -118,24 +161,54 @@ export default function ActivityPage() {
             <NoActivities />
         )
     }
-    console.log(listActivities)
+    const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
+    const isNotFound = !filteredActivities.length && !!filterName;
+
     return (
         <MainCard title="Actividades" darkTitle="true">
             <Grid item xs={12} md={7} lg={8}>
-                <CreateActivity setList = {setListActivities}/>
+                <CreateActivity setList={setListActivities} />
                 <Box sx={{ p: 3, pb: 3 }}>
                     <Stack spacing={2} >
                         <Typography variant="h5" >
                             Mis Actividades programadas
                         </Typography>
+                        <Toolbar sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}>
+                            <ActivitiesHead filterWord={filterName} onFilterWord={handleFilterName} option={orderBy} />
+
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <Button variant="outlined" startIcon={<OrderedListOutlined />} sx={{ mr: '1rem' }} onClick={handleOpenOrderMenu}>
+                                    Ordenar: {order}
+                                </Button>
+                                <Menu anchorEl={orderMenuAnchor} open={Boolean(orderMenuAnchor)} onClose={handleCloseOrderMenu}>
+                                    <MenuItem onClick={() => onOrderChange('asc')} disabled={order === 'asc'}> Ascendente </MenuItem>
+                                    <MenuItem onClick={() => onOrderChange('desc')} disabled={order === 'desc'}> Descendiente </MenuItem>
+                                </Menu>
+                                <Button variant="outlined" startIcon={<SearchOutlined />} onClick={handleOpenSearchMenu}>
+                                    Buscar por: {orderBy}
+                                </Button>
+                                <Menu anchorEl={searchMenuAnchor} open={Boolean(searchMenuAnchor)} onClose={handleCloseSearchMenu}>
+                                    <MenuItem onClick={() => onSearchChange('activity_name')} disabled={orderBy === 'activity_name'}> Nombre de Actividad </MenuItem>
+                                    <MenuItem onClick={() => onSearchChange('id')} disabled={orderBy === 'id'}> ID </MenuItem>
+                                    <MenuItem onClick={() => onSearchChange('patient_name')} disabled={orderBy === 'patient_name'}> Nombre de paciente </MenuItem>
+                                </Menu>
+                            </div>
+                        </Toolbar>
+
                     </Stack>
                 </Box>
                 <MainCard content={false}>
                     <List
                         component="nav"
+
                         sx={{
                             px: 0,
                             py: 0,
+                            maxHeight: '500px',
+                            overflow: 'auto',
                             '& .MuiListItemButton-root': {
                                 py: 1.5,
                                 '& .MuiAvatar-root': avatarSX,
@@ -143,7 +216,7 @@ export default function ActivityPage() {
                             }
                         }}
                     >
-                        {listActivities.map((elem, index) => (
+                        {filteredActivities.map((elem, index) => (
                             <ListItemButton divider key={index}>
                                 <ListItemAvatar>
                                     <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
@@ -165,7 +238,7 @@ export default function ActivityPage() {
                                     sx={{ ml: '1rem' }} />
                                 <ListItemSecondaryAction>
                                     <Stack direction="row" alignItems="center">
-                                        <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')}/>
+                                        <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
                                         <Typography variant="subtitle1" noWrap>
                                             {elem.status}
                                         </Typography>
@@ -175,6 +248,20 @@ export default function ActivityPage() {
 
                         ))}
                     </List>
+                    {isNotFound && (
+                        <MainCard>
+                            <Typography variant="h6" paragraph>
+                                No encontrado
+                            </Typography>
+
+                            <Typography variant="body2">
+                                No hay resultados para &nbsp;
+                                <strong>&quot;{filterName}&quot;</strong>.
+                                <br /> Buscando por &quot;{orderBy}&quot;
+                                <br /> Verifique o utilice palabras completas
+                            </Typography>
+                        </MainCard>
+                    )}
                 </MainCard>
                 <Box sx={{ p: 3, pb: 3 }}>
                     <Stack spacing={2} >

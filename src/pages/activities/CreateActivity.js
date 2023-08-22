@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
-// mui 
+// mui
 import {
     Typography, Avatar, List, ListItemAvatar, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton
 } from '@mui/material';
 
-// auth 0 
+// auth 0
 import { useAuth0 } from '@auth0/auth0-react';
 
-// import hooks 
+// import hooks
 import { useExternalApi as useActivityResponse } from 'hooks/activitiesResponse';
 import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
 
-// project import 
+// project import
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
 import NewActivityForm from './NewActivityForm';
@@ -41,13 +41,13 @@ export default function CreateActivity({setList}) {
     const [openModal, setOpenModal] = useState(false);
     const [mensaje, setMensaje] = useState('Crear Actividad');
     const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-    const [numberCreated, setNumberCreated] = useState(0); 
-    const [loadedCreated, setLoadedCreated] = useState(false);  
-    // api 
-    const { user } = useAuth0(); 
-    // hooks 
+    const [numberCreated, setNumberCreated] = useState(0);
+    const [loadedCreated, setLoadedCreated] = useState(false);
+    // api
+    const { user } = useAuth0();
+    // hooks
     const { createActivity } = useActivityResponse();
-    const { getActivitiesDetailed } = useTherapistResponse(); 
+    const { getActivitiesDetailed } = useTherapistResponse();
 
     const handleButtonClick = () => {
         setOpenModal(true);
@@ -56,23 +56,23 @@ export default function CreateActivity({setList}) {
     const handleCloseModal = () => {
         setOpenModal(false);
     };
-    
+
     const handleCloseSuccessDialog = () => {
-        setSuccessDialogOpen(false); 
-    }; 
+        setSuccessDialogOpen(false);
+    };
 
     const onSubmit = async (selectedList, selectedPatients, data) => {
         setSuccessDialogOpen(true);
-        console.log(selectedPatients, 'que hago con esto')
         try {
-            /*
             await Promise.all(
                 selectedPatients.map(async (patient) => {
-                    await createActivity(data, selectedList, patient, user.sub);
+                    await createActivity(data, selectedList.id, patient, user.sub);
                 })
             );
-            */
-           console.log(setList, 'que es ESTOOO')
+
+            await getActivitiesDetailed(user.sub, setList);
+            setNumberCreated(selectedPatients.length)
+            setLoadedCreated(true);
         } catch (error) {
             console.error('Error al crear actividades:', error);
         }
@@ -136,11 +136,11 @@ export default function CreateActivity({setList}) {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    {loadedCreated ? 
+                    {loadedCreated ?
                     <Typography>
-                        Se han creado {numberCreated} actividad(es) exitosamente. 
+                        Se han creado {numberCreated} actividad(es) exitosamente.
                     </Typography>
-                    : 
+                    :
                     <ChargingCard />
                     }
                 </DialogContent>
@@ -151,7 +151,7 @@ export default function CreateActivity({setList}) {
                 </DialogActions>
             </Dialog>
 
-            
+
         </MainCard>
     )
 }

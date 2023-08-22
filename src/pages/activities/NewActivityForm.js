@@ -59,12 +59,12 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
     const [listError, setListError] = useState(true);
     const [patientError, setPatientError] = useState(true);
     const [formError, setFormError] = useState(true);
-    const [dateError, setDateError] = useState(true); 
+    const [dateError, setDateError] = useState(true);
 
     const { getListGamesDetailed } = useListGameResponse();
     const { getTherapistPatients } = useTherapistResponse();
 
-    // loading for lists 
+    // loading for lists
     useEffect(() => {
         getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -97,16 +97,16 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
             setPatientError(false);
             setListError(false);
         } else if (formData.end_date <= formData.start_date) {
-            setDateError(true); 
+            setDateError(true);
             setFormError(false);
             setPatientError(false);
             setListError(false);
         } else {
-            setDateError(false); 
+            setDateError(false);
             setListError(false);
             setPatientError(false);
             setFormError(false);
-            onSubmit(selectedList, selectedPatients, formData)
+            onSubmit(listGames[selectedList], selectedPatients, formData)
             handleExit()
         }
 
