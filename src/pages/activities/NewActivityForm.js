@@ -42,6 +42,8 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
     const { handleSubmit: registerSubmit, register: registro, watch } = useForm();
     const formData = watch(); // Obtiene los valores actuales del formulario
 
+    const watchStartDate = watch('start_date');
+
     // auth 0
     const { user } = useAuth0()
 
@@ -57,11 +59,12 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
     const [listError, setListError] = useState(true);
     const [patientError, setPatientError] = useState(true);
     const [formError, setFormError] = useState(true);
+    const [dateError, setDateError] = useState(true);
 
     const { getListGamesDetailed } = useListGameResponse();
     const { getTherapistPatients } = useTherapistResponse();
 
-    // loading for lists 
+    // loading for lists
     useEffect(() => {
         getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,16 +91,22 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
             setListError(true);
         } else if (selectedPatients.length === 0) {
             setPatientError(true);
-            setListError(false); 
-        } else if (!formData.name || !formData.last_scheduled_date || !formData.description || !formData.interval) {
-            setFormError(true); 
-            setPatientError(false); 
-            setListError(false); 
+            setListError(false);
+        } else if (!formData.name || !formData.start_date || !formData.description || !formData.end_date) {
+            setFormError(true);
+            setPatientError(false);
+            setListError(false);
+        } else if (formData.end_date <= formData.start_date) {
+            setDateError(true);
+            setFormError(false);
+            setPatientError(false);
+            setListError(false);
         } else {
+            setDateError(false);
             setListError(false);
             setPatientError(false);
             setFormError(false);
-            onSubmit(selectedList, selectedPatients, formData)
+            onSubmit(listGames[selectedList], selectedPatients, formData)
             handleExit()
         }
 
@@ -118,21 +127,23 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
                             <TextField id='name' {...registro('name', { required: true })} inputProps={{ maxLength: 30 }} fullWidth />
                         </Grid>
                         <Grid item xs={4}>
-                            <Typography variant="body1">
-                                Fecha de inicio
-                            </Typography>
-                            <TextField id="fecha" type="date" {...registro('last_scheduled_date', { required: true })} inputProps={{ min: new Date().toISOString().split('T')[0] }} fullWidth />
+                            <Typography variant="body1">Fecha de inicio</Typography>
+                            <TextField
+                                id="start_date"
+                                type="date"
+                                {...registro('start_date', { required: true })}
+                                inputProps={{ min: new Date().toISOString().split('T')[0] }}
+                                fullWidth
+                            />
                         </Grid>
                         <Grid item xs={4}>
-                            <Typography variant="body1">
-                                Intervalos (de días)
-                            </Typography>
+                            <Typography variant="body1">Fecha máxima (Deadline)</Typography>
                             <TextField
-                                id='interval'
-                                inputProps={{ maxLength: 3, min: 1, max: 100, step: 1 }}
+                                id="end_date"
+                                type="date"
+                                {...registro('end_date', { required: true })}
+                                inputProps={{ min: watchStartDate || new Date().toISOString().split('T')[0] }}
                                 fullWidth
-                                type="number"
-                                {...registro('interval', { required: true })}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -234,6 +245,7 @@ export default function NewActivityForm({ onSubmit, handleExit }) {
                 {listError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, selecciona una lista.</Alert></Grid>}
                 {patientError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, selecciona al menos un paciente.</Alert></Grid>}
                 {formError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, completa todos los campos del formulario.</Alert></Grid>}
+                {dateError && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, ingresa una fecha de finalización posterior a la fecha de inicio.</Alert></Grid>}
                 <Button variant="contained" onClick={saveActivity}> Crear Actividad / Actividades</Button>
             </Grid>
         </MainCard>

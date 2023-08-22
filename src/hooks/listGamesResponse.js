@@ -70,7 +70,7 @@ export const useExternalApi = () => {
         }
         const data = await makeRequest({config})
 
-        console.log(data)
+        // console.log(data)
     }
 
     const createList = async (datos) => {
@@ -83,7 +83,7 @@ export const useExternalApi = () => {
 
         const data = await makeRequest({config})
 
-        console.log(data)
+        // console.log(data)
         console.log('Registrado correctamente')
     }
 
