@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // mui
 import {
-    Container, Stack, Typography, Grid, Button, List,
+    Stack, Typography, Grid, Button, List,
     ListItemAvatar,
     ListItemButton,
     ListItemSecondaryAction,
@@ -11,7 +11,12 @@ import {
     Box,
     Toolbar,
     Menu,
-    MenuItem
+    MenuItem,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    IconButton
 } from '@mui/material';
 
 // components
@@ -22,6 +27,7 @@ import ChargingCard from 'components/ChargingCard';
 import NoActivities from './NoActivities';
 import CreateActivity from './CreateActivity';
 import ActivitiesHead from './ActivitiesHead';
+import ViewActivity from './ViewActivity';
 
 // filter
 import { filter } from 'lodash';
@@ -31,9 +37,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 // API
 import { useExternalApi } from 'hooks/therapistResponse';
+import { useExternalApi as useActivityApi } from 'hooks/activitiesResponse';
 
 // assets
-import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, NotificationOutlined, WarningOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -131,9 +138,61 @@ export default function ActivityPage() {
     const [order, setOrder] = useState('asc')
     const [orderBy, setOrderBy] = useState('activity_name')
 
+    // API - CallBacks
     const {
         getActivitiesDetailed
     } = useExternalApi();
+
+    const {
+        deleteActivity
+    } = useActivityApi();
+    // selectedList
+    const [selectedList, setSelectedList] = useState(null)
+
+    const handleListClick = (index) => {
+        setSelectedList(index)
+    }
+
+    // modals
+    const [openListModal, setOpenListModal] = useState(false)
+
+    const handleCloseListModal = () => {
+        setOpenListModal(false);
+    }
+
+    const handleOpenListModal = () => {
+        setOpenListModal(true);
+    }
+
+    // warning modals
+    const [warningModal, setWarningModal] = useState(false);
+
+    const handleOpenWarningModal = () => {
+        setWarningModal(true);
+    }
+
+    const handleCloseWarningModal = () => {
+        setWarningModal(false);
+    }
+
+    // success delete modal
+    const [successDeleteModal, setSuccessDeleteModal] = useState(false);
+    const [deletedStatus, setDeletedStatus] = useState(false);
+    const handleDeleteActivity = () => {
+        setSuccessDeleteModal(true);
+        setWarningModal(false);
+        setOpenListModal(false);
+        deleteActivity(filteredActivities[selectedList].id).then(() => {
+            getActivitiesDetailed(user.sub, setListActivities).then(() => {
+                setDeletedStatus(true);
+            });
+        })
+    }
+
+    const handleCloseSuccessDeleteModal = () => {
+        setSuccessDeleteModal(false);
+        setDeletedStatus(false);
+    }
 
     // useEffects
     useEffect(() => {
@@ -163,6 +222,8 @@ export default function ActivityPage() {
     }
     const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
     const isNotFound = !filteredActivities.length && !!filterName;
+
+    console.log(filteredActivities)
 
     return (
         <MainCard title="Actividades" darkTitle="true">
@@ -217,7 +278,7 @@ export default function ActivityPage() {
                         }}
                     >
                         {filteredActivities.map((elem, index) => (
-                            <ListItemButton divider key={index}>
+                            <ListItemButton divider key={index} onClick={() => { handleListClick(index) }} sx={{ bgcolor: index === selectedList ? '#74e0da' : null, '&:hover': { bgcolor: selectedList === index ? '#74e0da' : null } }}>
                                 <ListItemAvatar>
                                     <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
                                         <Avatar
@@ -243,17 +304,89 @@ export default function ActivityPage() {
                                             {elem.status}
                                         </Typography>
                                     </Stack>
+                                    {
+                                        selectedList === index ?
+                                            (<Button variant="contained" onClick={handleOpenListModal}>
+                                                Ver Más
+                                            </Button>) :
+                                            (null)
+                                    }
+
                                 </ListItemSecondaryAction>
                             </ListItemButton>
-
                         ))}
                     </List>
+                    <Dialog open={openListModal} onClose={handleCloseListModal}>
+                        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography fontWeight="bold" fontSize="1.25rem">
+                                {selectedList !== null && filteredActivities[selectedList]
+                                    ? `Id No. ${filteredActivities[selectedList].id} - ${filteredActivities[selectedList].activity_name}`
+                                    : 'Seleccione una lista'}
+                            </Typography>
+                            <IconButton edge='end' color='inherit'>
+                                <NotificationOutlined />
+                            </IconButton>
+                        </DialogTitle>
+                        <DialogContent>
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseListModal} color="primary">
+                                Cerrar
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                    <Dialog open={warningModal} onClose={handleCloseWarningModal}>
+                        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography fontWeight='bold' fontSize='1.25rem'>
+                                Advertencia
+                            </Typography>
+                            <IconButton edge='end' color='inherit'>
+                                <WarningOutlined />
+                            </IconButton>
+                        </DialogTitle>
+                        <DialogContent>
+                            <Typography>
+                                Al eliminar la actividad, esta no podrá ser recuperada ni sus sesiones asociadas
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleDeleteActivity} color='primary'>
+                                Eliminar Actividad
+                            </Button>
+                            <Button onClick={handleCloseWarningModal} color='primary'>
+                                Cancelar
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                    <Dialog open = {successDeleteModal} onClose = {handleCloseSuccessDeleteModal}>
+                        <DialogTitle sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography fontWeight='bold' fontSize='1.25rem'>
+                                Notificación
+                            </Typography>
+                            <IconButton edge='end' color='inherit'>
+                                <NotificationOutlined />
+                            </IconButton>
+                        </DialogTitle>
+                        <DialogContent>
+                            {deletedStatus ? (<Typography>
+                                La actividad se ha eliminado correctamente
+                            </Typography>) : (<ChargingCard />)}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick = {handleCloseSuccessDeleteModal} color = 'primary'>
+                                Cerrar
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
                     {isNotFound && (
                         <MainCard>
                             <Typography variant="h6" paragraph>
                                 No encontrado
                             </Typography>
-
                             <Typography variant="body2">
                                 No hay resultados para &nbsp;
                                 <strong>&quot;{filterName}&quot;</strong>.
