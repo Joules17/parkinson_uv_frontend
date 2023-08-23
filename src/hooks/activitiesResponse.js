@@ -23,27 +23,39 @@ export const useExternalApi = () => {
     const createActivity = async (datos, id_list, id_patient, id_therapist) => {
         const config = {
             url: `${apiServerUrl}/api/activity/create`,
-            method: 'POST', 
-            headers: {}, 
+            method: 'POST',
+            headers: {},
             data: {
-                "name" : datos.name, 
-                "description" : datos.description, 
+                "name" : datos.name,
+                "description" : datos.description,
                 "start_date": datos.start_date,
-                "end_date": datos.end_date, 
-                "status" : 'Pendiente', 
-                "id_list": id_list, 
-                "id_patient": id_patient, 
+                "end_date": datos.end_date,
+                "status" : 'Pendiente',
+                "id_list": id_list,
+                "id_patient": id_patient,
                 "id_therapist" : id_therapist
             }
         }
-        
+
         console.log(config.data, 'QUE SUCEDE? ')
         const data = await makeRequest({config})
 
         console.log('Actividad creada correctamente', data)
     }
 
+    const deleteActivity = async (id) => {
+        const config = {
+            url: `${apiServerUrl}/api/activity/delete/${id}`,
+            method: 'DELETE',
+            headers: {},
+            data: {}
+        }
+
+        await makeRequest({config})
+    }
+
     return {
-        createActivity
+        createActivity,
+        deleteActivity
     }
 }

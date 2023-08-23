@@ -151,7 +151,6 @@ export default function CreateActivity({setList}) {
                 </DialogActions>
             </Dialog>
 
-
         </MainCard>
     )
 }
