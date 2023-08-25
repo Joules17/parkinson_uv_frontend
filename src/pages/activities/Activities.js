@@ -28,6 +28,7 @@ import NoActivities from './NoActivities';
 import CreateActivity from './CreateActivity';
 import ActivitiesHead from './ActivitiesHead';
 import ViewActivity from './ViewActivity';
+import ActivityCalendar from './ActivityCalendar';
 
 // filter
 import { filter } from 'lodash';
@@ -401,6 +402,14 @@ export default function ActivityPage() {
                         <Typography variant="h5" >
                             Calendario
                         </Typography>
+                        {
+                            selectedList === null ?
+                            (<Typography variant="h5" >
+                            Intenta escogiendo alguna actividad
+                            </Typography>)
+                            :
+                            (<ActivityCalendar start_date = {filteredActivities[selectedList].start_date} end_date = {filteredActivities[selectedList].end_date} />)
+                        }
                     </Stack>
                 </Box>
             </Grid>
