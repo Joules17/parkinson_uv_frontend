@@ -142,6 +142,18 @@ export const useExternalApi = () => {
         createPatient(datos, id, email)
         setMensaje('Registrado correctamente')
     }
+
+    const getActivitiesDetailed = async (id_patient, setActivities) => {
+        const config = {
+            url: `${apiServerUrl}/api/activity/retreive/patient/${id_patient}/`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+        setActivities(data)
+    }
     
     return {
         getPatient,
@@ -149,7 +161,8 @@ export const useExternalApi = () => {
         createPatient,
         updatePatient, 
         updatePatientAssignee, 
-        getPatientDetailed
+        getPatientDetailed, 
+        getActivitiesDetailed
     }
 }
 

@@ -6,7 +6,7 @@ import MainCard from "components/MainCard"
 import ChargingCard from "components/ChargingCard"
 
 // assets
-import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -139,7 +139,7 @@ export default function ViewActivity({ data, handleOpenWarningModal }) {
                         </Box>
                     </Grid>
                 </Grid>
-                <List component='nav' sx={{
+                { handleOpenWarningModal !== undefined ? (<List component='nav' sx={{
                     px: 0,
                     py: 0,
                     mt: '1rem',
@@ -148,7 +148,7 @@ export default function ViewActivity({ data, handleOpenWarningModal }) {
                         '& .MuiAvatar-root': avatarSX,
                         '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
                     }
-                }}>
+                    }}>
                     <ListItemButton divider onClick = {handleOpenWarningModal} sx={{ bgcolor: '#ff4d4f', '&:hover': { bgcolor: '#ff4d4f' } }} >
                         <ListItemAvatar>
                             <Avatar
@@ -162,7 +162,31 @@ export default function ViewActivity({ data, handleOpenWarningModal }) {
                         </ListItemAvatar>
                         <ListItemText primary={<Typography variant="subtitle1" sx = {{ color: '#ffffff'}}>Eliminar Actividad</Typography>} />
                     </ListItemButton>
-                </List>
+                </List>) : (<List component='nav' sx={{
+                    px: 0,
+                    py: 0,
+                    mt: '1rem',
+                    '& .MuiListItemButton-root': {
+                        py: 1.5,
+                        '& .MuiAvatar-root': avatarSX,
+                        '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                    }
+                    }}>
+                    <ListItemButton divider sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                        <ListItemAvatar>
+                            <Avatar
+                                sx={{
+                                    color: 'success.main',
+                                    bgcolor: 'success.lighter'
+                                }}
+                            >
+                                <PlayCircleOutlined />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={<Typography variant="subtitle1" sx = {{ color: '#ffffff'}}>Empezar Actividad</Typography>} />
+                    </ListItemButton>
+                </List>) }
+                
             </Grid>
         </MainCard>
     )
