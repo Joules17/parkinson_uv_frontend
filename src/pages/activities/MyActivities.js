@@ -186,14 +186,14 @@ export default function MyActivitiesPage() {
             <NoActivities />
         )
     }
-    
+
     const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
     const isNotFound = !filteredActivities.length && !!filterName;
 
     return (
         <MainCard title="Actividades" darkTitle="true">
             <Grid item xs={12} md={7} lg={8}>
-                
+
                 <Box sx={{ p: 3, pb: 3 }}>
                     <Stack spacing={2} >
                         <Typography variant="h5" >
@@ -293,7 +293,7 @@ export default function MyActivitiesPage() {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {undefined} />
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {undefined} type = {'paciente'} handleViewSession = {console.log('Esta es tu sesion')} handleStartSession = {console.log('Comenzo la sesion')}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseListModal} color="primary">

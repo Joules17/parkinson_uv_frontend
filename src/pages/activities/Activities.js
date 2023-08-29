@@ -224,7 +224,7 @@ export default function ActivityPage() {
     const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
     const isNotFound = !filteredActivities.length && !!filterName;
 
-    console.log(filteredActivities)
+    // console.log(filteredActivities) // comentar para ver las actividades traidas
 
     return (
         <MainCard title="Actividades" darkTitle="true">
@@ -329,7 +329,7 @@ export default function ActivityPage() {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} />
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} type = {'doctor'} handleViewSession = {undefined} handleStartSession = {undefined}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseListModal} color="primary">
@@ -403,7 +403,7 @@ export default function ActivityPage() {
                             Calendario
                         </Typography>
                         {
-                            (selectedList === null || filteredActivities[selectedList] === null) ?
+                            (selectedList === null || filteredActivities[selectedList] === undefined) ?
                             (<Typography variant="h5" >
                             Intenta escogiendo alguna actividad
                             </Typography>)
