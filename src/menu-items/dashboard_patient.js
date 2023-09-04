@@ -7,7 +7,7 @@ const icons = {
     PlayCircleOutlined,
     UserOutlined,
     UnorderedListOutlined,
-    AppstoreOutlined, 
+    AppstoreOutlined,
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -26,21 +26,13 @@ const dashboard_patient = {
             breadcrumbs: false
         },
         {
-            id: 'library',
-            title: 'Biblioteca',
+            id: 'activities',
+            title: 'Actividades',
             type: 'item',
-            url: '/library-page',
-            icon: icons.UnorderedListOutlined,
+            url: '/my-activities-page',
+            icon: icons.AppstoreOutlined,
             breadcrumbs: false
         },
-        {
-            id: 'activities', 
-            title: 'Actividades', 
-            type: 'item', 
-            url: '/my-activities-page',
-            icon: icons.AppstoreOutlined, 
-            breadcrumbs: false
-        }, 
         {
             id: 'games',
             title: 'Games',
