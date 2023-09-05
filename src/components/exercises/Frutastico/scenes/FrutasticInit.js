@@ -14,7 +14,7 @@ export default class FrutasticInit extends Phaser.Scene {
 
     create () {
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
     } 
 

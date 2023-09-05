@@ -67,8 +67,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         let obj = this; 
         
         scene.sound.play(selected ? 'good' : 'bad' ); 
-        if (selected) {
+        if (selected && scene.scene.key !== 'FrutasLoby') {
             // no mas clicks
+            console.log('entreee')
             obj.active = false; 
         }
         this.scene.tweens.addCounter({

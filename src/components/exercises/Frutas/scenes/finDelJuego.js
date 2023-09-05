@@ -3,10 +3,16 @@ import Phaser from 'phaser';
 import '../styles.css'
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
 
+// custom classes imported
+import Frutita from '../sprites/base/Frutita.js';
+
+// assets imports
+import PalmeraImg from '../assets/img/palmera.png';
+
 export default class finDelJuego extends Phaser.Scene {
 
   constructor() {
-    super({key: 'finDelJuego', backgroundColor: '#3f1651'});
+    super({key: 'finDelJuego', backgroundColor: '#e0bc28'});
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
 
@@ -51,33 +57,45 @@ export default class finDelJuego extends Phaser.Scene {
 
   preload() {
     //
+    this.load.image('palmeraImg', PalmeraImg);
     this.waveOffset = 0;
   }
 
   create() {
-    this.cameras.main.setBackgroundColor('#3f1651');
+    this.cameras.main.setBackgroundColor('#e0bc28');
 
     // -------------------------
     this.flag = false;
-    // -------------------------
 
-    this.title = this.add.text(160,40, "fin del juego", { fontFamily : 'ARCO', fill: '#ffffff'}).setFontSize(60)
+    // palmeras -------------
+    this.palmeraDer = new Frutita({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' });
+    this.palmeraIzq = new Frutita({ scene: this, posx: 5, posy: 150, key: 'palmeraImg' });
+    this.palmeraIzq.setFlipX(true);
 
+    this.palmeraDer.setScale(1.4);
+    this.palmeraIzq.setScale(1.4);
+
+    this.palmeraDer.dance_function(3, 2000);
+    this.palmeraIzq.dance_function(-3, 2000);
     // ---------------------
 
     this.panelStats = this.add.graphics();
     this.panelStats.fillStyle(0xffffff, 1);
-    this.panelStats.fillRoundedRect(50, 120, 700, 480, 20); // x, y, ancho, alto, radio de curvatura
+    this.panelStats.fillRoundedRect(100, 200, 600, 300, 20); // x, y, ancho, alto, radio de curvatura
     this.panelStats.setAlpha(0)
+
+    // -------------------------
+
+    this.title = this.add.text(200,100, "fin del juego", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(100)
 
     // ---------------------
     // Mensajes
-    this.tiempo_total_msg = this.add.text(100, 150, "Tiempo total:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
-    this.tiempo_total_log = this.add.text(500, 150, this.tiempo_total, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
-    this.tiempo_promedio_msg = this.add.text(100, 300, "Tiempo promedio:", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
-    this.tiempo_promedio_log = this.add.text(500, 300, this.tiempo_rondas, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
-    this.number_rondas_msg = this.add.text(100, 450, "Numero rondas: ", { fontFamily : 'ARCO', fill: '#000000'}).setFontSize(35)
-    this.number_rondas_log = this.add.text(500, 450, this.number_rondas, { fontFamily : 'ARCO', fill: '#1A2E44'}).setFontSize(35)
+    this.tiempo_total_msg = this.add.text(150, 250, "Tiempo total:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+    this.tiempo_total_log = this.add.text(500, 250, this.tiempo_total, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
+    this.tiempo_promedio_msg = this.add.text(150, 310, "Tiempo promedio:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+    this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
+    this.number_rondas_msg = this.add.text(150, 370, "Numero rondas: ", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+    this.number_rondas_log = this.add.text(500, 370, this.number_rondas, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
     this.statsShow(this, false)
 
     // ---------------------
@@ -86,7 +104,7 @@ export default class finDelJuego extends Phaser.Scene {
     this.olas = this.physics.add.group()
 
     for (let i = 0; i < 10; i++) {
-      this.olas.add(this.add.circle(50 + i*90, 600, 70, 0xfff89f5b, 0))
+      this.olas.add(this.add.circle(50 + i*90, 600, 70, 0xfff4e9de0, 0))
     }
 
     this.olas.children.iterate(ball => {

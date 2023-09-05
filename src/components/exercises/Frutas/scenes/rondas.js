@@ -8,7 +8,7 @@ import TableroRenewed from '../sprites/base/TableroRenewed';
 // import object_list
 import object_list from '../sprites/base/object_list';
 
-// import sounds
+// assets imports
 import good from '../assets/music/correct.wav';
 import bad from '../assets/music/bad.wav';
 import hover from '../assets/music/hover.mp3';
@@ -99,16 +99,16 @@ export default class rondas extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(0xffffff);
         // this.initializer();
 
-        this.blockdown = this.add.rectangle(0, 800, 1800, 200, 0x3f1651, 1);
-        this.blockup = this.add.rectangle(0, 0, 1800, 100, 0x3f1651, 1);
+        this.blockdown = this.add.rectangle(0, 800, 1800, 200, 0x4e9de0, 1);
+        this.blockup = this.add.rectangle(0, 0, 1800, 100, 0x4e9de0, 1);
 
         // text
         this.text_numberrondas = this.add
-            .text(10, 560, 'Rondas: ' + this.current_number + '/' + this.numberFases, { fontFamily: 'ARCO', fill: '#ffffff' })
-            .setFontSize(25);
+            .text(10, 560, 'Rondas: ' + this.current_number + '/' + this.numberFases, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
         this.texto_tiempototal = this.add
-            .text(710, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'ARCO', fill: '#ffffff' })
-            .setFontSize(25);
+            .text(710, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
         this.text_numberrondas.setVisible(false);
         this.texto_tiempototal.setVisible(false);
 
@@ -117,7 +117,6 @@ export default class rondas extends Phaser.Scene {
         this.create_rondas(this.numberFases);
 
         // botones fullscreen
-
         new FullScreenBttn(this, 770, 30, 'fullsceenImg');
     }
 

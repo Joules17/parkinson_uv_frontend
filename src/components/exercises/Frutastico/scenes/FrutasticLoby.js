@@ -94,55 +94,32 @@ export default class FrutasticLoby extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor(0x3f1651);
-
-        // paneles ------------------------------------------------------------------------------------------------------------
-
-        this.panel = this.add.graphics();
-        this.panel.fillStyle(0xf89f5b, 1);
-        this.panel.fillRect(0, 0, 1800, 100);
-
-        this.panel_explanation = this.add.graphics();
-        this.panel_explanation.fillStyle(0xffffff, 1);
-        this.panel_explanation.fillRoundedRect(200, 140, 550, 70, 10);
-        this.panel_explanation.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
-        this.panel_explanation.strokeRoundedRect(200, 140, 550, 70, 10); // Dibuja el borde
+        this.cameras.main.setBackgroundColor(0x4e9de0);
 
         this.panel_round = this.add.graphics();
         this.panel_round.fillStyle(0xffffff, 1);
-        this.panel_round.fillRoundedRect(50, 250, 700, 300, 10);
-        this.panel_round.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
-        this.panel_round.strokeRoundedRect(50, 250, 700, 300, 10); // Dibuja el borde
+        this.panel_round.fillRect(50, 150, 700, 500);
         this.panel_round.setAlpha(0);
-
-        this.divider = this.add.graphics();
-        this.divider.lineStyle(4, 0x000000, 1);
-        this.divider.beginPath();
-        this.divider.moveTo(0, 100);
-        this.divider.lineTo(800, 100);
-        this.divider.strokePath();
 
         // Figuras de fondo ------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 550, 'bushes').setScale(0.12);
         this.bushes_sprite2 = this.add.sprite(600, 550, 'bushes2').setScale(0.12);
-        this.monkey = this.add.sprite(100, 180, 'monkey').setScale(0.15);
-
         // titulo ------------------------------------------------------------------------------------------------------------
-        this.title = this.add.text(200, 20, 'TUTORIAL', { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(70);
+        this.title = this.add.text(50, 25, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100);
         this.explanation = this.add
-            .text(240, 160, 'Mira las frutas a continuacion', { fontFamily: 'ARCO', fill: '#000000' })
+            .text(240, 160, 'Mira las frutas a continuacion', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(25);
         this.explanation2 = this.add
-            .text(240, 155, 'Selecciona la fruta nueva, \nsi solo hay una, ¡haz click en ella!', { fontFamily: 'ARCO', fill: '#000000' })
+            .text(240, 155, 'Selecciona la fruta nueva, \nsi solo hay una, ¡haz click en ella!', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(20);
         this.explanation2.setVisible(false);
 
         this.good_description = this.add
-            .text(240, 155, '¡Excelente! Sigue asi, si necesitas\nayuda, haz click en el monito', { fontFamily: 'ARCO', fill: '#000000' })
+            .text(240, 155, '¡Excelente! Sigue asi, si necesitas\nayuda, haz click en el monito', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(20);
         this.bad_description = this.add
             .text(230, 160, 'Error: Recuerda que debes seleccionar\n¡La fruta nueva! Haz click en el monito para mas ayuda', {
-                fontFamily: 'ARCO',
+                fontFamily: 'TROUBLE',
                 fill: '#000000'
             })
             .setFontSize(15);
@@ -150,15 +127,15 @@ export default class FrutasticLoby extends Phaser.Scene {
         this.bad_description.setVisible(false);
 
         this.mensaje_final = this.add
-            .text(100, 350, '¡Muy bien! Ya estas listo, ', { fontFamily: 'ARCO', fill: '#000000' })
+            .text(100, 350, '¡Muy bien! Ya estas listo, ', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(40);
         this.mensaje_final.setVisible(false);
 
         // button ------------------------------------------------------------------------------------------------------------
         this.go_button = this.add
             .text(190, 400, 'HAZ CLICK AQUI', {
-                fontFamily: 'ARCO',
-                fill: '#f89f5b'
+                fontFamily: 'TROUBLE',
+                fill: '#4e9de0'
             })
             .setFontSize(50);
         this.go_button.setInteractive();

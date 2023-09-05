@@ -154,7 +154,7 @@ export default class ArticTuto extends Phaser.Scene {
         this.title = this.add.text(280, 20, 'TUTORIAL', { fontFamily: 'StayPixelRegular', fill: '#ffffff' }).setFontSize(70);
         this.explanation = this.add
             .text(100, 540, 'Bienvenido a flechas articas, para jugar utiliza tu teclado', {
-                fontFamily: 'StayPixelRegular',
+                fontFamily: 'TROUBLE',
                 fill: '#ffffff'
             })
             .setFontSize(25);

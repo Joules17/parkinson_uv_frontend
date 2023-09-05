@@ -71,7 +71,7 @@ export default class FrutasMenu extends Phaser.Scene {
         this.start_button = this.add
             .text(350, 380, 'Iniciar', {
                 fontFamily: 'TROUBLE',
-                fill: '#e15554'
+                fill: '#3bb173'
             })
             .setFontSize(50);
 
@@ -151,7 +151,7 @@ export default class FrutasMenu extends Phaser.Scene {
         });
 
         this.start_button.on('pointerout', () => {
-            this.start_button.setColor('#e15554');
+            this.start_button.setColor('#3bb173');
             this.tweens.add({
                 targets: this.start_button,
                 scaleX: 1,

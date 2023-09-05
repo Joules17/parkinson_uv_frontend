@@ -58,22 +58,22 @@ export default class FrutasticMenu extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor('#3f1651');
+        this.cameras.main.setBackgroundColor('#4e9de0');
 
         // Figuras de fondo ------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 500, 'bushes').setScale(0.12);
         this.bushes_sprite2 = this.add.sprite(600, 500, 'bushes2').setScale(0.12);
 
         // Textos ------------------------------------------------------------------------------------------------------------
-        this.title = this.add.text(80, 200, 'FRUTAS EN FUGA', { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(70);
+        this.title = this.add.text(120, 200, 'RECUERDA Y ENCUENTRA', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(80);
 
         // botones
         this.start_button = this.add
-            .text(290, 320, 'Iniciar', {
-                fontFamily: 'ARCO',
-                fill: '#f89f5b'
+            .text(330, 320, 'Iniciar', {
+                fontFamily: 'TROUBLE',
+                fill: '#e15554'
             })
-            .setFontSize(50);
+            .setFontSize(60);
 
         // fullScreenButton
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
@@ -118,7 +118,7 @@ export default class FrutasticMenu extends Phaser.Scene {
         });
 
         this.start_button.on('pointerout', () => {
-            this.start_button.setColor('#f89f5b');
+            this.start_button.setColor('#e15554');
             this.tweens.add({
                 targets: this.start_button,
                 scaleX: 1,
