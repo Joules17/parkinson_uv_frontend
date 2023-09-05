@@ -81,10 +81,10 @@ export default class FrutasLoby extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBackgroundColor(0xfff89f5b);
+    this.cameras.main.setBackgroundColor(0xfff4e9de0);
     // this.initializer();
     // -----------------------
-    this.welcome_title = this.add.text(170, 1000, "TUTORIAL", { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(70)
+    this.welcome_title = this.add.text(50, 1000, "TUTORIAL", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
     this.move_upside(this.welcome_title, 970, 1000, this)
 
     // panel
@@ -95,7 +95,7 @@ export default class FrutasLoby extends Phaser.Scene {
 
     this.panelTitle = this.add.graphics();
     this.panelTitle.fillStyle(0x000000, 1);
-    this.panelTitle.fillRect(-10, 125, 1800, 50);
+    this.panelTitle.fillRect(-10, 125, 1800, 60);
     this.panelTitle.setAlpha(0);
 
     // palmera
@@ -104,14 +104,14 @@ export default class FrutasLoby extends Phaser.Scene {
     this.palmeraDer.setAlpha(0)
     this.palmeraDer.dance_function(3, 2000)
 
-    this.ready_text = this.add.text(180, 140, "aprendamos a Como jugar:", { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(25)
+    this.ready_text = this.add.text(60, 140, "aprendamos a Como jugar:", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40)
     this.ready_text.setAlpha(0)
 
     // messages
-    this.error_message = this.add.text(80, 500, "Error", { fontFamily: 'ARCO', fill: "#FF0000" }).setFontSize(20)
-    this.error_detailed = this.add.text(160, 500, 'recuerda que debes seleccionar el objeto distinto', { fontFamily: 'ARCO', fill: '#000000' }).setFontSize(20)
-    this.victory_message = this.add.text(60, 500, "EXCELENTE", { fontFamily: 'ARCO', fill: "#006400" }).setFontSize(20)
-    this.victory_explained = this.add.text(190, 500, 'has entendido el ejercicio, ¡haz click en jugar!', { fontFamily: 'ARCO', fill: '#000000' }).setFontSize(20)
+    this.error_message = this.add.text(110, 480, "Error", { fontFamily: 'TROUBLE', fill: "#FF0000" }).setFontSize(40)
+    this.error_detailed = this.add.text(200, 485, 'recuerda que debes seleccionar el objeto distinto', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(30)
+    this.victory_message = this.add.text(80, 480, "EXCELENTE", { fontFamily: 'TROUBLE', fill: "#006400" }).setFontSize(40)
+    this.victory_explained = this.add.text(230, 485, 'has entendido el ejercicio, ¡haz click en jugar!', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(30)
     this.error_message.setVisible(false)
     this.error_detailed.setVisible(false)
     this.victory_explained.setVisible(false)
@@ -123,9 +123,9 @@ export default class FrutasLoby extends Phaser.Scene {
 
     // prettier button
     this.button_continue = this.add.text(350, 550, "jugar", {
-      fontFamily: 'ARCO',
-      fill: '#3f1651'
-    }).setFontSize(30)
+      fontFamily: 'TROUBLE',
+      fill: '#e15554'
+    }).setFontSize(60)
 
     this.button_continue.setInteractive();
     this.button_continue.setVisible(false);
@@ -223,7 +223,7 @@ export default class FrutasLoby extends Phaser.Scene {
         if (!scene.eventFinished) {
           scene.tablero_ejemplo = new TableroRenewed(scene.tablero_config)
           scene.eventFinished = true;
-          scene.explanatory_text = scene.add.text(90, 450, "¡Haz click en el objeto que no se repita!", { fontFamily: 'ARCO', fill: '#000000' }).setFontSize(25)
+          scene.explanatory_text = scene.add.text(90, 420, "Haz click en el objeto que no se repita", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50)
         }
       }
     });
