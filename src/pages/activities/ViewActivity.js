@@ -4,9 +4,10 @@ import { Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, List
 // project import
 import MainCard from "components/MainCard"
 import ChargingCard from "components/ChargingCard"
+import ViewList from 'pages/activities/ViewList';
 
 // assets
-import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -25,7 +26,7 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function ViewActivity({ data, handleOpenWarningModal }) {
+export default function ViewActivity({ data, handleOpenWarningModal, type, handleViewSession, handleStartSession }) {
     if (data === null) {
         return <ChargingCard />
     }
@@ -138,31 +139,118 @@ export default function ViewActivity({ data, handleOpenWarningModal }) {
                             </div>
                         </Box>
                     </Grid>
+                    <Grid item xs = {12} sm = {12} md = {12} lg = {12}>
+                        <Typography variant='body1'>
+                            Lista Asignada
+                        </Typography>
+                        <ViewList id_list = {data.id_list} name_list = {data.lista_name} />
+                    </Grid>
                 </Grid>
-                <List component='nav' sx={{
-                    px: 0,
-                    py: 0,
-                    mt: '1rem',
-                    '& .MuiListItemButton-root': {
-                        py: 1.5,
-                        '& .MuiAvatar-root': avatarSX,
-                        '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
-                    }
-                }}>
-                    <ListItemButton divider onClick = {handleOpenWarningModal} sx={{ bgcolor: '#ff4d4f', '&:hover': { bgcolor: '#ff4d4f' } }} >
-                        <ListItemAvatar>
-                            <Avatar
-                                sx={{
-                                    color: 'error.main',
-                                    bgcolor: 'error.lighter'
-                                }}
-                            >
-                                <DeleteOutlined />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={<Typography variant="subtitle1" sx = {{ color: '#ffffff'}}>Eliminar Actividad</Typography>} />
-                    </ListItemButton>
-                </List>
+                {type === 'doctor' && (
+                    <List component='nav' sx={{
+                        px: 0,
+                        py: 0,
+                        mt: '1rem',
+                        '& .MuiListItemButton-root': {
+                            py: 1.5,
+                            '& .MuiAvatar-root': avatarSX,
+                            '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                        }
+                    }}>
+                        <ListItemButton divider onClick={handleOpenWarningModal} sx={{ bgcolor: '#ff4d4f', '&:hover': { bgcolor: '#ff4d4f' } }} >
+                            <ListItemAvatar>
+                                <Avatar
+                                    sx={{
+                                        color: 'error.main',
+                                        bgcolor: 'error.lighter'
+                                    }}
+                                >
+                                    <DeleteOutlined />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={<Typography variant="subtitle1" sx={{ color: '#ffffff' }}>Eliminar Actividad</Typography>} />
+                        </ListItemButton>
+                    </List>
+                )
+                }
+                {type === 'paciente' && data.status === 'Pendiente' && (
+                    <List component='nav' sx={{
+                        px: 0,
+                        py: 0,
+                        mt: '1rem',
+                        '& .MuiListItemButton-root': {
+                            py: 1.5,
+                            '& .MuiAvatar-root': avatarSX,
+                            '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                        }
+                    }}>
+                        <ListItemButton divider onClick={handleStartSession} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                            <ListItemAvatar>
+                                <Avatar
+                                    sx={{
+                                        color: 'success.main',
+                                        bgcolor: 'success.lighter'
+                                    }}
+                                >
+                                    <PlayCircleOutlined />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={<Typography variant="subtitle1" sx={{ color: '#ffffff' }}>Empezar Actividad</Typography>} />
+                        </ListItemButton>
+                    </List>
+                )}
+                {type === 'paciente' && data.status === 'Realizado' && (
+                    <List component = 'nax' sx = {{
+                        px: 0,
+                        py: 0,
+                        mt: '1rem',
+                        '& .MuiListItemButton-root': {
+                            py: 1.5,
+                            '& .MuiAvatar-root': avatarSX,
+                            '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                        }
+                    }}>
+                        <ListItemButton divider onClick={handleViewSession} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                            <ListItemAvatar>
+                                <Avatar
+                                    sx={{
+                                        color: 'success.main',
+                                        bgcolor: 'success.lighter'
+                                    }}
+                                >
+                                    <PlayCircleOutlined />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={<Typography variant="subtitle1" sx={{ color: '#ffffff' }}>Ver Sesion</Typography>} />
+                        </ListItemButton>
+                    </List>
+                )}
+                {type === 'paciente' && data.status === 'Caducado' && (
+                    <List component='nav' sx={{
+                        px: 0,
+                        py: 0,
+                        mt: '1rem',
+                        '& .MuiListItemButton-root': {
+                            py: 1.5,
+                            '& .MuiAvatar-root': avatarSX,
+                            '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
+                        }
+                    }}>
+                        <ListItemButton divider onClick={handleStartSession} disabled = {true} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                            <ListItemAvatar>
+                                <Avatar
+                                    sx={{
+                                        color: 'success.main',
+                                        bgcolor: 'success.lighter'
+                                    }}
+                                >
+                                    <PlayCircleOutlined />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={<Typography variant="subtitle1" sx={{ color: '#ffffff' }}>Empezar Actividad</Typography>} />
+                        </ListItemButton>
+                    </List>
+                )}
             </Grid>
         </MainCard>
     )

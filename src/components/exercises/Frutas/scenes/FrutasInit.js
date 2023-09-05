@@ -15,23 +15,23 @@ export default class FrutasInit extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000, 3000, "", { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(20)
+        this.cameras.main.setBackgroundColor('#662e9b');
+        this.add.text(3000, 3000, "", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(20)
         // Musica ---------------
         /*
-        let musica; 
+        let musica;
 
-        
-        this.soundManager = this.sound; 
+
+        this.soundManager = this.sound;
 
         this.soundManager.on('complete', function (sound) {
         if (sound.key === 'main_music') {
-            this.play({ key: 'main_music', loop: true }); 
+            this.play({ key: 'main_music', loop: true });
         }
-        }); 
+        });
 
-        musica = this.soundManager.add('main_music', {loop: true}); 
-        musica.play(); 
+        musica = this.soundManager.add('main_music', {loop: true});
+        musica.play();
         */
 
         this.pass()

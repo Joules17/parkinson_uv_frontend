@@ -12,7 +12,7 @@ export const lista_juegos = [
                     rondas: 5,
                     objetos: "Frutas"
                 },
-                urlImage: "https://i.imgur.com/OFtDruP_d.webp?maxwidth=760&fidelity=grand",
+                urlImage: "https://i.imgur.com/lGFovD7.png",
                 played: false
             },
             {
@@ -34,7 +34,7 @@ export const lista_juegos = [
                 settings: {
                     rondas: 3
                 },
-                urlImage: "https://i.imgur.com/aKpxz47_d.webp?maxwidth=760&fidelity=grand",
+                urlImage: "https://i.imgur.com/lGFovD7.png",
                 played: false
             },
             {
@@ -74,7 +74,7 @@ export const lista_juegos = [
                     rondas: 10,
                     objetos: "Frutas"
                 },
-                urlImage: "https://i.imgur.com/dlovyLf.jpg"
+                urlImage: "https://i.imgur.com/lGFovD7.png"
             },
             {
                 id_game: "04",

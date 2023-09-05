@@ -25,7 +25,6 @@ import Dot from 'components/@extended/Dot';
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
 import NoActivities from './NoActivities';
-import CreateActivity from './CreateActivity';
 import ActivitiesHead from './ActivitiesHead';
 import ViewActivity from './ViewActivity';
 import ActivityCalendar from './ActivityCalendar';
@@ -37,8 +36,7 @@ import { filter } from 'lodash';
 import { useAuth0 } from '@auth0/auth0-react';
 
 // API
-import { useExternalApi } from 'hooks/therapistResponse';
-import { useExternalApi as useActivityApi } from 'hooks/activitiesResponse';
+import { useExternalApi as usePatientApi} from 'hooks/patientResponse';
 
 // assets
 import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, NotificationOutlined, WarningOutlined } from '@ant-design/icons';
@@ -98,7 +96,7 @@ function applySortFilter(array, comparator, query, orderBy) {
 }
 
 
-export default function ActivityPage() {
+export default function MyActivitiesPage() {
     // auth 0 functions
     const { user } = useAuth0()
     const [listActivities, setListActivities] = useState(undefined);
@@ -142,11 +140,8 @@ export default function ActivityPage() {
     // API - CallBacks
     const {
         getActivitiesDetailed
-    } = useExternalApi();
+    } = usePatientApi();
 
-    const {
-        deleteActivity
-    } = useActivityApi();
     // selectedList
     const [selectedList, setSelectedList] = useState(null)
 
@@ -163,36 +158,6 @@ export default function ActivityPage() {
 
     const handleOpenListModal = () => {
         setOpenListModal(true);
-    }
-
-    // warning modals
-    const [warningModal, setWarningModal] = useState(false);
-
-    const handleOpenWarningModal = () => {
-        setWarningModal(true);
-    }
-
-    const handleCloseWarningModal = () => {
-        setWarningModal(false);
-    }
-
-    // success delete modal
-    const [successDeleteModal, setSuccessDeleteModal] = useState(false);
-    const [deletedStatus, setDeletedStatus] = useState(false);
-    const handleDeleteActivity = () => {
-        setSuccessDeleteModal(true);
-        setWarningModal(false);
-        setOpenListModal(false);
-        deleteActivity(filteredActivities[selectedList].id).then(() => {
-            getActivitiesDetailed(user.sub, setListActivities).then(() => {
-                setDeletedStatus(true);
-            });
-        })
-    }
-
-    const handleCloseSuccessDeleteModal = () => {
-        setSuccessDeleteModal(false);
-        setDeletedStatus(false);
     }
 
     // useEffects
@@ -221,15 +186,14 @@ export default function ActivityPage() {
             <NoActivities />
         )
     }
+
     const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
     const isNotFound = !filteredActivities.length && !!filterName;
-
-    // console.log(filteredActivities) // comentar para ver las actividades traidas
 
     return (
         <MainCard title="Actividades" darkTitle="true">
             <Grid item xs={12} md={7} lg={8}>
-                <CreateActivity setList={setListActivities} />
+
                 <Box sx={{ p: 3, pb: 3 }}>
                     <Stack spacing={2} >
                         <Typography variant="h5" >
@@ -329,55 +293,10 @@ export default function ActivityPage() {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} type = {'doctor'} handleViewSession = {undefined} handleStartSession = {undefined}/>
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {undefined} type = {'paciente'} handleViewSession = {console.log('Esta es tu sesion')} handleStartSession = {console.log('Comenzo la sesion')}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseListModal} color="primary">
-                                Cerrar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-
-                    <Dialog open={warningModal} onClose={handleCloseWarningModal}>
-                        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography fontWeight='bold' fontSize='1.25rem'>
-                                Advertencia
-                            </Typography>
-                            <IconButton edge='end' color='inherit'>
-                                <WarningOutlined />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            <Typography>
-                                Al eliminar la actividad, esta no podrá ser recuperada ni sus sesiones asociadas
-                            </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleDeleteActivity} color='primary'>
-                                Eliminar Actividad
-                            </Button>
-                            <Button onClick={handleCloseWarningModal} color='primary'>
-                                Cancelar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-
-                    <Dialog open = {successDeleteModal} onClose = {handleCloseSuccessDeleteModal}>
-                        <DialogTitle sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography fontWeight='bold' fontSize='1.25rem'>
-                                Notificación
-                            </Typography>
-                            <IconButton edge='end' color='inherit'>
-                                <NotificationOutlined />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            {deletedStatus ? (<Typography>
-                                La actividad se ha eliminado correctamente
-                            </Typography>) : (<ChargingCard />)}
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick = {handleCloseSuccessDeleteModal} color = 'primary'>
                                 Cerrar
                             </Button>
                         </DialogActions>
@@ -389,7 +308,7 @@ export default function ActivityPage() {
                                 No encontrado
                             </Typography>
                             <Typography variant="body2">
-                                No hay resultados para &nbsp;
+                                No hay resultados para &nFbsp;
                                 <strong>&quot;{filterName}&quot;</strong>.
                                 <br /> Buscando por &quot;{orderBy}&quot;
                                 <br /> Verifique o utilice palabras completas

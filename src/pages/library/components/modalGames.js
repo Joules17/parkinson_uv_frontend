@@ -20,7 +20,7 @@ const ModalGames = ({ list, open, handleClose}) => {
       setExpandedItem(id);
     }
   };
-  
+
   const handleListUpdate = (updatedList) => {
     setModifiedList(updatedList);
     dispatch(setGameList({ "gamesList": updatedList }))

@@ -61,7 +61,7 @@ export default class FrutasMenu extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor('#3f1651');
+        this.cameras.main.setBackgroundColor('#e0bc28');
         // this.initializer();
 
         //
@@ -69,9 +69,9 @@ export default class FrutasMenu extends Phaser.Scene {
         // botones; start
 
         this.start_button = this.add
-            .text(290, 380, 'Iniciar', {
-                fontFamily: 'ARCO',
-                fill: '#f89f5b'
+            .text(350, 380, 'Iniciar', {
+                fontFamily: 'TROUBLE',
+                fill: '#e15554'
             })
             .setFontSize(50);
 
@@ -94,30 +94,30 @@ export default class FrutasMenu extends Phaser.Scene {
         new FullScreenBttn(this, 770, 30, 'fullscreenImg')
         // -------------------------
 
-        this.title = this.add.text(125, 250, 'Frutas Locas', { fontFamily: 'ARCO', fill: '#ffffff' }).setFontSize(70);
+        this.title = this.add.text(120, 250, 'OBJETO INTRUSO', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(120);
 
         // Frutitas
         this.frutas_menu = this.physics.add.group();
-        let coco = new Frutita({ scene: this, posx: 700, posy: 310, key: 'cocoImg' });
+        let coco = new Frutita({ scene: this, posx: 730, posy: 330, key: 'cocoImg' });
         this.frutas_menu.add(coco);
-        let mango = new Frutita({ scene: this, posx: 105, posy: 260, key: 'mangoImg' });
+        let mango = new Frutita({ scene: this, posx: 80, posy: 260, key: 'mangoImg' });
         this.frutas_menu.add(mango);
 
         // baile!
         for (let i = 0; i < this.frutas_menu.getChildren().length; i++) {
-            this.frutas_menu.getChildren()[i].setScale(0.1);
+            this.frutas_menu.getChildren()[i].setScale(0.2);
             this.frutas_menu.getChildren()[i].dance_function(30, 1000);
         }
 
         // ---------------------
 
-        this.juice_rectangle = this.add.rectangle(0, 1200, 1800, 1200, 0xfff89f5b, 0);
+        this.juice_rectangle = this.add.rectangle(0, 1200, 1800, 1200, 0xfff4e9de0, 0);
         this.juice_rectangle.originalY = 1200;
 
         this.olas = this.physics.add.group();
 
         for (let i = 0; i < 10; i++) {
-            this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0xfff89f5b, 0));
+            this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0xfff4e9de0, 0));
         }
 
         this.olas.children.iterate((ball) => {
@@ -151,7 +151,7 @@ export default class FrutasMenu extends Phaser.Scene {
         });
 
         this.start_button.on('pointerout', () => {
-            this.start_button.setColor('#f89f5b');
+            this.start_button.setColor('#e15554');
             this.tweens.add({
                 targets: this.start_button,
                 scaleX: 1,
