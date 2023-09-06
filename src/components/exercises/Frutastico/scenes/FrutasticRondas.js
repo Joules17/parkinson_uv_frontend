@@ -30,7 +30,7 @@ const log = {
 
 export default class FrutasticRondas extends Phaser.Scene {
     constructor() {
-        super({ key: 'FrutasticRondas', backgroundColor: '#3f1651' });
+        super({ key: 'FrutasticRondas', backgroundColor: '#4e9de0' });
 
         // assets
         this.bushes = undefined;
@@ -107,7 +107,7 @@ export default class FrutasticRondas extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor(0x3f1651);
+        this.cameras.main.setBackgroundColor(0x4e9de0);
 
         // figuras
         this.bushes_sprite = this.add.sprite(100, 620, 'bushes').setScale(0.12);
@@ -118,38 +118,38 @@ export default class FrutasticRondas extends Phaser.Scene {
         // panels
         this.panel_round = this.add.graphics();
         this.panel_round.fillStyle(0xffffff, 1);
-        this.panel_round.fillRoundedRect(30, 20, 740, 550, 10);
+        this.panel_round.fillRect(30, 20, 750, 550);
         this.panel_round.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
-        this.panel_round.strokeRoundedRect(30, 20, 740, 550, 10); // Dibuja el borde
+        this.panel_round.strokeRect(30, 20, 750, 550); // Dibuja el borde
         this.panel_round.setAlpha(0);
 
         this.panel_down = this.add.graphics();
-        this.panel_down.fillStyle(0xfd7f20, 1);
-        this.panel_down.fillRoundedRect(30, 520, 750, 60, 10);
+        this.panel_down.fillStyle(0x3bb173, 1);
+        this.panel_down.fillRect(30, 520, 750, 60);
         this.panel_down.lineStyle(2, 0x000000, 1); // Grosor, Color, Opacidad
-        this.panel_down.strokeRoundedRect(30, 520, 750, 60, 10); // Dibuja el borde
+        this.panel_down.strokeRect(30, 520, 750, 60); // Dibuja el borde
         this.panel_down.setAlpha(0);
 
         this.circle_round = this.add.graphics();
         this.circle_round.lineStyle(2, 0x000000, 1);
-        this.circle_round.fillStyle(0x00ffff, 1);
+        this.circle_round.fillStyle(0xe0bc28, 1);
         this.circle_round.fillCircle(50, 550, 50);
         this.circle_round.strokeCircle(50, 550, 50);
         this.circle_round.setAlpha(0);
 
         // text
         this.text_numberrondas = this.add
-            .text(120, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1], { fontFamily: 'ARCO', fill: '#000000' })
-            .setFontSize(25);
+            .text(120, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1], { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(40);
         this.texto_tiempototal = this.add
-            .text(21, 538, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'ARCO', fill: '#000000' })
-            .setFontSize(25);
+            .text(22, 538, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(40);
         this.texto_errores = this.add
-            .text(350, 540, 'ERRORES: ' + this.number_errors, { fontFamily: 'ARCO', fill: '#000000' })
-            .setFontSize(25);
+            .text(350, 540, 'ERRORES: ' + this.number_errors, { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(40);
         this.texto_niveles = this.add
-            .text(570, 540, 'Nivel: ' + this.current_level + '/' + this.number_rounds.length, { fontFamily: 'ARCO', fill: '#000000'})
-            .setFontSize(25);
+            .text(570, 540, 'Nivel: ' + this.current_level + '/' + this.number_rounds.length, { fontFamily: 'TROUBLE', fill: '#000000'})
+            .setFontSize(40);
         this.texto_niveles.setVisible(false); 
         this.texto_errores.setVisible(false);
         this.texto_tiempototal.setVisible(false);

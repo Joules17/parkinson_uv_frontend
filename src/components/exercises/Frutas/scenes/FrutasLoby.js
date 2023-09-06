@@ -104,7 +104,7 @@ export default class FrutasLoby extends Phaser.Scene {
     this.palmeraDer.setAlpha(0)
     this.palmeraDer.dance_function(3, 2000)
 
-    this.ready_text = this.add.text(60, 140, "aprendamos a Como jugar:", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40)
+    this.ready_text = this.add.text(60, 140, "APRENDAMOS A COMO JUGAR", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40)
     this.ready_text.setAlpha(0)
 
     // messages

@@ -96,44 +96,56 @@ export default class FrutasticLoby extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor(0x4e9de0);
 
+        this.welcome_title = this.add.text(50, 1000, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
+        this.move_upside(this.welcome_title, 970, 1000, this)
+
+        // panel 
         this.panel_round = this.add.graphics();
         this.panel_round.fillStyle(0xffffff, 1);
-        this.panel_round.fillRect(50, 150, 700, 500);
+        this.panel_round.fillRect(0, 140, 1800, 600);
         this.panel_round.setAlpha(0);
 
+        this.panel_title = this.add.graphics();
+        this.panel_title.fillStyle(0x000000, 1);
+        this.panel_title.fillRect(-10, 125, 1800, 60);
+        this.panel_title.setAlpha(0);
+    
         // Figuras de fondo ------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 550, 'bushes').setScale(0.12);
         this.bushes_sprite2 = this.add.sprite(600, 550, 'bushes2').setScale(0.12);
-        // titulo ------------------------------------------------------------------------------------------------------------
-        this.title = this.add.text(50, 25, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100);
+        
+        // explanation msg
+
         this.explanation = this.add
-            .text(240, 160, 'Mira las frutas a continuacion', { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(25);
+            .text(60, 140, 'Mira las frutas a continuacion', { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40)
+            .setAlpha(0);
+
         this.explanation2 = this.add
-            .text(240, 155, 'Selecciona la fruta nueva, \nsi solo hay una, ¡haz click en ella!', { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(20);
+            .text(120, 200, 'Selecciona la fruta nueva, si solo hay una, \n                  ¡haz click en ella!', { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(40);
         this.explanation2.setVisible(false);
 
         this.good_description = this.add
-            .text(240, 155, '¡Excelente! Sigue asi, si necesitas\nayuda, haz click en el monito', { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(20);
+            .text(250, 200, '¡Excelente! Sigue asi', { fontFamily: 'TROUBLE', fill: '#3bb173' })
+            .setFontSize(40);
         this.bad_description = this.add
-            .text(230, 160, 'Error: Recuerda que debes seleccionar\n¡La fruta nueva! Haz click en el monito para mas ayuda', {
+            .text(50, 200, 'Error: Recuerda que debes seleccionar La fruta nueva!', {
                 fontFamily: 'TROUBLE',
-                fill: '#000000'
+                fill: '#e15554'
             })
-            .setFontSize(15);
+            .setFontSize(40);
         this.good_description.setVisible(false);
         this.bad_description.setVisible(false);
 
         this.mensaje_final = this.add
-            .text(100, 350, '¡Muy bien! Ya estas listo, ', { fontFamily: 'TROUBLE', fill: '#000000' })
+            .text(220, 350, '¡Muy bien! Ya estas listo, ', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(40);
         this.mensaje_final.setVisible(false);
 
-        // button ------------------------------------------------------------------------------------------------------------
+        // button -----------------------n-------------------------------------------------------------------------------------
         this.go_button = this.add
-            .text(190, 400, 'HAZ CLICK AQUI', {
+            .text(290, 400, 'HAZ CLICK AQUI', {
                 fontFamily: 'TROUBLE',
                 fill: '#4e9de0'
             })
@@ -217,6 +229,8 @@ export default class FrutasticLoby extends Phaser.Scene {
             repeat: 0,
             onComplete: function () {
                 scene.aparecer(scene.panel_round, scene);
+                scene.aparecer(scene.panel_title, scene);
+                scene.aparecer(scene.explanation, scene);
             }
         });
     }
@@ -228,7 +242,6 @@ export default class FrutasticLoby extends Phaser.Scene {
             duration: 1000,
             ease: 'Power2',
             onComplete: function () {
-                scene.explanation.setVisible(false);
                 scene.explanation2.setVisible(true);
                 scene.flag = true;
             }
