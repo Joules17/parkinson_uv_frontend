@@ -143,28 +143,27 @@ export default class ArticTuto extends Phaser.Scene {
         // panels
         this.conversation_panel = this.add.graphics();
         this.conversation_panel.fillStyle(0x000000, 1);
-        this.conversation_panel.lineStyle(2, 0xffffff);
-        this.conversation_panel.fillRoundedRect(50, 530, 700, 60, 5); // Crea el rectángulo con bordes curvos
-        this.conversation_panel.strokeRoundedRect(50, 530, 700, 60, 5); // Dibuja los bordes negros
+        this.conversation_panel.fillRect(50, 530, 700, 60, 5); // Crea el rectángulo con bordes curvos
+        this.conversation_panel.strokeRect(50, 530, 700, 60, 5); // Dibuja los bordes negros
 
         // fullScreenButton
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
         // text ------------------------------------------------------------------------------------------------------------------------
-        this.title = this.add.text(280, 20, 'TUTORIAL', { fontFamily: 'StayPixelRegular', fill: '#ffffff' }).setFontSize(70);
+        this.title = this.add.text(305, 20, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(70);
         this.explanation = this.add
-            .text(100, 540, 'Bienvenido a flechas articas, para jugar utiliza tu teclado', {
+            .text(100, 550, 'Bienvenido a flechas articas, para jugar utiliza tu teclado', {
                 fontFamily: 'TROUBLE',
                 fill: '#ffffff'
             })
-            .setFontSize(25);
+            .setFontSize(30);
         this.explanation.setAlpha(0);
         this.aparecer(this.explanation, this);
         this.aparecer(this.caps, this);
 
         // button 
         this.play_button = this.add.text(320, 240, 'JUGAR', {
-          fontFamily: 'StayPixelRegular',
+          fontFamily: 'TROUBLE',
           fill: '#ffffff',
         }).setFontSize(80); 
         this.play_button.setVisible(false); 
@@ -210,15 +209,15 @@ export default class ArticTuto extends Phaser.Scene {
       if (this.first_phase) {
           this.explanation
               .setText(
-                  '        La mecánica es simple, las flechas azules indican la \n                     orientacion correcta a presionar'
+                  'si el color es azul, la orientacion correcta a presionar es la misma de la flecha'
               )
-              .setFontSize(25);
+              .setFontSize(22);
           this.caps.setVisible(false);
           this.createRounds();
           this.first_phase = false;
       }
       if (this.bad_flag) {
-        this.explanation.setText('En cambio, las flechas rojas indican la orientación contraria a la correcta').setFontSize(20); 
+        this.explanation.setText('En cambio, las flechas rojas indican la orientacion contraria a la correcta').setFontSize(23); 
         this.bad_flag = false; 
       }
       if (this.patron_flag) {
@@ -227,7 +226,7 @@ export default class ArticTuto extends Phaser.Scene {
         this.patron_flag = false; 
       }
       if (this.fin_del_tuto) {
-          this.explanation.setText('¡Excelente! Haz completado el tutorial, ¡haz click en Jugar!').setFontSize(25)
+          this.explanation.setText('Excelente! Has completado el tutorial, haz click en Jugar!').setFontSize(30)
           this.play_button.setVisible(true); 
           this.fin_del_tuto = false; 
       }
@@ -241,10 +240,6 @@ export default class ArticTuto extends Phaser.Scene {
         this.tableros.push('bad_explanation');
         for (let i = 0; i < this.bad_rounds; i++) {
             this.tableros.push(new Level(this.level_config_bad));
-        }
-        this.tableros.push('patron_explanation')
-        for (let i = 0; i < this.bad_rounds; i++) {
-          this.tableros.push(new Level(this.level_config_patron));
         }
         this.flag = true;
     }
@@ -278,7 +273,7 @@ export default class ArticTuto extends Phaser.Scene {
             ease: 'Power2',
             onComplete: function () {
                 if (!scene.eventFinished) {
-                    scene.explanation.setText('*** Oprime tecla espacio para continuar con el tutorial ***');
+                    scene.explanation.setText('       Oprime tecla espacio para continuar con el tutorial');
                     scene.eventFinished = true;
                 }
             }
@@ -342,7 +337,7 @@ export default class ArticTuto extends Phaser.Scene {
         [200, 500]
     ];
     let selected = positions[Math.floor(Math.random() * positions.length)];
-    const feedbackMessage = this.add.text(selected[0], selected[1], '', { fontFamily: 'kongtext', fontSize: 24 });
+    const feedbackMessage = this.add.text(selected[0], selected[1], '', { fontFamily: 'TROUBLE', fontSize: 30 });
     feedbackMessage.setOrigin(0.5);
     feedbackMessage.setScale(0);
     if (status) {

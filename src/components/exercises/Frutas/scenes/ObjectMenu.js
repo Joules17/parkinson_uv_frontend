@@ -2,27 +2,30 @@
 import Phaser from 'phaser';
 import '../styles.css';
 
+// ---------------------------- CUSTOMS IMPORTS ----------------------------
 // custom classes imported:
-import Frutita from '../sprites/base/Frutita.js';
+import SteroidObject from 'components/Factory/SteroidObject.js';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets imports
-import PalmeraImg from '../assets/img/palmera.png';
-import coco from '../assets/frutas/coco.png';
-import mango from '../assets/frutas/mango.png';
-import banana from '../assets/frutas/banana.png';
-import manzana from '../assets/frutas/manzana.png';
-import fullscreen from '../assets/img/fullscreen.png';
+// ---------------------------- ASSETS --------------------------------------
+// resources imports 
+import PalmeraImg from 'components/exercises/general_assets/images/objects/others/palmera.png'; 
+import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png';
+// fruits imports
+import CocoImg from 'components/exercises/general_assets/images/objects/fruits/coco.png';
+import MangoImg from 'components/exercises/general_assets/images/objects/fruits/mango.png';
+// textures
+import BgImg from 'components/exercises/general_assets/images/textures/sand_texture.png';
+// sounds
+import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'; 
+import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav';
+// -----------------------------------------------------------------
 
-import hover from '../assets/music/hover.mp3';
-import correct from '../assets/music/correct.wav';
-
-export default class FrutasMenu extends Phaser.Scene {
+export default class ObjectMenu extends Phaser.Scene {
     constructor() {
-        super({ key: 'FrutasMenu', backgroundColor: '#3f1651' });
+        super({ key: 'ObjectMenu', backgroundColor: '#3f1651' });
         this.worldSizeWidth = 800;
         this.worldSizeHeight = 600;
-        // camera config
 
         // botones
         this.start_button, (this.fullscreen_button = undefined);
@@ -45,28 +48,36 @@ export default class FrutasMenu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('palmeraImg', PalmeraImg);
-        this.load.image('cocoImg', coco);
-        this.load.image('mangoImg', mango);
-        this.load.image('bananaImg', banana);
-        this.load.image('manzanaImg', manzana);
-        this.load.image('fullscreenImg', fullscreen);
+        // assets - images
+        this.load.image('PalmeraImg', PalmeraImg);
+        this.load.image('CocoImg', CocoImg);
+        this.load.image('MangoImg', MangoImg);
+        this.load.image('FullscreenImg', FullscreenImg);
+        this.load.image('BgImg', BgImg); 
 
-        // audio
-        this.load.audio('hover', hover);
-        this.load.audio('correct', correct);
+        // assets - audio 
+        this.load.audio('HoverSound', HoverSound);
+        this.load.audio('CorrectSound', CorrectSound);
 
-        //
+        // vars
         this.waveOffset = 0;
     }
 
     create() {
+        // background color
         this.cameras.main.setBackgroundColor('#e0bc28');
-        // this.initializer();
 
-        //
+        // bg_image
+        this.bg = this.add.sprite(400, 300, 'BgImg')
+        
+        // vars
         this.flag = false;
-        // botones; start
+
+        // -------------------------------- BUTTONS --------------------------------  
+        // start_button 
+        this.start_panel = this.add.graphics();
+        this.start_panel.fillStyle(0x000000, 1);
+        this.start_panel.fillRect(335, 365, 140, 70);
 
         this.start_button = this.add
             .text(350, 380, 'Iniciar', {
@@ -77,39 +88,45 @@ export default class FrutasMenu extends Phaser.Scene {
 
         this.start_button.setInteractive();
 
-        // palmeras -------------
-
-        this.palmeraDer = new Frutita({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' });
-        this.palmeraIzq = new Frutita({ scene: this, posx: 5, posy: 150, key: 'palmeraImg' });
-        this.palmeraIzq.setFlipX(true);
-
-        this.palmeraDer.setScale(1.4);
-        this.palmeraIzq.setScale(1.4);
-
-        this.palmeraDer.dance_function(3, 2000);
-        this.palmeraIzq.dance_function(-3, 2000);
-        // -----------------------
-
-        // botones fullscreen
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg')
-        // -------------------------
+        // -------------------------------------------------------------------------
+        // ---------------------------- PANELS ------------------------------------
+        // title_panel
+        this.title_panel = this.add.graphics();
+        this.title_panel.lineStyle(5, 0x000000); 
+        this.title_panel.fillStyle(0xffffff, 1);
+        this.title_panel.fillRect(100, 230, 620, 120);
 
         this.title = this.add.text(120, 250, 'OBJETO INTRUSO', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(120);
+        // -------------------------------------------------------------------------
+        // ---------------------------- SPRITES ------------------------------------
+        // Palmeras
+        this.palmera_der = new SteroidObject({ scene: this, posx: 795, posy: 150, key: 'PalmeraImg' });
+        this.palmera_izq = new SteroidObject({ scene: this, posx: 5, posy: 150, key: 'PalmeraImg' });
 
-        // Frutitas
+        this.palmera_der.setScale(1.4);
+        this.palmera_izq.setScale(1.4).setFlipX(true);
+
+        this.palmera_der.dance_function(3, 2000);
+        this.palmera_izq.dance_function(-3, 2000);
+
+        // ---------------------------- FULLSCREEN BUTTON ---------------------------
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg')
+        // -------------------------------------------------------------------------- 
+        // Frutas 
         this.frutas_menu = this.physics.add.group();
-        let coco = new Frutita({ scene: this, posx: 730, posy: 330, key: 'cocoImg' });
-        this.frutas_menu.add(coco);
-        let mango = new Frutita({ scene: this, posx: 80, posy: 260, key: 'mangoImg' });
-        this.frutas_menu.add(mango);
+        let coco = new SteroidObject({ scene: this, posx: 730, posy: 330, key: 'CocoImg' });
+        let mango = new SteroidObject({ scene: this, posx: 80, posy: 260, key: 'MangoImg' });
+        this.frutas_menu.add(coco); 
+        this.frutas_menu.add(mango); 
 
-        // baile!
+        // dance_function applied 
         for (let i = 0; i < this.frutas_menu.getChildren().length; i++) {
             this.frutas_menu.getChildren()[i].setScale(0.2);
             this.frutas_menu.getChildren()[i].dance_function(30, 1000);
         }
-
-        // ---------------------
+        
+        // -------------------------------------------------------------------------
+        // ---------------------------- FIGURES - WAVES INTERACTION ------------------------------------
 
         this.juice_rectangle = this.add.rectangle(0, 1200, 1800, 1200, 0xfff4e9de0, 0);
         this.juice_rectangle.originalY = 1200;
@@ -126,10 +143,11 @@ export default class FrutasMenu extends Phaser.Scene {
             // ball.setScale(0.1);
         });
 
-        // Eventos
-
+        // -------------------------------------------------------------------------
+        // ---------------------------- EVENTOS ------------------------------------
+        // start_button listeners
         this.start_button.on('pointerdown', () => {
-            this.sound.play('correct');
+            this.sound.play('CorrectSound');
             this.pressed = true;
             this.olas.children.iterate((ball) => {
                 this.move_upside(ball, 800, 3000, this);
@@ -139,8 +157,7 @@ export default class FrutasMenu extends Phaser.Scene {
         });
 
         this.start_button.on('pointerover', () => {
-            this.start_button.setColor('#ffffff');
-            this.sound.play('hover');
+            this.sound.play('HoverSound');
             this.tweens.add({
                 targets: this.start_button,
                 scaleX: 1.1,
@@ -160,20 +177,23 @@ export default class FrutasMenu extends Phaser.Scene {
                 ease: 'Power2'
             });
         });
-
+        // -------------------------------------------------------------------------
     }
 
     update() {
         this.waveOffset += 0.01;
+        // wave movement 
         if (!this.pressed) {
             this.olas.children.each((child) => {
                 child.y = child.originalY + Math.sin(child.x / 40 + this.waveOffset) * 20;
             });
         }
+
+        // next scene: 
         if (this.flag) {
             const settings = this.sys.settings.data.settings;
             this.flag = false;
-            this.scene.start('FrutasLoby', {settings});
+            this.scene.start('ObjectLoby', {settings});
         }
     }
 

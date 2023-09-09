@@ -17,6 +17,7 @@ import bushes2 from '../assets/img/bushes2.png';
 import monkey from '../assets/img/monkey.png';
 import object_list from '../sprites/object_list';
 import fullscreen from '../assets/img/fullscreen.png';
+import bg_image from '../assets/img/frutasticobd.png'
 
 export default class FrutasticLoby extends Phaser.Scene {
     constructor() {
@@ -78,6 +79,7 @@ export default class FrutasticLoby extends Phaser.Scene {
         this.load.image('bushes2', bushes2);
         this.load.image('monkey', monkey);
         this.load.image('fullscreenImg', fullscreen);
+        this.load.image('bg_image', bg_image); 
 
         for (let categoria in object_list) {
             // busca cada subcategoria para cargar su correspondiente imagen
@@ -95,9 +97,10 @@ export default class FrutasticLoby extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor(0x4e9de0);
+        this.bg = this.add.sprite(400, 300, 'bg_image'); 
 
         this.welcome_title = this.add.text(50, 1000, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
-        this.move_upside(this.welcome_title, 970, 1000, this)
+        this.move_upside(this.welcome_title, 970, 1000, this, false)
 
         // panel 
         this.panel_round = this.add.graphics();
@@ -117,12 +120,12 @@ export default class FrutasticLoby extends Phaser.Scene {
         // explanation msg
 
         this.explanation = this.add
-            .text(60, 140, 'Mira las frutas a continuacion', { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .text(60, 140, 'Mira los objetos a continuacion', { fontFamily: 'TROUBLE', fill: '#ffffff' })
             .setFontSize(40)
             .setAlpha(0);
 
         this.explanation2 = this.add
-            .text(120, 200, 'Selecciona la fruta nueva, si solo hay una, \n                  ¡haz click en ella!', { fontFamily: 'TROUBLE', fill: '#000000' })
+            .text(120, 200, 'Selecciona el objeto nuevo, si solo hay uno, \n                  ¡haz click en el!', { fontFamily: 'TROUBLE', fill: '#000000' })
             .setFontSize(40);
         this.explanation2.setVisible(false);
 
@@ -162,8 +165,8 @@ export default class FrutasticLoby extends Phaser.Scene {
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
         // transitions ------------------------------------------------------------------------------------------------------------
-        this.move_upside(this.bushes_sprite, -60, 2000, this);
-        this.move_upside(this.bushes_sprite2, -60, 2000, this);
+        this.move_upside(this.bushes_sprite, -60, 2000, this, true);
+        this.move_upside(this.bushes_sprite2, -60, 2000, this, true);
         // events ------------------------------------------------------------------------------------------------------------
         this.go_button.on('pointerdown', () => {
             this.sound.play('good');
@@ -218,7 +221,7 @@ export default class FrutasticLoby extends Phaser.Scene {
     }
 
     // Customs functions
-    move_upside(spt, position, duration, scene) {
+    move_upside(spt, position, duration, scene,  cont) {
         spt.originalY = spt.originalY - position;
         this.tweens.add({
             targets: spt,
@@ -228,9 +231,11 @@ export default class FrutasticLoby extends Phaser.Scene {
             yoyo: false,
             repeat: 0,
             onComplete: function () {
-                scene.aparecer(scene.panel_round, scene);
-                scene.aparecer(scene.panel_title, scene);
-                scene.aparecer(scene.explanation, scene);
+                if (cont) {
+                    scene.aparecer(scene.panel_round, scene);
+                    scene.aparecer(scene.panel_title, scene);
+                    scene.aparecer(scene.explanation, scene);
+                }
             }
         });
     }

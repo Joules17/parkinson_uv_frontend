@@ -62,9 +62,8 @@ export default class ArticGame extends Phaser.Scene {
         // variables
         this.first_rounds = 30; 
         this.second_rounds = 20; 
-        this.third_rounds = 30; 
         // Pendiente definir los settings de este juego
-        this.number_rounds = this.first_rounds + this.second_rounds + this.third_rounds; // numero de rondas
+        this.number_rounds = this.first_rounds + this.second_rounds
         this.tableros = []; // lista de tableros
         this.tablero_actual = undefined; // tablero actual
         this.flag = undefined;
@@ -163,14 +162,14 @@ export default class ArticGame extends Phaser.Scene {
 
         // text
         this.text_numberrondas = this.add
-            .text(15, 15, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'kongtext', fill: '#ffffff' })
-            .setFontSize(15);
+            .text(15, 15, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
         this.texto_tiempototal = this.add
-            .text(25, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'kongtext', fill: '#ffffff' })
-            .setFontSize(15);
+            .text(25, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
         this.texto_numbererros = this.add
-            .text(600, 560, 'Errores: ' + this.errores, { fontFamily: 'kongtext', fill: '#ffffff' })
-            .setFontSize(15);
+            .text(600, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
 
         // rounds manager
         this.levels_global.push(this.level_config);
@@ -234,10 +233,12 @@ export default class ArticGame extends Phaser.Scene {
         for (let i = 0; i < this.second_rounds; i++) {
             this.tableros.push(new Level(this.levels_global[1]));
         }
+        /*
         this.tableros.push('hard');
         for (let i = 0; i < this.third_rounds; i++) {
             this.tableros.push(new Level(this.levels_global[2]));
         }
+        */
         this.flag = true;
     }
 
@@ -337,7 +338,7 @@ export default class ArticGame extends Phaser.Scene {
             [200, 500]
         ];
         let selected = positions[Math.floor(Math.random() * positions.length)];
-        const feedbackMessage = this.add.text(selected[0], selected[1], '', { fontFamily: 'kongtext', fontSize: 24 });
+        const feedbackMessage = this.add.text(selected[0], selected[1], '', { fontFamily: 'TROUBLE', fontSize: 40 });
         feedbackMessage.setOrigin(0.5);
         feedbackMessage.setScale(0);
         if (status) {
@@ -372,7 +373,7 @@ export default class ArticGame extends Phaser.Scene {
     storm_rising() {
         this.emiter.gravityY = 500;
         this.emiter.quantity = 10; 
-        const feedbackMessage = this.add.text(50, 500, 'La tormenta se acerca', { fontFamily: 'kongtext', fontSize: 30 });
+        const feedbackMessage = this.add.text(50, 500, 'La tormenta se acerca', { fontFamily: 'TROUBLE', fontSize: 30 });
         feedbackMessage.setDepth(10)
         this.tweens.add({
             targets: feedbackMessage,
@@ -402,7 +403,7 @@ export default class ArticGame extends Phaser.Scene {
       this.emiter.gravityY = 200; 
       this.emiter.setTexture('snowflake')
       this.emiter.setParticleScale(1.5, 1);
-      const feedbackMessage = this.add.text(50, 500, 'TORMENTA DE NIEVE!', { fontFamily: 'kongtext', fontSize: 30 });
+      const feedbackMessage = this.add.text(50, 500, 'TORMENTA DE NIEVE!', { fontFamily: 'TROUBLE', fontSize: 50 });
       feedbackMessage.setDepth(10)
       this.tweens.add({
           targets: feedbackMessage,

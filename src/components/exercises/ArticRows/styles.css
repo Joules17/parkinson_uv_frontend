@@ -1,9 +1,4 @@
 @font-face {
-    font-family: StayPixelRegular;
-    src: url('./assets/fonts/stay-pixel-font/StayPixelRegular-EaOxl.ttf')
-}
-
-@font-face {
-    font-family: kongtext;
-    src: url('./assets/fonts/kongtext/kongtext.ttf');
+    font-family: TROUBLE;
+    src: url('./assets/fonts/Trouble.ttf')
 }

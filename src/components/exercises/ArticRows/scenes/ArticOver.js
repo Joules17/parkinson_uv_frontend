@@ -61,14 +61,18 @@ export default class ArticOver extends Phaser.Scene {
         }); 
 
         // messages
-        this.title = this.add.text(220, 40, "FIN DEL JUEGO", {fontFamily: 'kongtext', fontSize: 30, color: '#ffffff'}); 
+        this.title = this.add.text(200, 100, "FIN DEL JUEGO", {fontFamily: 'TROUBLE', fontSize: 100, color: '#ffffff'}); 
 
-        this.tiempo_total_msg = this.add.text(100, 150, "tiempo total:", { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
-        this.tiempo_total_log = this.add.text(400, 150, this.tiempo_total, { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
-        this.tiempo_promedio_msg = this.add.text(100, 300, "tiempo promedio:", { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
-        this.tiempo_promedio_log = this.add.text(400, 300, this.tiempo_rondas, { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
-        this.number_errores_msg = this.add.text(100, 450, "Numero de errores: ", { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
-        this.number_errores_log = this.add.text(400, 450, this.number_errores, { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(15)
+        this.panelStats = this.add.graphics(); 
+        this.panelStats.fillStyle(0xffffff, 1);
+        this.panelStats.fillRoundedRect(100, 200, 600, 300, 20); 
+        
+        this.tiempo_total_msg = this.add.text(150, 250, "tiempo total:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+        this.tiempo_total_log = this.add.text(500, 250, this.tiempo_total, { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+        this.tiempo_promedio_msg = this.add.text(150, 310, "tiempo promedio:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+        this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas, { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+        this.number_errores_msg = this.add.text(150, 370, "Numero de errores: ", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
+        this.number_errores_log = this.add.text(500, 370, this.number_errores, { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
 
         // fullScreenButton
         new FullScreenBttn(this, 770, 30, 'fullscreenImg');

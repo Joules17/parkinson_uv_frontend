@@ -13,6 +13,7 @@ import mango from '../assets/frutas/mango.png';
 import banana from '../assets/frutas/banana.png';
 import manzana from '../assets/frutas/manzana.png';
 import fullscreen from '../assets/img/fullscreen.png';
+import bd_image from '../assets/img/frutasticobd.png';
 
 import hover from '../assets/music/hover.mp3';
 import correct from '../assets/music/correct.wav';
@@ -51,6 +52,7 @@ export default class FrutasticMenu extends Phaser.Scene {
         this.load.image('banana', banana);
         this.load.image('manzana', manzana);
         this.load.image('fullscreenImg', fullscreen);
+        this.load.image('bd_image', bd_image); 
 
         // audio
         this.load.audio('hover', hover);
@@ -59,10 +61,12 @@ export default class FrutasticMenu extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor('#4e9de0');
+        this.bg = this.add.sprite(400, 300, 'bd_image').setDepth(-2); 
 
         // Figuras de fondo ------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 500, 'bushes').setScale(0.12);
         this.bushes_sprite2 = this.add.sprite(600, 500, 'bushes2').setScale(0.12);
+
 
         // Textos ------------------------------------------------------------------------------------------------------------
         this.title = this.add.text(120, 200, 'RECUERDA Y ENCUENTRA', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(80);

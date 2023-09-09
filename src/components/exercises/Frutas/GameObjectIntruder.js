@@ -2,19 +2,19 @@ import { Component } from 'react';
 import Phaser from 'phaser';
 
 // Escenas
-import FrutasInit from 'components/exercises/Frutas/scenes/FrutasInit';
-import FrutasMenu from 'components/exercises/Frutas/scenes/FrutasMenu';
-import FrutasLoby from 'components/exercises/Frutas/scenes/FrutasLoby';
+import ObjectInit from 'components/exercises/Frutas/scenes/ObjectIntruderInit';
+import ObjectMenu from 'components/exercises/Frutas/scenes/ObjectMenu';
+import ObjectLoby from 'components/exercises/Frutas/scenes/ObjectLoby';
 import finDelJuego from 'components/exercises/Frutas/scenes/finDelJuego';
 import rondas from 'components/exercises/Frutas/scenes/rondas';
 
 //css
-import 'components/exercises/Frutas/styles.css';
+import 'components/exercises/general_assets/styles.css';
 
-class Frutas extends Component {
-
+class ObjectIntruder extends Component {
     componentDidMount() {
-        const { setting } = this.props;
+        /* eslint-disable */
+        const { settings } = this.props;
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-game-container',
@@ -30,11 +30,11 @@ class Frutas extends Component {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizontal
             },
-            scene: [FrutasInit, FrutasMenu, FrutasLoby, rondas, finDelJuego]
+            scene: [ObjectInit, ObjectMenu, ObjectLoby, rondas, finDelJuego]
         };
 
         this.game = new Phaser.Game(config);
-        this.game.scene.start('FrutasInit', {setting});
+        this.game.scene.start('FrutasInit', {settings});
         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 
@@ -68,4 +68,4 @@ class Frutas extends Component {
     }
 }
 
-export default Frutas;
+export default ObjectIntruder;

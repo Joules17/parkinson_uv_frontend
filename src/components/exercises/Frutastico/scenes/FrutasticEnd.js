@@ -9,6 +9,7 @@ import Frutita from 'components/exercises/Frutas/sprites/base/Frutita';
 // assets
 import fullscreen from '../assets/img/fullscreen.png';
 import PalmeraImg from '../assets/img/palmera.png';
+import bg_image from '../assets/img/fruits texture.png'
 
 export default class FrutasticEnd extends Phaser.Scene {
     constructor() {
@@ -59,11 +60,13 @@ export default class FrutasticEnd extends Phaser.Scene {
         //
         this.load.image('palmeraImg', PalmeraImg);
         this.load.image('fullscreenImg', fullscreen);
+        this.load.image('bg_image', bg_image); 
         this.waveOffset = 0;
     }
 
     create() {
         this.cameras.main.setBackgroundColor('#e0bc28');
+        this.bg = this.add.sprite(400, 300, 'bg_image'); 
 
         // -------------------------
         this.flag = false;
@@ -113,7 +116,7 @@ export default class FrutasticEnd extends Phaser.Scene {
         this.olas = this.physics.add.group();
 
         for (let i = 0; i < 10; i++) {
-            this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0xfff4e9de0, 0));
+            this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0x3bb173, 0));
         }
 
         this.olas.children.iterate((ball) => {

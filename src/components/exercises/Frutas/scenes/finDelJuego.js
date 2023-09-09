@@ -8,7 +8,7 @@ import Frutita from '../sprites/base/Frutita.js';
 
 // assets imports
 import PalmeraImg from '../assets/img/palmera.png';
-
+import bd_image from '../assets/img/fruits texture.png';
 export default class finDelJuego extends Phaser.Scene {
 
   constructor() {
@@ -56,6 +56,8 @@ export default class finDelJuego extends Phaser.Scene {
     }
 
   preload() {
+    
+    this.load.image('bg_image', bd_image); 
     //
     this.load.image('palmeraImg', PalmeraImg);
     this.waveOffset = 0;
@@ -63,6 +65,7 @@ export default class finDelJuego extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor('#e0bc28');
+    this.bg = this.add.sprite(400, 300, 'bg_image')
 
     // -------------------------
     this.flag = false;

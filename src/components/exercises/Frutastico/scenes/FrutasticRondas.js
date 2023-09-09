@@ -3,15 +3,17 @@ import Phaser from 'phaser';
 import '../styles.css';
 
 // custom classes imported:
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import bushes from '../assets/img/bushes.png';
 import bushes2 from '../assets/img/bushes2.png';
 import fullscreen from '../assets/img/fullscreen.png';
+import bg_image_frustastic from '../assets/img/frutasticobd.png'
 
 // import object_list
 import object_list from '../sprites/object_list';
-import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+
 
 // import sounds
 import good from '../assets/music/correct.wav';
@@ -91,6 +93,7 @@ export default class FrutasticRondas extends Phaser.Scene {
         this.load.image('bushes', bushes);
         this.load.image('bushes2', bushes2);
         this.load.image('fullscreenImg', fullscreen);
+        this.load.image('bg_image_frustastic', bg_image_frustastic)
 
         for (let categoria in object_list) {
             // busca cada subcategoria para cargar su correspondiente imagen
@@ -108,6 +111,7 @@ export default class FrutasticRondas extends Phaser.Scene {
 
     create() {
         this.cameras.main.setBackgroundColor(0x4e9de0);
+        this.bg = this.add.sprite(400, 300, 'bg_image_frustastic')
 
         // figuras
         this.bushes_sprite = this.add.sprite(100, 620, 'bushes').setScale(0.12);

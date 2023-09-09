@@ -63,7 +63,6 @@ export default class ArticMenu extends Phaser.Scene {
   create() {
     // bg image
     this.bg = this.add.image(400, 300, 'sky'); 
-
     // cursor: 
     this.cursors = this.input.keyboard.createCursorKeys();
     
@@ -82,21 +81,21 @@ export default class ArticMenu extends Phaser.Scene {
 
 
     // text ------------------------------------------------------------------------------------------------------------------------
-    this.title = this.add.text(180,200, "Flechas Articas", { fontFamily : 'StayPixelRegular', fill: '#ffffff'}).setFontSize(70)
+    this.title = this.add.text(140,200, "FLECHAS ARTICAS", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(100)
     
     // fullScreenButton
     new FullScreenBttn(this, 770, 30, 'fullscreenImg');
     
     // buttons ---------------------------------------------------------------------------------------------------------------------
     this.start_button = this.add.text(340, 320, "Jugar", {
-      fontFamily: 'StayPixelRegular', 
+      fontFamily: 'TROUBLE', 
       fill: '#ffffff',
     }).setFontSize(50); 
 
     this.start_button.setInteractive(); 
 
     this.tuto_button = this.add.text(340, 380, "Tutorial", {
-      fontFamily: 'StayPixelRegular', 
+      fontFamily: 'TROUBLE', 
       fill: '#ffffff',
     }).setFontSize(50); 
 
@@ -145,7 +144,7 @@ export default class ArticMenu extends Phaser.Scene {
     let oposite = (index === 0) ? 1 : 0;
     this.selected = index; 
     this.pointer_out(this.list_buttons[oposite])
-    let posy = (index === 0) ? 345 : 405;
+    let posy = (index === 0) ? 335 : 400;
     this.r_arrow.y = posy; 
     this.pointer_over(this.list_buttons[index])
   }

@@ -4,13 +4,15 @@ import '../styles.css'
 
 // custom classes imported:
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-
+import Frutita from '../sprites/Frutita.js';
 // assets imports
-import bg_image from 'components/exercises/DominoGame/assets/images/bg_image.png'
 import bg from 'components/exercises/DominoGame/assets/images/bg_bricks.jpg'
 import curtain from 'components/exercises/DominoGame/assets/images/curtain.png'
 import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png'
 import fullscreen from '../assets/images/fullscreen.png';
+import bg_image from '../assets/images/green_texture.png';  
+import tree from '../assets/images/tree.png';
+
 // audio
 import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
 import correct from 'components/exercises/DominoGame/assets/music/correct.wav'
@@ -37,10 +39,11 @@ export default class DominoMenu extends Phaser.Scene {
     preload () {
         // images
         this.load.image('bg', bg);
-        this.load.spritesheet('bg_image', bg_image, { frameWidth: 800, frameHeight: 600});
         this.load.image('curtain', curtain);
         this.load.image('up_curtain', up_curtain);
         this.load.image('fullscreenImg', fullscreen);
+        this.load.image('bg_image', bg_image); 
+        this.load.image('tree', tree); 
 
         // audio
         this.load.audio('hover', hover);
@@ -49,44 +52,58 @@ export default class DominoMenu extends Phaser.Scene {
 
     create () {
     // bg
-    this.anims.create({
-        key: 'bd_anim',
-        frames: this.anims.generateFrameNumbers('bg_image', { start: 0, end: 9 }),
-        frameRate: 10,
-        repeat: -1
-    });
-    const sprite = this.add.sprite(400, 300, 'bg_image');
-    sprite.play('bd_anim');
+    this.add.sprite(400, 300, 'bg_image'); 
+    
+    this.pino_der = new Frutita({ scene: this, posx: 830, posy: 300, key: 'tree'}); 
+    this.pino_izq = new Frutita({ scene: this, posx: -30, posy: 300, key: 'tree'}); 
 
+    this.pino_der.setScale(0.4); 
+    this.pino_izq.setScale(0.4).setFlipX(true); 
+
+    this.pino_der.dance_function(3, 2000); 
+    this.pino_izq.dance_function(-3, 2000); 
 
     // flag variables
     this.flag = false;
 
+    // panel circle
+    this.red_circle = this.add.graphics(); 
+    this.red_circle.fillStyle(0xe15554, 1); 
+    this.red_circle.fillCircle(400, 270, 260);
+    this.main_circle = this.add.graphics(); 
+    this.main_circle.fillStyle(0xffffff, 1);
+    this.main_circle.fillCircle(400, 270, 250);
+    this.main_circle.lineStyle(5, 0x000000)
+    this.main_circle.strokeCircle(400, 270, 250);
+
     // texts
-    this.title = this.add.text(190, 230, 'LETRAS VS NUMEROS', {
-        fontFamily: 'Atarian',
+    this.title = this.add.text(200, 130, '   LETRAS\n      VS\n  NUMEROS', {
+        fontFamily: 'TROUBLE',
         fill: '#000000',
-    }).setFontSize(60);
+    }).setFontSize(120);
     // --------------------------------------------------------------
+    this.panel_start = this.add.graphics(); 
+    this.panel_start.fillStyle(0x000000, 1);
+    this.panel_start.fillRect(185, 465, 140, 70);
+
     // buttons
-    this.start_button = this.add.text(200, 400, 'INICIAR', {
-        fontFamily: 'Atarian',
+    this.start_button = this.add.text(200, 480, 'INICIAR', {
+        fontFamily: 'TROUBLE',
         fill: '#eb3724',
     }).setFontSize(50);
 
-    this.tuto_button = this.add.text(450, 400, 'TUTORIAL', {
-        fontFamily: 'Atarian',
+    this.panel_tuto = this.add.graphics();
+    this.panel_tuto.fillStyle(0x000000, 1);
+    this.panel_tuto.fillRect(435, 465, 170, 70);
+
+    this.tuto_button = this.add.text(450, 480, 'TUTORIAL', {
+        fontFamily: 'TROUBLE',
         fill: '#eb3724'
     }).setFontSize(50);
 
     this.start_button.setInteractive();
     this.tuto_button.setInteractive();
 
-    // curtains 
-    // red curtains
-    this.curtain_right = this.add.image(900, 320, 'curtain').setScale(1.7)
-    this.curtain_left = this.add.image(-100, 320, 'curtain').setScale(1.7)
-    this.curtain_right.flipX = true;
     // --------------------------------------------------------------
     // fullScreenButton
     new FullScreenBttn(this, 770, 30, 'fullscreenImg');
@@ -95,12 +112,11 @@ export default class DominoMenu extends Phaser.Scene {
     // start_button
     this.start_button.on('pointerdown', () => {
         this.sound.play('correct')
-        this.move(this.curtain_right, 300, 2000, -1, this, 'game')
-        this.move(this.curtain_left, 300, 2000, 1, this, 'game')
+        // this.move(this.curtain_right, 300, 2000, -1, this, 'game')
+        // this.move(this.curtain_left, 300, 2000, 1, this, 'game')
     });
 
     this.start_button.on('pointerover', () => {
-        this.start_button.setColor('#000000')
         this.sound.play('hover')
         this.tweens.add({
             targets: this.start_button,
@@ -123,7 +139,6 @@ export default class DominoMenu extends Phaser.Scene {
 
     // tuto_button
     this.tuto_button.on('pointerover', () => {
-        this.tuto_button.setColor('#000000')
         this.sound.play('hover')
         this.tweens.add({
             targets: this.tuto_button,
@@ -145,9 +160,10 @@ export default class DominoMenu extends Phaser.Scene {
     });
     this.tuto_button.on('pointerdown', () => {
         this.sound.play('correct')
-        this.move(this.curtain_right, 300, 2000, -1, this, 'tuto')
-        this.move(this.curtain_left, 300, 2000, 1, this, 'tuto')
+        // this.move(this.curtain_right, 300, 2000, -1, this, 'tuto')
+        // this.move(this.curtain_left, 300, 2000, 1, this, 'tuto')
     });
+
     }
 
     update () {

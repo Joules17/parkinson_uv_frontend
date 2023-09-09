@@ -10,8 +10,7 @@ export default class ArticInit extends Phaser.Scene {
     
     create () {
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'StayPixelRegular', fill: '#ffffff'}).setFontSize(20)
-        this.add.text(3000,3000, "", { fontFamily : 'kongtext', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         // Musica ---------------
         /*
         ... codigo de musica

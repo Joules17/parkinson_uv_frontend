@@ -2,23 +2,24 @@
 import Phaser from 'phaser';
 import '../styles.css'
 
-// custom classes imported:
+//  ------------------------- Custom Classes Imported -------------------------
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js'; 
 import Frutita from '../sprites/base/Frutita.js'
 import TableroRenewed from '../sprites/base/TableroRenewed';
-import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 // assets imports
 import PalmeraImg from '../assets/img/palmera.png'
 import object_list from '../sprites/base/object_list';
+import bg from '../assets/img/frutasticobd.png'
 
 // import sounds
 import good from '../assets/music/correct.wav'
 import bad from '../assets/music/bad.wav'
 import hover from '../assets/music/hover.mp3'
 
-export default class FrutasLoby extends Phaser.Scene {
+export default class ObjectLoby extends Phaser.Scene {
   constructor() {
-    super({ key: 'FrutasLoby', backgroundColor: '#3f1651' });
+    super({ key: 'ObjectLoby', backgroundColor: '#3f1651' });
     this.eventFinished = false;
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
@@ -73,6 +74,8 @@ export default class FrutasLoby extends Phaser.Scene {
         this.load.image(object_list[categoria][subcategoria]["key"], object_list[categoria][subcategoria]["imagen"])
       }
     }
+    
+    this.load.image('bg', bg)
 
     // audio
     this.load.audio('bad', bad)
@@ -82,6 +85,7 @@ export default class FrutasLoby extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(0xfff4e9de0);
+    this.bg = this.add.sprite(400, 300, 'bg')
     // this.initializer();
     // -----------------------
     this.welcome_title = this.add.text(50, 1000, "TUTORIAL", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
