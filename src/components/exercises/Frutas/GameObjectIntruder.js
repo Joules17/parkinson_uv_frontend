@@ -5,8 +5,8 @@ import Phaser from 'phaser';
 import ObjectInit from 'components/exercises/Frutas/scenes/ObjectIntruderInit';
 import ObjectMenu from 'components/exercises/Frutas/scenes/ObjectMenu';
 import ObjectLoby from 'components/exercises/Frutas/scenes/ObjectLoby';
-import finDelJuego from 'components/exercises/Frutas/scenes/finDelJuego';
-import rondas from 'components/exercises/Frutas/scenes/rondas';
+import ObjectEnd from 'components/exercises/Frutas/scenes/ObjectEnd';
+import ObjectRondas from 'components/exercises/Frutas/scenes/ObjectRondas';
 
 //css
 import 'components/exercises/general_assets/styles.css';
@@ -14,7 +14,7 @@ import 'components/exercises/general_assets/styles.css';
 class ObjectIntruder extends Component {
     componentDidMount() {
         /* eslint-disable */
-        const { settings } = this.props;
+        const { setting } = this.props;
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-game-container',
@@ -30,11 +30,11 @@ class ObjectIntruder extends Component {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizontal
             },
-            scene: [ObjectInit, ObjectMenu, ObjectLoby, rondas, finDelJuego]
+            scene: [ObjectInit, ObjectMenu, ObjectLoby, ObjectRondas, ObjectEnd]
         };
 
         this.game = new Phaser.Game(config);
-        this.game.scene.start('FrutasInit', {settings});
+        this.game.scene.start('ObjectInit', {setting});
         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

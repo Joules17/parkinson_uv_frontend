@@ -8,7 +8,7 @@ import NumbersLoby from 'components/exercises/Numbers/scenes/NumbersLoby'
 import rondas from 'components/exercises/Numbers/scenes/rondas'
 
 //css
-import 'components/exercises/Frutas/styles.css'
+import 'components/exercises/general_assets/styles.css'
 
 class GameNumbers extends Component {
   componentDidMount() {

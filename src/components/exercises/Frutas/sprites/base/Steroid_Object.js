@@ -27,7 +27,7 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         // Listeners: 
         // get closer if over
         this.on('pointerover', () => {
-            this.scene.sound.play('hover'); 
+            this.scene.sound.play('HoverSound'); 
             this.scene.tweens.add({
                 targets: this,
                 scaleX: 0.2,
@@ -66,10 +66,9 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
         let self = this.scene; 
         let obj = this; 
         
-        scene.sound.play(selected ? 'good' : 'bad' ); 
-        if (selected && scene.scene.key !== 'FrutasLoby') {
+        scene.sound.play(selected ? 'CorrectSound' : 'BadSound' ); 
+        if (selected && scene.scene.key !== 'ObjectLoby') {
             // no mas clicks
-            console.log('entreee')
             obj.active = false; 
         }
         this.scene.tweens.addCounter({
@@ -95,7 +94,7 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                 this.setTint(color)
             },
             onComplete: function () {
-                if (self.scene.key == 'rondas') {
+                if (self.scene.key == 'ObjectRondas') {
                     if (selected) {
                         console.log('Objeto correcto')
                         scene.numberVictory += 1; 

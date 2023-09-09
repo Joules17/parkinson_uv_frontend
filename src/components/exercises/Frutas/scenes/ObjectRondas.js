@@ -1,18 +1,10 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css';
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported:
 import TableroRenewed from '../sprites/base/TableroRenewed';
-
-// import object_list
-import object_list from '../sprites/base/object_list';
-
-// assets imports
-import good from '../assets/music/correct.wav';
-import bad from '../assets/music/bad.wav';
-import hover from '../assets/music/hover.mp3';
-import FullScreenBttn from 'components/Factory/FullScreenBttn';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 const log = {
     info: {
@@ -22,9 +14,9 @@ const log = {
     }
 };
 
-export default class rondas extends Phaser.Scene {
+export default class ObjectRondas extends Phaser.Scene {
     constructor() {
-        super({ key: 'rondas', backgroundColor: 0xffffff });
+        super({ key: 'ObjectRondas', backgroundColor: 0xffffff });
         this.blockup, (this.blockdown = undefined);
 
         // config rondas
@@ -75,21 +67,7 @@ export default class rondas extends Phaser.Scene {
         this.limite = 20;
     }
 
-    preload() {
-        // images
-        for (let categoria in object_list) {
-            // busca cada subcategoria para cargar su correspondiente imagen
-            // console.log(`Elementos en la categoría ${categoria}:`)
-            for (let subcategoria in object_list[categoria]) {
-                this.load.image(object_list[categoria][subcategoria]['key'], object_list[categoria][subcategoria]['imagen']);
-            }
-        }
-
-        // audio
-        this.load.audio('bad', bad);
-        this.load.audio('good', good);
-        this.load.audio('hover', hover);
-    }
+    preload() {}
 
     create() {
         const settings = this.sys.settings.data.settings;
@@ -134,7 +112,7 @@ export default class rondas extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
             this.setLog(this.tiempo_rondas, this.texto_tiempototal.text, this.numberFases);
-            this.scene.start('finDelJuego', log);
+            this.scene.start('ObjectEnd', log);
             this.fin_del_juego = false;
         }
     }

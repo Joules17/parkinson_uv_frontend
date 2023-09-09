@@ -1,18 +1,15 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
-import FullScreenBttn from 'components/Factory/FullScreenBttn';
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported
-import Frutita from '../sprites/base/Frutita.js';
+import SteroidObject from 'components/Factory/SteroidObject.js';
+import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets imports
-import PalmeraImg from '../assets/img/palmera.png';
-import bd_image from '../assets/img/fruits texture.png';
-export default class finDelJuego extends Phaser.Scene {
+export default class ObjectEnd extends Phaser.Scene {
 
   constructor() {
-    super({key: 'finDelJuego', backgroundColor: '#e0bc28'});
+    super({key: 'ObjectEnd', backgroundColor: '#e0bc28'});
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
 
@@ -56,38 +53,33 @@ export default class finDelJuego extends Phaser.Scene {
     }
 
   preload() {
-    
-    this.load.image('bg_image', bd_image); 
-    //
-    this.load.image('palmeraImg', PalmeraImg);
     this.waveOffset = 0;
   }
 
   create() {
     this.cameras.main.setBackgroundColor('#e0bc28');
-    this.bg = this.add.sprite(400, 300, 'bg_image')
+    this.bg = this.add.sprite(400, 300, 'BgImg')
 
     // -------------------------
     this.flag = false;
 
-    // palmeras -------------
-    this.palmeraDer = new Frutita({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' });
-    this.palmeraIzq = new Frutita({ scene: this, posx: 5, posy: 150, key: 'palmeraImg' });
-    this.palmeraIzq.setFlipX(true);
+    // -------------------------- FIGURES --------------------------
+    // -------------------------- PALMS ----------------------------
+    this.palmera_der = new SteroidObject({ scene: this, posx: 795, posy: 150, key: 'PalmeraImg' });
+    this.palmera_izq = new SteroidObject({ scene: this, posx: 5, posy: 150, key: 'PalmeraImg' }).setFlipX(true);
 
-    this.palmeraDer.setScale(1.4);
-    this.palmeraIzq.setScale(1.4);
+    this.palmera_der.setScale(1.4);
+    this.palmera_izq.setScale(1.4);
 
-    this.palmeraDer.dance_function(3, 2000);
-    this.palmeraIzq.dance_function(-3, 2000);
-    // ---------------------
+    this.palmera_der.dance_function(3, 2000);
+    this.palmera_izq.dance_function(-3, 2000);
 
+    // -------------------------- PANEL STATS ----------------------------  
     this.panelStats = this.add.graphics();
     this.panelStats.fillStyle(0xffffff, 1);
     this.panelStats.fillRoundedRect(100, 200, 600, 300, 20); // x, y, ancho, alto, radio de curvatura
     this.panelStats.setAlpha(0)
 
-    // -------------------------
 
     this.title = this.add.text(200,100, "fin del juego", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(100)
 
@@ -102,6 +94,8 @@ export default class finDelJuego extends Phaser.Scene {
     this.statsShow(this, false)
 
     // ---------------------
+    new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+    // ---------------------
     this.aparecer(this.panelStats, this)
 
     this.olas = this.physics.add.group()
@@ -115,9 +109,6 @@ export default class finDelJuego extends Phaser.Scene {
       // console.log('aqui estoy', ball.x, ball.y)
       // ball.setScale(0.1);
     })
-
-    new FullScreenBttn(this, 770, 30, 'fullsceenImg');
-
   }
 
   update () {

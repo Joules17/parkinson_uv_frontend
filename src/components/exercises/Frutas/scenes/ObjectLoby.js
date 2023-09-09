@@ -1,52 +1,32 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+import 'components/exercises/general_assets/styles.css'
 
-//  ------------------------- Custom Classes Imported -------------------------
+// --------------------------------------- CUSTOM CLASSES IMPORTED ---------------------------------------
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js'; 
-import Frutita from '../sprites/base/Frutita.js'
+import SteroidObject from 'components/Factory/SteroidObject.js';
 import TableroRenewed from '../sprites/base/TableroRenewed';
+// -------------------------------------------------------------------------------------------------------
 
-// assets imports
-import PalmeraImg from '../assets/img/palmera.png'
-import object_list from '../sprites/base/object_list';
-import bg from '../assets/img/frutasticobd.png'
-
-// import sounds
-import good from '../assets/music/correct.wav'
-import bad from '../assets/music/bad.wav'
-import hover from '../assets/music/hover.mp3'
 
 export default class ObjectLoby extends Phaser.Scene {
   constructor() {
     super({ key: 'ObjectLoby', backgroundColor: '#3f1651' });
-    this.eventFinished = false;
+    // vars
+    this.event_finished = false;
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
     this.button = undefined;
     this.welcome_title = undefined;
 
-    // paneles
-    this.panel = undefined;
-    this.panelTitle = undefined;
-
-    // texto
-    this.ready_text = undefined;
-    this.explanatory_text = undefined;
-    this.error_message = undefined;
-    this.error_detailed = undefined;
-    this.victory_message = undefined;
-    this.victory_explained = undefined;
-
-    // otros
-    this.palmeraDer = undefined;
+    // ---------------------------- Others ----------------------------
     this.tablero_ejemplo = undefined;
     this.score = 0; // se torna 1 cuando hizo click correctamente y -1 cuando no
     this.counter = 0;
 
     this.button_continue = undefined;
 
-    // tablero ejemplo config
+    // ---------------------------- Config ----------------------------
     this.tablero_config = {
       scene: this,
       game_width: 620,
@@ -64,49 +44,41 @@ export default class ObjectLoby extends Phaser.Scene {
     }
   }
 
-  preload() {
-    // images
-    this.load.image('palmeraImg', PalmeraImg)
-    for (let categoria in object_list) {
-      // busca cada subcategoria para cargar su correspondiente imagen
-      // console.log(`Elementos en la categoría ${categoria}:`)
-      for (let subcategoria in object_list[categoria]) {
-        this.load.image(object_list[categoria][subcategoria]["key"], object_list[categoria][subcategoria]["imagen"])
-      }
-    }
-    
-    this.load.image('bg', bg)
-
-    // audio
-    this.load.audio('bad', bad)
-    this.load.audio('good', good)
-    this.load.audio('hover', hover)
-  }
+  preload() {}
 
   create() {
+    // ----------------------- Background -----------------------
     this.cameras.main.setBackgroundColor(0xfff4e9de0);
-    this.bg = this.add.sprite(400, 300, 'bg')
-    // this.initializer();
-    // -----------------------
+    this.bg = this.add.sprite(400, 300, 'BgSky')
+    // -----------------------------------------------------------
+
+    // ----------------------- Welcome Title -----------------------
+    // and movement: 
     this.welcome_title = this.add.text(50, 1000, "TUTORIAL", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
     this.move_upside(this.welcome_title, 970, 1000, this)
 
-    // panel
+    // -------------------------------------------------------------
+    // ----------------------- Panels  -----------------------------
+  
+    // panel 
     this.panel = this.add.graphics();
     this.panel.fillStyle(0xffffff, 1);
     this.panel.fillRect(0, 140, 1800, 600);
     this.panel.setAlpha(0);
 
-    this.panelTitle = this.add.graphics();
-    this.panelTitle.fillStyle(0x000000, 1);
-    this.panelTitle.fillRect(-10, 125, 1800, 60);
-    this.panelTitle.setAlpha(0);
+    // panel Title
+    this.panel_title = this.add.graphics();
+    this.panel_title.fillStyle(0x000000, 1);
+    this.panel_title.fillRect(-10, 125, 1800, 60);
+    this.panel_title.setAlpha(0);
 
+    // -------------------------------------------------------------
+    // ----------------------- Objects: Palm Sprite -----------------------------
     // palmera
-    this.palmeraDer = new Frutita({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' })
-    this.palmeraDer.setScale(1.4)
-    this.palmeraDer.setAlpha(0)
-    this.palmeraDer.dance_function(3, 2000)
+    this.palmera_der = new SteroidObject({ scene: this, posx: 795, posy: 150, key: 'PalmeraImg' })
+    this.palmera_der.setScale(1.4)
+    this.palmera_der.setAlpha(0)
+    this.palmera_der.dance_function(3, 2000)
 
     this.ready_text = this.add.text(60, 140, "APRENDAMOS A COMO JUGAR", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40)
     this.ready_text.setAlpha(0)
@@ -121,12 +93,12 @@ export default class ObjectLoby extends Phaser.Scene {
     this.victory_explained.setVisible(false)
     this.victory_message.setVisible(false)
 
-    // botones fullscreen
+    // ----------------------------------------------- BUTTONS -----------------------------------------------
+    // ---------------------------- FULLSCREEN BUTTON ---------------------------
+    new FullScreenBttn(this, 770, 30, 'FullscreenImg')
 
-    new FullScreenBttn(this, 770, 30, 'fullscreenImg')
-
-    // prettier button
-    this.button_continue = this.add.text(350, 550, "jugar", {
+    // ---------------------------- CONTINUE BUTTON ---------------------------
+    this.button_continue = this.add.text(350, 550, "JUGAR", {
       fontFamily: 'TROUBLE',
       fill: '#e15554'
     }).setFontSize(60)
@@ -134,16 +106,18 @@ export default class ObjectLoby extends Phaser.Scene {
     this.button_continue.setInteractive();
     this.button_continue.setVisible(false);
 
+    // ---------------------------- CONTINUE BUTTON EVENTS ---------------------------
+
     this.button_continue.on('pointerdown', () => {
       if (this.victory_message.visible && this.button_continue.visible) {
         const settings = this.sys.settings.data.settings;
-        this.sound.play('good')
-        this.scene.start('rondas', {settings})
+        this.sound.play('CorrectSound')
+        this.scene.start('ObjectRondas', {settings})
       }
     })
 
     this.button_continue.on('pointerover', () => {
-      this.sound.play('hover')
+      this.sound.play('HoverSound')
       this.tweens.add({
         targets: this.button_continue,
         scaleX: 1.1,
@@ -199,9 +173,9 @@ export default class ObjectLoby extends Phaser.Scene {
       repeat: 0,
       onComplete: function () {
         scene.aparecer(scene.panel, scene)
-        scene.aparecer(scene.panelTitle, scene)
+        scene.aparecer(scene.panel_title, scene)
         scene.aparecer(scene.ready_text, scene)
-        scene.aparecer(scene.palmeraDer, scene)
+        scene.aparecer(scene.palmera_der, scene)
       }
     });
   }
@@ -224,9 +198,9 @@ export default class ObjectLoby extends Phaser.Scene {
       duration: 1000,
       ease: 'Power2',
       onComplete: function () {
-        if (!scene.eventFinished) {
+        if (!scene.event_finished) {
           scene.tablero_ejemplo = new TableroRenewed(scene.tablero_config)
-          scene.eventFinished = true;
+          scene.event_finished = true;
           scene.explanatory_text = scene.add.text(90, 420, "Haz click en el objeto que no se repita", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50)
         }
       }

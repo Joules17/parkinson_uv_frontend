@@ -1,7 +1,6 @@
 // custom classes imported
 import SteroidObject from './Steroid_Object';
-
-import object_list from './object_list';
+import object_list from 'components/exercises/general_assets/images/objects/object_list.js';
 
 export default class TableroRenewed {
   // Nota: Key: Skin: Imagen a la que hace referencia la fruta

@@ -4,7 +4,7 @@ import '../styles.css';
 
 // custom classes
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-import Frutita from 'components/exercises/Frutas/sprites/base/Frutita';
+import SteroidObject from 'components/Factory/SteroidObject.js';
 
 // assets
 import fullscreen from '../assets/img/fullscreen.png';
@@ -72,8 +72,8 @@ export default class FrutasticEnd extends Phaser.Scene {
         this.flag = false;
 
         // palmeras -------------
-        this.palmeraDer = new Frutita({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' });
-        this.palmeraIzq = new Frutita({ scene: this, posx: 5, posy: 150, key: 'palmeraImg' });
+        this.palmeraDer = new SteroidObject({ scene: this, posx: 795, posy: 150, key: 'palmeraImg' });
+        this.palmeraIzq = new SteroidObject({ scene: this, posx: 5, posy: 150, key: 'palmeraImg' });
         this.palmeraIzq.setFlipX(true);
 
         this.palmeraDer.setScale(1.4);

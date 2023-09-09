@@ -1,9 +1,6 @@
 import Phaser from 'phaser';
 import '../styles.css'
 
-// music import
-// music
-
 // Clase no visible para cargar assets e inicializar el juego
 export default class DominoInit extends Phaser.Scene {
     constructor () {

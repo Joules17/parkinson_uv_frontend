@@ -1,26 +1,13 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css';
+import 'components/exercises/general_assets/styles.css'
 
 // ---------------------------- CUSTOMS IMPORTS ----------------------------
 // custom classes imported:
 import SteroidObject from 'components/Factory/SteroidObject.js';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// ---------------------------- ASSETS --------------------------------------
-// resources imports 
-import PalmeraImg from 'components/exercises/general_assets/images/objects/others/palmera.png'; 
-import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png';
-// fruits imports
-import CocoImg from 'components/exercises/general_assets/images/objects/fruits/coco.png';
-import MangoImg from 'components/exercises/general_assets/images/objects/fruits/mango.png';
-// textures
-import BgImg from 'components/exercises/general_assets/images/textures/sand_texture.png';
-// sounds
-import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'; 
-import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav';
 // -----------------------------------------------------------------
-
 export default class ObjectMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'ObjectMenu', backgroundColor: '#3f1651' });
@@ -48,17 +35,6 @@ export default class ObjectMenu extends Phaser.Scene {
     }
 
     preload() {
-        // assets - images
-        this.load.image('PalmeraImg', PalmeraImg);
-        this.load.image('CocoImg', CocoImg);
-        this.load.image('MangoImg', MangoImg);
-        this.load.image('FullscreenImg', FullscreenImg);
-        this.load.image('BgImg', BgImg); 
-
-        // assets - audio 
-        this.load.audio('HoverSound', HoverSound);
-        this.load.audio('CorrectSound', CorrectSound);
-
         // vars
         this.waveOffset = 0;
     }
