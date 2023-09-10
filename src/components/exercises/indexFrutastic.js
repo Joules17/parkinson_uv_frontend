@@ -6,7 +6,7 @@ import { Typography, Box } from '@mui/material';
 // project import
 import MainCard from 'components/MainCard';
 
-import GameFrutastic from 'components/exercises/Frutastico/GameFrutastic'
+import GameFrutastic from 'components/exercises/RememberAndFind/GameRemember'
 
 // ==============================|| SAMPLE PAGE ||============================== //
 

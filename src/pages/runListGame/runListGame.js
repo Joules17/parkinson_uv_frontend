@@ -7,10 +7,10 @@ import 'react-multi-carousel/lib/styles.css';
 import MainCard from 'components/MainCard';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ObjectIntruder from 'components/exercises/Frutas/GameObjectIntruder'
+import ObjectIntruder from 'components/exercises/ObjectIntruder/GameObjectIntruder'
 import GameNumbers from 'components/exercises/Numbers/GameNumbers';
 import GameArtic from 'components/exercises/ArticRows/GameArtic';
-import GameFrutastic from 'components/exercises/Frutastico/GameFrutastic';
+import GameRememberAndFind from 'components/exercises/RememberAndFind/GameRemember';
 import GameDomino from 'components/exercises/DominoGame/GameDomino'
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 
@@ -70,8 +70,8 @@ const RunListGames = () => {
                 return <GameNumbers setting={startGame.setting}/>;
             case "Flechas Articas":
                 return <GameArtic setting={startGame.setting}/>;
-            case "Frutastico":
-                return <GameFrutastic setting={startGame.setting}/>;
+            case "Recuerda y Encuentra":
+                return <GameRememberAndFind setting={startGame.setting}/>;
             case "Letras VS Numeros":
                 return <GameDomino setting={startGame.setting}/>;
             case "Letra Aventura":

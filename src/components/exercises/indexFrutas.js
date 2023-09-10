@@ -6,7 +6,7 @@ import { Typography, Box } from '@mui/material';
 // project import
 import MainCard from 'components/MainCard';
 
-import GameFruits from 'components/exercises/Frutas/GameObjectIntruder'
+import GameFruits from 'components/exercises/ObjectIntruder/GameObjectIntruder'
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
