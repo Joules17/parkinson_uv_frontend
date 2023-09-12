@@ -68,8 +68,9 @@ export default class RememberMenu extends Phaser.Scene {
 
         // entered buttons
         this.start_button.on('pointerdown', () => {
+            const settings = this.sys.settings.data.settings;
             this.sound.play('CorrectSound');
-            this.scene.start('RememberLoby');
+            this.scene.start('RememberLoby', { settings });
         });
 
         this.start_button.on('pointerover', () => {

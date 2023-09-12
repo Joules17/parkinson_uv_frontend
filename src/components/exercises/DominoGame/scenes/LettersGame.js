@@ -1,19 +1,12 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css';
+
+// styles 
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported:
 import Level from 'components/exercises/DominoGame/sprites/levelObj.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-
-// assets imports
-import bg_game from 'components/exercises/DominoGame/assets/images/bg_game.jpg'; 
-import up_curtain from 'components/exercises/DominoGame/assets/images/up_curtain.png';
-import fullscreen from '../assets/images/fullscreen.png';
-// sounds
-import hover from 'components/exercises/DominoGame/assets/music/hover.mp3';
-import correct from 'components/exercises/DominoGame/assets/music/correct.wav';
-import bad from 'components/exercises/DominoGame/assets/music/bad.wav';
 
 const log = {
     info: {
@@ -24,28 +17,12 @@ const log = {
     }
 };
 
-export default class DominoGame extends Phaser.Scene {
+export default class LettersGame extends Phaser.Scene {
     constructor() {
-        super({ key: 'DominoGame', backgroundColor: '#3f1651' });
+        super({ key: 'LettersGame', backgroundColor: '#3f1651' });
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
-
-        // decoration (assets...)
-
-        // panels
-        this.rectangle_base = undefined;
-        this.left_side_base = undefined;
-        this.left_rectangle = undefined;
-        this.right_side_base = undefined;
-        this.right_rectangle = undefined;
-        this.bottom_panel = undefined;
-
-        this.circle_yes = undefined;
-        this.circle_no = undefined;
-
-        this.text_yes = undefined;
-        this.text_no = undefined;
 
         // timers
         this.gameTimeSec = 0;
@@ -62,6 +39,7 @@ export default class DominoGame extends Phaser.Scene {
         this.errores = 0;
         this.fin_del_juego = false;
         this.correct_actual_option = undefined;
+
         // config
         this.levels_config = {
             scene: this,
@@ -77,30 +55,18 @@ export default class DominoGame extends Phaser.Scene {
 
     }
 
-    preload() {
-        // images
-        this.load.spritesheet('bg_game', bg_game, { frameWidth: 800, frameHeight: 600 }); 
-        this.load.image('up_curtain', up_curtain);
-        this.load.image('fullscreenImg', fullscreen);
-        // audio
-        this.load.audio('hover', hover)
-        this.load.audio('correct', correct)
-        this.load.audio('bad', bad)
-    }
+    preload() {}
 
     create() {
+        // Initialize config --------------------------------------------------
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas
-        // bg
-        this.anims.create({
-            key: 'bd_anim_game',
-            frames: this.anims.generateFrameNumbers('bg_game', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        const sprite = this.add.sprite(400, 300, 'bg_game');
-        sprite.play('bd_anim_game');
-        // panels / figures
+        console.log(this.number_rounds)
+
+        // Background --------------------------------------------------
+        this.add.sprite(400, 300, 'BgForest');
+        
+        // Panels / Figures -------------------------------------------------------
         // yes circle
         this.circle_yes = this.add.graphics();
         this.circle_yes.fillStyle(0x006400, 0.5);
@@ -130,7 +96,7 @@ export default class DominoGame extends Phaser.Scene {
         this.text_no.setDepth(2)
         this.text_no.setInteractive();
         // ----------------------------------------------------------------------------------------------------------
-        // other texts
+        // Titles ---------------------------------------------------------------------------------------------------
         this.text_numberrondas = this.add
             .text(340, 560, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'Atarian', fill: '#ffffff' })
             .setFontSize(30);
@@ -140,30 +106,31 @@ export default class DominoGame extends Phaser.Scene {
         this.texto_numbererros = this.add
             .text(660, 560, 'Errores: ' + this.errores, { fontFamily: 'Atarian', fill: '#ffffff' })
             .setFontSize(30);
-        // ----------------------------------------------------------------------------------------------------------
-        // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
 
-        // listeners
+        // ----------------------------------------------------------------------------------------------------------
+        // FullScreen button ----------------------------------------------------------------------------------------
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+
+        // Listeners ------------------------------------------------------------------------------------------------
         this.text_yes.on('pointerover', () => {
-            this.sound.play('hover')
+            this.sound.play('HoverSound')
             this.tweens.add({
                 targets: this.circle_yes,
                 x: this.circle_yes.x +5,
-                duration: 200, // Duración de la animación en milisegundos
-                yoyo: true, // Hace que la animación se reproduzca hacia atrás una vez que termine
-                repeat: -1 // Repite la animación indefinidamente
+                duration: 200, 
+                yoyo: true, 
+                repeat: -1 
             });
         });
 
         this.text_no.on('pointerover', () => {
-            this.sound.play('hover')
+            this.sound.play('HoverSound')
             this.tweens.add({
                 targets: this.circle_no,
                 x: this.circle_no.x + 5,
-                duration: 200, // Duración de la animación en milisegundos
-                yoyo: true, // Hace que la animación se reproduzca hacia atrás una vez que termine
-                repeat: -1 // Repite la animación indefinidamente
+                duration: 200,
+                yoyo: true, 
+                repeat: -1
             });
         });
 
@@ -197,10 +164,10 @@ export default class DominoGame extends Phaser.Scene {
             this.circle_no.x = 0;
         });
 
-        // execute game
+        // Execute Game ---------------------------------------------------------------------------------------------
         this.create_rounds();
-        // ----------------------------------------------------------------------------------------------------------
-        // time
+
+        // Timer ----------------------------------------------------------------------------------------------------
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
     }
 

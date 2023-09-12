@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // material-ui
 // import Button from '@mui/material/Button';
 // import Modal from '@mui/material/Modal';
-import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea, Dialog, DialogContent, DialogTitle, DialogActions, Button, IconButton} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -11,6 +11,10 @@ import 'react-multi-carousel/lib/styles.css';
 // project import
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
+import ViewGameForm from './ViewGameForm';
+
+// icons 
+import { EditOutlined } from '@ant-design/icons';
 
 // hooks
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
@@ -39,10 +43,44 @@ const responsive = {
 
 const CardComponent = ({ card }) => {
     const navigate = useNavigate();
+    // ----------------------------|| MODAL - DIALOG FORM ||---------------------------- //
+    const [open, setOpen] = useState(false); 
 
+    const handleOpenDialog = () => {
+        setOpen(true); 
+    }; 
+
+    const handleCloseDialog = () => {   
+        setOpen(false); 
+    }; 
+
+    const handleFormSubmit = (config) => {
+        const settings = {}
+        // general rounds 
+        settings['rondas'] = config.rondas; 
+        
+        // only levels games: 
+        if (card.title === 'Recuerda y Encuentra') {
+            settings['niveles'] = config.niveles; 
+        } 
+
+        // only categories games: 
+        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra') {
+            settings['categorias'] = config.categorias;
+        }
+
+        console.log('Se envia las siguientes settings: ', settings)
+        navigate(`/run-game?game=${card.title}&description=${card.description}`, {
+            state: settings
+        }); 
+        setOpen(false); 
+    }; 
+
+    // ------------------------------------------------------------------------------------
     return (
+        <>
         <Card sx={{ maxWidth: 230 }}>
-            <CardActionArea onClick={() => navigate(`/run-game?game=${card.title}&description=${card.description}`)}>
+            <CardActionArea onClick={handleOpenDialog}>
                 <CardMedia component="img" height="150" image={card.image} alt={card.title} />
                 <CardContent>
                     <Typography variant="h5">{card.title}</Typography>
@@ -50,6 +88,27 @@ const CardComponent = ({ card }) => {
                 </CardContent>
             </CardActionArea>
         </Card>
+        <Dialog open={open} onClose={handleCloseDialog}>
+            <DialogTitle sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <Typography fontWeight="bold" variant="1.25rem">
+                    Configuracion - {card.title}
+                </Typography>       
+                <IconButton edge='end' color='inherit'>
+                    <EditOutlined />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent>
+                <ViewGameForm card = {card} handleCloseDialog = {handleCloseDialog} handleFormSubmit = {handleFormSubmit}/>   
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                    Cerrar
+                </Button>
+            </DialogActions>
+
+        </Dialog>
+        </>
+        
     );
 };
 

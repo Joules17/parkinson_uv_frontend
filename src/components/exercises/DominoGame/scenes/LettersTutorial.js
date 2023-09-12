@@ -1,10 +1,13 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+
+// styles
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported:
 import Level from 'components/exercises/DominoGame/sprites/levelObj'
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
+
 // assets imports
 import bg_tuto from 'components/exercises/DominoGame/assets/images/bg_tuto.png'; 
 import fullscreen from '../assets/images/fullscreen.png';
@@ -14,9 +17,9 @@ import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
 import correct from 'components/exercises/DominoGame/assets/music/correct.wav'
 import bad from 'components/exercises/DominoGame/assets/music/bad.wav';
 
-export default class DominoTutorial extends Phaser.Scene {
+export default class LettersTutorial extends Phaser.Scene {
     constructor() {
-        super({key: 'DominoTutorial', backgroundColor: '#3f1651'});
+        super({key: 'LettersTutorial', backgroundColor: '#3f1651'});
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;

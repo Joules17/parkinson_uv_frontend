@@ -2,17 +2,18 @@ import { Component } from 'react';
 import Phaser from 'phaser';
 
 // scenes
-import DominoInit from 'components/exercises/DominoGame/scenes/DominoInit';
-import DominoMenu from 'components/exercises/DominoGame/scenes/DominoMenu';
-import DominoGame from 'components/exercises/DominoGame/scenes/DominoGame';
-import DominoTutorial from 'components/exercises/DominoGame/scenes/DominoTutorial';
+import LettersInit from 'components/exercises/DominoGame/scenes/LettersInit';
+import LettersMenu from 'components/exercises/DominoGame/scenes/LettersMenu';
+import LettersGame from 'components/exercises/DominoGame/scenes/LettersGame';
+import LettersTutorial from 'components/exercises/DominoGame/scenes/LettersTutorial';
 import DominoEndGame from 'components/exercises/DominoGame/scenes/DominoEndGame';
 
 // css
-import 'components/exercises/DominoGame/styles.css'
+import 'components/exercises/general_assets/styles.css'
 
 class Domino extends Component {
     componentDidMount() {
+        /* eslint-disable */
         const { setting } = this.props;
         const config = {
             type: Phaser.AUTO,
@@ -29,7 +30,7 @@ class Domino extends Component {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [DominoInit, DominoMenu, DominoTutorial, DominoGame, DominoEndGame]
+            scene: [LettersInit, LettersMenu, LettersTutorial, LettersGame, DominoEndGame]
         };
 
         this.game = new Phaser.Game(config);

@@ -123,8 +123,10 @@ export default class RememberLoby extends Phaser.Scene {
         this.move_upside(this.bushes_sprite2, -60, 2000, this, true);
         // events ------------------------------------------------------------------------------------------------------------
         this.go_button.on('pointerdown', () => {
+            const settings = this.sys.settings.data.settings;
+            console.log('ALO? ', settings)
             this.sound.play('CorrectSound');
-            this.scene.start('RememberRondas');
+            this.scene.start('RememberRondas', { settings });
         });
 
         this.go_button.on('pointerover', () => {
@@ -148,6 +150,7 @@ export default class RememberLoby extends Phaser.Scene {
             });
         });
     }
+
     update() {
         if (this.flag) {
             if (!(this.tablero_actual === undefined)) {

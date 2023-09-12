@@ -14,7 +14,7 @@ import 'components/exercises/general_assets/styles.css'
 class GameRememberAndFind extends Component {
   componentDidMount() {
     /* eslint-disable */
-    const { settings } = this.props;
+    const { setting } = this.props;
     const config = {
       type: Phaser.AUTO,
       parent: 'phaser-game-container',
@@ -34,7 +34,7 @@ class GameRememberAndFind extends Component {
     }
 
     this.game = new Phaser.Game(config);
-    this.game.scene.start('FrutasticInit', {settings});
+    this.game.scene.start('RememberInit', {setting});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

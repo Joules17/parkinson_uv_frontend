@@ -60,6 +60,8 @@ export default class RememberInit extends Phaser.Scene {
     } 
 
     pass () {
-        this.scene.start('RememberMenu')
+        const settings = this.sys.settings.data.setting;
+        console.log('ALO??? ', settings)
+        this.scene.start('RememberMenu', {settings})
     }
 }

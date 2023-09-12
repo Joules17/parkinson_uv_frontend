@@ -95,7 +95,7 @@ let object_list =
             "imagen": lavadora
             }
     }, 
-    animals : {
+    animales : {
         "bear" : {
             "key": "bear",
             "color": "cafe",

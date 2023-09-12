@@ -52,7 +52,7 @@ export default class RememberRondas extends Phaser.Scene {
                     spriteWidth: 5,
                     spriteHeight: 5,
                     sprite_scale: 0.17,
-                    category: ['frutas', 'casa', 'comida', 'animals'],
+                    category: ['frutas', 'casa', 'comida', 'animales'],
                     actual: false,
                     color_wished: undefined
                 }
@@ -66,6 +66,13 @@ export default class RememberRondas extends Phaser.Scene {
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor(0x4e9de0);
         this.bg = this.add.sprite(400, 300, 'BgSkye')
+
+        // Number_Rounds - settings ------------------------------------------------------------------------------------------------------------
+        const settings = this.sys.settings.data.settings; 
+        this.number_rounds = []
+        for (let i = 0; i < settings.niveles; i++) {
+            this.number_rounds.push(settings.rondas);
+        }
 
         // Figures -----------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 620, 'FirstBush').setScale(0.12);
@@ -120,14 +127,16 @@ export default class RememberRondas extends Phaser.Scene {
         // Board ---------------------------------------------------------------------------------------------------------------------------------------------------------------
         this.lista_tablero = [];
         let board;
-        for (let i = 0; i < this.tableros_config.length;  i++) {
+
+        for (let i = 0; i < settings.niveles;  i++) {
+            this.tableros_config[i]['number_objects'] = settings.rondas;
+            this.tableros_config[i]['category'] = settings.categorias;
             board = new Board(this.tableros_config[i])
             if (i !== 0) {
                 this.lista_tablero.push('cambio'); 
             }
             this.lista_tablero.push(...board.get_matrices());
         }
-        console.log(this.lista_tablero)
 
         // FullScreenButton ---------------------------------------------------------------------------------------------------
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');

@@ -18,15 +18,15 @@ import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 
 const RunGame = () => {
     const location = useLocation();
+    
     const queryParams = new URLSearchParams(location.search);
     const game = queryParams.get('game');
     const description = queryParams.get('description'); 
     const gameListState = useSelector((state) => state.gamesList);
     const [startGame, setStartGame] = useState({})
 
-    const setting = {
-        rondas: 2 
-    }
+    const setting = location.state
+    // console.log(setting)
 
     const renderGame = () => {
         switch (game) {

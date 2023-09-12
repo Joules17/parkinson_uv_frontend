@@ -72,7 +72,9 @@ export default class ObjectRondas extends Phaser.Scene {
     create() {
         const settings = this.sys.settings.data.settings;
         console.log(this.sys.settings.data)
+
         this.numberFases = settings.rondas
+        this.tablero_config['category'] = settings.categorias; 
         this.limite = settings.rondas
         this.cameras.main.setBackgroundColor(0xffffff);
         // this.initializer();
