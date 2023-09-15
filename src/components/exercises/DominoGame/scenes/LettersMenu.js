@@ -140,7 +140,6 @@ export default class LettersMenu extends Phaser.Scene {
     update () {
         if(this.game_flag) {
             const settings = this.sys.settings.data.settings;  
-            console.log(settings, 'alo?')
             this.scene.start('LettersGame', {settings})
             this.game_flag = false; 
         }

@@ -8,27 +8,12 @@ import 'components/exercises/general_assets/styles.css'
 import Level from 'components/exercises/DominoGame/sprites/levelObj'
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
 
-// assets imports
-import bg_tuto from 'components/exercises/DominoGame/assets/images/bg_tuto.png'; 
-import fullscreen from '../assets/images/fullscreen.png';
-
-// audio
-import hover from 'components/exercises/DominoGame/assets/music/hover.mp3'
-import correct from 'components/exercises/DominoGame/assets/music/correct.wav'
-import bad from 'components/exercises/DominoGame/assets/music/bad.wav';
-
 export default class LettersTutorial extends Phaser.Scene {
     constructor() {
         super({key: 'LettersTutorial', backgroundColor: '#3f1651'});
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
-
-        // panel title
-        this.panel_title = undefined;
-        this.panel_explanation = undefined;
-        this.title = undefined;
-        this.explanation = undefined;
 
         // vars
         this.tableros = [];
@@ -100,42 +85,25 @@ export default class LettersTutorial extends Phaser.Scene {
         }
     }
 
-    preload() {
-        //images
-        this.load.spritesheet('bg_tuto', bg_tuto, { frameWidth: 800, frameHeight: 600 }); 
-        this.load.image('fullscreenImg', fullscreen);
-        // audio
-        this.load.audio('bad', bad); 
-        this.load.audio('hover', hover);
-        this.load.audio('correct', correct);
-    }
+    preload() {}
 
     create () {
-        this.anims.create({
-            key: 'bd_anim_tuto',
-            frames: this.anims.generateFrameNumbers('bg_tuto', { start: 0, end: 9 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        const sprite = this.add.sprite(400, 300, 'bg_tuto');
-        sprite.play('bd_anim_tuto');
+        this.add.sprite(400, 300, 'BgForest');
         
         // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         
         // panel
         this.panel_title = this.add.graphics();
-        this.panel_title.fillStyle(0x032670, 1);
-        this.panel_title.lineStyle(2, 0xffffff);
-        this.panel_title.fillRoundedRect(10, 10, 200, 50, 5); // Crea el rectángulo con bordes curvos
-        this.panel_title.strokeRoundedRect(10, 10, 200, 50, 5); // Dibuja los bordes negros
+        this.panel_title.fillStyle(0x000000, 1);
+        this.panel_title.fillRect(10, 10, 200, 50);
 
         // text
         this.title = this.add.text(50, 15, 'TUTORIAL', {
-            fontFamily: 'Atarian',
-            fill: '#ffffff',
-        }).setFontSize(40);
+            fontFamily: 'TROUBLE',
+            fill: '#eb3724',
+        }).setFontSize(50);
         
         // panel explanation 
         this.panel_explanation = this.add.graphics(); 
@@ -144,7 +112,7 @@ export default class LettersTutorial extends Phaser.Scene {
         this.panel_explanation.fillRoundedRect(60, 530, 700, 60, 5); 
         this.panel_explanation.strokeRoundedRect(60, 530, 700, 60, 5); 
         this.text_explanation = this.add.text(80, 540, 'Bienvenido al tutorial', {
-            fontFamily: 'Atarian', 
+            fontFamily: 'TROUBLE', 
             fill: '#ffffff',
         }).setFontSize(40); 
 
@@ -157,7 +125,7 @@ export default class LettersTutorial extends Phaser.Scene {
         this.circle_yes.strokeCircle(480, 475, 50);
         this.circle_yes.setDepth(1)
 
-        this.text_yes = this.add.text(480, 475, 'SI', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_yes = this.add.text(480, 475, 'SI', {fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(60);
         this.text_yes.setOrigin(0.5);
         this.text_yes.setDepth(2)
         this.text_yes.setInteractive();
@@ -173,7 +141,7 @@ export default class LettersTutorial extends Phaser.Scene {
         this.circle_no.strokeCircle(320, 475, 50);
         this.circle_no.setDepth(1)
 
-        this.text_no = this.add.text(325, 475, 'NO', {fontFamily: 'Atarian', fill: '#ffffff'}).setFontSize(60);
+        this.text_no = this.add.text(325, 475, 'NO', {fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(60);
         this.text_no.setOrigin(0.5);
         this.text_no.setDepth(2)
         this.text_no.setInteractive();
@@ -183,7 +151,7 @@ export default class LettersTutorial extends Phaser.Scene {
 
         // button play 
         this.play_button = this.add.text(650, 540, "JUGAR", {
-            fontFamily: 'Atarian',
+            fontFamily: 'TROUBLE',
             fill: '#ffffff'
         }).setFontSize(40)  
 
@@ -192,11 +160,11 @@ export default class LettersTutorial extends Phaser.Scene {
 
         // listeners
         this.text_yes.on('pointerover', () => {
-            this.sound.play('hover')
+            this.sound.play('HoverSound')
         });
 
         this.text_no.on('pointerover', () => {
-            this.sound.play('hover')
+            this.sound.play('HoverSound')
         });
 
         this.text_yes.on('pointerout', () => {
@@ -238,7 +206,7 @@ export default class LettersTutorial extends Phaser.Scene {
         }); 
       
         this.play_button.on('pointerover', () => {
-            this.sound.play('hover')
+            this.sound.play('HoverSound')
             this.tweens.add({
               targets: this.play_button,
               scaleX: 1.1,
@@ -308,11 +276,11 @@ export default class LettersTutorial extends Phaser.Scene {
     }
 
     incorrect_answer () {
-        this.sound.play('bad')
+        this.sound.play('BadSound')
     }
 
     correct_answer() {
-        this.sound.play('correct')
+        this.sound.play('CorrectSound')
         this.flag = true; 
     }
 

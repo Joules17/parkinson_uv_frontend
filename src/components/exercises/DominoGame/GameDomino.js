@@ -6,7 +6,7 @@ import LettersInit from 'components/exercises/DominoGame/scenes/LettersInit';
 import LettersMenu from 'components/exercises/DominoGame/scenes/LettersMenu';
 import LettersGame from 'components/exercises/DominoGame/scenes/LettersGame';
 import LettersTutorial from 'components/exercises/DominoGame/scenes/LettersTutorial';
-import DominoEndGame from 'components/exercises/DominoGame/scenes/DominoEndGame';
+import LettersEndGame from 'components/exercises/DominoGame/scenes/LettersEndGame';
 
 // css
 import 'components/exercises/general_assets/styles.css'
@@ -30,11 +30,11 @@ class Domino extends Component {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [LettersInit, LettersMenu, LettersTutorial, LettersGame, DominoEndGame]
+            scene: [LettersInit, LettersMenu, LettersTutorial, LettersGame, LettersEndGame]
         };
 
         this.game = new Phaser.Game(config);
-        this.game.scene.start('DominoInit', {setting});
+        this.game.scene.start('LettersInit', {setting});
         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

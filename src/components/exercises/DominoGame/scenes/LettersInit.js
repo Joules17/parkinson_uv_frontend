@@ -6,6 +6,9 @@ import BgForest from 'components/exercises/general_assets/images/textures/green_
 import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png'
 import TreeImg from 'components/exercises/general_assets/images/objects/others/TreeImg.png'
 
+import NeutralArrowLeft from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_arrow_left.png'
+import NeutralArrowRight from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_arrow_right.png'
+
 // sounds
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
@@ -26,6 +29,10 @@ export default class LettersInit extends Phaser.Scene {
         this.load.image('FullscreenImg', FullscreenImg);
         this.load.image('TreeImg', TreeImg);
 
+        // arrows
+        this.load.image('NeutralArrowRight', NeutralArrowRight); 
+        this.load.image('NeutralArrowLeft', NeutralArrowLeft);
+
         // sounds 
         this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound);
@@ -40,7 +47,7 @@ export default class LettersInit extends Phaser.Scene {
 
     pass () {
         const settings = this.sys.settings.data.setting;
-        console.log('AQUI LLEGO BIEN?', settings)
+        // console.log('Llego bien?', settings)
         this.scene.start('LettersMenu', {settings})
     }
 }
