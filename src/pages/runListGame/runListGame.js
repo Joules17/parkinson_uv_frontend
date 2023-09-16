@@ -11,7 +11,7 @@ import ObjectIntruder from 'components/exercises/ObjectIntruder/GameObjectIntrud
 import GameNumbers from 'components/exercises/Numbers/GameNumbers';
 import GameArtic from 'components/exercises/ArticRows/GameArtic';
 import GameRememberAndFind from 'components/exercises/RememberAndFind/GameRemember';
-import GameDomino from 'components/exercises/DominoGame/GameDomino'
+import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumbers'
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 
 // ==============================|| GAMES PAGE ||============================== //
@@ -73,7 +73,7 @@ const RunListGames = () => {
             case "Recuerda y Encuentra":
                 return <GameRememberAndFind setting={startGame.setting}/>;
             case "Letras VS Numeros":
-                return <GameDomino setting={startGame.setting}/>;
+                return <LettersVsNumbers setting={startGame.setting}/>;
             case "Letra Aventura":
                 return <GameLetras setting={startGame.setting}/>;
             default:

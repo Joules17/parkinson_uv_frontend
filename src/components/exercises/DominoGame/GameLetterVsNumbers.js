@@ -1,4 +1,5 @@
 import { Component } from 'react';
+// phaser
 import Phaser from 'phaser';
 
 // scenes
@@ -11,7 +12,7 @@ import LettersEndGame from 'components/exercises/DominoGame/scenes/LettersEndGam
 // css
 import 'components/exercises/general_assets/styles.css'
 
-class Domino extends Component {
+class LettersVsNumbers extends Component {
     componentDidMount() {
         /* eslint-disable */
         const { setting } = this.props;
@@ -69,4 +70,4 @@ class Domino extends Component {
     }
 }
 
-export default Domino;
+export default LettersVsNumbers;

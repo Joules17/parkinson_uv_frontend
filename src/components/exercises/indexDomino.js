@@ -6,7 +6,7 @@ import { Typography, Box } from "@mui/material";
 // project import
 import MainCard from "components/MainCard";
 
-import GameDomino from 'components/exercises/DominoGame/GameDomino'
+import GameDomino from 'components/exercises/DominoGame/GameLetterVsNumbers'
 
 // ==============================|| SAMPLE PAGE ||============================== //
 const IndexDomino = () => {
