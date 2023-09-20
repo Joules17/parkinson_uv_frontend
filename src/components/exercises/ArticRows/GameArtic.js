@@ -8,10 +8,11 @@ import ArticTuto from 'components/exercises/ArticRows/scenes/ArticTuto'
 import ArticGame from 'components/exercises/ArticRows/scenes/ArticGame'
 import ArticOver from 'components/exercises/ArticRows/scenes/ArticOver'
 //css
-import 'components/exercises/ArticRows/styles.css'
+import 'components/exercises/general_assets/styles.css'
 
 class GameArtic extends Component {
   componentDidMount() {
+    /* eslint-disable */
     const { setting } = this.props;
     const config = {
       type: Phaser.AUTO,

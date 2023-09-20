@@ -50,7 +50,7 @@ export const lista_juegos = [
             },
             {
                 id_game: "05",
-                name: "Letra Aventura",
+                name: "Palabras Ocultas",
                 nivel: 4,
                 dominio: "Atención",
                 settings: {
@@ -138,7 +138,7 @@ export const juegos = [
     },
     {
         id_game: "05",
-        name: "Letra Aventura",
+        name: "Palabras Ocultas",
         nivel: 4,
         dominio: "Atención",
         settings: {

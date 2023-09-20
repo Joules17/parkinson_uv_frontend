@@ -1,6 +1,8 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+
+// styles
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported: 
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';

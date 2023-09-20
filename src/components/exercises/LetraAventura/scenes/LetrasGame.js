@@ -1,26 +1,14 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css';
+
+// styles
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported:
 import Level from 'components/exercises/LetraAventura/sprites/levelObj.js';
 import keyboard from 'components/exercises/LetraAventura/sprites/keyboard';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-// assets imports
-import bg from 'components/exercises/LetraAventura/assets/images/bg_game.png';
-import piece from 'components/exercises/LetraAventura/assets/images/piece_paper_2.png';
-import fullscreen from '../assets/images/fullscreen.png';
-// music
-import typing from 'components/exercises/LetraAventura/assets/music/type.mp3';
-import fail from 'components/exercises/LetraAventura/assets/music/fail.mp3';
-import flip_round from 'components/exercises/LetraAventura/assets/music/flip_round.mp3';
-import good from 'components/exercises/LetraAventura/assets/music/good.mp3'
 
-// alphabet images
-import letter_list from '../sprites/letter_list';
-
-// sounds
-// import sounds here
 const log = {
     info: {
         tiempo_total: undefined,
@@ -38,14 +26,8 @@ export default class LetrasGame extends Phaser.Scene {
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
-        // decoration (assets...)
-
-        // text
-        this.text_numberrondas = undefined;
-        this.texto_tiempototal = undefined;
-        this.current_number = 1;
-
         // timers
+        this.current_number = 1;
         this.gameTimeSec = 0;
         this.gameTimeMin = 0;
         this.tiempo_rondas = [];
@@ -103,48 +85,51 @@ export default class LetrasGame extends Phaser.Scene {
         };
     }
 
-    preload() {
-        this.load.image('bg', bg);
-        this.load.image('piece', piece);
-        this.load.image('fullscreenImg', fullscreen);
-        // sprites
-        for (let tipo in letter_list) {
-            for (let dir in letter_list[tipo]) {
-                this.load.image(letter_list[tipo][dir]['key'], letter_list[tipo][dir]['imagen']);
-            }
-        }
-
-        // audio
-        this.load.audio('typing', typing);
-        this.load.audio('fail', fail);
-        this.load.audio('flip_round', flip_round);
-        this.load.audio('good', good);
-    }
+    preload() {}
 
     create() {
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas
         // bg image
-        this.bg = this.add.image(400, 300, 'bg');
+        this.bg = this.add.image(400, 300, 'BgMint');
 
-        // panel
-        this.panel = this.add.image(400, 300, 'piece').setScale(0.255);
+        // main_panel
+        this.main_bottom_panel = this.add.graphics(); 
+        this.main_bottom_panel.fillStyle(0x3F3464, 1);
+        this.main_bottom_panel.fillRect(0, 190, 800, 220);
+
+        this.main_panel = this.add.graphics(); 
+        this.main_panel.fillStyle(0xffffff, 1);
+        this.main_panel.fillRect(0, 200, 800, 200);
+
         // text
+        this.top_panel = this.add.graphics(); 
+        this.top_panel.fillStyle(0x3F3464, 0.3);
+        this.top_panel.fillRect(5, 0, 200, 60);
+
         this.text_numberrondas = this.add
-            .text(25, 25, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'ComicSans', fill: '#000000' })
-            .setFontSize(20);
-        this.texto_tiempototal = this.add
-            .text(720, 555, this.gameTimeMin + ':' + this.gameTimeSec, { fontFamily: 'ComicSans', fill: '#000000' })
-            .setFontSize(35);
+            .text(25, 25, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#FFFFFF' })
+            .setFontSize(40);
+        
+        this.time_panel = this.add.graphics(); 
+        this.time_panel.fillStyle(0x3F3464, 0.3);
+        this.time_panel.fillRect(700, 550, 90, 60); 
+            this.texto_tiempototal = this.add
+            .text(720, 555, this.gameTimeMin + ':' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
 
         // execution
         this.create_rounds();
 
-        this.keyboard = new keyboard(this, 800, 30, 460, 35, this.alphabet, { fontFamily: 'ComicSans', fill: '#000000' }, (key) => {
+        this.keyboard = new keyboard(this, 800, 30, 460, 35, this.alphabet, { fontFamily: 'TROUBLE', fill: '#000000' }, (key) => {
             this.comprobar(key);
         });
-        // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+
+        //  Listeners del teclado ---------------------------------------------
+        this.input.keyboard.on('keydown', this.handle_keydown, this);
+
+        // Fullscreen Bttn ----------------------------------------------------
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
         // time
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
     }
@@ -177,7 +162,7 @@ export default class LetrasGame extends Phaser.Scene {
 
     // pon_tablero
     pon_tablero() {
-        this.sound.play('flip_round');
+        this.sound.play('FlipSound');
         this.write_flag = true; 
         if (this.tableros.length != 0) {
             this.tablero_actual = this.tableros.shift();
@@ -195,6 +180,16 @@ export default class LetrasGame extends Phaser.Scene {
             this.pon_letra(key);
         } else {
             this.incorrect_answer();
+        }
+    }
+
+    // handle_keydown
+    handle_keydown(event) {
+        const char = event.key.toUpperCase();
+        if (/^[A-Z]$/.test(char)) {
+            if (this.write_flag) {
+                this.comprobar(char)
+            }
         }
     }
     // inspect
@@ -215,7 +210,7 @@ export default class LetrasGame extends Phaser.Scene {
         this.tablero_actual.letter_space.forEach((element) => {
             // key coincide y que ya no se halla mostrado antes
             if (element.letter === key && !element.covered) {
-                this.sound.play('typing');
+                this.sound.play('TypingSound');
                 element.set_covered(true);
             }
         });
@@ -229,7 +224,7 @@ export default class LetrasGame extends Phaser.Scene {
             })
             this.time_flag = false;
             var scene = this
-            this.sound.play('good')
+            this.sound.play('GoodSound')
             console.log(aux)
             this.tweens.add({
                 targets: aux,
@@ -250,7 +245,7 @@ export default class LetrasGame extends Phaser.Scene {
 
     // incorrect
     incorrect_answer() {
-        this.sound.play('fail');
+        this.sound.play('FailSound');
         this.errores += 1;
     }
 

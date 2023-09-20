@@ -1,56 +1,72 @@
 import Phaser from 'phaser';
-import '../styles.css';
+
+// styles
+import 'components/exercises/general_assets/styles.css';
 
 // custom classes imported:
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+import SteroidObject from 'components/Factory/SteroidObject';
 
-// assets
-import bd_spritesheet from 'components/exercises/LetraAventura/assets/images/sprite_sheet_small.png';
-import paper from 'components/exercises/LetraAventura/assets/images/paper.png';
-import flip_round from 'components/exercises/LetraAventura/assets/music/flip_round.mp3'
-import fullscreen from '../assets/images/fullscreen.png';
 export default class LetrasMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'LetrasMenu', backgroundColor: '#3f1651' });
         // dimensions
         this.world_size_width = 800;
         this.world_size_height = 600;
-
-        // figures
-        this.title_image = undefined;
-        this.tuto_image = undefined;
-        // text
-        this.title = undefined;
-        this.tutorial = undefined;
     }
 
     preload() {
-        this.load.spritesheet('bd_spritesheet', bd_spritesheet, { frameWidth: 800, frameHeight: 600 });
-        this.load.image('paper', paper);
-        this.load.image('fullscreenImg', fullscreen);
-        // audio 
-        this.load.audio('flip_round', flip_round); 
+        this.waveOffset = 0;
     }
 
     create() {
+        // Initialize -----------------------------------------------------------------------------------------
         const settings = this.sys.settings.data.setting;
-        this.anims.create({
-            key: 'bd_anim',
-            frames: this.anims.generateFrameNumbers('bd_spritesheet', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
+        
+        //Background ------------------------------------------------------------------------------------------
+        this.background = this.add.sprite(400, 300, 'BgMint')
+
+
+        // Start_panels ---------------------------------------------------------------------------------------
+        this.start_panel = this.add.graphics();
+        this.start_panel.fillStyle(0xffffff, 1);
+        this.start_panel.fillRect(185, 445, 150, 60); 
+        this.title = this.add.text(200, 450, 'Jugar', { fontFamily: 'TROUBLE', fontSize: 60, color: '#000000' });
+
+        // Tutorial_panels ------------------------------------------------------------------------------------
+        this.tutorial_panel = this.add.graphics();
+        this.tutorial_panel.fillStyle(0xffffff, 1);
+        this.tutorial_panel.fillRect(435, 445, 200, 60);
+
+        this.tutorial = this.add.text(450, 450, 'Tutorial', { fontFamily: 'TROUBLE', fontSize: 60, color: '#000000' });
+        
+        // Panel TitleGame -------------------------------------------------------------------------------------
+        // title_panel
+        this.title_panel = this.add.graphics();
+        this.title_panel.fillStyle(0xffffff, 1);
+        this.title_panel.fillRect(100, 230, 620, 120);
+
+        this.lupa = new SteroidObject({scene: this, posx: 715, posy: 220, key: 'LupaImg'})
+        this.lupa.setScale(0.15); 
+        this.lupa.dance_function(15, 1000);
+
+        this.detective = new SteroidObject({scene: this, posx: 80, posy: 360, key: 'DetectiveImg'})
+        this.detective.setScale(0.2);
+        this.detective.dance_function(-15, 1000);
+
+        this.title_game = this.add.text(115, 250, 'PALABRAS OCULTAS', { fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(105); 
+        
+        // Clouds ------------------------------------------------------------------------------------------------
+        this.clouds = this.physics.add.group(); 
+        for (let i = 0; i < 10; i++) {
+            this.clouds.add(this.add.circle(50 + i * 90, 0, 70,0xfff7768ad, 0));
+        }
+
+        this.clouds.children.iterate((ball) => {
+            ball.originalY = ball.y;
         });
-
-        const sprite = this.add.sprite(400, 300, 'bd_spritesheet');
-        sprite.play('bd_anim');
-
-        this.title_image = this.add.image(250, 530, 'paper').setScale(0.1);
-        this.title = this.add.text(200, 505, 'Jugar', { fontFamily: 'ComicSans', fontSize: 40, color: '#000000' });
-        this.tuto_image = this.add.image(520, 530, 'paper').setScale(0.1);
-        this.tutorial = this.add.text(450, 505, 'Tutorial', { fontFamily: 'ComicSans', fontSize: 40, color: '#000000' });
-
-        // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        // Fullscreen button ----------------------------------------------------------------------------------
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
         
         // interactive
         this.title.setInteractive();
@@ -58,7 +74,7 @@ export default class LetrasMenu extends Phaser.Scene {
 
         // title listeners
         this.title.on('pointerdown', () => {
-            this.sound.play('flip_round')
+            this.sound.play('FlipSound')
             this.scene.start('LetrasGame', {settings});
         });
         this.title.on('pointerover', () => {
@@ -72,7 +88,7 @@ export default class LetrasMenu extends Phaser.Scene {
 
         // tutorial listeners
         this.tutorial.on('pointerdown', () => {
-            this.sound.play('flip_round')
+            this.sound.play('FlipSound')
             this.scene.start('LetrasTutorial', {settings})
         }); 
         this.tutorial.on('pointerover', () => {
@@ -84,7 +100,17 @@ export default class LetrasMenu extends Phaser.Scene {
             this.achicar(this.tutorial)
         });
 
-        this.dance_papers();
+        // this.dance_papers();
+    }
+
+    update () {
+        this.waveOffset += 0.01;
+        // wave movement 
+        
+        this.clouds.children.each((child) => {
+            child.y = child.originalY + Math.sin(child.x / 40 + this.waveOffset) * 20;
+        });
+        
     }
 
     dance_papers() {

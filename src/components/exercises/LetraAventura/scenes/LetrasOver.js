@@ -1,16 +1,11 @@
 // phaser library 
 import Phaser from 'phaser'; 
-import '../styles.css'; 
+
+// styles
+import 'components/exercises/general_assets/styles.css'; 
 
 // custom classes imported:
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-
-// assets imports 
-import bg from 'components/exercises/LetraAventura/assets/images/bg_game.png';
-import fullscreen from '../assets/images/fullscreen.png';
-
-// audio 
-import win from 'components/exercises/LetraAventura/assets/music/win.mp3'; 
 
 export default class LetrasOver extends Phaser.Scene {
     constructor() {
@@ -19,14 +14,8 @@ export default class LetrasOver extends Phaser.Scene {
         // dimensions 
         this.world_size_width = 800;
         this.world_size_height = 600;
-
         // var
         this.flag = false; 
-        // panels 
-        this.panel_results = undefined; 
-
-        // text 
-        this.title = undefined; 
         // log
         this.tiempo_total = undefined;
         this.tiempo_rondas = undefined;
@@ -47,40 +36,53 @@ export default class LetrasOver extends Phaser.Scene {
     }
 
     preload () {
-        // images
-        this.load.image('bg', bg); 
-        this.load.image('fullscreenImg', fullscreen);
-
-        // audio 
-        this.load.audio('win', win)
+        this.waveOffset = 0;
     }
 
     create () {
         // bg 
-        this.bg = this.add.image(400, 300, 'bg')
+        this.bg = this.add.image(400, 300, 'BgMint')
 
-        // figures
+        this.title = this.add.text(200,100, "fin del juego", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(100)
+
+        // Figures ------------------------------------------------------------------------------------------
         this.panel_results = this.add.graphics(); 
         this.panel_results.fillStyle(0xffffff, 1); 
-        this.panel_results.fillRoundedRect(100, 100, 600, 400, 10)
+        this.panel_results.fillRoundedRect(100, 200, 600, 300, 20)
         this.panel_results.setAlpha(0); 
 
-        // msg
-        this.tiempo_total_msg = this.add.text(150, 200, 'tiempo total:', { fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
-        this.tiempo_total_log = this.add.text(500, 200, this.tiempo_total, { fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
-        this.tiempo_promedio_msg = this.add.text(150, 300, 'tiempo promedio:',{ fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
-        this.tiempo_promedio_log = this.add.text(500, 300, this.tiempo_rondas,{ fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
-        this.number_errores_msg = this.add.text(150, 400, 'Numero de errores: ', { fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
-        this.number_errores_log = this.add.text(500, 400, this.number_errores, { fontFamily: 'ComicSans', fill: '#000000' }).setFontSize(35);
+        // Messages -----------------------------------------------------------------------------------------
+        this.tiempo_total_msg = this.add.text(150, 250, 'tiempo total:', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.tiempo_total_log = this.add.text(500, 250, this.tiempo_total, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.tiempo_promedio_msg = this.add.text(150, 310, 'tiempo promedio:',{ fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas,{ fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.number_errores_msg = this.add.text(150, 370, 'Numero de errores: ', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.number_errores_log = this.add.text(500, 370, this.number_errores, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
         this.statsShow(this, false);
         // -----------------------------------------------------
         this.aparecer(this.panel_results, this)
         
+        // Clouds ------------------------------------------------------------------------------------------------
+        this.clouds = this.physics.add.group(); 
+        for (let i = 0; i < 10; i++) {
+            this.clouds.add(this.add.circle(50 + i * 90, 0, 70,0xfff7768ad, 0));
+            this.clouds.add(this.add.circle(50 + i * 90, 600, 70,0xfff7768ad, 0));
+        }
+
+        this.clouds.children.iterate((ball) => {
+            ball.originalY = ball.y;
+        });
+
         // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
     }
 
     update () {
+        this.waveOffset += 0.01;
+        // wave movement 
+        this.clouds.children.each((child) => {
+            child.y = child.originalY + Math.sin(child.x / 40 + this.waveOffset) * 20;
+        });
         if (this.flag) {
             this.statsShow(this, true)
             this.flag = false; 

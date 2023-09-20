@@ -1,4 +1,6 @@
 import { Component } from "react";
+
+// phaser 
 import Phaser from "phaser";
 
 // Escenas
@@ -7,11 +9,13 @@ import LetrasMenu from 'components/exercises/LetraAventura/scenes/LetrasMenu';
 import LetrasTuto from 'components/exercises/LetraAventura/scenes/LetrasTuto';
 import LetrasGame from 'components/exercises/LetraAventura/scenes/LetrasGame';
 import LetrasOver from 'components/exercises/LetraAventura/scenes/LetrasOver';
+
 //css
-import 'components/exercises/LetraAventura/styles.css'
+import 'components/exercises/general_assets/styles.css'
 
 class GameLetras extends Component {
   componentDidMount() {
+    /* eslint-disable */
     const { setting } = this.props;
     const config = {
       type: Phaser.AUTO,
@@ -32,7 +36,7 @@ class GameLetras extends Component {
     }
 
     this.game = new Phaser.Game(config);
-    console.log('ESTA ES LA FORMA EN LA QUE SE INICIA SETTINGS = ', {setting})
+    // console.log('ESTA ES LA FORMA EN LA QUE SE INICIA SETTINGS = ', {setting})
     this.game.scene.start('LetrasMenu', {setting});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);

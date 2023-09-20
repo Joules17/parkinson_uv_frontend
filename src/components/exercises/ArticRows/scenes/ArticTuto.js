@@ -1,6 +1,8 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+
+// styles.css
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported: 
 import Level from '../sprites/levelObj.js';

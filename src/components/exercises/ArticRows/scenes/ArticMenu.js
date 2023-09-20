@@ -1,20 +1,11 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+
+// Styles 
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported: 
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-
-// assets imports
-import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png'
-import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg'
-import fullscreen from '../assets/img/fullscreen.png';
-
-import derecha from 'components/exercises/ArticRows/assets/img/arrow/good/good_right.png'
-
-// audio 
-import start_button from 'components/exercises/ArticRows/assets/music/start_button.mp3'
-import cracking from 'components/exercises/ArticRows/assets/music/cracking.mp3'
 
 export default class ArticMenu extends Phaser.Scene {
   constructor() {
@@ -28,17 +19,6 @@ export default class ArticMenu extends Phaser.Scene {
     // emiters
     this.emiter = undefined; 
 
-    // texto
-    this.title = undefined; 
-    
-    // buttons 
-    this.start_button = undefined;
-    this.tuto_button = undefined;
-    this.list_buttons = undefined; 
-    
-    // figures
-    this.r_arrow = undefined; 
-
     // cursors: 
     this.cursors = undefined; 
     
@@ -47,27 +27,17 @@ export default class ArticMenu extends Phaser.Scene {
     this.selected = 0; 
   }
 
-  preload() {
-    // images 
-    this.load.image('sky', nightsky);
-    this.load.image('rain', raindrop);
-    this.load.image('derecha', derecha); 
-    this.load.image('fullscreenImg', fullscreen);
-
-    // audio 
-    this.load.audio('start_button', start_button);
-    this.load.audio('cracking', cracking);
-
-  }
+  preload() {}
 
   create() {
-    // bg image
-    this.bg = this.add.image(400, 300, 'sky'); 
-    // cursor: 
+    // Background ----------------------------------------------------------------------------------------------------------------------
+    this.bg = this.add.image(400, 300, 'BgNightSky'); 
+
+    // Cursors ----------------------------------------------------------------------------------------------------------------------
     this.cursors = this.input.keyboard.createCursorKeys();
     
-    // emiter 
-    this.emiter = this.add.particles(0, -10, 'rain', {
+    // Emitter ----------------------------------------------------------------------------------------------------------------------
+    this.emiter = this.add.particles(0, -10, 'RaindropImg', {
       x: { min: 0, max: 800 },
       quantity: 2,
       lifespan: 2500,
@@ -75,16 +45,16 @@ export default class ArticMenu extends Phaser.Scene {
       scale: { start: 0.005, end: 0.001 },
     });
 
-    // arrows ----------------------------------------------------------------------------------------------------------------------
-    this.r_arrow = this.add.sprite(300, 345, 'derecha');
+    // Arrows ----------------------------------------------------------------------------------------------------------------------
+    this.r_arrow = this.add.sprite(300, 345, 'RightArrowImg');
     this.r_arrow.setScale(0.1)
 
 
-    // text ------------------------------------------------------------------------------------------------------------------------
+    // Text title ------------------------------------------------------------------------------------------------------------------------
     this.title = this.add.text(140,200, "FLECHAS ARTICAS", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(100)
     
-    // fullScreenButton
-    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+    // Fullscreen bttns ------------------------------------------------------------------------------------------------------------------------
+    new FullScreenBttn(this, 770, 30, 'FullscreenImg');
     
     // buttons ---------------------------------------------------------------------------------------------------------------------
     this.start_button = this.add.text(340, 320, "Jugar", {
@@ -100,10 +70,10 @@ export default class ArticMenu extends Phaser.Scene {
     }).setFontSize(50); 
 
     this.tuto_button.setInteractive(); 
-    // arrows ----------------------------------------------------------------------------------------------------------------------
+    // Arrows ----------------------------------------------------------------------------------------------------------------------
     this.animation_movement(this.r_arrow, 'izquierda')
 
-    // arrow events ------------------------------------------------------------------------------------------------------------------------------
+    // Arrow events ------------------------------------------------------------------------------------------------------------------------------
     this.list_buttons = [this.start_button, this.tuto_button]
     this.setSelected(0); 
     // cursor listeners: 
@@ -150,9 +120,8 @@ export default class ArticMenu extends Phaser.Scene {
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   letsPlay() { 
-    this.sound.play('start_button')
+    this.sound.play('StartButtonSound')
     const settings = this.sys.settings.data.setting;
-    console.log('CULOPATO', settings)
     this.scene.start(this.scene_options[this.selected], {settings})
   }
   // ------------------------------------------------------------------------------------------------------------------------------

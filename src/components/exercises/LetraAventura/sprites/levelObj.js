@@ -38,13 +38,14 @@ export default class Level {
         console.log(palabra)
         const len = palabra.length;
         const total_width = len * this.letter_width;
+        const padding = 35; 
         const offset = (this.game_width - total_width) / 2;
 
         // creacion de la palabra secreta y de las cards
         for (let i = 0; i < len; i++) {
             // creacion de la palabra secreta
             let key = palabra[i];
-            let sprite = this.scene.add.sprite(offset + (i * this.letter_width), 300, key);
+            let sprite = this.scene.add.sprite(offset + padding + (i * this.letter_width), 300, key);
             this.letters_generated.push(sprite);
             sprite.setVisible(this.actual);
             sprite.setScale(this.sprite_scale);

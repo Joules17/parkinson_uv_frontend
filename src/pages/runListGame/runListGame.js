@@ -74,7 +74,7 @@ const RunListGames = () => {
                 return <GameRememberAndFind setting={startGame.setting}/>;
             case "Letras VS Numeros":
                 return <LettersVsNumbers setting={startGame.setting}/>;
-            case "Letra Aventura":
+            case "Palabras Ocultas":
                 return <GameLetras setting={startGame.setting}/>;
             default:
                 return null;

@@ -1,24 +1,19 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css';
 
-// custom classes imported:
+// styles
+import 'components/exercises/general_assets/styles.css';
+
+// Custom Classes Imported --------------------------------------------------------------------------------------------------------------------------------
 import Level from 'components/exercises/ArticRows/sprites/levelObj.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets imports
-import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png';
-import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
 import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
 import glass from 'components/exercises/ArticRows/assets/img/glass.png';
 import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
 import fullscreen from '../assets/img/fullscreen.png';
 
 import arrow_list from '../sprites/arrow_list';
-
-// audio
-import start_button from 'components/exercises/ArticRows/assets/music/start_button.mp3';
-import cracking from 'components/exercises/ArticRows/assets/music/cracking.mp3';
 
 const log = {
     info: {
@@ -121,9 +116,6 @@ export default class ArticGame extends Phaser.Scene {
     }
 
     preload() {
-        // images
-        this.load.image('sky', nightsky);
-        this.load.image('rain', raindrop);
         this.load.image('snowflake', snowflake);
         this.load.image('fullscreenImg', fullscreen);
 

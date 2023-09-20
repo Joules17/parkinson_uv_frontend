@@ -18,7 +18,7 @@ export default class Card {
         this.card_graphics.fillStyle(0xffffff, 1);
         this.card_graphics.fillRoundedRect(this.x, this.y, this.card_width, this.card_height, this.card_radius);
 
-        this.letter_text = this.scene.add.text(this.x + 20, this.y + 15, this.letter, { fontFamily: 'ComicSans', color: "#0000FF"}).setFontSize(50); 
+        this.letter_text = this.scene.add.text(this.x + 20, this.y + 15, this.letter, { fontFamily: 'TROUBLE', color: "#0000FF"}).setFontSize(70); 
         
         this.letter_text.setVisible(this.covered);
         this.card_graphics.setVisible(this.visible); 
