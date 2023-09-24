@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import ObjectIntruder from 'components/exercises/ObjectIntruder/GameObjectIntruder'
 import GameNumbers from 'components/exercises/Numbers/GameNumbers';
 import GameArtic from 'components/exercises/ArticRows/GameArtic';
+import GameFlechasCongeladas from 'components/exercises/FlechasCongeladas/GameFlechasCongeladas';
 import GameRememberAndFind from 'components/exercises/RememberAndFind/GameRemember';
 import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumbers'
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
@@ -76,6 +77,8 @@ const RunListGames = () => {
                 return <LettersVsNumbers setting={startGame.setting}/>;
             case "Palabras Ocultas":
                 return <GameLetras setting={startGame.setting}/>;
+            case "Flechas Congeladas":
+                return <GameFlechasCongeladas setting={startGame.setting}/>;
             default:
                 return null;
         }

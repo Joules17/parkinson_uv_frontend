@@ -35,6 +35,7 @@ class GameRememberAndFind extends Component {
 
     this.game = new Phaser.Game(config);
     this.game.scene.start('RememberInit', {setting});
+    console.log('SE ESTA ENVIANDO', {setting})
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

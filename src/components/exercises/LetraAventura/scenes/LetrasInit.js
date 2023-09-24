@@ -24,7 +24,7 @@ import letter_list from 'components/exercises/general_assets/images/objects/lett
 // clase no visible para cargar assets e inicializar el juego
 export default class LetrasInit extends Phaser.Scene {
     constructor () {
-        super({ ket: 'LetrasInit', backgroundColor: '#3f1651'});
+        super({ key: 'LetrasInit', backgroundColor: '#3f1651'});
     }
 
     preload () {
@@ -56,6 +56,7 @@ export default class LetrasInit extends Phaser.Scene {
     }
 
     pass () {
-        this.scene.start('LetrasMenu')
+        const settings = this.sys.settings.data.setting;
+        this.scene.start('LetrasMenu', {settings})
     }
 }

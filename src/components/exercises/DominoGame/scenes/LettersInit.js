@@ -6,8 +6,8 @@ import BgForest from 'components/exercises/general_assets/images/textures/green_
 import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png'
 import TreeImg from 'components/exercises/general_assets/images/objects/others/TreeImg.png'
 
-import NeutralArrowLeft from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_arrow_left.png'
-import NeutralArrowRight from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_arrow_right.png'
+import NeutralArrowLeft from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_left.png'
+import NeutralArrowRight from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_right.png'
 
 // sounds
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'

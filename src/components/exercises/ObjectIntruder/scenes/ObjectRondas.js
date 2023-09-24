@@ -97,7 +97,7 @@ export default class ObjectRondas extends Phaser.Scene {
         this.create_rondas(this.numberFases);
 
         // botones fullscreen
-        new FullScreenBttn(this, 770, 30, 'fullsceenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
     }
 
     update() {

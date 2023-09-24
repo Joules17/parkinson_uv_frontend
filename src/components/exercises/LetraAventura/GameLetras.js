@@ -37,7 +37,8 @@ class GameLetras extends Component {
 
     this.game = new Phaser.Game(config);
     // console.log('ESTA ES LA FORMA EN LA QUE SE INICIA SETTINGS = ', {setting})
-    this.game.scene.start('LetrasMenu', {setting});
+    console.log('SE ESTA ENVIANDO', {setting})
+    this.game.scene.start('LetrasInit', {setting});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

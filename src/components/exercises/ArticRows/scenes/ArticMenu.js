@@ -49,7 +49,6 @@ export default class ArticMenu extends Phaser.Scene {
     this.r_arrow = this.add.sprite(300, 345, 'RightArrowImg');
     this.r_arrow.setScale(0.1)
 
-
     // Text title ------------------------------------------------------------------------------------------------------------------------
     this.title = this.add.text(140,200, "FLECHAS ARTICAS", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(100)
     
@@ -121,7 +120,8 @@ export default class ArticMenu extends Phaser.Scene {
   // ------------------------------------------------------------------------------------------------------------------------------
   letsPlay() { 
     this.sound.play('StartButtonSound')
-    const settings = this.sys.settings.data.setting;
+    const settings = this.sys.settings.data.settings;
+    console.log(settings, 'HOLA COMO ESTAS? ')
     this.scene.start(this.scene_options[this.selected], {settings})
   }
   // ------------------------------------------------------------------------------------------------------------------------------

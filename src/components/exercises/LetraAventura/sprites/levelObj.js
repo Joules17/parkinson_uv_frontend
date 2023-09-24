@@ -6,6 +6,7 @@ import Card from './card'
 export default class Level {
     constructor(config) {
         this.scene = config.scene;
+        this.min = config.min; 
         this.limit = config.limit;
         this.game_width = config.game_width;
         this.sprite_scale = config.sprite_scale;
@@ -23,10 +24,11 @@ export default class Level {
     }
 
     create_word() {
-        let aux = '';
+        console.log(this.min, this.limit)
+        let aux = randomWords(1)[0]
         do {
             aux = randomWords(1)[0];
-        } while (aux.length > this.limit);
+        } while (aux.length < this.min || aux.length > this.limit);
         this.word = aux;
         this.word = this.word.toUpperCase();
         this.word = this.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/Ñ/g, "N");
