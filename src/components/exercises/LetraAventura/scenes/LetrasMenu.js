@@ -21,7 +21,7 @@ export default class LetrasMenu extends Phaser.Scene {
 
     create() {
         // Initialize -----------------------------------------------------------------------------------------
-        const settings = this.sys.settings.data.setting;
+        const settings = this.sys.settings.data.settings;
         
         //Background ------------------------------------------------------------------------------------------
         this.background = this.add.sprite(400, 300, 'BgMint')

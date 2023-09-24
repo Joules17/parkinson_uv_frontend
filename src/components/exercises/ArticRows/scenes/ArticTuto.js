@@ -8,41 +8,11 @@ import 'components/exercises/general_assets/styles.css'
 import Level from '../sprites/levelObj.js';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets imports
-import raindrop from 'components/exercises/ArticRows/assets/img/rain_drop.png';
-import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
-import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
-import glass from 'components/exercises/ArticRows/assets/img/glass.png';
-import fullscreen from '../assets/img/fullscreen.png';
-
-import arrow_list from '../sprites/arrow_list';
-
-// audio
-import start_button from 'components/exercises/ArticRows/assets/music/start_button.mp3';
-import cracking from 'components/exercises/ArticRows/assets/music/cracking.mp3';
-import keycap from 'components/exercises/ArticRows/assets/img/arrow_keys.png'
-
 export default class ArticTuto extends Phaser.Scene {
     constructor() {
         super({ key: 'ArticTuto', backgroundColor: '#3f1651' });
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
-
-        // bg
-        this.bg = undefined;
-        this.caps = undefined;
-
-        // emiters
-        this.emiter = undefined;
-
-        // texts
-        this.title = undefined;
-        this.explanation = undefined;
-
-        // panels
-        this.conversation_panel = undefined;
-
-        this.play_button = undefined; 
 
         // vars
         this.eventFinished = false;
@@ -96,42 +66,21 @@ export default class ArticTuto extends Phaser.Scene {
         };
     }
 
-    preload() {
-        // images
-        this.load.image('sky', nightsky);
-        this.load.image('rain', raindrop);
-        this.load.image('keycap', keycap);
-        this.load.image('fullscreenImg', fullscreen);
-        // sprites
-        for (let tipo in arrow_list) {
-            // busca cada tipo para cargar su correspondiente imagen
-            // console.log(`Elementos en el tipo ${tipo}:`)
-            for (let dir in arrow_list[tipo]) {
-                this.load.image(arrow_list[tipo][dir]['key'], arrow_list[tipo][dir]['imagen']);
-            }
-        }
-
-        // other images
-        this.load.image('broken_glass', broken_glass);
-        this.load.image('glass', glass);
-        // audio
-        this.load.audio('start_button', start_button);
-        this.load.audio('cracking', cracking);
-    }
+    preload() {}
 
     create() {
-        // bg image
-        this.bg = this.add.image(400, 300, 'sky');
+        // Background
+        this.bg = this.add.image(400, 300, 'BgNightSky');
 
-        // emiters
+        // Emitters
         this.glass_emitter = undefined;
         this.flag_emitter = true;
 
-        // cursor
+        // Cursor
         this.input.keyboard.on('keydown', this.handle_keydown, this);
 
-        // emiter
-        this.emiter = this.add.particles(0, -10, 'rain', {
+        // Emitter
+        this.emiter = this.add.particles(0, -10, 'RaindropImg', {
             x: { min: 0, max: 800 },
             quantity: 2,
             lifespan: 2500,
@@ -139,7 +88,7 @@ export default class ArticTuto extends Phaser.Scene {
             scale: { start: 0.005, end: 0.001 }
         });
 
-        this.caps = this.add.image(400, 300, 'keycap');
+        this.caps = this.add.image(400, 300, 'KeycapImg');
         this.caps.setAlpha(0);
 
         // panels
@@ -149,7 +98,7 @@ export default class ArticTuto extends Phaser.Scene {
         this.conversation_panel.strokeRect(50, 530, 700, 60, 5); // Dibuja los bordes negros
 
         // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         // text ------------------------------------------------------------------------------------------------------------------------
         this.title = this.add.text(305, 20, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(70);

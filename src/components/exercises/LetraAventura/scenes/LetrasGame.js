@@ -78,6 +78,7 @@ export default class LetrasGame extends Phaser.Scene {
         // config
         this.level_config = {
             scene: this,
+            min: 2, 
             limit: 10,
             game_width: this.worldSizeWidth,
             sprite_scale: 0.15,
@@ -89,7 +90,18 @@ export default class LetrasGame extends Phaser.Scene {
 
     create() {
         const settings = this.sys.settings.data.settings;
-        this.number_rounds = settings.rondas
+        this.number_rounds = settings.rondas;
+        // Initialize Data
+        if (settings.longitudPalabra !== undefined) {
+            this.number_max = parseInt(settings.longitudPalabra);
+            this.level_config.limit = this.number_max; 
+        } 
+
+        if (settings.longitudMinPalabra !== undefined) {
+            this.number_min = parseInt(settings.longitudMinPalabra);
+            this.level_config.min = this.number_min; 
+        } 
+
         // bg image
         this.bg = this.add.image(400, 300, 'BgMint');
 

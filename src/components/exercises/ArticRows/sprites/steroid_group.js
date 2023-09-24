@@ -49,7 +49,7 @@ export default class steroid_group extends Phaser.GameObjects.Group {
             } else {
                 // console.log('bad');
                 this.scene.broke_screen(this);
-                this.scene.sound.play('cracking');
+                this.scene.sound.play('CrackingSound');
                 this.scene.set_status(false);
                 this.damage();
             }
@@ -60,14 +60,14 @@ export default class steroid_group extends Phaser.GameObjects.Group {
         // console.log('buen trabajo!');
         this.scene.current_number += 1;
         this.scene.feedback(true);
-        this.scene.sound.play('start_button');
+        this.scene.sound.play('StartButtonSound');
         this.scene.set_status(true);
     }
 
     damage() {
         this.scene.broke_screen(this);
         this.scene.feedback(false);
-        this.scene.sound.play('cracking');
+        this.scene.sound.play('CrackingSound');
         this.scene.errores += 1; 
         this.scene.error_flag = true; 
         this.scene.set_status(false);

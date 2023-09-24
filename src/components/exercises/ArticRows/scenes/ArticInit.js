@@ -10,6 +10,13 @@ import RaindropImg from 'components/exercises/general_assets/images/objects/othe
 import BgNightSky from 'components/exercises/general_assets/images/textures/night_sky_texture.jpg'; 
 import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png';
 import RightArrowImg from 'components/exercises/general_assets/images/objects/arrows/good/good_right.png'; 
+import SnowImg from 'components/exercises/general_assets/images/objects/others/snowflake.png';
+import GlassImg from 'components/exercises/general_assets/images/objects/others/glass.png'; 
+import BrokenImg from 'components/exercises/general_assets/images/objects/others/broken.png';
+import KeycapImg from 'components/exercises/general_assets/images/objects/others/arrow_keys.png'; 
+
+// arrow list
+import arrow_list from 'components/exercises/general_assets/images/objects/arrow_list.js';
 
 // audio
 import StartButtonSound from 'components/exercises/general_assets/sounds/start_button.mp3'; 
@@ -27,7 +34,20 @@ export default class ArticInit extends Phaser.Scene {
         this.load.image('BgNightSky', BgNightSky); 
         this.load.image('RightArrowImg', RightArrowImg); 
         this.load.image('FullscreenImg', FullscreenImg);
+        this.load.image('SnowImg', SnowImg);
+        this.load.image('GlassImg', GlassImg);
+        this.load.image('BrokenImg', BrokenImg);
+        this.load.image('KeycapImg', KeycapImg); 
 
+        // sprites
+        for (let tipo in arrow_list) {
+            // busca cada tipo para cargar su correspondiente imagen
+            // console.log(`Elementos en el tipo ${tipo}:`)
+            for (let dir in arrow_list[tipo]) {
+                this.load.image(arrow_list[tipo][dir]['key'], arrow_list[tipo][dir]['imagen']);
+            }
+        }
+        
         // audio 
         this.load.audio('StartButtonSound', StartButtonSound);
         this.load.audio('CrackingSound', CrackingSound);
@@ -39,7 +59,8 @@ export default class ArticInit extends Phaser.Scene {
     } 
 
     pass () {
-        const settings = this.sys.settings.data.settings;
+        const settings = this.sys.settings.data.setting;
+        console.log(settings, 'verificando como va todo por aqui')
         this.scene.start('ArticMenu', {settings})
     }
 }

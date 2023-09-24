@@ -1,6 +1,7 @@
-// import assets 
-import arrow_list from './arrow_list'
-// custom classes
+// Assets
+import arrow_list from 'components/exercises/general_assets/images/objects/arrow_list.js'
+
+// Custom Classes
 import steroid_arrow from './steroid_arrow'
 import steroid_group from './steroid_group'
 export default class Level {
@@ -107,13 +108,13 @@ export default class Level {
 
     crear_patron(correct_option) {
         var positions = [
-            [[(this.game_width)/2, (this.game_height)/2], [(this.game_width)/2, 200], [(this.game_width)/2, 400], [300, (this.game_height)/2], [500, (this.game_height)/2]], 
-            [[(this.game_width)/2, (this.game_height)/2], [(this.game_width)/2, 200], [(this.game_width)/2, 100], [(this.game_width)/2, 400], [(this.game_width)/2,500]],
+            [[(this.game_width)/2, (this.game_height)/2], [(this.game_width)/2, 150], [(this.game_width)/2, 450], [250, (this.game_height)/2], [550, (this.game_height)/2]], 
+            [[(this.game_width)/2, (this.game_height)/2], [(this.game_width)/2, 180], [(this.game_width)/2, 70], [(this.game_width)/2, 420], [(this.game_width)/2,530]],
             [[500, (this.game_height)/2], [(this.game_width)/2, 200], [(this.game_width)/2, 400], [300, 100], [300, 500]],
-            [[(this.game_width)/2, 400], [300, (this.game_height)/2], [500, (this.game_height)/2], [200, 200], [600, 200]],
+            [[(this.game_width)/2, 450], [250, (this.game_height)/2], [550, (this.game_height)/2], [100, 150], [700, 150]],
             [[300, (this.game_height)/2], [(this.game_width)/2, 200], [(this.game_width)/2, 400], [500, 100], [500, 500]], 
-            [[(this.game_width)/2, 200], [300, (this.game_height)/2], [500, (this.game_height)/2], [200, 400], [600, 400]], 
-            [[(this.game_width)/2, (this.game_height)/2], [300, (this.game_height)/2], [200, (this.game_height)/2], [500, (this.game_height)/2], [600, (this.game_height)/2]]
+            [[(this.game_width)/2, 150], [250, (this.game_height)/2], [550, (this.game_height)/2], [100, 450], [700, 450]], 
+            [[(this.game_width)/2, (this.game_height)/2], [250, (this.game_height)/2], [100, (this.game_height)/2], [550, (this.game_height)/2], [700, (this.game_height)/2]]
         ]
 
         let selected = positions[Math.floor(Math.random() * positions.length)];
@@ -139,7 +140,7 @@ export default class Level {
                         scene: this.scene,
                         posx: selected[i][0],
                         posy: selected[i][1],
-                        key: 'frozen_'+correct_option,
+                        key: 'neutral_'+correct_option,
                         correct_option: correct_option,
                         original_scale: this.sprite_scale
                     }));  
@@ -149,7 +150,7 @@ export default class Level {
                         scene: this.scene,
                         posx: selected[i][0],
                         posy: selected[i][1],
-                        key: 'frozen_'+opposite,
+                        key: 'neutral_'+opposite,
                         correct_option: correct_option,
                         original_scale: this.sprite_scale
                     })); 

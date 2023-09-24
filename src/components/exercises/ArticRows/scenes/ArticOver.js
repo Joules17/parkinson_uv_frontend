@@ -7,25 +7,11 @@ import 'components/exercises/general_assets/styles.css'
 // custom classes imported: 
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets import
-import nightsky from 'components/exercises/ArticRows/assets/img/sky.jpg';
-import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
-import fullscreen from '../assets/img/fullscreen.png';
-
 export default class ArticOver extends Phaser.Scene {
     constructor () {
         super({key: 'ArticOver', backgroundColor: '#3f1651'});
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
-
-        // mensajes
-        this.title = undefined; 
-        this.tiempo_total_msg = undefined; 
-        this.tiempo_total_log = undefined;
-        this.tiempo_promedio_msg = undefined;
-        this.tiempo_promedio_log = undefined;
-        this.number_errores_msg = undefined;
-        this.number_errores_log = undefined; 
     }
 
     init (data) {
@@ -41,20 +27,14 @@ export default class ArticOver extends Phaser.Scene {
         this.number_errores = data.info.errores.toString();
     }
 
-    preload() {
-        this.load.image('nightsky', nightsky);
-        this.load.image('snowflake', snowflake);
-        this.load.image('fullscreenImg', fullscreen);
-    }
+    preload() {}
 
     create() {
-        console.log('nueva escena')
-        // bg image
-        this.bg = this.add.image(400, 300, 'sky');
+        // Background
+        this.bg = this.add.image(400, 300, 'BgNightSky');
 
-        // -------------------------
-        // emiter
-        this.emiter = this.add.particles(0, -10, 'snowflake', {
+        // Emitter
+        this.emiter = this.add.particles(0, -10, 'SnowImg', {
             x: {min: 0, max: 800},
             quantity: 2, 
             lifespan: 2500, 
@@ -62,7 +42,7 @@ export default class ArticOver extends Phaser.Scene {
             scale: { start: 0.01, end: 0.005 },
         }); 
 
-        // messages
+        // Messages
         this.title = this.add.text(200, 100, "FIN DEL JUEGO", {fontFamily: 'TROUBLE', fontSize: 100, color: '#ffffff'}); 
 
         this.panelStats = this.add.graphics(); 
@@ -76,10 +56,8 @@ export default class ArticOver extends Phaser.Scene {
         this.number_errores_msg = this.add.text(150, 370, "Numero de errores: ", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
         this.number_errores_log = this.add.text(500, 370, this.number_errores, { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
 
-        // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        // FullScreen bttn 
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
     }
-
-    
 }

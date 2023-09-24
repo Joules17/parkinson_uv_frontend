@@ -69,6 +69,18 @@ const CardComponent = ({ card }) => {
             settings['categorias'] = config.categorias;
         }
 
+        // only word length games:
+        if (card.title === 'Palabras Ocultas') {
+            settings['longitudMinPalabra'] = config.longitudMinPalabra; 
+            settings['longitudPalabra'] = config.longitudPalabra; 
+        }
+
+        // only Artic Arrow game: 
+        if (card.title === 'Flechas Articas') {
+            settings['rondasFirst'] = config.rondasFirstArrow; 
+            settings['rondasSecond'] = config.rondasSecondArrow;
+        }
+
         console.log('Se envia las siguientes settings: ', settings)
         navigate(`/run-game?game=${card.title}&description=${card.description}`, {
             state: settings
@@ -187,7 +199,7 @@ const Games = () => {
                 <Stack spacing={2}>
                     {cardList.map((card) =>
                         card.list.length !== 0 ? (
-                            <>
+                            <div key= {card.title}>
                                 <Typography variant="h5">{card.title}</Typography>
                                 <Carousel responsive={responsive}>
                                     {card.list.map((cardItem, index) => (
@@ -195,7 +207,7 @@ const Games = () => {
                                     ))}
                                 </Carousel>
                                 <Divider />
-                            </>
+                            </div>
                         ) : null
                     )}
                 </Stack>

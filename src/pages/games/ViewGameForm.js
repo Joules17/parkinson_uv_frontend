@@ -31,6 +31,10 @@ const actionSX = {
 export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
     const [valueRounds, setValueRounds] = useState(10); 
     const [valueLevels, setValueLevels] = useState(1); 
+    const [valueWorldMinLength, setValueWorldMinLength] = useState(2);
+    const [valueWordLength, setValueWordLength] = useState(10);
+    const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(10);
+    const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(10);
     const [selectedCategories, setSelectedCategories] = useState([]); 
 
     const objetos = [
@@ -50,6 +54,22 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         setValueLevels(event.target.value);
     }; 
 
+    const handleValueWorldMinLength = (event) => {
+        setValueWorldMinLength(event.target.value); 
+    }
+
+    const handleValueWorldLength = (event) => {
+        setValueWordLength(event.target.value);
+    }; 
+    
+    const handleValueFirstRoundArrow = (event) => {
+        setValueFirstRoundArrow(event.target.value);
+    }; 
+
+    const handleValueSecondRoundArrow = (event) => {
+        setValueSecondRoundArrow(event.target.value);
+    }; 
+
     
     const handleCheckboxChange = (event) => {
         const optionValue = event.target.value;
@@ -66,6 +86,10 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         const config = {
             rondas: valueRounds,
             niveles: valueLevels,
+            longitudPalabra: valueWordLength,
+            longitudMinPalabra: valueWorldMinLength,
+            rondasFirstArrow: valueFirstRoundArrow,
+            rondasSecondArrow: valueSecondRoundArrow,
             categorias: selectedCategories
         }
         handleFormSubmit(config); 
@@ -105,7 +129,8 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             Especificaciones
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    {card.title !== 'Flechas Articas' && (
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
                             type="number"
                             label="Número de Rondas"
@@ -116,7 +141,34 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             onChange={handleRoundsChange}
                             fullWidth
                         />
-                    </Grid>
+                        </Grid>
+                    )}
+                    {card.title === 'Flechas Articas' && (
+                        <>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Número de Rondas del Primer Nivel"
+                            InputProps={{
+                                inputProps: { min: 0 }
+                            }}
+                            value={valueFirstRoundArrow}
+                            onChange={handleValueFirstRoundArrow}
+                            fullWidth
+                        />
+                        <TextField
+                            type="number"
+                            label="Número de Rondas del Segundo Nivel"
+                            InputProps={{
+                                inputProps: { min: 0 }
+                            }}
+                            value={valueSecondRoundArrow}
+                            onChange={handleValueSecondRoundArrow}
+                            fullWidth
+                        />
+                        </Grid>
+                        </>
+                    )}
                     {card.title === 'Recuerda y Encuentra' && (
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
@@ -130,6 +182,34 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             fullWidth
                         />
                     </Grid>
+                    )}
+                    {card.title === 'Palabras Ocultas' && (
+                        <>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Longitud Minima de palabras"
+                            InputProps={{
+                                inputProps: { min: 2, max: 10 }
+                            }}
+                            value={valueWorldMinLength}
+                            onChange={handleValueWorldMinLength}
+                            fullWidth
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Longitud Maxima de palabras"
+                            InputProps={{
+                                inputProps: { min: 2, max: 10 }
+                            }}
+                            value={valueWordLength}
+                            onChange={handleValueWorldLength}
+                            fullWidth
+                        />
+                        </Grid>
+                        </>
                     )}
                     {
                         (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso') &&

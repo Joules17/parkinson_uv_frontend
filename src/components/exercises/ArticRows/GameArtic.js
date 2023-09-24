@@ -33,7 +33,7 @@ class GameArtic extends Component {
     }
 
     this.game = new Phaser.Game(config);
-    this.game.scene.start('ArticMenu', {setting});
+    this.game.scene.start('ArticInit', {setting});
     this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
     this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 

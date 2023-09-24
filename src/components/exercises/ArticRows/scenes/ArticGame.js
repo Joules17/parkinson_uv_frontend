@@ -8,13 +8,6 @@ import 'components/exercises/general_assets/styles.css';
 import Level from 'components/exercises/ArticRows/sprites/levelObj.js'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-import broken_glass from 'components/exercises/ArticRows/assets/img/broken.png';
-import glass from 'components/exercises/ArticRows/assets/img/glass.png';
-import snowflake from 'components/exercises/ArticRows/assets/img/snowflake.png'
-import fullscreen from '../assets/img/fullscreen.png';
-
-import arrow_list from '../sprites/arrow_list';
-
 const log = {
     info: {
         tiempo_total: undefined,
@@ -37,17 +30,13 @@ export default class ArticGame extends Phaser.Scene {
         this.emiter = undefined;
         this.glass_emitter = undefined;
         this.flag_emitter = true;
-
-        // texto
-        this.title = undefined;
-
+        
         // cursors:
         this.cursors = undefined;
 
-        // texto
-        this.text_numberrondas = undefined; 
-        this.texto_tiempototal = undefined;
+        // vars
         this.current_number = 1;
+
         // timers
         this.gameTimeSec = 0;
         this.gameTimeMin = 0;
@@ -57,7 +46,8 @@ export default class ArticGame extends Phaser.Scene {
         // variables
         this.first_rounds = 30; 
         this.second_rounds = 20; 
-        // Pendiente definir los settings de este juego
+        
+        // flags
         this.number_rounds = this.first_rounds + this.second_rounds
         this.tableros = []; // lista de tableros
         this.tablero_actual = undefined; // tablero actual
@@ -115,36 +105,24 @@ export default class ArticGame extends Phaser.Scene {
         };
     }
 
-    preload() {
-        this.load.image('snowflake', snowflake);
-        this.load.image('fullscreenImg', fullscreen);
-
-        // sprites
-        for (let tipo in arrow_list) {
-            // busca cada tipo para cargar su correspondiente imagen
-            // console.log(`Elementos en el tipo ${tipo}:`)
-            for (let dir in arrow_list[tipo]) {
-                this.load.image(arrow_list[tipo][dir]['key'], arrow_list[tipo][dir]['imagen']);
-            }
-        }
-
-        // other images
-        this.load.image('broken_glass', broken_glass);
-        this.load.image('glass', glass);
-        // audio
-        this.load.audio('start_button', start_button);
-        this.load.audio('cracking', cracking);
-    }
+    preload() {}
 
     create() {
-        // bg image
-        this.bg = this.add.image(400, 300, 'sky');
+        // Initialize Data Settings --------------------------------------------------------------------------------------------------------------------------------
+        const settings = this.sys.settings.data.settings; 
+        if (settings.rondasFirst !== undefined && settings.rondasSecond !== undefined) {
+            this.first_rounds = parseInt(settings.rondasFirst);
+            this.second_rounds = parseInt(settings.rondasSecond);
+            this.number_rounds = this.first_rounds + this.second_rounds;
+        }
+        // Background ----------------------------------------------------------------------------------------------------------------------
+        this.bg = this.add.image(400, 300, 'BgNightSky');
 
-        // cursor:
+        // Cursor ----------------------------------------------------------------------------------------------------------------------
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // emiter
-        this.emiter = this.add.particles(0, -10, 'rain', {
+        // Emitter ----------------------------------------------------------------------------------------------------------------------
+        this.emiter = this.add.particles(0, -10, 'RaindropImg', {
             x: { min: 0, max: 800 },
             quantity: 2,
             lifespan: 2500,
@@ -152,7 +130,7 @@ export default class ArticGame extends Phaser.Scene {
             scale: { start: 0.005, end: 0.001 }
         });
 
-        // text
+        // Text title ------------------------------------------------------------------------------------------------------------------------
         this.text_numberrondas = this.add
             .text(15, 15, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#ffffff' })
             .setFontSize(40);
@@ -163,21 +141,20 @@ export default class ArticGame extends Phaser.Scene {
             .text(600, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
             .setFontSize(40);
 
-        // rounds manager
+        // Rounds ------------------------------------------------------------------------------------------------------------------------
         this.levels_global.push(this.level_config);
         this.levels_global.push(this.level_config_2);
-        this.levels_global.push(this.level_config_3);
         this.createRounds();
 
-        // effects
-        this.broken_glass = this.add.image(400, 300, 'broken_glass').setAlpha(0);
+        // Effects ------------------------------------------------------------------------------------------------------------------------
+        this.broken_glass = this.add.image(400, 300, 'BrokenImg').setAlpha(0);
         this.broken_glass.setScale(1.39);
 
         // time
         this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
         
         // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
     }
 
     update() {
@@ -288,7 +265,7 @@ export default class ArticGame extends Phaser.Scene {
     broke_screen() {
         // emiter
         if (this.flag_emitter) {
-            this.glass_emitter = this.add.particles(400, 300, 'glass', {
+            this.glass_emitter = this.add.particles(400, 300, 'GlassImg', {
                 speed: { min: 200, max: 400 },
                 gravityY: 200,
                 scale: { start: 0.1, end: 0.01 },
@@ -393,7 +370,7 @@ export default class ArticGame extends Phaser.Scene {
     snow_falling() {
       this.emiter.quantity = 3; 
       this.emiter.gravityY = 200; 
-      this.emiter.setTexture('snowflake')
+      this.emiter.setTexture('SnowImg')
       this.emiter.setParticleScale(1.5, 1);
       const feedbackMessage = this.add.text(50, 500, 'TORMENTA DE NIEVE!', { fontFamily: 'TROUBLE', fontSize: 50 });
       feedbackMessage.setDepth(10)
