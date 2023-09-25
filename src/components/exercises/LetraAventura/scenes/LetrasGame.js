@@ -102,7 +102,7 @@ export default class LetrasGame extends Phaser.Scene {
             this.level_config.min = this.number_min; 
         } 
 
-        // bg image
+        // Background 
         this.bg = this.add.image(400, 300, 'BgMint');
 
         // main_panel

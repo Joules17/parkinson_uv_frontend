@@ -9,8 +9,10 @@ import BgMint from 'components/exercises/general_assets/images/textures/mint_tex
 import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png'; 
 import LupaImg from 'components/exercises/general_assets/images/objects/others/Lupa.png'; 
 import DetectiveImg from 'components/exercises/general_assets/images/objects/others/detective.png'; 
-
+import KeyboardAndMouseImg from 'components/exercises/general_assets/images/objects/others/keyboard-and-mouse.png';
+import RightArrowImg from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_right.png'; 
 // sounds 
+import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import TypingSound from 'components/exercises/general_assets/sounds/type.mp3';
 import FailSound from 'components/exercises/general_assets/sounds/fail.mp3';
 import FlipSound from 'components/exercises/general_assets/sounds/flip_round.mp3';
@@ -33,6 +35,8 @@ export default class LetrasInit extends Phaser.Scene {
         this.load.image('FullscreenImg', FullscreenImg); 
         this.load.image('LupaImg', LupaImg); 
         this.load.image('DetectiveImg', DetectiveImg);
+        this.load.image('KeyboardAndMouseImg', KeyboardAndMouseImg); 
+        this.load.image('RightArrowImg', RightArrowImg); 
         
         // sprites
         for (let tipo in letter_list) {
@@ -42,6 +46,7 @@ export default class LetrasInit extends Phaser.Scene {
         }
 
         // audio
+        this.load.audio('HoverSound', HoverSound); 
         this.load.audio('TypingSound', TypingSound);  
         this.load.audio('FlipSound', FlipSound); 
         this.load.audio('FailSound', FailSound);

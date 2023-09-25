@@ -218,7 +218,7 @@ export default class LettersTutorial extends Phaser.Scene {
 
         this.play_button.on('pointerdown', () => {
               const settings = this.sys.settings.data.settings;
-              this.sound.play('correct')
+              this.sound.play('CorrectSound')
               this.scene.start('LettersGame', {settings})
         }); 
       
@@ -265,19 +265,19 @@ export default class LettersTutorial extends Phaser.Scene {
     }
 
     create_rounds() {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 3; i++) {
             this.tableros.push(new Level(this.first_level_config));
         }
         this.tableros.push('En cambio si hay numeros en la derecha es NO');
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 3; i++) {
             this.tableros.push(new Level(this.second_level_config));
         }
         this.tableros.push('Tambien es NO si hay letras en la izquierda')
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 3; i++) {
             this.tableros.push(new Level(this.four_level_config));
         }
         this.tableros.push('Izquierda es SI solo para numeros');
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 3; i++) {
             this.tableros.push(new Level(this.third_level_config));
         }
         this.tableros.push('Izquierda numeros, Derecha letras, siempre recuerdalo');
