@@ -130,7 +130,11 @@ export default class LetterSoup {
         this.soup = this.gen_empty_soup();
         this.place_words();
         this.fill_soup();
-        // this.print_soup(); 
+        this.print_soup(); 
+    }
+
+    get_soup() {
+        return this.soup; 
     }
  
     
