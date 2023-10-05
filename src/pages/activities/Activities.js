@@ -216,202 +216,201 @@ export default function ActivityPage() {
         )
     }
 
-    if (Object.keys(listActivities).length === 0) {
-        return (
-            <NoActivities />
-        )
-    }
     const filteredActivities = applySortFilter(listActivities, getComparator(order, orderBy), filterName, orderBy);
     const isNotFound = !filteredActivities.length && !!filterName;
 
     // console.log(filteredActivities) // comentar para ver las actividades traidas
 
     return (
-        <MainCard title="Actividades" darkTitle="true">
+        <MainCard title="Actividades" darkTitle={true}>
             <Grid item xs={12} md={7} lg={8}>
                 <CreateActivity setList={setListActivities} />
-                <Box sx={{ p: 3, pb: 3 }}>
-                    <Stack spacing={2} >
-                        <Typography variant="h5" >
-                            Mis Actividades programadas
-                        </Typography>
-                        <Toolbar sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}>
-                            <ActivitiesHead filterWord={filterName} onFilterWord={handleFilterName} option={orderBy} />
+                {Object.keys(listActivities).length === 0 ? (<NoActivities type = {'terapeuta'}/>) : (
+                    <>
+                        <Box sx={{ p: 3, pb: 3 }}>
+                            <Stack spacing={2} >
+                                <Typography variant="h5" >
+                                    Mis Actividades programadas
+                                </Typography>
+                                <Toolbar sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}>
+                                    <ActivitiesHead filterWord={filterName} onFilterWord={handleFilterName} option={orderBy} />
 
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <Button variant="outlined" startIcon={<OrderedListOutlined />} sx={{ mr: '1rem' }} onClick={handleOpenOrderMenu}>
-                                    Ordenar: {order}
-                                </Button>
-                                <Menu anchorEl={orderMenuAnchor} open={Boolean(orderMenuAnchor)} onClose={handleCloseOrderMenu}>
-                                    <MenuItem onClick={() => onOrderChange('asc')} disabled={order === 'asc'}> Ascendente </MenuItem>
-                                    <MenuItem onClick={() => onOrderChange('desc')} disabled={order === 'desc'}> Descendiente </MenuItem>
-                                </Menu>
-                                <Button variant="outlined" startIcon={<SearchOutlined />} onClick={handleOpenSearchMenu}>
-                                    Buscar por: {orderBy}
-                                </Button>
-                                <Menu anchorEl={searchMenuAnchor} open={Boolean(searchMenuAnchor)} onClose={handleCloseSearchMenu}>
-                                    <MenuItem onClick={() => onSearchChange('activity_name')} disabled={orderBy === 'activity_name'}> Nombre de Actividad </MenuItem>
-                                    <MenuItem onClick={() => onSearchChange('id')} disabled={orderBy === 'id'}> ID </MenuItem>
-                                    <MenuItem onClick={() => onSearchChange('patient_name')} disabled={orderBy === 'patient_name'}> Nombre de paciente </MenuItem>
-                                </Menu>
-                            </div>
-                        </Toolbar>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Button variant="outlined" startIcon={<OrderedListOutlined />} sx={{ mr: '1rem' }} onClick={handleOpenOrderMenu}>
+                                            Ordenar: {order}
+                                        </Button>
+                                        <Menu anchorEl={orderMenuAnchor} open={Boolean(orderMenuAnchor)} onClose={handleCloseOrderMenu}>
+                                            <MenuItem onClick={() => onOrderChange('asc')} disabled={order === 'asc'}> Ascendente </MenuItem>
+                                            <MenuItem onClick={() => onOrderChange('desc')} disabled={order === 'desc'}> Descendiente </MenuItem>
+                                        </Menu>
+                                        <Button variant="outlined" startIcon={<SearchOutlined />} onClick={handleOpenSearchMenu}>
+                                            Buscar por: {orderBy}
+                                        </Button>
+                                        <Menu anchorEl={searchMenuAnchor} open={Boolean(searchMenuAnchor)} onClose={handleCloseSearchMenu}>
+                                            <MenuItem onClick={() => onSearchChange('activity_name')} disabled={orderBy === 'activity_name'}> Nombre de Actividad </MenuItem>
+                                            <MenuItem onClick={() => onSearchChange('id')} disabled={orderBy === 'id'}> ID </MenuItem>
+                                            <MenuItem onClick={() => onSearchChange('patient_name')} disabled={orderBy === 'patient_name'}> Nombre de paciente </MenuItem>
+                                        </Menu>
+                                    </div>
+                                </Toolbar>
 
-                    </Stack>
-                </Box>
-                <MainCard content={false}>
-                    <List
-                        component="nav"
+                            </Stack>
+                        </Box>
+                        <MainCard content={false}>
+                            <List
+                                component="nav"
 
-                        sx={{
-                            px: 0,
-                            py: 0,
-                            maxHeight: '500px',
-                            overflow: 'auto',
-                            '& .MuiListItemButton-root': {
-                                py: 1.5,
-                                '& .MuiAvatar-root': avatarSX,
-                                '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
-                            }
-                        }}
-                    >
-                        {filteredActivities.map((elem, index) => (
-                            <ListItemButton divider key={index} onClick={() => { handleListClick(index) }} sx={{ bgcolor: index === selectedList ? '#74e0da' : null, '&:hover': { bgcolor: selectedList === index ? '#74e0da' : null } }}>
-                                <ListItemAvatar>
-                                    <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
-                                        <Avatar
-                                            sx={{
-                                                color: elem.status === 'Realizado' ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
-                                                bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
-                                            }}
-                                        >
-                                            {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
-                                        </Avatar>
-                                        <Avatar alt={elem.therapist_name} src={elem.therapist_picture} />
-                                        <Avatar alt={elem.patient_name} src={elem.patient_picture} />
-                                    </AvatarGroup>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={<Typography variant="subtitle1"> Id No. {elem.id} - {elem.activity_name}</Typography>}
-                                    secondary={`Fecha de inicio: ${elem.start_date} - Fecha de Fin: ${elem.end_date}`}
-                                    sx={{ ml: '1rem' }} />
-                                <ListItemSecondaryAction>
-                                    <Stack direction="row" alignItems="center">
-                                        <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
-                                        <Typography variant="subtitle1" noWrap>
-                                            {elem.status}
-                                        </Typography>
-                                    </Stack>
-                                    {
-                                        selectedList === index ?
-                                            (<Button variant="contained" onClick={handleOpenListModal}>
-                                                Ver Más
-                                            </Button>) :
-                                            (null)
+                                sx={{
+                                    px: 0,
+                                    py: 0,
+                                    maxHeight: '500px',
+                                    overflow: 'auto',
+                                    '& .MuiListItemButton-root': {
+                                        py: 1.5,
+                                        '& .MuiAvatar-root': avatarSX,
+                                        '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
                                     }
+                                }}
+                            >
+                                {filteredActivities.map((elem, index) => (
+                                    <ListItemButton divider key={index} onClick={() => { handleListClick(index) }} sx={{ bgcolor: index === selectedList ? '#74e0da' : null, '&:hover': { bgcolor: selectedList === index ? '#74e0da' : null } }}>
+                                        <ListItemAvatar>
+                                            <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
+                                                <Avatar
+                                                    sx={{
+                                                        color: elem.status === 'Realizado' ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
+                                                        bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
+                                                    }}
+                                                >
+                                                    {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
+                                                </Avatar>
+                                                <Avatar alt={elem.therapist_name} src={elem.therapist_picture} />
+                                                <Avatar alt={elem.patient_name} src={elem.patient_picture} />
+                                            </AvatarGroup>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={<Typography variant="subtitle1"> Id No. {elem.id} - {elem.activity_name}</Typography>}
+                                            secondary={`Fecha de inicio: ${elem.start_date} - Fecha de Fin: ${elem.end_date}`}
+                                            sx={{ ml: '1rem' }} />
+                                        <ListItemSecondaryAction>
+                                            <Stack direction="row" alignItems="center">
+                                                <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
+                                                <Typography variant="subtitle1" noWrap>
+                                                    {elem.status}
+                                                </Typography>
+                                            </Stack>
+                                            {
+                                                selectedList === index ?
+                                                    (<Button variant="contained" onClick={handleOpenListModal}>
+                                                        Ver Más
+                                                    </Button>) :
+                                                    (null)
+                                            }
 
-                                </ListItemSecondaryAction>
-                            </ListItemButton>
-                        ))}
-                    </List>
-                    <Dialog open={openListModal} onClose={handleCloseListModal}>
-                        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography fontWeight="bold" fontSize="1.25rem">
-                                {selectedList !== null && filteredActivities[selectedList]
-                                    ? `Id No. ${filteredActivities[selectedList].id} - ${filteredActivities[selectedList].activity_name}`
-                                    : 'Seleccione una lista'}
-                            </Typography>
-                            <IconButton edge='end' color='inherit'>
-                                <NotificationOutlined />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} type = {'doctor'} handleViewSession = {undefined} handleStartSession = {undefined}/>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseListModal} color="primary">
-                                Cerrar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                                        </ListItemSecondaryAction>
+                                    </ListItemButton>
+                                ))}
+                            </List>
+                            <Dialog open={openListModal} onClose={handleCloseListModal}>
+                                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography fontWeight="bold" fontSize="1.25rem">
+                                        {selectedList !== null && filteredActivities[selectedList]
+                                            ? `Id No. ${filteredActivities[selectedList].id} - ${filteredActivities[selectedList].activity_name}`
+                                            : 'Seleccione una lista'}
+                                    </Typography>
+                                    <IconButton edge='end' color='inherit'>
+                                        <NotificationOutlined />
+                                    </IconButton>
+                                </DialogTitle>
+                                <DialogContent>
+                                    <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal={handleOpenWarningModal} type={'doctor'} handleViewSession={undefined} handleStartSession={undefined} />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseListModal} color="primary">
+                                        Cerrar
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
 
-                    <Dialog open={warningModal} onClose={handleCloseWarningModal}>
-                        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography fontWeight='bold' fontSize='1.25rem'>
-                                Advertencia
-                            </Typography>
-                            <IconButton edge='end' color='inherit'>
-                                <WarningOutlined />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            <Typography>
-                                Al eliminar la actividad, esta no podrá ser recuperada ni sus sesiones asociadas
-                            </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleDeleteActivity} color='primary'>
-                                Eliminar Actividad
-                            </Button>
-                            <Button onClick={handleCloseWarningModal} color='primary'>
-                                Cancelar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                            <Dialog open={warningModal} onClose={handleCloseWarningModal}>
+                                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography fontWeight='bold' fontSize='1.25rem'>
+                                        Advertencia
+                                    </Typography>
+                                    <IconButton edge='end' color='inherit'>
+                                        <WarningOutlined />
+                                    </IconButton>
+                                </DialogTitle>
+                                <DialogContent>
+                                    <Typography>
+                                        Al eliminar la actividad, esta no podrá ser recuperada ni sus sesiones asociadas
+                                    </Typography>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleDeleteActivity} color='primary'>
+                                        Eliminar Actividad
+                                    </Button>
+                                    <Button onClick={handleCloseWarningModal} color='primary'>
+                                        Cancelar
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
 
-                    <Dialog open = {successDeleteModal} onClose = {handleCloseSuccessDeleteModal}>
-                        <DialogTitle sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography fontWeight='bold' fontSize='1.25rem'>
-                                Notificación
-                            </Typography>
-                            <IconButton edge='end' color='inherit'>
-                                <NotificationOutlined />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            {deletedStatus ? (<Typography>
-                                La actividad se ha eliminado correctamente
-                            </Typography>) : (<ChargingCard />)}
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick = {handleCloseSuccessDeleteModal} color = 'primary'>
-                                Cerrar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                            <Dialog open={successDeleteModal} onClose={handleCloseSuccessDeleteModal}>
+                                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography fontWeight='bold' fontSize='1.25rem'>
+                                        Notificación
+                                    </Typography>
+                                    <IconButton edge='end' color='inherit'>
+                                        <NotificationOutlined />
+                                    </IconButton>
+                                </DialogTitle>
+                                <DialogContent>
+                                    {deletedStatus ? (<Typography>
+                                        La actividad se ha eliminado correctamente
+                                    </Typography>) : (<ChargingCard />)}
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseSuccessDeleteModal} color='primary'>
+                                        Cerrar
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
 
-                    {isNotFound && (
-                        <MainCard>
-                            <Typography variant="h6" paragraph>
-                                No encontrado
-                            </Typography>
-                            <Typography variant="body2">
-                                No hay resultados para &nbsp;
-                                <strong>&quot;{filterName}&quot;</strong>.
-                                <br /> Buscando por &quot;{orderBy}&quot;
-                                <br /> Verifique o utilice palabras completas
-                            </Typography>
+                            {isNotFound && (
+                                <MainCard>
+                                    <Typography variant="h6" paragraph>
+                                        No encontrado
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        No hay resultados para &nbsp;
+                                        <strong>&quot;{filterName}&quot;</strong>.
+                                        <br /> Buscando por &quot;{orderBy}&quot;
+                                        <br /> Verifique o utilice palabras completas
+                                    </Typography>
+                                </MainCard>
+                            )}
                         </MainCard>
-                    )}
-                </MainCard>
-                <Box sx={{ p: 3, pb: 3 }}>
-                    <Stack spacing={2} >
-                        <Typography variant="h5" >
-                            Calendario
-                        </Typography>
-                        {
-                            (selectedList === null || filteredActivities[selectedList] === undefined) ?
-                            (<Typography variant="h5" >
-                            Intenta escogiendo alguna actividad
-                            </Typography>)
-                            :
-                            (<ActivityCalendar start_date = {filteredActivities[selectedList].start_date} end_date = {filteredActivities[selectedList].end_date} />)
-                        }
-                    </Stack>
-                </Box>
+                        <Box sx={{ p: 3, pb: 3 }}>
+                            <Stack spacing={2} >
+                                <Typography variant="h5" >
+                                    Calendario
+                                </Typography>
+                                {
+                                    (selectedList === null || filteredActivities[selectedList] === undefined) ?
+                                        (<Typography variant="h5" >
+                                            Intenta escogiendo alguna actividad
+                                        </Typography>)
+                                        :
+                                        (<ActivityCalendar start_date={filteredActivities[selectedList].start_date} end_date={filteredActivities[selectedList].end_date} />)
+                                }
+                            </Stack>
+                        </Box>
+                    </>
+                )}
             </Grid>
         </MainCard>
     )
