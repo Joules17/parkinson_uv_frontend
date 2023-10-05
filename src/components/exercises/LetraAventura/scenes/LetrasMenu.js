@@ -78,6 +78,7 @@ export default class LetrasMenu extends Phaser.Scene {
             this.scene.start('LetrasGame', {settings});
         });
         this.title.on('pointerover', () => {
+            this.sound.play('HoverSound')
             this.title.setColor('#FF0000')
             this.agrandar(this.title); 
         });
@@ -89,9 +90,10 @@ export default class LetrasMenu extends Phaser.Scene {
         // tutorial listeners
         this.tutorial.on('pointerdown', () => {
             this.sound.play('FlipSound')
-            this.scene.start('LetrasTutorial', {settings})
+            this.scene.start('LetrasTuto', {settings})
         }); 
         this.tutorial.on('pointerover', () => {
+            this.sound.play('HoverSound')
             this.tutorial.setColor('#FF0000')
             this.agrandar(this.tutorial)
         }); 

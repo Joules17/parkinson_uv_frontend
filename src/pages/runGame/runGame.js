@@ -14,6 +14,7 @@ import GameFlechasCongeladas from 'components/exercises/FlechasCongeladas/GameFl
 import GameRememberAndFind from 'components/exercises/RememberAndFind/GameRemember';
 import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumbers'
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
+import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -46,6 +47,8 @@ const RunGame = () => {
                 return <GameLetras setting={setting}/>;
             case "Flechas Congeladas": 
                 return <GameFlechasCongeladas setting={setting}/>; 
+            case "Letras Marinas": 
+                return <GameLetrasMarinas setting={setting}/>;
             default:
                 return null;
         }

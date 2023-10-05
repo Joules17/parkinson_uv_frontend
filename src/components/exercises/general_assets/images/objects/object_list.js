@@ -100,7 +100,7 @@ import turtle from './animals/turtle.png'
 let object_list = 
 {
     frutas: {
-        "banana" :  {
+        "banano" :  {
             "key" : "banana",
             "color" : "amarillo", 
             "imagen" : banana
@@ -125,23 +125,23 @@ let object_list =
             "color" : "rojo",
             "imagen" : manzana
             }, 
-        "green_apple" :  {
-            "key" : "green_apple",
+        "manzana_verde" :  {
+            "key" : "manzana_verde",
             "color" : "verde",
             "imagen" : green_apple
             },
-        "carrot" :  {
-            "key" : "carrot",
+        "zanahoria" :  {
+            "key" : "zanahoria",
             "color" : "naranja",
             "imagen" : carrot
         },
-        "cherry" :  {
-            "key" : "cherry",
+        "cereza" :  {
+            "key" : "cereza",
             "color" : "rojo",
             "imagen" : cherry
         },  
-        "dragon_fruit" :  {
-            "key" : "dragon_fruit",
+        "maracuya" :  {
+            "key" : "maracuya",
             "color" : "amarillo",
             "imagen" : dragon_fruit
         },
@@ -155,8 +155,8 @@ let object_list =
             "color" : "verde",
             "imagen" : kiwi
         },
-        "lettuce" :  {
-            "key" : "lettuce",
+        "lechuga" :  {
+            "key" : "lechuga",
             "color" : "verde",
             "imagen" : lettuce
         },
@@ -165,13 +165,13 @@ let object_list =
             "color" : "amarillo",
             "imagen" : limon
         },
-        "onion" :  {
-            "key" : "onion",
+        "cebolla" :  {
+            "key" : "cebolla",
             "color" : "blanco",
             "imagen" : onion
         },
-        "palta" :  {
-            "key" : "palta",
+        "aguacate" :  {
+            "key" : "aguacate",
             "color" : "verde",
             "imagen" : palta
         },
@@ -180,18 +180,18 @@ let object_list =
             "color" : "amarillo",
             "imagen" : papaya
         },
-        "pear" :  {
-            "key" : "pear",
+        "pera" :  {
+            "key" : "pera",
             "color" : "amarillo",
             "imagen" : pear
         },
-        "pina" :  {
-            "key" : "pina",
+        "piña" :  {
+            "key" : "piña",
             "color" : "amarillo",
             "imagen" : pina
         },
-        "pumpkin" :  {
-            "key" : "pumpkin",
+        "calabaza" :  {
+            "key" : "calabaza",
             "color" : "naranja",
             "imagen" : pumpkin
         },
@@ -227,23 +227,23 @@ let object_list =
             "color": "cafe",
             "imagen": bistec
             },
-        "burguer" : {
-            "key": "burguer",
+        "hamburguesa" : {
+            "key": "hamburguesa",
             "color": "cafe",
             "imagen": burguer
             },
-        "cake" : {
-            "key": "cake",
+        "pastel" : {
+            "key": "pastel",
             "color": "cafe",
             "imagen": cake
             },
-        "candy" : {
-            "key": "candy",
+        "dulce" : {
+            "key": "dulce",
             "color": "amarillo",
             "imagen": candy
             },
-        "chickenPlate" : {
-            "key": "chickenPlate",
+        "pollofrito" : {
+            "key": "pollofrito",
             "color": "amarillo",
             "imagen": chickenPlate
             },
@@ -252,13 +252,13 @@ let object_list =
             "color": "cafe",
             "imagen": chocolate
             },
-        "cookie" : {
-            "key": "cookie",
+        "galleta" : {
+            "key": "galleta",
             "color": "cafe",
             "imagen": cookie
             }, 
-        "cookiecream" : {
-            "key": "cookiecream",
+        "platillo" : {
+            "key": "platillo",
             "color": "cafe",
             "imagen": cookiecream
             },
@@ -267,18 +267,18 @@ let object_list =
             "color": "cafe",
             "imagen": hotdog
             },
-        "icecream" : {
-            "key": "icecream",
+        "helado" : {
+            "key": "helado",
             "color": "cafe",
             "imagen": icecream
             },
-        "juice" : {
-            "key": "juice",
+        "jugo" : {
+            "key": "jugo",
             "color": "amarillo",
             "imagen": juice
             },
-        "pez" : {
-            "key": "pez",
+        "pescado" : {
+            "key": "pescado",
             "color": "amarillo",
             "imagen": pez
             },
@@ -292,13 +292,13 @@ let object_list =
             "color": "amarillo",
             "imagen": sandwich
             },
-        "soda" : {
-            "key": "soda",
+        "gaseosa" : {
+            "key": "gaseosa",
             "color": "amarillo",
             "imagen": soda
             },
-        "soup" : {
-            "key": "soup",
+        "sopa" : {
+            "key": "sopa",
             "color": "amarillo",
             "imagen": soup
             },
@@ -329,73 +329,73 @@ let object_list =
             "color" : "gris",
             "imagen": lavadora
         },
-        "bed" : {
-            "key" : "bed",
+        "cama" : {
+            "key" : "cama",
             "color" : "cafe",
             "imagen": bed
         },
-        "car" : {
-            "key" : "car",
+        "carro" : {
+            "key" : "carro",
             "color" : "cafe",
             "imagen": car
         },
-        "clock" : {
-            "key" : "clock",
+        "reloj" : {
+            "key" : "reloj",
             "color" : "cafe",
             "imagen": clock
         },
-        "coffee_machine" : {
-            "key" : "coffee_machine",
+        "cafetera" : {
+            "key" : "cafetera",
             "color" : "cafe",
             "imagen": coffee_machine
         },
-        "dinning_room" : {
-            "key" : "dinning_room",
+        "sala" : {
+            "key" : "sala",
             "color" : "cafe",
             "imagen": dinning_room
         },
-        "fan" : {
-            "key" : "fan",
+        "ventilador" : {
+            "key" : "ventilador",
             "color" : "cafe",
             "imagen": fan
         },
-        "flower_pot" : {
-            "key" : "flower_pot",
+        "maceta" : {
+            "key" : "maceta",
             "color" : "cafe",
             "imagen": flower_pot
         },
-        "key_chain" : {
-            "key" : "key_chain",
+        "llaves" : {
+            "key" : "llaves",
             "color" : "cafe",
             "imagen": key_chain
         },
-        "microwave" : {
-            "key" : "microwave",
+        "microondas" : {
+            "key" : "microondas",
             "color" : "cafe",
             "imagen": microwave
         },
-        "pc" : {
-            "key" : "pc",
+        "computador" : {
+            "key" : "computador",
             "color" : "cafe",
             "imagen": pc
         },
-        "seater_sofa" : {
-            "key" : "seater_sofa",
+        "sofa" : {
+            "key" : "sofa",
             "color" : "cafe",
             "imagen": seater_sofa
         },
-        "stereo" : {
-            "key" : "stereo",
+        "estereo" : {
+            "key" : "estereo",
             "color" : "cafe",
             "imagen": stereo
         },
-        "table_lamp" : {
-            "key" : "table_lamp",
+        "lampara" : {
+            "key" : "lampara",
             "color" : "cafe",
             "imagen": table_lamp
         },
-        "telephone" : {
-            "key" : "telephone",
+        "telefono" : {
+            "key" : "telefono",
             "color" : "cafe",
             "imagen": telephone
         },
@@ -404,60 +404,60 @@ let object_list =
             "color" : "cafe",
             "imagen": television
         },
-        "toilet_paper" : {
-            "key" : "toilet_paper",
+        "higienico" : {
+            "key" : "higienico",
             "color" : "cafe",
             "imagen": toilet_paper
         },
-        "toilet" : {
-            "key" : "toilet",
+        "inodoro" : {
+            "key" : "inodoro",
             "color" : "cafe",
             "imagen": toilet
         },
-        "tooth_brush" : {
-            "key" : "tooth_brush",
+        "cepillo" : {
+            "key" : "cepillo",
             "color" : "cafe",
             "imagen": tooth_brush
         },
-        "trash" : {
-            "key" : "trash",
+        "basura" : {
+            "key" : "basura",
             "color" : "cafe",
             "imagen": trash
         }
     }, 
     animales : {
-        "bear" : {
-            "key": "bear",
+        "oso" : {
+            "key": "oso",
             "color": "cafe",
             "imagen": bear
         },
-        "chicken" : {
-            "key": "chicken",
+        "gallina" : {
+            "key": "gallina",
             "color": "amarillo",
             "imagen": chicken
         },
-        "cocodrile" : {
-            "key": "cocodrile",
+        "cocodrilo" : {
+            "key": "cocodrilo",
             "color": "verde",
             "imagen": cocodrile
         },
-        "cow" : {
-            "key": "cow",
+        "vaca" : {
+            "key": "vaca",
             "color": "blanco",
             "imagen": cow
         },
-        "dog" : {
-            "key": "dog",
+        "perro" : {
+            "key": "perro",
             "color": "cafe",
             "imagen": dog
         },
-        "duck" : {
-            "key": "duck",
+        "pato" : {
+            "key": "pato",
             "color": "amarillo",
             "imagen": duck
         },
-        "fish" : {
-            "key": "fish",
+        "pez" : {
+            "key": "pez",
             "color": "gris",
             "imagen": fish
         },
@@ -466,78 +466,78 @@ let object_list =
             "color": "cafe",
             "imagen": hamster
         },
-        "horse" : {
-            "key": "horse",
+        "caballo" : {
+            "key": "caballo",
             "color": "cafe",
             "imagen": horse
         },
-        "lion" : {
-            "key": "lion",
+        "leon" : {
+            "key": "leon",
             "color": "amarillo",
             "imagen": lion
         },
-        "parrot" : {
-            "key": "parrot",
+        "loro" : {
+            "key": "loro",
             "color": "verde",
             "imagen": parrot
         },
-        "penguin" : {
-            "key": "penguin",
+        "pinguino" : {
+            "key": "pinguino",
             "color": "blanco",
             "imagen": penguin
         },
-        "pig" : {
-            "key": "pig",
+        "cerdo" : {
+            "key": "cerdo",
             "color": "rosado",
             "imagen": pig
         },
-        "snake" : {
-            "key": "snake",
+        "serpiente" : {
+            "key": "serpiente",
             "color": "verde",
             "imagen": snake
         },
-        "whale" : {
-            "key": "whale",
+        "ballena" : {
+            "key": "ballena",
             "color": "gris",
             "imagen": whale
         }, 
-        "bee" : {
-            "key": "bee",
+        "abeja" : {
+            "key": "abeja",
             "color": "amarillo",
             "imagen": bee
         },
-        "cat" : {
-            "key": "cat",
+        "gato" : {
+            "key": "gato",
             "color": "cafe",
             "imagen": cat
         },
-        "crab" : {
-            "key": "crab",
+        "cangrejo" : {
+            "key": "cangrejo",
             "color": "cafe",
             "imagen": crab
         },
-        "monkey" : {
-            "key": "monkey",
+        "mono" : {
+            "key": "mono",
             "color": "cafe",
             "imagen": monkey
         },
-        "rabbit" : {
-            "key": "rabbit",
+        "conejo" : {
+            "key": "conejo",
             "color": "blanco",
             "imagen": rabbit
         },
-        "sheep" : {
-            "key": "sheep",
+        "oveja" : {
+            "key": "oveja",
             "color": "blanco",
             "imagen": sheep
         },
-        "snail" : {
-            "key": "snail",
+        "caracol" : {
+            "key": "caracol",
             "color": "cafe",
             "imagen": snail
         },
-        "turtle" : {
-            "key": "turtle",
+        "tortuga" : {
+            "key": "tortuga",
             "color": "verde",
             "imagen": turtle
         }
