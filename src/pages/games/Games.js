@@ -59,13 +59,19 @@ const CardComponent = ({ card }) => {
         // general rounds 
         settings['rondas'] = config.rondas; 
         
+
+        // only letter soup games: 
+        if (card.title === 'Letras Marinas') {
+            settings['wordsperlevel'] = config.wordsperlevel; 
+        }
+        
         // only levels games: 
-        if (card.title === 'Recuerda y Encuentra') {
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
             settings['niveles'] = config.niveles; 
         } 
 
         // only categories games: 
-        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra') {
+        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
             settings['categorias'] = config.categorias;
         }
 

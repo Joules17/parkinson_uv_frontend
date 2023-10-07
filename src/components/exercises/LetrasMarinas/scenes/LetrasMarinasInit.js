@@ -17,6 +17,7 @@ import FullscreenImg from 'components/exercises/general_assets/images/objects/ot
 import BubbleImg from 'components/exercises/general_assets/images/objects/others/Bubble.png'; 
 // Audio
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
+import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
 
 export default class LetrasMarinasInit extends Phaser.Scene {
     constructor () {
@@ -44,6 +45,7 @@ export default class LetrasMarinasInit extends Phaser.Scene {
         
         // audio
         this.load.audio('HoverSound', HoverSound);
+        this.load.audio('CorrectSound', CorrectSound); 
 
     }
 

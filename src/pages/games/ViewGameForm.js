@@ -31,6 +31,7 @@ const actionSX = {
 export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
     const [valueRounds, setValueRounds] = useState(10); 
     const [valueLevels, setValueLevels] = useState(1); 
+    const [wordsperlevel, setWordsperlevel] = useState(4); 
     const [valueWorldMinLength, setValueWorldMinLength] = useState(2);
     const [valueWordLength, setValueWordLength] = useState(10);
     const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(10);
@@ -70,6 +71,10 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         setValueSecondRoundArrow(event.target.value);
     }; 
 
+    const handleWordsPerLevelChange = (event) => {
+        setWordsperlevel(event.target.value);
+    }; 
+
     
     const handleCheckboxChange = (event) => {
         const optionValue = event.target.value;
@@ -85,6 +90,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
     const handleStart = () => {
         const config = {
             rondas: valueRounds,
+            wordsperlevel: wordsperlevel,
             niveles: valueLevels,
             longitudPalabra: valueWordLength,
             longitudMinPalabra: valueWorldMinLength,
@@ -129,7 +135,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             Especificaciones
                         </Typography>
                     </Grid>
-                    {card.title !== 'Flechas Articas' && (
+                    {(card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas') && (
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
                             type="number"
@@ -139,6 +145,20 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             }}
                             value={valueRounds}
                             onChange={handleRoundsChange}
+                            fullWidth
+                        />
+                        </Grid>
+                    )}
+                    {card.title === 'Letras Marinas' && (
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Numero de palabras por nivel"
+                            InputProps={{
+                                inputProps: { min: 0, max: 6 }
+                            }}
+                            value={wordsperlevel}
+                            onChange={handleWordsPerLevelChange}
                             fullWidth
                         />
                         </Grid>
@@ -169,7 +189,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                         </Grid>
                         </>
                     )}
-                    {card.title === 'Recuerda y Encuentra' && (
+                    {(card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') && (
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
                             type="number"
@@ -212,7 +232,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                         </>
                     )}
                     {
-                        (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso') &&
+                        (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas') &&
                         (
                             <Grid item xs={12} sm={12} md={12} lg={12}>
                                 <Typography fontWeight="bold" variant="1.25rem">
