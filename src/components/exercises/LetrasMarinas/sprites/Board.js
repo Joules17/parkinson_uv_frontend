@@ -56,7 +56,7 @@ export default class Board extends Phaser.GameObjects.Group {
     // Function para volver visible / invisible el trablero
     mostrar(bool) {
         this.children.iterate((sprite) => {
-            sprite.setVisible(bool);
+            sprite.mostrar(bool);
         });
     }
 

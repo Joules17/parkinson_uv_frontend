@@ -6,7 +6,7 @@ import Phaser from "phaser";
 import LetrasMarinasInit from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasInit'; 
 import LetrasMarinasMenu from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasMenu'; 
 import LetrasMarinasGame from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasGame'; 
-
+import LetrasMarinasEnd from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasEnd'; 
 //css
 import 'components/exercises/general_assets/styles.css'
 
@@ -29,7 +29,7 @@ class GameLetrasMarinas extends Component {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizonta
       },
-      scene: [LetrasMarinasInit, LetrasMarinasMenu, LetrasMarinasGame],
+      scene: [LetrasMarinasInit, LetrasMarinasMenu, LetrasMarinasGame, LetrasMarinasEnd],
     }
 
     this.game = new Phaser.Game(config);
@@ -51,7 +51,6 @@ class GameLetrasMarinas extends Component {
     gameContainer.style.height = window.innerHeight + 'px';
     gameContainer.style.justifyContent = 'center';
     gameContainer.style.alignItems = 'center';
-    console.log(gameContainer)
   }
 
   handleLeaveFullScreen() {
@@ -60,7 +59,6 @@ class GameLetrasMarinas extends Component {
     // Restablecer las dimensiones del contenedor
     gameContainer.style.width = `${this.game.config.width}px`;
     gameContainer.style.height = `${this.game.config.height}px`;
-    console.log(gameContainer)
     this.game.scale.resize(this.game.config.width, this.game.config.height);
   }
 

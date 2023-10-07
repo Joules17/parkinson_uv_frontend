@@ -84,5 +84,37 @@ export default class extends Phaser.GameObjects.Container {
         }
     }
 
+    hinting() {
+        // Duración de cada cambio de color (en milisegundos)
+        const colorChangeDuration = 200; // 0.2 segundos
+    
+        const numberOfColorChanges = 10;
+    
+        // Colores a alternar (amarillo y blanco)
+        const colors = [0xe0bc28, 0xffffff];
+    
+        // Iniciar el temporizador para alternar colores
+        const hintTimer = this.scene.time.addEvent({
+            delay: colorChangeDuration,
+            repeat: numberOfColorChanges - 1, // -1 para que termine después del último cambio
+            callback: () => {
+                const currentColor = colors.shift();
+                colors.push(currentColor); // Mueve el color actual al final del arreglo
+                this.bg.setFillStyle(currentColor);
+            }
+        });
+    
+        // Detener el temporizador después de 5 segundos
+        this.scene.time.delayedCall(2000, () => {
+            hintTimer.remove();
+            this.bg.setFillStyle(0xffffff); // Restaurar el color blanco al final
+        });
+    }
+
+    mostrar (bool) {
+        this.bg.setVisible(bool);
+        this.texto.setVisible(bool);
+    }
+
 
 }
