@@ -25,6 +25,7 @@ export default class extends Phaser.GameObjects.Container {
     }
 
     mostrar(bool) {
+        console.log('AQUI?')
         this.figure.setVisible(bool);
         this.bubble_sprite.setVisible(bool);
     }
