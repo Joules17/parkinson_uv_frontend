@@ -23,7 +23,7 @@ export default class LetrasMarinasGame extends Phaser.Scene {
         this.worldSizeHeigth = 600;
         // Level Variables
         this.wordsperlevel = 5; 
-        this.current_level = 1;
+        this.current_nivel = 1;
         this.number_levels = 5;
         // Timers
         this.gameTimeSec = 0;
@@ -35,7 +35,6 @@ export default class LetrasMarinasGame extends Phaser.Scene {
         this.level_list = []; 
         this.current_level = undefined; 
         this.current_board = undefined;
-        this.current_nivel = undefined; 
         this.tablero_config = {
             scene: this, 
             pos_initx: 20,
@@ -214,11 +213,10 @@ export default class LetrasMarinasGame extends Phaser.Scene {
     update () {
         if (this.flag) {
             if (!(this.current_level === undefined)) {
-                this.current_level.execute_level(); 
                 this.tiempo_rondas.push(this.tiempo_por_ronda); 
                 this.tiempo_por_ronda = 0; 
-                this.current_level += 1; 
-                this.nivel_text.setText('Nivel: ' + this.current_level + '/' + this.number_levels)
+                this.current_nivel += 1; 
+                this.nivel_text.setText('Nivel: ' + this.current_nivel + '/' + this.number_levels)
             }
 
             this.pon_tablero(); 
