@@ -10,6 +10,8 @@ export default class extends Phaser.GameObjects.Container {
         this.posy = config.posy;
         this.bubble_sprite = undefined;
         this.type = config.type;
+        this.correct_option = config.correct_option;
+        this.completed = false;
 
         this.figure = undefined;
 
@@ -55,7 +57,7 @@ export default class extends Phaser.GameObjects.Container {
 
     }
 
-    leave () {
+    leave (bubble) {
         this.scene.tweens.add({
             targets: this.objectGroup,
             y: -500,
@@ -63,6 +65,7 @@ export default class extends Phaser.GameObjects.Container {
             duration: 500,
             ease: 'Power2',
             onComplete: () => {
+                bubble.completed = true;
             }
         });
     }
@@ -94,6 +97,10 @@ export default class extends Phaser.GameObjects.Container {
         this.figure.body.onWorldBounds = true;
         this.figure.body.setVelocity(diagonalSpeed, diagonalSpeed);
         this.figure.body.setBounce(1);
+    }
 
+    getFigureSkin () {
+        const figure_skin = this.figure.texture.key.replace('Img', '');
+        return figure_skin;
     }
 }

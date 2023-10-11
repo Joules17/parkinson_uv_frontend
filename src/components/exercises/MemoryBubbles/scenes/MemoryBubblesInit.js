@@ -16,8 +16,8 @@ import FullscreenImg from 'components/exercises/general_assets/images/objects/ot
 import TriangleImg from 'components/exercises/general_assets/images/objects/figures/triangle.png'
 import CircleImg from 'components/exercises/general_assets/images/objects/figures/circle.png'
 import StarImg from 'components/exercises/general_assets/images/objects/figures/star.png'
-
-
+// import SquareImg from 'components/exercises/general_assets/images/objects/figures/square.png';
+// import RhombusImg from 'components/exercises/general_assets/images/objects/figures/rhombus.png';
 import NeutralArrowLeft from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_left.png'
 import NeutralArrowRight from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_right.png'
 
@@ -46,6 +46,8 @@ export default class MemoryBubblesInit extends Phaser.Scene {
         this.load.image('TriangleImg', TriangleImg);
         this.load.image('CircleImg', CircleImg);
         this.load.image('StarImg', StarImg);
+        // this.load.image('SquareImg', SquareImg);
+        // this.load.image('RhombusImg', RhombusImg);
 
         // sounds
         this.load.audio('HoverSound', HoverSound);

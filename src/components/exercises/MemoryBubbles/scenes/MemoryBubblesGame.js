@@ -6,7 +6,7 @@ import 'components/exercises/general_assets/styles.css'
 
 // Custom Classes Imported
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
-import Bubble from '../sprites/Bubble';
+import Level from 'components/exercises/MemoryBubbles/sprites/Level';
 import SteroidObject from 'components/Factory/SteroidObject';
 
 export default class MemoryBubblesGame extends Phaser.Scene {
@@ -94,7 +94,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
 
         this.text_question = this.add.text(80, 70, 'LA BURBUJA ACTUAL ES IGUAL A LA INMEDIATAMENTE\n                                ANTERIOR?', { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(40);
         // Calling Some Bubbles
-        this.test_bubble = new Bubble({scene: this, posx: 400, posy: 300, type: 'Circle'})
+        this.test_level = new Level({scene: this, number_levels: this.number_levels});
         // Fullscreen button
         new FullScreenBttn(this, 770, 30, 'FullscreenImg')
 
