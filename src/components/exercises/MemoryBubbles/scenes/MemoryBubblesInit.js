@@ -1,5 +1,5 @@
 // Phaser
-import Phaser from 'phaser'; 
+import Phaser from 'phaser';
 
 // Styles
 import 'components/exercises/general_assets/styles.css'
@@ -9,9 +9,14 @@ import SeaImg from 'components/exercises/general_assets/images/textures/sea_text
 import AlgaeImg from 'components/exercises/general_assets/images/objects/others/algae.png'
 import AlgaeRedImg from 'components/exercises/general_assets/images/objects/others/algae_red.png'
 import AlgaeGreenImg from 'components/exercises/general_assets/images/objects/others/algae_green.png'
-import BubbleImg from 'components/exercises/general_assets/images/objects/others/Bubble.png'; 
-import BubbleTransparentImg from 'components/exercises/general_assets/images/objects/others/bubble_transparente.png'; 
-import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png'; 
+import BubbleImg from 'components/exercises/general_assets/images/objects/others/Bubble.png';
+import BubbleTransparentImg from 'components/exercises/general_assets/images/objects/others/bubble_transparente.png';
+import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png';
+
+import TriangleImg from 'components/exercises/general_assets/images/objects/figures/triangle.png'
+import CircleImg from 'components/exercises/general_assets/images/objects/figures/circle.png'
+import StarImg from 'components/exercises/general_assets/images/objects/figures/star.png'
+
 
 import NeutralArrowLeft from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_left.png'
 import NeutralArrowRight from 'components/exercises/general_assets/images/objects/arrows/neutral/neutral_right.png'
@@ -27,29 +32,34 @@ export default class MemoryBubblesInit extends Phaser.Scene {
 
     preload () {
         // images
-        this.load.image('SeaImg', SeaImg);  
-        this.load.image('AlgaeImg', AlgaeImg); 
+        this.load.image('SeaImg', SeaImg);
+        this.load.image('AlgaeImg', AlgaeImg);
         this.load.image('FullscreenImg', FullscreenImg);
         this.load.image('BubbleImg', BubbleImg);
         this.load.image('AlgaeRedImg', AlgaeRedImg);
         this.load.image('AlgaeGreenImg', AlgaeGreenImg);
         this.load.image('NeutralArrowRight', NeutralArrowRight);
         this.load.image('NeutralArrowLeft', NeutralArrowLeft);
-        this.load.image('BubbleTransparentImg', BubbleTransparentImg); 
+        this.load.image('BubbleTransparentImg', BubbleTransparentImg);
 
-        // sounds 
-        this.load.audio('HoverSound', HoverSound); 
+        // Figures
+        this.load.image('TriangleImg', TriangleImg);
+        this.load.image('CircleImg', CircleImg);
+        this.load.image('StarImg', StarImg);
+
+        // sounds
+        this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound);
     }
 
     create () {
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
-        this.pass() 
+        this.pass()
     }
 
     pass () {
-        const settings = this.sys.settings.data.setting; 
+        const settings = this.sys.settings.data.setting;
         this.scene.start('MemoryBubblesMenu', {settings});
     }
 }

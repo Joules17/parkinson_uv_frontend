@@ -1,28 +1,28 @@
-// Phaser Component 
-import { Component } from 'react'; 
-import Phaser from 'phaser'; 
+// Phaser Component
+import { Component } from 'react';
+import Phaser from 'phaser';
 
 // Scenes
 import MemoryBubblesInit from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesInit';
 import MemoryBubblesMenu from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesMenu';
-import MemoryBubblesGame from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesGame'; 
+import MemoryBubblesGame from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesGame';
 
 // css
-import 'components/exercises/general_assets/styles.css';    
+import 'components/exercises/general_assets/styles.css';
 
 class GameMemoryBubbles extends Component {
     componentDidMount () {
-        /* eslint-disable */	
+        /* eslint-disable */
         const { setting } = this.props;
         const config = {
-            type: Phaser.AUTO, 
+            type: Phaser.AUTO,
             parent: 'phaser-game-container',
             width: 800,
             height: 600,
             physics: {
                 default: 'arcade',
                 arcade: {
-                    debug: true,
+                    debug: false,
                 },
             },
             scale: {
