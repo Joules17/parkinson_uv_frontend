@@ -33,9 +33,6 @@ export default class extends Phaser.GameObjects.Container {
 
         // Making Group
         this.objectGroup = this.scene.add.container(0, 400, [this.base_figure, this.figure, this.bubble_sprite]).setDepth(-2);
-        console.log(this.posx, this.posy)
-        // Appear Bubble
-        this.appear(this);
     }
 
     create_figure(type) {
@@ -66,6 +63,7 @@ export default class extends Phaser.GameObjects.Container {
             ease: 'Power2',
             onComplete: () => {
                 bubble.completed = true;
+                bubble.setAppeareance(false); 
             }
         });
     }
@@ -102,5 +100,11 @@ export default class extends Phaser.GameObjects.Container {
     getFigureSkin () {
         const figure_skin = this.figure.texture.key.replace('Img', '');
         return figure_skin;
+    }
+
+    setAppeareance(bool) {
+        this.base_figure.setVisible(bool); 
+        this.figure.setVisible(bool); 
+        this.bubble_sprite.setVisible(bool);
     }
 }

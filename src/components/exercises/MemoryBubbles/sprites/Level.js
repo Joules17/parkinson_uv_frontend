@@ -22,7 +22,6 @@ export default class Level {
         for (let i = 0; i < this.number_levels; i++) {
             if (i === 0) {
                 selected_figure = this.figure_options[Math.floor(Math.random() * this.figure_options.length)];
-                console.log(selected_figure, typeof selected_figure, 'AQUI')
                 selected_option = 'first';
             } else {
                 previous_one = this.list_bubbles[i-1].getFigureSkin();
