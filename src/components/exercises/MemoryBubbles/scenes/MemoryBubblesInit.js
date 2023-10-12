@@ -24,6 +24,7 @@ import NeutralArrowRight from 'components/exercises/general_assets/images/object
 // Audio
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
+import BadSound from 'components/exercises/general_assets/sounds/bad.wav';
 
 export default class MemoryBubblesInit extends Phaser.Scene {
     constructor () {
@@ -52,6 +53,7 @@ export default class MemoryBubblesInit extends Phaser.Scene {
         // sounds
         this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound);
+        this.load.audio('BadSound', BadSound);
     }
 
     create () {

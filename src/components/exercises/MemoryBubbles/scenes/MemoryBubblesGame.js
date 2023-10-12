@@ -21,10 +21,10 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         this.number_errors = 0;
 
         // Bubbles
-        this.current_bubble = undefined; 
-        this.current_bubble_index = -1; 
-        this.main_level = undefined; 
-        
+        this.current_bubble = undefined;
+        this.current_bubble_index = -1;
+        this.main_level = undefined;
+
         //
         this.gameTimeSec = 0;
         this.gameTimeMin = 0;
@@ -40,6 +40,9 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         // Init
         const settings = this.sys.settings.data.settings;
 
+        if (settings.rondas !== undefined) {
+            this.number_levels = parseInt(settings.rondas);
+        }
         // Background
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
 
@@ -60,16 +63,16 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         // Panel Rondas
         this.panel_rondas = this.add.graphics();
         this.panel_rondas.fillStyle(0x000000, 0.5);
-        this.panel_rondas.fillRect(150, 0, 160, 40);
+        this.panel_rondas.fillRect(150, 0, 170, 40);
 
         this.rondas_text = this.add.text(160, 10, 'Burbujas: '+this.current_level+'/'+this.number_levels, { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(30);
 
         // Panel Errors
         this.panel_error = this.add.graphics();
         this.panel_error.fillStyle(0x000000, 0.5);
-        this.panel_error.fillRect(315, 0, 135, 40);
+        this.panel_error.fillRect(325, 0, 135, 40);
 
-        this.error_text = this.add.text(325, 10, 'Errores: '+this.number_errors, { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(30);
+        this.error_text = this.add.text(335, 10, 'Errores: '+this.number_errors, { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(30);
 
         // Panel Options
         // Option Right
@@ -88,22 +91,107 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         this.text_left = this.add.text(280, 555, 'NO', { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(40);
         this.arrow_left = this.add.sprite(350, 570, 'NeutralArrowLeft').setScale(0.1)
 
+        // Interactive
+        this.text_right.setInteractive();
+        this.text_left.setInteractive();
         // Panel Question
         this.panel_question = this.add.graphics();
         this.panel_question.fillStyle(0x000000, 0.5);
         this.panel_question.fillRect(50, 50, 700, 100);
 
         this.text_question = this.add.text(80, 70, 'LA BURBUJA ACTUAL ES IGUAL A LA INMEDIATAMENTE\n                                ANTERIOR?', { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(40);
-        
+
         // Calling Some Bubbles
         this.main_level = new Level({scene: this, number_levels: this.number_levels});
-        this.flag = true; 
-        
+        this.flag = true;
+
         // Fullscreen button
         new FullScreenBttn(this, 770, 30, 'FullscreenImg')
 
-        // Listener de teclado 
-        this.input.keyboard.on('keydown', this.handle_keydown, this); 
+        // Listener de teclado
+        this.input.keyboard.on('keydown', this.handle_keydown, this);
+
+        // Listeners de botones
+        this.text_right.on('pointerover', () => {
+            this.sound.play('HoverSound');
+            this.text_right.setTint(0x3bb173)
+            this.tweens.add({
+                targets: this.text_right,
+                scaleX: 1.01,
+                scaleY: 1.01,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
+        this.text_right.on('pointerout', () => {
+            this.text_right.setTint(0xffffff)
+            this.tweens.add({
+                targets: this.text_right,
+                scaleX: 1,
+                scaleY: 1,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
+        this.text_right.on('pointerdown', () => {
+            if (this.current_bubble.correct_option === 'yes') {
+                // Correct Answer Procedure
+                this.feedback(true);
+                this.current_bubble.leave(this.current_bubble);
+                this.sound.play('CorrectSound');
+                this.flag = true;
+            } else {
+                // Bad Answer Procedure
+                this.feedback(false);
+                this.number_errors += 1;
+                this.error_text.setText('Errores: ' + this.number_errors);
+                this.sound.play('BadSound');
+            }
+        });
+
+        this.text_left.on('pointerover', () => {
+            this.sound.play('HoverSound');
+            this.text_left.setTint(0xe15554)
+            this.tweens.add({
+                targets: this.text_left,
+                scaleX: 1.01,
+                scaleY: 1.01,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
+        this.text_left.on('pointerout', () => {
+            this.text_left.setTint(0xffffff)
+            this.tweens.add({
+                targets: this.text_left,
+                scaleX: 1,
+                scaleY: 1,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
+        this.text_left.on('pointerdown', () => {
+            if (this.current_bubble.correct_option === 'no') {
+                // Correct Answer Procedure
+                this.feedback(true);
+                this.current_bubble.leave(this.current_bubble);
+                this.sound.play('CorrectSound');
+                this.flag = true;
+            } else {
+                // Bad Answer Procedure
+                this.feedback(false);
+                this.number_errors += 1;
+                this.error_text.setText('Errores: ' + this.number_errors);
+                this.sound.play('BadSound');
+            }
+        });
+
+
+
         // Time Event
         this.time.addEvent({
             delay: 1000,
@@ -117,35 +205,36 @@ export default class MemoryBubblesGame extends Phaser.Scene {
     update () {
         if (this.flag) {
             if (! (this.current_bubble === undefined)) {
-                this.tiempo_rondas.push(this.tiempo_por_ronda); 
+                this.tiempo_rondas.push(this.tiempo_por_ronda);
                 this.tiempo_por_ronda = 0;
                 this.current_level += 1;
                 this.rondas_text.setText('Burbujas: ' + this.current_level + '/' + this.number_levels);
             }
-            this.put_bubble(); 
+            this.put_bubble();
         }
         if (this.fin_del_juego) {
             console.log('TERMINA EL JUEGO')
             // this.setLog(this.tiempo_por_ronda, this.time_text.text, this.number_levels)
-            // this.scene.start('MemoryBubblesEnd', log); 
-            this.fin_del_juego = false; 
+            // this.scene.start('MemoryBubblesEnd', log);
+            this.fin_del_juego = false;
         }
     }
 
     put_bubble () {
         if (!this.main_level.check_win()) {
-            this.current_bubble_index += 1; 
-            this.current_bubble = this.main_level.list_bubbles[this.current_bubble_index]; 
-            this.current_bubble.appear(this.current_bubble); 
-            this.flag = false; 
+            this.current_bubble_index += 1;
+            this.current_bubble = this.main_level.list_bubbles[this.current_bubble_index];
+            this.current_bubble.appear(this.current_bubble);
+            this.flag = false;
             if (this.current_bubble_index === 0) {
-                this.introduction_time = true; 
-                this.show_introduction(); 
+                this.introduction_time = true;
+                this.show_introduction();
             }
         } else {
-            // the player has won 
+            console.log('Estoy llegando aqui? ')
+            // the player has won
             this.fin_del_juego = true;
-            this.flag = false; 
+            this.flag = false;
         }
     }
 
@@ -162,38 +251,84 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         }
     }
 
-    // Keyboard event 
+    // Keyboard event
     handle_keydown(event) {
         if (!this.flag && !this.fin_del_juego) {
             if (event.keyCode === 37 || event.keyCode === 39) {
                 if (this.current_bubble.correct_option !== 'first') {
                     if ((this.current_bubble.correct_option === 'yes' && event.keyCode === 39) || (this.current_bubble.correct_option === 'no' && event.keyCode === 37)) {
                         // Correct Answer Procedure
-                        this.current_bubble.leave(this.current_bubble); 
-                        this.flag = true; 
+                        this.feedback(true);
+                        this.current_bubble.leave(this.current_bubble);
+                        this.sound.play('CorrectSound');
+                        this.flag = true;
                     } else {
                         // Bad Answer Procedure
-                        console.log('BAD')
+                        this.feedback(false);
+                        this.number_errors += 1;
+                        this.error_text.setText('Errores: ' + this.number_errors);
+                        this.sound.play('BadSound');
                     }
                 }
             }
         }
     }
 
-    // Introduction 
+    // Introduction
     show_introduction () {
         this.text_question.setText('                         OBSERVA LA BURBUJA')
         this.time.addEvent({
-            delay: 3000, 
+            delay: 3000,
             callback: () => {
                 this.text_question.setText('LA BURBUJA ACTUAL ES IGUAL A LA INMEDIATAMENTE\n                                ANTERIOR?')
-                this.introduction_time = false; 
-                // 
+                this.introduction_time = false;
+                //
                 this.current_bubble.leave(this.current_bubble);
                 this.flag = true;
             },
-            callbackScope: this, 
+            callbackScope: this,
             loop: false
-        }); 
+        });
+    }
+
+    feedback(status) {
+        let positions = [
+            [600, 500],
+            [600, 200],
+            [200, 200],
+            [200, 500]
+        ];
+
+        let selected = positions[Math.floor(Math.random() * positions.length)];
+        const feedbackMessage = this.add.text(selected[0], selected[1], '', { fontFamily: 'TROUBLE', fontSize: 40});
+        feedbackMessage.setOrigin(0.5);
+        feedbackMessage.setScale(0);
+
+        if (status) {
+            feedbackMessage.setText('Correcto!');
+            feedbackMessage.setTint(0x00ff00);
+        } else {
+            feedbackMessage.setText('Incorrecto!');
+            feedbackMessage.setTint(0xff0000);
+        }
+
+        //
+        this.tweens.add({
+            targets: feedbackMessage,
+            scale: 1,
+            duration: 500,
+            ease: 'Back',
+            onComplete: () => {
+                this.tweens.add({
+                    targets: feedbackMessage,
+                    alpha: 0,
+                    duration: 500,
+                    delay: 100,
+                    onComplete: () => {
+                        feedbackMessage.destroy();
+                    }
+                });
+            }
+        })
     }
 }
