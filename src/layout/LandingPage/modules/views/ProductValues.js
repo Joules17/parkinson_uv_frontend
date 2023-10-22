@@ -2,10 +2,11 @@
 import { Box, Typography, Container } from '@mui/material'; 
 
 // assets
-import memoria from './assets/memoria.JPG'
-import letra from './assets/letra.jpg'
-import numero from './assets/numero.JPG'
-import frutas from './assets/frutas.JPG'
+import FrozenArrowsMistake from './assets/FrozenArrowsMistake.png'
+import ObjectIntruder from './assets/ObjectIntruder.png'
+import palabraoculta from './assets/palabraoculta.png'
+import soup from './assets/soup.png'
+import saving from './assets/saving.png'
 
 
 function ProductValues() {
@@ -26,17 +27,19 @@ function ProductValues() {
         </Typography>
         <div className="logos">
           <div className="logos-slide">
-            <img src= {memoria} alt = "mem" className="rounded-image"/>
-            <img src= {letra} alt = "let" className="rounded-image"/>
-            <img src= {frutas} alt = "fru" className="rounded-image"/>
-            <img src= {numero} alt = "num" className="rounded-image"/>
+            <img src= {ObjectIntruder} alt = "objIntr" className="rounded-image"/>
+            <img src= {palabraoculta} alt = "WordHidden" className="rounded-image"/>
+            <img src= {soup} alt = "soup" className="rounded-image"/>
+            <img src= {saving} alt = "saving" className="rounded-image"/>
+            <img src= {FrozenArrowsMistake} alt = "mem" className="rounded-image"/>
           </div>
 
           <div className="logos-slide">
-            <img src= {memoria} alt = "mem" className="rounded-image"/>
-            <img src= {letra} alt = "let" className="rounded-image"/>
-            <img src= {frutas} alt = "fru" className="rounded-image"/>
-            <img src= {numero} alt = "num" className="rounded-image"/>
+            <img src= {ObjectIntruder} alt = "objIntr" className="rounded-image"/>
+            <img src= {palabraoculta} alt = "WordHidden" className="rounded-image"/>
+            <img src= {soup} alt = "soup" className="rounded-image"/>
+            <img src= {saving} alt = "saving" className="rounded-image"/>
+            <img src= {FrozenArrowsMistake} alt = "mem" className="rounded-image"/>
           </div>
         </div>
       </Container>

@@ -1,50 +1,55 @@
 // Phaser 
-import Phaser from 'phaser';
+import Phaser from 'phaser'; 
 
 // Styles
 import 'components/exercises/general_assets/styles.css'
 
-// Custom classes Imported:
-import SteroidObject from 'components/Factory/SteroidObject.js';
-import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
+// Custom Classes imported 
+import SteroidObject from 'components/Factory/SteroidObject';
+import FullScreenBttn from 'components/Factory/FullScreenBttn';
 
-export default class LetrasMarinasMenu extends Phaser.Scene {
+export default class MemoryBubblesMenu extends Phaser.Scene {
     constructor () {
-        super({ key: 'LetrasMarinasMenu', backgroundColor: '#3f1651'});
+        super({ key: 'MemoryBubblesMenu', backgroundColor: '#3f1651'});
         this.worldSizeWidth = 800;  
         this.worldSizeHeigth = 600;
+
     }
 
     preload () {}
 
     create () {
-        // Background
-        this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2); 
+        // Background 
+        this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
+
+        // Panel 
+        this.title_panel = this.add.graphics(); 
+        this.title_panel.fillStyle(0xffffff, 0.9);
+        this.title_panel.lineStyle(10, 0x000000)
+        this.title_panel.strokeCircle(400, 260, 250);
+        this.title_panel.fillCircle(400, 260, 250);
+        this.title = this.add.text(238, 150, 'BURBUJAS\n     DE     \n MEMORIA', {fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(110); 
+        
+        this.algae_der = new SteroidObject({scene: this, posx: -10, posy: 350, key: 'AlgaeRedImg'}).dance_function(-5, 5000); 
+        this.algae_izq = new SteroidObject({scene: this, posx: 810, posy: 350, key: 'AlgaeGreenImg'}).dance_function(5, 5000);
+
+        // Algae Base
         var change = -1 
         for (let i = 0; i < 20; i++) {
             new SteroidObject({ scene: this, posx: i*50, posy: 580, key: 'AlgaeImg'}).setScale(0.2).dance_function(change*15, 2000); 
             change = change*-1
         }
 
-        this.coral_der = this.add.sprite(800, 400, 'CoralImg')
-        this.coral_izq = this.add.sprite(50, 500, 'CoralOrange')
-        
-        // Panel 
-        this.title_panel = this.add.graphics();
-        this.title_panel.fillStyle(0xffffff
-            , 1);
-        this.title_panel.fillRect(100, 230, 620, 120);
-
-        this.title = this.add.text(120, 250, 'Letras Marinas', { fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(110)
-        
+        // Start_Panel 
         this.start_panel = this.add.graphics(); 
         this.start_panel.fillStyle(0x000000, 1);
-        this.start_panel.fillRect(335, 365, 140, 70);
+        this.start_panel.fillRect(335, 480, 140, 70);
 
-        this.start_button = this.add.text(350, 380, 'Iniciar', { fontFamily: 'TROUBLE', fill: '#3bb173'}).setFontSize(50)
-        this.start_button.setInteractive(); 
+        this.start_button = this.add.text(350, 495, 'Iniciar', { fontFamily: 'TROUBLE', fill: '#3bb173'}).setFontSize(50)
+        this.start_button.setInteractive();
 
-        // Fullscreen button
+
+        // Fullscreen button 
         new FullScreenBttn(this, 770, 30, 'FullscreenImg')
 
         // Event: 
@@ -62,10 +67,11 @@ export default class LetrasMarinasMenu extends Phaser.Scene {
             callbackScope: this, 
             loop: true
         }); 
-        // Listeners 
+
+        // Listener 
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
-            this.scene.start('LetrasMarinasGame', { settings }); 
+            this.scene.start('MemoryBubblesGame', { settings }); 
         }); 
 
         this.start_button.on('pointerover', () => {
@@ -86,6 +92,7 @@ export default class LetrasMarinasMenu extends Phaser.Scene {
                 ease: 'Power2'
             }); 
         }); 
+
     }
 
     update () {
