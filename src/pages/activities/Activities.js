@@ -329,7 +329,7 @@ export default function ActivityPage() {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} type = {'doctor'} handleViewSession = {undefined} handleStartSession = {undefined}/>
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {handleOpenWarningModal} type = {'doctor'} handleViewSession = {undefined} />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseListModal} color="primary">

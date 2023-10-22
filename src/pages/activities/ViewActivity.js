@@ -1,14 +1,19 @@
-//mui
+
 import { Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 // project import
 import MainCard from "components/MainCard"
 import ChargingCard from "components/ChargingCard"
 import ViewList from 'pages/activities/ViewList';
+import { setGameList } from 'store/reducers/gamesListSlice';
+import { useExternalApi } from 'hooks/listGamesResponse';
+import { useExternalApi as useActivityResponse } from 'hooks/activitiesResponse';
 
 // assets
 import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
-
 // avatar style
 const avatarSX = {
     width: 36,
@@ -26,7 +31,31 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function ViewActivity({ data, handleOpenWarningModal, type, handleViewSession, handleStartSession }) {
+export default function ViewActivity({ data, handleOpenWarningModal, type, handleViewSession }) {
+    const { updateStatusActivity } = useActivityResponse();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [listGames, setListGames] = useState(null);
+    const {getListGames} = useExternalApi();
+
+    useEffect(() => {
+        getListGames(data.id_list, setListGames)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const handleButtonClick = () => {
+        if(data.status == "Pendiente"){
+            const status = "En curso"
+            // Fecha de ahora para iniciar la session
+            updateStatusActivity(data.id, status)
+        }
+
+        if(listGames !== null){
+            dispatch(setGameList({ "gamesList": listGames  }))
+            navigate('/run-list-games');
+        }
+    };
+
     if (data === null) {
         return <ChargingCard />
     }
@@ -139,11 +168,11 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             </div>
                         </Box>
                     </Grid>
-                    <Grid item xs = {12} sm = {12} md = {12} lg = {12}>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant='body1'>
                             Lista Asignada
                         </Typography>
-                        <ViewList id_list = {data.id_list} name_list = {data.lista_name} />
+                        <ViewList listGames={listGames} name_list={data.lista_name} />
                     </Grid>
                 </Grid>
                 {type === 'doctor' && (
@@ -173,7 +202,7 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                     </List>
                 )
                 }
-                {type === 'paciente' && data.status === 'Pendiente' && (
+                {type === 'paciente' && (data.status === 'Pendiente' || data.status === 'En curso') && (
                     <List component='nav' sx={{
                         px: 0,
                         py: 0,
@@ -184,7 +213,7 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
                         }
                     }}>
-                        <ListItemButton divider onClick={handleStartSession} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                        <ListItemButton divider onClick={handleButtonClick} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{
@@ -200,7 +229,7 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                     </List>
                 )}
                 {type === 'paciente' && data.status === 'Realizado' && (
-                    <List component = 'nax' sx = {{
+                    <List component='nax' sx={{
                         px: 0,
                         py: 0,
                         mt: '1rem',
@@ -236,7 +265,7 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
                         }
                     }}>
-                        <ListItemButton divider onClick={handleStartSession} disabled = {true} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
+                        <ListItemButton divider onClick={handleButtonClick} disabled={true} sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.main' } }} >
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{

@@ -34,7 +34,7 @@ export default class RememberEnd extends Phaser.Scene {
         this.tiempo_total = undefined;
         this.tiempo_rondas = undefined;
         this.number_errores = undefined;
-        
+
         // grupos
         this.frutas_lluviosas = undefined;
         // skins
@@ -42,7 +42,9 @@ export default class RememberEnd extends Phaser.Scene {
     }
 
     init(data) {
+
         console.log(data);
+        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total;
         let arreglo = data.info.tiempo_rondas;
         let sum = 0;
@@ -59,9 +61,10 @@ export default class RememberEnd extends Phaser.Scene {
     }
 
     create() {
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor('#e0bc28');
-        this.bg = this.add.sprite(400, 300, 'BgSkye').setDepth(-2); 
+        this.bg = this.add.sprite(400, 300, 'BgSkye').setDepth(-2);
 
         // Flag variable   ------------------------------------------------------------------------------------------------------------
         this.flag = false;
@@ -76,7 +79,7 @@ export default class RememberEnd extends Phaser.Scene {
         this.panelStats.fillRoundedRect(100, 200, 600, 300, 20); // x, y, ancho, alto, radio de curvatura
         this.panelStats.setAlpha(0)
 
-        this.title = this.add.text(200,100, 'FIN DEL JUEGO', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
+        this.title = this.add.text(200, 100, 'FIN DEL JUEGO', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
 
         this.panelStats = this.add.graphics();
         this.panelStats.fillStyle(0xffffff, 1);
@@ -166,5 +169,14 @@ export default class RememberEnd extends Phaser.Scene {
         scene.tiempo_promedio_log.setVisible(value);
         scene.number_errores_msg.setVisible(value);
         scene.number_errores_log.setVisible(value);
+    }
+
+    emitDataToReactComponent(dataToSend) {
+        if (this.game) {
+            // Emitir un evento personalizado
+            this.game.events.emit('dataToReactComponent', dataToSend);
+        } else {
+            console.error('this.game no es válido. Asegúrate de que el juego esté configurado correctamente.');
+        }
     }
 }

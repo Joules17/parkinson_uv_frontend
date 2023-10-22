@@ -49,6 +49,7 @@ export default class RememberLoby extends Phaser.Scene {
     preload() { }
 
     create() {
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor(0x4e9de0);
         this.bg = this.add.sprite(400, 300, 'BgSkye'); 
@@ -126,7 +127,7 @@ export default class RememberLoby extends Phaser.Scene {
             const settings = this.sys.settings.data.settings;
             console.log('ALO? ', settings)
             this.sound.play('CorrectSound');
-            this.scene.start('RememberRondas', { settings });
+            this.scene.start('RememberRondas', { settings }, {game: this.game});
         });
 
         this.go_button.on('pointerover', () => {

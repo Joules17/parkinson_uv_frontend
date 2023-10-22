@@ -30,6 +30,7 @@ const RunListGames = () => {
 
     useEffect(() => {
         setGames(gameListState.gamesList.games)
+        console.log(gameListState)
     }, [gameListState]);
 
     // useEffect(() => {
@@ -40,8 +41,10 @@ const RunListGames = () => {
         image: game.game_picture,
         title: game.name,
         description: game.dominio,
-        setting: game.setting
+        setting: game.setting,
+        active: game.is_played
     }));
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -62,26 +65,29 @@ const RunListGames = () => {
         }
     };
 
+    const handleUpdateIsPlayed = (is_played) => {
+        console.log("is_played actualizado:", is_played);
+    };
+
 
     const renderGame = () => {
-        console.log(startGame.title)
         switch (startGame.title) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={startGame.setting}/>;
+                return <ObjectIntruder setting={startGame.setting} />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting}/>;
+                return <GameNumbers setting={startGame.setting} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting}/>;
+                return <GameArtic setting={startGame.setting} />;
             case "Recuerda y Encuentra":
-                return <GameRememberAndFind setting={startGame.setting}/>;
+                return <GameRememberAndFind setting={startGame.setting} onUpdateIsPlayed={handleUpdateIsPlayed} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting}/>;
+                return <LettersVsNumbers setting={startGame.setting} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting}/>;
+                return <GameLetras setting={startGame.setting} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting}/>;
-            case "Letras Marinas": 
-                return <GameLetrasMarinas setting={startGame.setting}/>;
+                return <GameFlechasCongeladas setting={startGame.setting} />;
+            case "Letras Marinas":
+                return <GameLetrasMarinas setting={startGame.setting} />;
             default:
                 return null;
         }
@@ -90,20 +96,24 @@ const RunListGames = () => {
 
     const renderCard = (card, index) => {
         return (
-            <Card key={index} sx={{ maxWidth: 230 }}>
-                <CardActionArea onClick={() => setStartGame({title: card.title, setting: card.setting})}>
-                    <CardMedia
-                        component="img"
-                        height="90"
-                        image={card.image}
-                        alt={card.title}
-                    />
-                    <CardContent>
-                        <Typography variant="h5">{card.title}</Typography>
-                        <Typography variant="body2">{card.description}</Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+            <div style={card.active ? { pointerEvents: 'none' } : {}}>
+                <Card key={index} sx={{ maxWidth: 230 }} style={card.active ? { backgroundColor: '#f5f5f5'} : {}}>
+                    <CardActionArea onClick={() => setStartGame({ title: card.title, setting: card.setting })}>
+                        <CardMedia
+                            component="img"
+                            height="90"
+                            image={card.image}
+                            alt={card.title}
+                            style={card.active ? { filter: 'grayscale(100%)' } : {}}
+                        />
+                        <CardContent>
+                            <Typography variant="h5">{card.title}</Typography>
+                            <Typography variant="body2">{card.description}</Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </div>
+
         );
     };
 

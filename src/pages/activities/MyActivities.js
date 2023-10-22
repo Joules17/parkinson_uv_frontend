@@ -293,7 +293,7 @@ export default function MyActivitiesPage() {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {undefined} type = {'paciente'} handleViewSession = {console.log('Esta es tu sesion')} handleStartSession = {console.log('Comenzo la sesion')}/>
+                            <ViewActivity data={filteredActivities[selectedList]} handleOpenWarningModal = {undefined} type = {'paciente'} handleViewSession = {console.log('Esta es tu sesion')}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseListModal} color="primary">
