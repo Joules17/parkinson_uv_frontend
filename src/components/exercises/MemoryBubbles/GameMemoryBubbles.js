@@ -6,6 +6,7 @@ import Phaser from 'phaser';
 import MemoryBubblesInit from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesInit';
 import MemoryBubblesMenu from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesMenu';
 import MemoryBubblesGame from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesGame';
+import MemoryBubblesEnd from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesEnd'; 
 
 // css
 import 'components/exercises/general_assets/styles.css';
@@ -27,9 +28,9 @@ class GameMemoryBubbles extends Component {
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizonta
+                autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizontal
             },
-            scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame],
+            scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame, MemoryBubblesEnd],
         }
 
         this.game = new Phaser.Game(config);
