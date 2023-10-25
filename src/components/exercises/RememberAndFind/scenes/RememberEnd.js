@@ -14,15 +14,6 @@ export default class RememberEnd extends Phaser.Scene {
         // paneles
         this.panelStats = undefined;
 
-        // Mensajes
-        this.title = undefined;
-        this.tiempo_total_msg = undefined;
-        this.tiempo_total_log = undefined;
-        this.tiempo_promedio_msg = undefined;
-        this.tiempo_promedio_log = undefined;
-        this.number_errores_msg = undefined;
-        this.number_errores_log = undefined;
-
         // figuras
         this.waveOffset = undefined;
         this.olas = undefined;

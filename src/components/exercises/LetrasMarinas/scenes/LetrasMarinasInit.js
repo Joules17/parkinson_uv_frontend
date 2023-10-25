@@ -18,6 +18,10 @@ import BubbleImg from 'components/exercises/general_assets/images/objects/others
 // Audio
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
+import BubblePopSound from 'components/exercises/general_assets/sounds/BubblePop.mp3'
+import PickBubbleSound from 'components/exercises/general_assets/sounds/PickBubble.mp3'
+import GoodSound from 'components/exercises/general_assets/sounds/good.mp3';
+import FlipSound from 'components/exercises/general_assets/sounds/flip_round.mp3';
 
 export default class LetrasMarinasInit extends Phaser.Scene {
     constructor () {
@@ -46,7 +50,10 @@ export default class LetrasMarinasInit extends Phaser.Scene {
         // audio
         this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound); 
-
+        this.load.audio('PickBubbleSound', PickBubbleSound);
+        this.load.audio('BubblePopSound', BubblePopSound);
+        this.load.audio('GoodSound', GoodSound);
+        this.load.audio('FlipSound', FlipSound);
     }
 
     create () {

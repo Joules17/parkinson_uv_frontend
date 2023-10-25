@@ -9,6 +9,15 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn';
 import Level from 'components/exercises/MemoryBubbles/sprites/Level';
 import SteroidObject from 'components/Factory/SteroidObject';
 
+// Log 
+const log = {
+    info: {
+        numero_rondas: undefined, 
+        tiempo_rondas: undefined,
+        tiempo_total: undefined
+    }
+}
+
 export default class MemoryBubblesGame extends Phaser.Scene {
     constructor () {
         super({key: 'MemoryBubblesGame', backgroundColor: '#3f1651'});
@@ -214,15 +223,16 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('TERMINA EL JUEGO')
-            // this.setLog(this.tiempo_por_ronda, this.time_text.text, this.number_levels)
-            // this.scene.start('MemoryBubblesEnd', log);
+            this.setLog(this.tiempo_por_ronda, this.time_text.text, this.current_level-1)
+            this.scene.start('MemoryBubblesEnd', log);
             this.fin_del_juego = false;
         }
     }
 
     put_bubble () {
-        if (!this.main_level.check_win()) {
+        if (this.current_bubble_index < this.main_level.list_bubbles.length-1) {
             this.current_bubble_index += 1;
+            console.log('CHECK:', this.main_level.list_bubbles.length, '   -   ', this.current_bubble_index)
             this.current_bubble = this.main_level.list_bubbles[this.current_bubble_index];
             this.current_bubble.appear(this.current_bubble);
             this.flag = false;
@@ -330,5 +340,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 });
             }
         })
+    }
+
+    setLog(tiempo_rondas, tiempo_total, number_rondas) {
+        log.info.numero_rondas = number_rondas;
+        log.info.tiempo_total = tiempo_total;
+        log.info.tiempo_rondas = tiempo_rondas;
     }
 }

@@ -97,6 +97,7 @@ export default class Level {
             this.current_bubble = this.bubbles[this.current_index]
             this.current_hint = 0; 
             this.current_bubble.mostrar(true);
+            this.scene.sound.play('GoodSound')
         } else {
             this.victory = true;
             this.victory_level(); 
@@ -105,6 +106,7 @@ export default class Level {
 
     victory_level () {
         this.kill_bubbles()
+        this.scene.sound.play('FlipSound'); 
         this.show_level(false); 
         this.scene.flag = true; 
     }

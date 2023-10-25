@@ -65,6 +65,7 @@ export default class LetrasMarinasMenu extends Phaser.Scene {
         // Listeners 
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
+            this.sound.play('CorrectSound'); 
             this.scene.start('LetrasMarinasGame', { settings }); 
         }); 
 

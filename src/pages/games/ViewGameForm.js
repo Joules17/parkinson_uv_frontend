@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // mui 
-import { Grid, TextField, Typography, Divider, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip, Button, Box, FormControlLabel, FormGroup, Checkbox, FormControl } from '@mui/material';
+import { Grid, TextField, Typography, Divider, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip, Button, Box, FormControlLabel, FormGroup, Checkbox, FormControl, Alert } from '@mui/material';
 
 // project imports
 import MainCard from 'components/MainCard';
@@ -37,6 +37,12 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
     const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(10);
     const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(10);
     const [selectedCategories, setSelectedCategories] = useState([]); 
+    // Errors
+    const [errorRounds, setErrorRounds] = useState(false); 
+    const [errorLevels, setErrorLevels] = useState(false);
+    const [errorWordsPerLevel, setErrorWordsPerLevel] = useState(false);
+    const [errorArrowRounds, setErrorArrowRounds] = useState(false);
+    const [errorCategories, setErrorCategories] = useState(false);
 
     const objetos = [
         { value: "frutas", label: "Frutas" },
@@ -87,20 +93,93 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         });
     };
 
-    const handleStart = () => {
-        const config = {
-            rondas: valueRounds,
-            wordsperlevel: wordsperlevel,
-            niveles: valueLevels,
-            longitudPalabra: valueWordLength,
-            longitudMinPalabra: valueWorldMinLength,
-            rondasFirstArrow: valueFirstRoundArrow,
-            rondasSecondArrow: valueSecondRoundArrow,
-            categorias: selectedCategories
+    const handleCheckErrors = () => {
+        
+        // Rounds Errors  - Flechas Articas y Flechas Marinas (NO)
+        if (card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas') {
+            if (isNaN(parseInt(valueRounds, 10)) || parseInt(valueRounds, 10) < 1) {
+                setErrorRounds(true);
+                return true; 
+            } else {
+                setErrorRounds(false); 
+                
+            }
+        } else {
+            setErrorRounds(false); 
         }
-        handleFormSubmit(config); 
-        handleCloseDialog();
+
+        // Level Erros - Recuerda y Encuentra y Letras Marinas (SI)
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
+            if (isNaN(parseInt(valueLevels, 10)) || parseInt(valueLevels, 10) < 1) {
+                setErrorLevels(true);
+                return true; 
+            } else {
+                setErrorLevels(false); 
+            }
+        } else {
+            setErrorLevels(false); 
+        }
+
+        // Words per level - Letras Marinas (SI)    
+        if (card.title === 'Letras Marinas') {
+            if (isNaN(parseInt(wordsperlevel, 10)) || parseInt(wordsperlevel, 10) < 1 || parseInt(wordsperlevel, 10) > 5) {
+                setErrorWordsPerLevel(true);
+                return true; 
+            } else {
+                setErrorWordsPerLevel(false);   
+            }
+        } else {
+            setErrorWordsPerLevel(false); 
+        }
+
+        // Arrows - Flechas Articas (SI) 
+        if (card.title === 'Flechas Articas') {
+            if (isNaN(parseInt(valueFirstRoundArrow, 10)) || parseInt(valueFirstRoundArrow, 10) < 1) {
+                setErrorArrowRounds(true);
+                return true; 
+            } else {
+                setErrorArrowRounds(false); 
+            }
+            if (isNaN(parseInt(valueSecondRoundArrow, 10)) || parseInt(valueSecondRoundArrow, 10) < 1) {
+                setErrorArrowRounds(true);
+                return true; 
+            } else {
+                setErrorArrowRounds(false); 
+            }
+        } else {
+            setErrorArrowRounds(false);
+        }
+
+        // Categories -  Recuerda y Encuentra, Objeto Intruso, Letras Marinas
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas') {
+            if (selectedCategories.length === 0) {
+                setErrorCategories(true); 
+                return true;
+            } else {
+                setErrorCategories(false); 
+            }
+        } else {
+            setErrorCategories(false); 
+        }
+
     }; 
+    const handleStart = () => {
+        if (!handleCheckErrors()) {
+            const config = {
+                rondas: valueRounds,
+                wordsperlevel: wordsperlevel,
+                niveles: valueLevels,
+                longitudPalabra: valueWordLength,
+                longitudMinPalabra: valueWorldMinLength,
+                rondasFirstArrow: valueFirstRoundArrow,
+                rondasSecondArrow: valueSecondRoundArrow,
+                categorias: selectedCategories
+            }
+            handleFormSubmit(config); 
+            handleCloseDialog();
+        }
+    }; 
+    // ------------------------------------------------------------- RENDER ------------------------------------------------------------- //
     if (card === null) {
         return <ChargingCard />
     } 
@@ -257,6 +336,11 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                             
                         )
                     }
+                    {errorRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de rondas. </Alert></Grid>}
+                    {errorLevels && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de niveles. </Alert></Grid>}
+                    {errorWordsPerLevel && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor digite un valor entre 1 a 6 para el numero de palabras por nivel. </Alert></Grid>}
+                    {errorArrowRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite valores positivos para los numeros de rondas de Flechas. </Alert></Grid>}
+                    {errorCategories && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, seleccione al menos una categoria. </Alert></Grid>}
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <List component='nav' sx={{
                             px: 0,

@@ -38,6 +38,7 @@ export default class extends Phaser.GameObjects.Container {
         this.bg.on('pointerover', () => {
             this.bg.setFillStyle(0xe0bc28);
             this.texto.setTint(0xffffff);
+            this.scene.sound.play('BubblePopSound', { volume: 0.05 })
             if (!this.board.selected_casillas.includes(this)) {
                 this.board.selected_casillas.push(this);
             }
@@ -45,6 +46,7 @@ export default class extends Phaser.GameObjects.Container {
 
         this.bg.on('pointerdown', () => {
             if (!this.board.selecting) {
+                this.scene.sound.play('CorrectSound', { volume: 0.5 })
                 this.board.selecting = true;
                 this.bg.setFillStyle(0xe0bc28);
                 this.texto.setTint(0xffffff);
