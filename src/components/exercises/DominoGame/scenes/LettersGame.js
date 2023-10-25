@@ -58,6 +58,7 @@ export default class LettersGame extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         // Initialize config --------------------------------------------------
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas
@@ -233,7 +234,7 @@ export default class LettersGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino exitosamente')
             this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.number_rounds, this.errores)
-            this.scene.start('LettersEndGame', log)
+            this.scene.start('LettersEndGame', log, {game: this.game})
             this.fin_del_juego = false;
         }
     }

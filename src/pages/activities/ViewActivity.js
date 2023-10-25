@@ -11,6 +11,7 @@ import ViewList from 'pages/activities/ViewList';
 import { setGameList } from 'store/reducers/gamesListSlice';
 import { useExternalApi } from 'hooks/listGamesResponse';
 import { useExternalApi as useActivityResponse } from 'hooks/activitiesResponse';
+import { useExternalApi as useSessionResponse } from 'hooks/sessionResponse';
 
 // assets
 import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
@@ -33,6 +34,7 @@ const actionSX = {
 
 export default function ViewActivity({ data, handleOpenWarningModal, type, handleViewSession }) {
     const { updateStatusActivity } = useActivityResponse();
+    const { createSession } = useSessionResponse();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [listGames, setListGames] = useState(null);
@@ -44,13 +46,24 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
     }, [])
 
     const handleButtonClick = () => {
+        console.log(data)
         if(data.status == "Pendiente"){
             const status = "En curso"
+            const dataSession = {
+                date_start: new Date(),
+                id_activity: data.id,
+                id_patient: data.id_patient,
+                id_therapist: data.id_therapist
+            }
+
             // Fecha de ahora para iniciar la session
             updateStatusActivity(data.id, status)
+            createSession(dataSession)
         }
 
         if(listGames !== null){
+            listGames.id_activity= data.id
+            listGames.id_patient= data.id_patient
             dispatch(setGameList({ "gamesList": listGames  }))
             navigate('/run-list-games');
         }
@@ -155,13 +168,13 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             padding: 1
                         }}>
                             <Avatar alt={data.status} sx={{
-                                color: data.status === 'Realizado' ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' : 'error.main'),
-                                bgcolor: data.status === 'Realizado' ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter'),
+                                color: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' :  'error.main'),
+                                bgcolor: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter'),
                                 mr: '1rem'
 
                             }}
                             >
-                                {data.status === 'Realizado' ? <CarryOutOutlined /> : (data.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
+                                {data.status === 'Realizado' ? <CarryOutOutlined /> : ((data.status === 'Pendiente'|| data.status === 'En curso') ? <CalendarOutlined /> : <CloseSquareOutlined />)}
                             </Avatar>
                             <div>
                                 <Typography variant="subtitle1">{data.status}</Typography>
@@ -172,7 +185,7 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                         <Typography variant='body1'>
                             Lista Asignada
                         </Typography>
-                        <ViewList listGames={listGames} name_list={data.lista_name} />
+                        <ViewList listGames={listGames} name_list={data.lista_name} userType={type} />
                     </Grid>
                 </Grid>
                 {type === 'doctor' && (

@@ -108,6 +108,7 @@ export default class ArticGame extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         // Initialize Data Settings --------------------------------------------------------------------------------------------------------------------------------
         const settings = this.sys.settings.data.settings; 
         if (settings.rondasFirst !== undefined && settings.rondasSecond !== undefined) {
@@ -187,7 +188,7 @@ export default class ArticGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
             this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.errores); 
-            this.scene.start('ArticOver', log)
+            this.scene.start('ArticOver', log, {game: this.game})
             this.fin_del_juego = false;
         }
     }

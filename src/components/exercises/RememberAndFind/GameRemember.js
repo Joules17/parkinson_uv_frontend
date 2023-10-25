@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Phaser from "phaser";
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
+import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+
 
 import RememberInit from 'components/exercises/RememberAndFind/scenes/RememberInit'
 import RememberMenu from 'components/exercises/RememberAndFind/scenes/RememberMenu'
@@ -13,6 +15,8 @@ import 'components/exercises/general_assets/styles.css'
 
 function GameRememberAndFind(props) {
   const dispatch = useDispatch(); 
+  const { id, idSession } = props;
+  const {createLog}= useLogsResponse()
   useEffect(() => {
     const { setting } = props;
 
@@ -50,6 +54,12 @@ function GameRememberAndFind(props) {
   }, []);
 
   const handleDataFromPhaser = (data) => {
+    const dataLog = {
+      id_session: idSession,
+      id_game_list: id,
+      log: data
+    }
+    createLog(dataLog)
     console.log('Datos recibidos desde Phaser:', data);
     dispatch(markGameAsPlayed({ gameName: "Recuerda y Encuentra" })); // Utiliza dispatch aquí
   }

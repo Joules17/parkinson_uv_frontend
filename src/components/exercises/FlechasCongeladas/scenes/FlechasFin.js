@@ -15,6 +15,7 @@ export default class FlechasFin extends Phaser.Scene {
     }
 
     init (data) {
+        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total.text;
         let arreglo = data.info.tiempo_rondas;
         let sum = 0;
@@ -29,6 +30,7 @@ export default class FlechasFin extends Phaser.Scene {
     preload () { }
 
     create () {
+        this.game = this.sys.game
         // Background 
         this.bg = this.add.image(400, 300, 'BgNightSkySnow')
 
@@ -57,5 +59,14 @@ export default class FlechasFin extends Phaser.Scene {
 
         // FullScreen bttn
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+    }
+
+    emitDataToReactComponent(dataToSend) {
+        if (this.game) {
+            // Emitir un evento personalizado
+            this.game.events.emit('dataToReactComponent', dataToSend);
+        } else {
+            console.error('this.game no es válido. Asegúrate de que el juego esté configurado correctamente.');
+        }
     }
 }

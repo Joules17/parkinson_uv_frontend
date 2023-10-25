@@ -20,23 +20,9 @@ export const useExternalApi = () => {
         }
     }
 
-    const updateEndDateSession = async (id_list, datos) => {
-        // const config = {
-        //     url: `${apiServerUrl}/api/game_list/update/setting/${id_list}`,
-        //     method: 'PUT',
-        //     headers: {},
-        //     data: {
-        //         "setting": datos
-        //     }
-        // }
-        // const data = await makeRequest({config})
-
-        // console.log(data)
-    }
-
-    const createSession = async (datos) => {
+    const createLog = async (datos) => {
         const config = {
-            url: `${apiServerUrl}/api/session/create`,
+            url: `${apiServerUrl}/api/logs/create`,
             method: 'POST',
             headers: {},
             data: datos
@@ -46,9 +32,9 @@ export const useExternalApi = () => {
         console.log('Registrado correctamente')
     }
 
-    const getIdSession = async (id_activity, id_patient) =>{
+    const getLogs = async (id_session) =>{
         const config = {
-            url: `${apiServerUrl}/api/session/getId/${id_activity}/${id_patient}`,
+            url: `${apiServerUrl}/api/logs/session/${id_session}`,
             method: 'GET',
             headers: {},
             data: {}
@@ -59,8 +45,7 @@ export const useExternalApi = () => {
     }
 
     return {
-        updateEndDateSession,
-        createSession,
-        getIdSession
+        createLog,
+        getLogs
     }
 }

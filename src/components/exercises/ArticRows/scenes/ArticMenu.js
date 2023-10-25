@@ -30,6 +30,7 @@ export default class ArticMenu extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.game = this.sys.game
     // Background ----------------------------------------------------------------------------------------------------------------------
     this.bg = this.add.image(400, 300, 'BgNightSky'); 
 
@@ -122,7 +123,7 @@ export default class ArticMenu extends Phaser.Scene {
     this.sound.play('StartButtonSound')
     const settings = this.sys.settings.data.settings;
     console.log(settings, 'HOLA COMO ESTAS? ')
-    this.scene.start(this.scene_options[this.selected], {settings})
+    this.scene.start(this.scene_options[this.selected], {settings}, {game: this.game})
   }
   // ------------------------------------------------------------------------------------------------------------------------------
   pointer_over (btn) {

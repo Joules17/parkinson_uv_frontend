@@ -53,6 +53,7 @@ export default class ArticInit extends Phaser.Scene {
         this.load.audio('CrackingSound', CrackingSound);
     }
     create () {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
@@ -61,6 +62,6 @@ export default class ArticInit extends Phaser.Scene {
     pass () {
         const settings = this.sys.settings.data.setting;
         console.log(settings, 'verificando como va todo por aqui')
-        this.scene.start('ArticMenu', {settings})
+        this.scene.start('ArticMenu', {settings}, {game: this.game})
     }
 }

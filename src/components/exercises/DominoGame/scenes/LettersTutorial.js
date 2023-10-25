@@ -88,6 +88,7 @@ export default class LettersTutorial extends Phaser.Scene {
     preload() {}
 
     create () {
+        this.game = this.sys.game
         this.add.sprite(400, 300, 'BgForest');
         
         // fullScreenButton
@@ -219,7 +220,7 @@ export default class LettersTutorial extends Phaser.Scene {
         this.play_button.on('pointerdown', () => {
               const settings = this.sys.settings.data.settings;
               this.sound.play('CorrectSound')
-              this.scene.start('LettersGame', {settings})
+              this.scene.start('LettersGame', {settings}, {game: this.game})
         }); 
       
         this.play_button.on('pointerover', () => {
