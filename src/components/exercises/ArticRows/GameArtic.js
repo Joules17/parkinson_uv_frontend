@@ -1,5 +1,7 @@
 import { Component } from "react";
+import React, { useEffect } from "react";
 import Phaser from "phaser";
+import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 
 // Escenas
 import ArticInit from 'components/exercises/ArticRows/scenes/ArticInit'
@@ -7,6 +9,8 @@ import ArticMenu from 'components/exercises/ArticRows/scenes/ArticMenu'
 import ArticTuto from 'components/exercises/ArticRows/scenes/ArticTuto'
 import ArticGame from 'components/exercises/ArticRows/scenes/ArticGame'
 import ArticOver from 'components/exercises/ArticRows/scenes/ArticOver'
+import { useDispatch } from 'react-redux';
+import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 //css
 import 'components/exercises/general_assets/styles.css'
 

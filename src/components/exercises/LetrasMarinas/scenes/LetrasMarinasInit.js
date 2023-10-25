@@ -57,6 +57,7 @@ export default class LetrasMarinasInit extends Phaser.Scene {
     }
 
     create () {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass() 
@@ -64,6 +65,6 @@ export default class LetrasMarinasInit extends Phaser.Scene {
 
     pass () {
         const settings = this.sys.settings.data.setting; 
-        this.scene.start('LetrasMarinasMenu', {settings});
+        this.scene.start('LetrasMarinasMenu', {settings}, {game: this.game});
     }
 }

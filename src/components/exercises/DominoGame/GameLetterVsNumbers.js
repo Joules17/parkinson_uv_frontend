@@ -1,6 +1,8 @@
 import { Component } from 'react';
+import React, { useEffect } from "react";
 // phaser
 import Phaser from 'phaser';
+import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 
 // scenes
 import LettersInit from 'components/exercises/DominoGame/scenes/LettersInit';
@@ -8,7 +10,8 @@ import LettersMenu from 'components/exercises/DominoGame/scenes/LettersMenu';
 import LettersGame from 'components/exercises/DominoGame/scenes/LettersGame';
 import LettersTutorial from 'components/exercises/DominoGame/scenes/LettersTutorial';
 import LettersEndGame from 'components/exercises/DominoGame/scenes/LettersEndGame';
-
+import { useDispatch } from 'react-redux';
+import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 // css
 import 'components/exercises/general_assets/styles.css'
 
@@ -39,7 +42,7 @@ function LettersVsNumbers(props) {
         }
 
         const game = new Phaser.Game(config);
-        game.scene.start('RememberInit', { setting }, { game });
+        game.scene.start('LettersInit', { setting }, { game });
         game.scale.on('enterfullscreen', handleEnterFullScreen);
         game.scale.on('leavefullscreen', handleLeaveFullScreen);
         game.events.on('dataToReactComponent', handleDataFromPhaser);

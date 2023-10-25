@@ -70,6 +70,7 @@ export default class ObjectRondas extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         console.log(this.sys.settings.data)
 
@@ -114,7 +115,7 @@ export default class ObjectRondas extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
             this.setLog(this.tiempo_rondas, this.texto_tiempototal.text, this.numberFases);
-            this.scene.start('ObjectEnd', log);
+            this.scene.start('ObjectEnd', log, {game: this.game});
             this.fin_del_juego = false;
         }
     }

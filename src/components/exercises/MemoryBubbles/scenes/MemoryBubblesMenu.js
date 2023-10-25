@@ -19,6 +19,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Background 
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
 
@@ -71,7 +72,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
         // Listener 
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
-            this.scene.start('MemoryBubblesGame', { settings }); 
+            this.scene.start('MemoryBubblesGame', { settings }, {game: this.game}); 
         }); 
 
         this.start_button.on('pointerover', () => {

@@ -89,6 +89,7 @@ export default class LetrasGame extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas;
         // Initialize Data
@@ -159,7 +160,7 @@ export default class LetrasGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('el juego acabo correctamente');
             this.set_log(this.tiempo_rondas, this.texto_tiempototal, this.number_rounds, this.errores)
-            this.scene.start('LetrasOver', log)
+            this.scene.start('LetrasOver', log, {game: this.game})
             this.fin_del_juego = false;
         }
     }

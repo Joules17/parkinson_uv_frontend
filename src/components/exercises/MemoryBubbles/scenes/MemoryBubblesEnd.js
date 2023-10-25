@@ -19,6 +19,7 @@ export default class MemoryBubblesEnd extends Phaser.Scene {
     }
     
     init (data) {
+        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total.substring(8); 
         this.numero_rondas = data.info.numero_rondas;
         this.tiempo_rondas = data.info.tiempo_rondas;
@@ -27,6 +28,7 @@ export default class MemoryBubblesEnd extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor('#e0bc28');
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
@@ -88,6 +90,15 @@ export default class MemoryBubblesEnd extends Phaser.Scene {
             if (this.bubble_group.getChildren()[i].y < -50) {
                 this.bubble_group.getChildren()[i].destroy();
             }
+        }
+    }
+
+    emitDataToReactComponent(dataToSend) {
+        if (this.game) {
+            // Emitir un evento personalizado
+            this.game.events.emit('dataToReactComponent', dataToSend);
+        } else {
+            console.error('this.game no es válido. Asegúrate de que el juego esté configurado correctamente.');
         }
     }
 }

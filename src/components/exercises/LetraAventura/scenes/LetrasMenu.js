@@ -20,6 +20,7 @@ export default class LetrasMenu extends Phaser.Scene {
     }
 
     create() {
+        this.game = this.sys.game
         // Initialize -----------------------------------------------------------------------------------------
         const settings = this.sys.settings.data.settings;
         
@@ -90,7 +91,7 @@ export default class LetrasMenu extends Phaser.Scene {
         // tutorial listeners
         this.tutorial.on('pointerdown', () => {
             this.sound.play('FlipSound')
-            this.scene.start('LetrasTuto', {settings})
+            this.scene.start('LetrasTuto', {settings}, {game: this.game})
         }); 
         this.tutorial.on('pointerover', () => {
             this.sound.play('HoverSound')

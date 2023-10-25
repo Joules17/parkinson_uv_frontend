@@ -18,6 +18,7 @@ export default class LetrasMarinasMenu extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Background
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2); 
         var change = -1 
@@ -66,7 +67,7 @@ export default class LetrasMarinasMenu extends Phaser.Scene {
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
             this.sound.play('CorrectSound'); 
-            this.scene.start('LetrasMarinasGame', { settings }); 
+            this.scene.start('LetrasMarinasGame', { settings }, {game: this.game}); 
         }); 
 
         this.start_button.on('pointerover', () => {

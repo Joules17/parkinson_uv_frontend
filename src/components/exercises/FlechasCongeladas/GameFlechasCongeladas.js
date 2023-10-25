@@ -1,8 +1,9 @@
 // react
 import { Component } from 'react';
-
+import React, { useEffect } from "react";
 // phaser
 import Phaser from 'phaser';
+import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 
 // Escenas
 import FlechasInit from 'components/exercises/FlechasCongeladas/scenes/FlechasInit';
@@ -10,7 +11,8 @@ import FlechasMenu from 'components/exercises/FlechasCongeladas/scenes/FlechasMe
 import FlechasGame from 'components/exercises/FlechasCongeladas/scenes/FlechasGame';
 import FlechasFin from 'components/exercises/FlechasCongeladas/scenes/FlechasFin';
 import FlechasTuto from 'components/exercises/FlechasCongeladas/scenes/FlechasTuto';
-
+import { useDispatch } from 'react-redux';
+import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 // Styles
 import 'components/exercises/general_assets/styles.css'
 
@@ -40,7 +42,7 @@ function GameFlechasCongeladas(props) {
         }
 
         const game = new Phaser.Game(config);
-        game.scene.start('RememberInit', { setting }, { game });
+        game.scene.start('FlechasInit', { setting }, { game });
         game.scale.on('enterfullscreen', handleEnterFullScreen);
         game.scale.on('leavefullscreen', handleLeaveFullScreen);
         game.events.on('dataToReactComponent', handleDataFromPhaser);

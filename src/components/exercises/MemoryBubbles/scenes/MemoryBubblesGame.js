@@ -44,6 +44,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Bounds
         this.physics.world.setBounds(0, 0, this.worldSizeWidth, this.worldSizeHeigth);
         // Init
@@ -224,7 +225,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('TERMINA EL JUEGO')
             this.setLog(this.tiempo_por_ronda, this.time_text.text, this.current_level-1)
-            this.scene.start('MemoryBubblesEnd', log);
+            this.scene.start('MemoryBubblesEnd', log, {game: this.game});
             this.fin_del_juego = false;
         }
     }

@@ -74,6 +74,7 @@ export default class LetrasTuto extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Background 
         this.add.image(400, 300, 'BgMint'); 
 
@@ -155,7 +156,7 @@ export default class LetrasTuto extends Phaser.Scene {
         this.button_start_game.on('pointerdown', () => {
             this.sound.play('FlipSound'); 
             const settings = this.sys.settings.data.settings
-            this.scene.start('LetrasGame', {settings}); 
+            this.scene.start('LetrasGame', {settings}, {game: this.game}); 
         }); 
 
         this.button_start_game.on('pointerover', () => {
