@@ -7,10 +7,12 @@ import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse'
 import { useAuth0 } from '@auth0/auth0-react';
 import { juegos, lista_juegos } from './globals';
 import ModalSelectGames from './modalSelectPatients';
+import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
 
 const ModalNewList = ({ open, handleClose }) => {
+    const { createList } = useListResponse()
     const { getGames } = useGameResponse();
     const [games, setGames] = useState(undefined);
     const [openNextModal, setOpenNextModal] = useState(false);
@@ -81,6 +83,10 @@ const ModalNewList = ({ open, handleClose }) => {
         pb: 3,
         overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
     };
+
+    const saveList = () => {
+        createList(newList)
+    }
     return (
         <div>
             <Modal open={open} onClose={handleClose}>
@@ -130,10 +136,13 @@ const ModalNewList = ({ open, handleClose }) => {
                             ))}
                         </Box>
                     </div>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
                         <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Siguiente</Button>
+                    </Box> */}
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
+                        <Button variant="contained" onClick={saveList}>Guardar</Button>
                     </Box>
-                    <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} />
+                    {/* <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} /> */}
                 </Box>
             </Modal>
         </div>
