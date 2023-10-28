@@ -1,10 +1,43 @@
 // mui
-import { Box, Typography, Container, Grid, Link} from '@mui/material';
+import { Box, Typography, Container, Grid, Link } from '@mui/material';
+
+// scroller 
+import { scroller } from 'react-scroll';
+
 // assets
 import fundacion from './assets/logos/fundacion.jpg';
 import uv from './assets/logos/Univalle.svg.png';
 
 function AppFooter() {
+
+    // Scrollers
+    const handleGoToDomains = () => {
+        scroller.scrollTo("product-domains", {
+            duration: 500, 
+            smooth: true, 
+            spy: true, 
+            offset: 50
+        });
+    }
+
+    const handleGoToLegend = () => {
+        scroller.scrollTo("product-legend", {
+            duration: 500, 
+            smooth: true, 
+            spy: true, 
+            offset: 50
+        });
+    }
+
+    const handleGoToHero = () => {
+        scroller.scrollTo("product-hero", {
+            duration: 500, 
+            smooth: true, 
+            spy: true, 
+            offset: 50
+        });
+    }
+
     return (
         <Box
             sx={{
@@ -26,15 +59,14 @@ function AppFooter() {
                         </Typography>
                         <ul>
                             <li>
-                                <Link href="/">Inicio</Link>
+                                <Link onClick = {handleGoToHero}>Inicio</Link>
                             </li>
                             <li>
-                                <Link href="/productos">Productos</Link>
+                                <Link onClick = {handleGoToLegend}>Proposito</Link>
                             </li>
                             <li>
-                                <Link href="/servicios">Servicios</Link>
+                                <Link onClick = {handleGoToDomains}>Dominios Cognitivos</Link>
                             </li>
-                            {/* Agrega más enlaces según tus necesidades */}
                         </ul>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
@@ -43,17 +75,15 @@ function AppFooter() {
                         </Typography>
                         <ul>
                             <li>
-                                <Typography color="#909fb4">
-                                  Lina Marcela Duque Becerra
-                                </Typography>
+                                <Typography color="#909fb4">Lina Marcela Duque Becerra</Typography>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                  Julian Andres Salamanca Tellez
-                                </Typography>
+                                <Typography color="#909fb4">Julian Andres Salamanca Tellez</Typography>
                             </li>
                             <li>
-                                <Link href="https://www.parkinsoncolombia.org">Universidad del Valle</Link>
+                                <Link href="https://www.univalle.edu.co" target="_blank" rel="noopener noreferrer">
+                                    Universidad del Valle
+                                </Link>
                             </li>
                         </ul>
                     </Grid>
@@ -63,40 +93,35 @@ function AppFooter() {
                         </Typography>
                         <ul>
                             <li>
-                                <Link href="https://www.parkinsoncolombia.org" target="_blank" rel="noopener noreferrer">Página Oficial</Link>
+                                <Link href="https://www.parkinsoncolombia.org" target="_blank" rel="noopener noreferrer">
+                                    Página Oficial
+                                </Link>
                             </li>
                             <li>
-                                <Link href="https://www.parkinsoncolombia.org/paginas/contactenos" target="_blank" rel="noopener noreferrer">Contáctenos</Link>
+                                <Link
+                                    href="https://www.parkinsoncolombia.org/paginas/contactenos"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Contáctenos
+                                </Link>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                  Carrera 36 # 4 - 56 San Fernando
-                                </Typography>
+                                <Typography color="#909fb4">Carrera 36 # 4 - 56 San Fernando</Typography>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                  Cali, Colombia
-                                </Typography>
+                                <Typography color="#909fb4">Cali, Colombia</Typography>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                  info@parkinsoncolombia.org
-                                </Typography>
+                                <Typography color="#909fb4">info@parkinsoncolombia.org</Typography>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                  (2) 5542381 - 5542384
-                                </Typography>
+                                <Typography color="#909fb4">(2) 5542381 - 5542384</Typography>
                             </li>
                             <li>
-                                <Typography color="#909fb4">
-                                 (+57) 317 853 4675
-                                </Typography>
+                                <Typography color="#909fb4">(+57) 317 853 4675</Typography>
                             </li>
                         </ul>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        {/* Otros elementos relevantes, como redes sociales, suscripción, etc. */}
                     </Grid>
                 </Grid>
             </Container>

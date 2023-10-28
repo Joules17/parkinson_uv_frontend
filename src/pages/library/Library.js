@@ -49,7 +49,7 @@ const Library = () => {
 
     console.log('listGames', listGames)
     return (
-        <MainCard title="Mi biblioteca" darkTitle>
+        <MainCard title="Mi biblioteca" darkTitle = {true}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
                     variant="contained"

@@ -122,7 +122,7 @@ const RunListGames = () => {
 
 
     return (
-        <MainCard title={lista_juegos[0].name} darkTitle>
+        <MainCard title={lista_juegos[0].name} darkTitle = {true}>
             <Stack spacing={2}>
                 <Carousel responsive={responsive}>
                     {cards.map((card, index) => renderCard(card, index))}

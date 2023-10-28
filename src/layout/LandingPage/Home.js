@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Box, LinearProgress } from '@mui/material';
-import { Link as LinkScroll } from 'react-scroll';
+
+// auth 0
+import { useAuth0 } from '@auth0/auth0-react';
 
 // project import
 import './modules/styles.css';
 import ParticlesComponent from 'layout/LandingPage/modules/components/Particles';
 import ProductHero from './modules/views/ProductHero';
+import ProductLegend from './modules/views/ProductLegend';
 import AppAppBar from './modules/views/AppAppBar';
 import ProductValues from './modules/views/ProductValues';
+import ProductDomains from './modules/views/ProductDomains';
 import ProductAllies from './modules/views/ProductAllies';
 import AppFooter from './modules/views/AppFooter';
 
 const Home = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -49,32 +54,34 @@ const Home = () => {
                 }}
             />
 
-            <div className={`scroll-transition ${scrollProgress > 0 ? 'scroll-active' : ''}`}>
-                <LinkScroll to="product-hero" smooth={true} duration={500}>
-                    <ProductHero />
-                </LinkScroll>
+            <div id = {'product-hero'} className={`scroll-transition ${scrollProgress > 0 ? 'scroll-active' : ''}`}>
+                <ProductHero logged={isAuthenticated} loginWithRedirect={loginWithRedirect} />
             </div>
             <ParticlesComponent />
-            <div className={`scroll-transition ${scrollProgress > 100 ? 'scroll-active' : ''}`}>
-                <LinkScroll to="product-values" smooth={true} duration={500}>
-                    <Box component="section" sx={{ position: 'relative', zIndex: 2, mb: '10rem' }}>
-                        <ProductValues />
-                    </Box>
-                </LinkScroll>
+            <div id={'product-legend'} className={`scroll-transition ${scrollProgress > 100 ? 'scroll-active' : ''}`}>
+                <Box component="section" sx={{ position: 'relative', zIndex: 2, mb: '10rem' }}>
+                    <ProductLegend />
+                </Box>
             </div>
-            <div className={`scroll-transition ${scrollProgress > 200 ? 'scroll-active' : ''}`}>
-                <LinkScroll to="product-info" smooth={true} duration={500}>
-                    <Box component="section" sx={{ position: 'relative', zIndex: 2 }}>
-                        <ProductAllies />
-                    </Box>
-                </LinkScroll>
+            <div id = {'product-domains'} className={`scroll-transition ${scrollProgress > 200 ? 'scroll-active' : ''}`}>
+                <Box component="section" sx={{ position: 'relative', zIndex: 2, mb: '10rem' }}>
+                    <ProductDomains />
+                </Box>
             </div>
-            <div className={`scroll-transition ${scrollProgress > 300 ? 'scroll-active' : ''}`}>
-                <LinkScroll to="product-info" smooth={true} duration={500}>
-                    <Box component="section" sx={{ position: 'relative', zIndex: 2 }}>
-                        <AppFooter />
-                    </Box>
-                </LinkScroll>
+            <div id = {'product-values'} className={`scroll-transition ${scrollProgress > 300 ? 'scroll-active' : ''}`}>
+                <Box component="section" sx={{ position: 'relative', zIndex: 2, mb: '10rem' }}>
+                    <ProductValues />
+                </Box>
+            </div>
+            <div className={`scroll-transition ${scrollProgress > 400 ? 'scroll-active' : ''}`}>
+                <Box component="section" sx={{ position: 'relative', zIndex: 2 }}>
+                    <ProductAllies />
+                </Box>
+            </div>
+            <div className={`scroll-transition ${scrollProgress > 500 ? 'scroll-active' : ''}`}>
+                <Box component="section" sx={{ position: 'relative', zIndex: 2 }}>
+                    <AppFooter />
+                </Box>
             </div>
         </Box>
     );

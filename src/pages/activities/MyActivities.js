@@ -185,7 +185,7 @@ export default function MyActivitiesPage() {
     const isNotFound = !filteredActivities.length && !!filterName;
 
     return (
-        <MainCard title="Actividades" darkTitle="true">
+        <MainCard title="Actividades" darkTitle={true}>
             <Grid item xs={12} md={7} lg={8}>
                 {Object.keys(listActivities).length === 0 ? (<NoActivities type={'paciente'} />) : (<>
 

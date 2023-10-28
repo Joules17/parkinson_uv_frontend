@@ -270,7 +270,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                         // Correct Answer Procedure
                         this.feedback(true);
                         this.current_bubble.leave(this.current_bubble);
-                        this.sound.play('CorrectSound');
+                        this.sound.play('BubblePopSound');
                         this.flag = true;
                     } else {
                         // Bad Answer Procedure

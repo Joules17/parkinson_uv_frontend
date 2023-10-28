@@ -71,6 +71,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
         // Listener 
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
+            this.sound.play('CorrectSound'); 
             this.scene.start('MemoryBubblesGame', { settings }); 
         }); 
 

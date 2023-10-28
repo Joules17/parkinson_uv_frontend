@@ -27,12 +27,12 @@ function ProductAllies() {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} sx = {{ mt: '1rem'}}>
+          <Grid item xs={12} sm={6} sx = {{ mt: '1rem' }}>
             <Box sx={{ marginLeft: '20px' }}>
               <Typography variant="h1" sx = {{ mb: '1rem'}}>
                 Fundación Parkinson de Colombia
               </Typography>
-              <Typography variant="h6">
+              <Typography variant="h6" style={{ textAlign: 'justify' }}>
                 La Fundación Parkinson de Colombia es una organización sin ánimo de lucro encaminada a ayudar a los pacientes con Enfermedad de Parkinson y sus familiares.
                 Fundada el 6 de Abril de 2004, nace como una entidad de puertas abiertas que busca integrar los esfuerzos individuales y de diferentes organizaciones sociales, solidarias con ésta causa.
                 Somos la primera institución especializada en la educación, soporte, rehabilitación y mejoramiento de la Calidad de Vida de pacientes con Enfermedad de Parkinson en Colombia.

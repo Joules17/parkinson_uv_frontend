@@ -8,7 +8,7 @@ import calcularEdad from 'components/handleAge';
 import ProfilePatientForm from 'components/Profile/ProfilePatientForm';
 
 // material-ui
-import { Typography, Stack, Grid, Avatar, Button } from '@mui/material';
+import { Typography, Stack, Grid, Avatar, Button, TextField } from '@mui/material';
 
 const PatientProfile = ({ user, img, handleEdit, editMode, editable, handleExit, onSubmit }) => {
     return (
@@ -29,129 +29,87 @@ const PatientProfile = ({ user, img, handleEdit, editMode, editable, handleExit,
                 </Grid>
 
                 <Grid item>
-                    {editable ? (<Button
-                        disableElevation
-                        color="primary"
-                        onClick={() => { editMode ? null : handleEdit() }}
-                        variant="contained"
-                        sx={{
-                            position: 'relative',
-                            top: '-35px',
-                            marginLeft: 'auto',
-                        }}
-                    >
-                        {editMode ? 'Editando...' : 'Editar'}
-                    </Button>) :
-                        null
-                    }
-
+                    {editable ? (
+                        <Button
+                            disableElevation
+                            color="primary"
+                            onClick={() => {
+                                editMode ? null : handleEdit();
+                            }}
+                            variant="contained"
+                            sx={{
+                                position: 'relative',
+                                top: '-35px',
+                                marginLeft: 'auto'
+                            }}
+                        >
+                            {editMode ? 'Editando...' : 'Editar'}
+                        </Button>
+                    ) : null}
                 </Grid>
                 {editMode ? (
                     <ProfilePatientForm userCharged={user} handleExit={handleExit} onSubmit={onSubmit} />
                 ) : (
                     <>
-                        <Grid item xs={12} sx={{ marginTop: '20px' }}>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" color="inherit" sx={{ marginLeft: '10px' }}>
-                                        Identificacion
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" color="inherit" sx={{ marginLeft: '10px' }}>
-                                        Nombre Completo
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" color="inherit" sx={{ marginLeft: '10px' }}>
-                                        Email
-                                    </Typography>
-                                </Grid>
+                        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+                            <Grid item xs={12} sm={12} lg={12}>
+                                <Typography variant="h4" color="inherit">
+                                    Datos Personales
+                                </Typography>
                             </Grid>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center', mb: '2rem' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.document_type} {user.document_id}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.name} {user.lastname}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.email}
-                                    </Typography>
-                                </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Identificacion"
+                                    fullWidth
+                                    InputProps={{ readOnly: true }}
+                                    defaultValue={`${user.document_type} ${user.document_id}`}
+                                />
                             </Grid>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Teléfono
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Edad
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Género
-                                    </Typography>
-                                </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Nombre Completo"
+                                    fullWidth
+                                    InputProps={{ readOnly: true }}
+                                    defaultValue={`${user.name} ${user.lastname}`}
+                                />
                             </Grid>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center', mb: '2rem' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.cell}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {calcularEdad(user.age)}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.gender}
-                                    </Typography>
-                                </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField label="Email" fullWidth InputProps={{ readOnly: true }} defaultValue={user.email} />
                             </Grid>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Estado
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Fase de Parkinson
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h4" sx={{ marginLeft: '10px' }}>
-                                        Terapeuta Asignado
-                                    </Typography>
-                                </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <TextField label="Teléfono" fullWidth InputProps={{ readOnly: true }} defaultValue={user.cell} />
                             </Grid>
-                            <Grid container spacing={2} sx={{ justifyContent: 'center', mb: '2rem' }}>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.user_status ? 'Activo' : 'Inactivo'}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.parkinson_phase}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                                        {user.therapist_name} {user.therapist_lastname}
-                                    </Typography>
-                                </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField label="Edad" fullWidth InputProps={{ readOnly: true }} defaultValue={calcularEdad(user.age)} />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField label="Género" fullWidth InputProps={{ readOnly: true }} defaultValue={user.gender} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Estado"
+                                    fullWidth
+                                    InputProps={{ readOnly: true }}
+                                    defaultValue={user.user_status ? 'Activo' : 'Inactivo'}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Fase de Parkinson"
+                                    fullWidth
+                                    InputProps={{ readOnly: true }}
+                                    defaultValue={user.parkinson_phase}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Terapeuta Asignado"
+                                    fullWidth
+                                    InputProps={{ readOnly: true }}
+                                    defaultValue={`${user.therapist_name} ${user.therapist_lastname}`}
+                                />
                             </Grid>
                         </Grid>
                     </>

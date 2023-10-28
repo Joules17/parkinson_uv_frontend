@@ -58,7 +58,7 @@ const RunGame = () => {
 
     return (
         <div style = {{ flex: 1 }}>
-            <MainCard title={game} darkTitle>
+            <MainCard title={game} darkTitle={true}>
                 <Typography variant="h6" sx = {{ mb: '2rem'}}>
                     {description}
                 </Typography>

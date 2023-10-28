@@ -57,7 +57,7 @@ export default class extends Phaser.GameObjects.Container {
     leave (bubble) {
         this.scene.tweens.add({
             targets: this.objectGroup,
-            y: -500,
+            y: -1000,
             alpha: 1,
             duration: 500,
             ease: 'Power2',

@@ -1,5 +1,4 @@
-// material ui
-import { Grid, Typography } from '@mui/material';
+import { Grid, TextField, Typography } from '@mui/material';
 
 // prop
 import PropTypes from 'prop-types';
@@ -7,34 +6,30 @@ import PropTypes from 'prop-types';
 const ProfileTherapistCard = ({ LABELS, userCharged }) => {
     console.log(userCharged);
     return (
-        <Grid container spacing={2} sx={{ justifyContent: 'center', marginTop: '20px' }}>
+        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+            <Grid item xs={12} sm={12} lg = {12}>
+                <Typography variant="h4" color="inherit">
+                    Datos Personales
+                </Typography>
+            </Grid>
             {LABELS.map((label) => (
                 <Grid item xs={12} sm={3} key={label}>
-                    <Typography variant="h4" color="inherit" sx={{ marginLeft: '10px' }}>
-                        {label}
-                    </Typography>
+                    <TextField
+                        label={label}
+                        fullWidth
+                        InputProps={{ readOnly: true }}
+                        defaultValue={label === 'Identificacion'
+                            ? `${userCharged.document_type} ${userCharged.document_id}`
+                            : label === 'Nombre Completo'
+                            ? `${userCharged.name} ${userCharged.lastname}`
+                            : label === 'Email'
+                            ? userCharged.email
+                            : label === 'Telefono'
+                            ? userCharged.cell
+                            : ''}
+                    />
                 </Grid>
             ))}
-            <Grid item xs={12} sm={3}>
-                <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                    {userCharged.document_type} {userCharged.document_id}
-                </Typography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-                <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                    {userCharged.name} {userCharged.lastname}
-                </Typography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-                <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                    {userCharged.email}
-                </Typography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-                <Typography variant="h5" color="grey.600" sx={{ marginLeft: '10px' }}>
-                    {userCharged.cell}
-                </Typography>
-            </Grid>
         </Grid>
     );
 };
