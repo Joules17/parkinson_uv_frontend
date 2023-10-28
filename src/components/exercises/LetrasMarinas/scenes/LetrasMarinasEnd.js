@@ -21,12 +21,14 @@ export default class LetrasMarinasEnd extends Phaser.Scene {
     }
 
     init (data) {
+        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total.substring(8); 
         this.numero_rondas = data.info.numero_rondas; 
         this.tiempo_rondas = data.info.tiempo_rondas; 
     }
 
     preload () {
+        this.game = this.sys.game
         // Background 
         this.bg = this.add.image(400, 300, 'SeaImg').setDepth(-2); 
         var change = -1; 
@@ -85,6 +87,15 @@ export default class LetrasMarinasEnd extends Phaser.Scene {
             if (this.bubble_group.getChildren()[i].y < -50) {
                 this.bubble_group.getChildren()[i].destroy();
             }
+        }
+    }
+
+    emitDataToReactComponent(dataToSend) {
+        if (this.game) {
+            // Emitir un evento personalizado
+            this.game.events.emit('dataToReactComponent', dataToSend);
+        } else {
+            console.error('this.game no es válido. Asegúrate de que el juego esté configurado correctamente.');
         }
     }
 }

@@ -9,7 +9,7 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 export default class ObjectEnd extends Phaser.Scene {
 
   constructor() {
-    super({key: 'ObjectEnd', backgroundColor: '#e0bc28'});
+    super({ key: 'ObjectEnd', backgroundColor: '#e0bc28' });
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
 
@@ -40,23 +40,25 @@ export default class ObjectEnd extends Phaser.Scene {
 
   init(data) {
     console.log(data)
+    this.emitDataToReactComponent(data)
     this.tiempo_total = data.info.tiempo_total;
     let arreglo = data.info.tiempo_rondas;
     let sum = 0;
     for (let i = 0; i < arreglo.length; i++) {
-        sum = sum + arreglo[i];
+      sum = sum + arreglo[i];
     }
     let promedio = sum / arreglo.length;
 
     this.tiempo_rondas = promedio.toFixed(2).toString();
     this.number_rondas = data.info.numero_rondas.toString();
-    }
+  }
 
   preload() {
     this.waveOffset = 0;
   }
 
   create() {
+    this.game = this.sys.game
     this.cameras.main.setBackgroundColor('#e0bc28');
     this.bg = this.add.sprite(400, 300, 'BgImg')
 
@@ -81,16 +83,16 @@ export default class ObjectEnd extends Phaser.Scene {
     this.panelStats.setAlpha(0)
 
 
-    this.title = this.add.text(200,100, "fin del juego", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(100)
+    this.title = this.add.text(200, 100, "fin del juego", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100)
 
     // ---------------------
     // Mensajes
-    this.tiempo_total_msg = this.add.text(150, 250, "Tiempo total:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
-    this.tiempo_total_log = this.add.text(500, 250, this.tiempo_total, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
-    this.tiempo_promedio_msg = this.add.text(150, 310, "Tiempo promedio:", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
-    this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
-    this.number_rondas_msg = this.add.text(150, 370, "Numero rondas: ", { fontFamily : 'TROUBLE', fill: '#000000'}).setFontSize(50)
-    this.number_rondas_log = this.add.text(500, 370, this.number_rondas, { fontFamily : 'TROUBLE', fill: '#1A2E44'}).setFontSize(50)
+    this.tiempo_total_msg = this.add.text(150, 250, "Tiempo total:", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50)
+    this.tiempo_total_log = this.add.text(500, 250, this.tiempo_total, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50)
+    this.tiempo_promedio_msg = this.add.text(150, 310, "Tiempo promedio:", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50)
+    this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50)
+    this.number_rondas_msg = this.add.text(150, 370, "Numero rondas: ", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50)
+    this.number_rondas_log = this.add.text(500, 370, this.number_rondas, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50)
     this.statsShow(this, false)
 
     // ---------------------
@@ -101,7 +103,7 @@ export default class ObjectEnd extends Phaser.Scene {
     this.olas = this.physics.add.group()
 
     for (let i = 0; i < 10; i++) {
-      this.olas.add(this.add.circle(50 + i*90, 600, 70, 0xfff4e9de0, 0))
+      this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0xfff4e9de0, 0))
     }
 
     this.olas.children.iterate(ball => {
@@ -111,7 +113,7 @@ export default class ObjectEnd extends Phaser.Scene {
     })
   }
 
-  update () {
+  update() {
     this.waveOffset += 0.01;
     if (!this.pressed) {
       this.olas.children.each(child => {
@@ -141,7 +143,7 @@ export default class ObjectEnd extends Phaser.Scene {
     });
   }
 
-  aparecer (obj, scene) {
+  aparecer(obj, scene) {
     this.tweens.add({
       targets: obj,
       alpha: 1,
@@ -153,7 +155,7 @@ export default class ObjectEnd extends Phaser.Scene {
     });
   }
 
-  statsShow (scene, value) {
+  statsShow(scene, value) {
     scene.tiempo_total_msg.setVisible(value)
     scene.tiempo_total_log.setVisible(value)
     scene.tiempo_promedio_msg.setVisible(value)
@@ -162,4 +164,12 @@ export default class ObjectEnd extends Phaser.Scene {
     scene.number_rondas_log.setVisible(value)
   }
 
+  emitDataToReactComponent(dataToSend) {
+    if (this.game) {
+      // Emitir un evento personalizado
+      this.game.events.emit('dataToReactComponent', dataToSend);
+    } else {
+      console.error('this.game no es válido. Asegúrate de que el juego esté configurado correctamente.');
+    }
+  }
 }

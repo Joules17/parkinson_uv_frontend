@@ -50,6 +50,7 @@ export default class LetrasMarinasGame extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Init
         const settings = this.sys.settings.data.settings; 
         console.log(settings, 'Hola')
@@ -224,7 +225,7 @@ export default class LetrasMarinasGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente'); 
             this.setLog(this.tiempo_por_ronda, this.time_text.text, this.number_levels)
-            this.scene.start('LetrasMarinasEnd', log); 
+            this.scene.start('LetrasMarinasEnd', log, {game: this.game}); 
             this.fin_del_juego = false; 
         }
     }

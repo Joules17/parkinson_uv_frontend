@@ -23,6 +23,7 @@ export default class RememberMenu extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor('#4e9de0');
         this.bg = this.add.sprite(400, 300, 'BgSkye').setDepth(-2); 
@@ -70,7 +71,7 @@ export default class RememberMenu extends Phaser.Scene {
         this.start_button.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings;
             this.sound.play('CorrectSound');
-            this.scene.start('RememberLoby', { settings });
+            this.scene.start('RememberLoby', { settings }, {game: this.game});
         });
 
         this.start_button.on('pointerover', () => {
@@ -95,6 +96,8 @@ export default class RememberMenu extends Phaser.Scene {
                 ease: 'Power2'
             });
         });
+
+        
     }
 
     update() {

@@ -63,6 +63,7 @@ export default class RememberRondas extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor(0x4e9de0);
         this.bg = this.add.sprite(400, 300, 'BgSkye')
@@ -171,7 +172,7 @@ export default class RememberRondas extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
             this.setLog(this.tiempo_rondas, this.texto_tiempototal._text, this.number_errors);
-            this.scene.start('RememberEnd', log);
+            this.scene.start('RememberEnd', log, {game: this.game});
             this.fin_del_juego = false;
         }
     }

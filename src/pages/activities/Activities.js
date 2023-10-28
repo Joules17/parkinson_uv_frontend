@@ -42,6 +42,7 @@ import { useExternalApi as useActivityApi } from 'hooks/activitiesResponse';
 
 // assets
 import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, NotificationOutlined, WarningOutlined } from '@ant-design/icons';
+import ModalLogs from './ModalLogs';
 
 // avatar style
 const avatarSX = {
@@ -156,9 +157,17 @@ export default function ActivityPage() {
 
     // modals
     const [openListModal, setOpenListModal] = useState(false)
+    const [openLogsModal, setOpenLogsModal] = useState(false)
 
     const handleCloseListModal = () => {
         setOpenListModal(false);
+    }
+
+    const handleCloseLogsModal = () => {
+        setOpenLogsModal(false);
+    }
+    const handleOpenLogsModal = () => {
+        setOpenLogsModal(true);
     }
 
     const handleOpenListModal = () => {
@@ -220,12 +229,11 @@ export default function ActivityPage() {
     const isNotFound = !filteredActivities.length && !!filterName;
 
     // console.log(filteredActivities) // comentar para ver las actividades traidas
-
     return (
         <MainCard title="Actividades" darkTitle={true}>
             <Grid item xs={12} md={7} lg={8}>
                 <CreateActivity setList={setListActivities} />
-                {Object.keys(listActivities).length === 0 ? (<NoActivities type = {'terapeuta'}/>) : (
+                {Object.keys(listActivities).length === 0 ? (<NoActivities type={'terapeuta'} />) : (
                     <>
                         <Box sx={{ p: 3, pb: 3 }}>
                             <Stack spacing={2} >
@@ -262,7 +270,6 @@ export default function ActivityPage() {
                         <MainCard content={false}>
                             <List
                                 component="nav"
-
                                 sx={{
                                     px: 0,
                                     py: 0,
@@ -281,11 +288,11 @@ export default function ActivityPage() {
                                             <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
                                                 <Avatar
                                                     sx={{
-                                                        color: elem.status === 'Realizado' ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
-                                                        bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
+                                                        color: (elem.status === 'Realizado' || elem.status === 'En curso') ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
+                                                        bgcolor: (elem.status === 'Realizado' || elem.status === 'En curso') ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
                                                     }}
                                                 >
-                                                    {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
+                                                    {elem.status === 'Realizado' ? <CarryOutOutlined /> : ((elem.status === 'Pendiente' || elem.status === 'En curso') ? <CalendarOutlined /> : <CloseSquareOutlined />)}
                                                 </Avatar>
                                                 <Avatar alt={elem.therapist_name} src={elem.therapist_picture} />
                                                 <Avatar alt={elem.patient_name} src={elem.patient_picture} />
@@ -295,21 +302,23 @@ export default function ActivityPage() {
                                             primary={<Typography variant="subtitle1"> Id No. {elem.id} - {elem.activity_name}</Typography>}
                                             secondary={`Fecha de inicio: ${elem.start_date} - Fecha de Fin: ${elem.end_date}`}
                                             sx={{ ml: '1rem' }} />
+                                        {(elem.status === 'En curso' && selectedList === index) ?
+                                            (<Button variant="contained" onClick={handleOpenLogsModal} style={{ marginTop: 'auto' }}>
+                                                Ver Resultados
+                                            </Button>) : <></>
+                                        }
                                         <ListItemSecondaryAction>
                                             <Stack direction="row" alignItems="center">
-                                                <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
+                                                <Dot color={(elem.status === 'Realizado' || elem.status === 'En curso') ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
                                                 <Typography variant="subtitle1" noWrap>
                                                     {elem.status}
                                                 </Typography>
                                             </Stack>
-                                            {
-                                                selectedList === index ?
-                                                    (<Button variant="contained" onClick={handleOpenListModal}>
-                                                        Ver Más
-                                                    </Button>) :
-                                                    (null)
-                                            }
-
+                                            {selectedList === index ? (
+                                                <Button variant="contained" onClick={handleOpenListModal}>
+                                                    Ver Más
+                                                </Button>
+                                            ) : null}
                                         </ListItemSecondaryAction>
                                     </ListItemButton>
                                 ))}
@@ -334,15 +343,14 @@ export default function ActivityPage() {
                                     </Button>
                                 </DialogActions>
                             </Dialog>
+                            
+                            <ModalLogs activity={filteredActivities[selectedList]}  open={openLogsModal} handleClose={handleCloseLogsModal}/>
 
                             <Dialog open={warningModal} onClose={handleCloseWarningModal}>
                                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <Typography fontWeight='bold' fontSize='1.25rem'>
                                         Advertencia
                                     </Typography>
-                                    <IconButton edge='end' color='inherit'>
-                                        <WarningOutlined />
-                                    </IconButton>
                                 </DialogTitle>
                                 <DialogContent>
                                     <Typography>

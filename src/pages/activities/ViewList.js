@@ -12,22 +12,8 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 // api callbacks
 import { useExternalApi } from 'hooks/listGamesResponse';
 
-export default function ViewList({ id_list, name_list }) {
+export default function ViewList({ listGames, name_list, userType }) {
     const [isInfoVisible, setIsInfoVisible] = useState(false);
-    const [listGames, setListGames] = useState(null);
-    const [loading, setLoading] = useState('Cargando...');
-
-    // api
-    const {
-        getListGames
-    } = useExternalApi();
-
-    useEffect(() => {
-        getListGames(id_list, setListGames).then(() => {
-            setLoading(name_list);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const toggleInfoVisible = () => {
         setIsInfoVisible(!isInfoVisible);
@@ -36,12 +22,10 @@ export default function ViewList({ id_list, name_list }) {
     if (listGames === null) {
         return <ChargingCard />;
     }
-
-    console.log(listGames)
     return (
         <div>
             <Button onClick={toggleInfoVisible} variant="outlined" fullWidth endIcon={isInfoVisible ? <UpOutlined /> : <DownOutlined />}>
-                {loading}
+                {name_list}
             </Button>
             {isInfoVisible && (
                 <div>
@@ -61,6 +45,10 @@ export default function ViewList({ id_list, name_list }) {
                                 <div>
                                     <Typography variant="subtitle1">{item.name}</Typography>
                                     <Typography variant="body2" color="text.secondary"> {item.id_type} </Typography>
+                                    {userType == "doctor" && (
+                                        //Poner aquí los logs 
+                                        <Typography variant="body2" color="text.secondary"> {item.id_type} </Typography>
+                                    )}
                                 </div>
                             </Box>
                             {item.setting && item.setting.rondas !== undefined && (

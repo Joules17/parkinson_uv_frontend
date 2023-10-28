@@ -54,6 +54,7 @@ export default class FlechasInit extends Phaser.Scene {
     }
 
     create () {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
@@ -61,6 +62,6 @@ export default class FlechasInit extends Phaser.Scene {
 
     pass () {
         const settings = this.sys.settings.data.setting; 
-        this.scene.start('FlechasMenu', {settings})
+        this.scene.start('FlechasMenu', {settings}, {game: this.game})
     }
 }

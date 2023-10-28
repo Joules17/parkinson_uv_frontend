@@ -76,6 +76,7 @@ export default class FlechasGame extends Phaser.Scene {
     preload () {}
 
     create() {
+        this.game = this.sys.game
         // Initialize 
         const settings = this.sys.settings.data.settings;
         console.log('ESTOY LLEGANDO BIEN?', settings)
@@ -155,7 +156,7 @@ export default class FlechasGame extends Phaser.Scene {
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente'); 
             this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.errores);
-            this.scene.start('FlechasFin', log);
+            this.scene.start('FlechasFin', log, {game: this.game});
             this.fin_del_juego = false; 
         }
     }

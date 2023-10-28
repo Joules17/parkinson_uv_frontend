@@ -40,6 +40,7 @@ export default class LettersInit extends Phaser.Scene {
     }
 
     create() {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
         this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
@@ -48,6 +49,6 @@ export default class LettersInit extends Phaser.Scene {
     pass () {
         const settings = this.sys.settings.data.setting;
         // console.log('Llego bien?', settings)
-        this.scene.start('LettersMenu', {settings})
+        this.scene.start('LettersMenu', {settings}, {game: this.game})
     }
 }

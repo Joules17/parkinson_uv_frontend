@@ -40,6 +40,7 @@ export default class ObjectMenu extends Phaser.Scene {
     }
 
     create() {
+        this.game = this.sys.game
         // background color
         this.cameras.main.setBackgroundColor('#e0bc28');
 
@@ -169,7 +170,7 @@ export default class ObjectMenu extends Phaser.Scene {
         if (this.flag) {
             const settings = this.sys.settings.data.settings;
             this.flag = false;
-            this.scene.start('ObjectLoby', {settings});
+            this.scene.start('ObjectLoby', {settings}, {game: this.game});
         }
     }
 

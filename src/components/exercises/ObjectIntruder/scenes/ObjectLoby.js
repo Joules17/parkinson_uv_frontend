@@ -47,6 +47,7 @@ export default class ObjectLoby extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.game = this.sys.game
     // ----------------------- Background -----------------------
     this.cameras.main.setBackgroundColor(0xfff4e9de0);
     this.bg = this.add.sprite(400, 300, 'BgSky')
@@ -112,7 +113,7 @@ export default class ObjectLoby extends Phaser.Scene {
       if (this.victory_message.visible && this.button_continue.visible) {
         const settings = this.sys.settings.data.settings;
         this.sound.play('CorrectSound')
-        this.scene.start('ObjectRondas', {settings})
+        this.scene.start('ObjectRondas', {settings}, {game: this.game})
       }
     })
 

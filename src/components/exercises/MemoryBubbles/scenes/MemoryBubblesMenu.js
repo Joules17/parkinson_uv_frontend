@@ -19,6 +19,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Background 
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
 

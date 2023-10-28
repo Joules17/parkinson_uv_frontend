@@ -69,6 +69,7 @@ export default class ArticTuto extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.game = this.sys.game
         // Background
         this.bg = this.add.image(400, 300, 'BgNightSky');
 
@@ -123,7 +124,7 @@ export default class ArticTuto extends Phaser.Scene {
         this.play_button.on('pointerdown', () => {
           this.sound.play('StartButtonSound')
           const settings = this.sys.settings.data.settings;
-          this.scene.start('ArticGame', {settings})
+          this.scene.start('ArticGame', {settings}, {game: this.game})
         }); 
   
         this.play_button.on('pointerover', () => {
