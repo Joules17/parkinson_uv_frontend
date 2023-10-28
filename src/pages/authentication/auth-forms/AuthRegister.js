@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
@@ -35,13 +35,11 @@ import { useExternalApi as TherapistApi } from 'hooks/therapistResponse';
 // project import
 // import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // assets
 import { CoffeeOutlined, UserOutlined} from '@ant-design/icons';
 
 // ============================|| FIREBASE - REGISTER ||============================ //
-
 const generos = [
     { value: 'masculino', label: 'Masculino' },
     { value: 'femenino', label: 'Femenino' },
@@ -106,10 +104,10 @@ const AuthRegister = () => {
                 validationSchema={Yup.object().shape({
                     document_type: Yup.string().max(20).required('Necesitamos saber tu tipo de id'), 
                     document_id: Yup.string().max(200).required('Necesitamos saber tu numero de indentificacion'),
-                    name: Yup.string().max(255).required('Recuerda poner tu nombre'),
-                    lastname: Yup.string().max(255).required('Necesitamos tu apellido'),
+                    name: Yup.string().max(255).matches(/^[A-Za-z]+$/, 'El nombre no debe contener dígitos').required('Recuerda poner tu nombre'),
+                    lastname: Yup.string().max(255).matches(/^[A-Za-z]+$/, 'El nombre no debe contener dígitos').required('Necesitamos tu apellido'),
                     gender: Yup.string().max(20).required('Necesitamos saber tu genero'),
-                    cell: Yup.string().max(200).required('Necesitamos un telefono'),
+                    cell: Yup.string().max(200).matches(/^[0-9]+$/, 'El teléfono solo debe contener dígitos').required('Necesitamos un telefono'),
                     age: Yup.string().max(11).required('La fecha de nacimiento es obligatoria')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -352,9 +350,9 @@ const AuthRegister = () => {
                 validationSchema={Yup.object().shape({
                     document_type: Yup.string().max(20).required('Recuerda poner tu tipo de id'),
                     document_id: Yup.string().max(255).required('Recuerda poner tu identificacion'),
-                    name: Yup.string().max(255).required('Recuerda poner tu nombre'),
-                    lastname: Yup.string().max(255).required('Necesitamos tu apellido'),
-                    cell: Yup.string().max(200).required('Necesitamos un telefono')
+                    name: Yup.string().max(255).matches(/^[A-Za-z]+$/, 'El nombre no debe contener dígitos').required('Recuerda poner tu nombre'),
+                    lastname: Yup.string().max(255).matches(/^[A-Za-z]+$/, 'El nombre no debe contener dígitos').required('Necesitamos tu apellido'),
+                    cell: Yup.string().max(200).matches(/^[0-9]+$/, 'El teléfono solo debe contener dígitos').required('Necesitamos un telefono')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
