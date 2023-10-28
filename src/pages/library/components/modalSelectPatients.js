@@ -35,7 +35,6 @@ const ModalSelectGames = ({ open, handleClose, newList }) => {
     }, [newList])
 
     useEffect(() => {
-        // Asegúrate de que selectedPatients y userCharged no sean undefined antes de actualizar newListReady
         if (selectedPatients !== undefined && userCharged !== undefined) {
             // Agrega los campos id_therapist e id_patient al objeto newListReady
             setNewListReady({

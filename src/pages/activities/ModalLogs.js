@@ -87,7 +87,7 @@ const ModalLogs = ({ activity, open, handleClose }) => {
           </Button>
           <h2>Resultados</h2>
           <List alignItems="flex-start">
-            {logs?.map((game) => (
+            {Array.isArray(logs) && logs.map((game) => (
               <>
                 <ListItemButton key={game.id} onClick={() => handleItemClick(game.id)}>
                   <ListItemAvatar>
@@ -103,7 +103,7 @@ const ModalLogs = ({ activity, open, handleClose }) => {
                   {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
                 </ListItemButton>
                 <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
-                  <Box sx={{margin: 2}}>
+                  <Box sx={{ margin: 2 }}>
                     {Object.keys(game.log.info).map((key) => (
                       <p key={key}>
                         <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {game.log.info[key]}

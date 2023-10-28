@@ -12,12 +12,14 @@ import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
 
 const ModalNewList = ({ open, handleClose }) => {
+    const { user } = useAuth0()
     const { createList } = useListResponse()
     const { getGames } = useGameResponse();
+    const [userCharged, setUserCharged] = useState(undefined);
     const [games, setGames] = useState(undefined);
     const [openNextModal, setOpenNextModal] = useState(false);
     const [checkedItems, setCheckedItems] = React.useState([]);
-    const { getTherapist, getTherapistPatients } = useTherapistResponse()
+    const { getTherapist } = useTherapistResponse()
 
     const [newList, setNewList] = useState({
         name: '',
@@ -25,23 +27,33 @@ const ModalNewList = ({ open, handleClose }) => {
     });
 
     useEffect(() => {
+        getTherapist(user.sub, setUserCharged);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
         if (open) {
-          setCheckedItems([]);
-          setNewList({
-            name: '',
-            games: [],
-          });
+            setCheckedItems([]);
+            setNewList({
+                name: '',
+                games: [],
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [open]);
+    }, [open]);
 
     const handleNameChange = (event) => {
         setNewList({ ...newList, name: event.target.value });
     };
 
     const handleListItemClick = (event) => {
-        setNewList({ ...newList, games: checkedItems });
-        setOpenNextModal(true);
+        if (userCharged !== undefined) {
+            setNewList((prevList) => {
+                const updatedList = { ...prevList, games: checkedItems, id_therapist: userCharged.user_id };
+                saveList(updatedList); 
+                return updatedList; 
+            });
+        }
     };
 
     useEffect(() => {
@@ -84,8 +96,8 @@ const ModalNewList = ({ open, handleClose }) => {
         overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
     };
 
-    const saveList = () => {
-        createList(newList)
+    const saveList = (list) => {
+        createList(list)
     }
     return (
         <div>
@@ -140,7 +152,7 @@ const ModalNewList = ({ open, handleClose }) => {
                         <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Siguiente</Button>
                     </Box> */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
-                        <Button variant="contained" onClick={saveList}>Guardar</Button>
+                        <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Guardar</Button>
                     </Box>
                     {/* <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} /> */}
                 </Box>
