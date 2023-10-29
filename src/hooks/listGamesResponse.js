@@ -47,6 +47,17 @@ export const useExternalApi = () => {
         setListGames(data)
     }
 
+    const deleteListGames = async (id) => {
+        const config = {
+            url: `${apiServerUrl}/api/list/delete/${id}`,
+            method: 'DELETE',
+            headers: {},
+            data: {}
+        }
+
+        await makeRequest({config}); 
+    }; 
+
     const getListGames = async (id, setListGames) => {
         const config = {
             url: `${apiServerUrl}/api/list/retreive/${id}`,
@@ -92,6 +103,7 @@ export const useExternalApi = () => {
         getListGamesDetailed,
         getListGames,
         updateSettingGameList,
-        createList
+        createList, 
+        deleteListGames
     }
 }
