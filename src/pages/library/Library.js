@@ -13,12 +13,12 @@ import {
     DialogTitle,
     DialogActions,
     DialogContent,
-    Typography, 
+    Typography,
     IconButton
 } from '@mui/material';
 
 // ant-design
-import { BookOutlined, PlusCircleOutlined, NotificationOutlined  } from '@ant-design/icons';
+import { BookOutlined, PlusCircleOutlined, NotificationOutlined } from '@ant-design/icons';
 
 // import { lista_juegos } from './components/globals';
 
@@ -40,7 +40,7 @@ import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
 // ==============================|| LIBRARY PAGE ||============================== //
 export default function Library() {
     // api
-    const { getListGamesDetailed, deleteListGames } = useListGameResponse();
+    const { getListGamesDetailed, deleteListGames, checkListGames } = useListGameResponse();
 
     // Auth 0
     const { user } = useAuth0();
@@ -53,7 +53,10 @@ export default function Library() {
     const [onLoading, setOnLoading] = useState(true);
     const [warningModal, setWarningModal] = useState(false);
     const [deletedStatus, setDeletedStatus] = useState(false);
+    const [failedStatus, setFailedStatus] = useState(false);
+
     const [createdStatus, setCreatedStatus] = useState(false);
+    const [createdListModal, setCreatedListModal] = useState(false);
     const [successDeleteModal, setSuccessDeleteModal] = useState(false);
 
     // modals
@@ -79,23 +82,35 @@ export default function Library() {
         setOpenModalGames(true);
     };
 
-    const handleDeleteList = () => {
-        setSuccessDeleteModal(true); 
-        deleteListGames(list.id).then(() => {
-            getListGamesDetailed(user.sub, setListGames).then(() => {
-                setDeletedStatus(true);
+    const handleDeleteList = async () => {
+        setSuccessDeleteModal(true);
+
+        const isAssigned = await checkListGames(list.id);
+        if (isAssigned) {
+            setFailedStatus(true); 
+        } else {
+            deleteListGames(list.id).then(() => {
+                getListGamesDetailed(user.sub, setListGames).then(() => {
+                    setDeletedStatus(true);
+                });
             });
-        });
+        }
     };
 
     const handleCloseSuccessDeleteModal = () => {
         setSuccessDeleteModal(false);
         setDeletedStatus(false);
-        setWarningModal(false); 
+        setFailedStatus(false);
+        setWarningModal(false);
         setOpenModalGames(false);
         setOpenModalNewList(false);
-    }; 
+    };
 
+    const handleCloseCreatedModal = () => {
+        setCreatedListModal(false); 
+        setCreatedStatus(false); 
+        
+    }; 
     // useEffects ----------------------------
     useEffect(() => {
         getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
@@ -156,7 +171,7 @@ export default function Library() {
                 </DialogActions>
             </Dialog>
 
-            {/* success deleted list */}
+            {/* success deleted list / failed deleting list */}
             <Dialog open={successDeleteModal} onClose={handleCloseSuccessDeleteModal}>
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight="bold" fontSize="1.25rem">
@@ -167,7 +182,16 @@ export default function Library() {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    {deletedStatus ? <Typography>La actividad se ha eliminado correctamente</Typography> : <ChargingCard />}
+                    {deletedStatus ? (
+                        <Typography>La lista se ha eliminado correctamente</Typography>
+                    ) : failedStatus ? (
+                        <Typography>
+                            La lista no pudo ser eliminada porque está relacionada con una actividad, por favor elimine todos los registros
+                            asociados e intente nuevamente.
+                        </Typography>
+                    ) : (
+                        <ChargingCard />
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseSuccessDeleteModal} color="primary">
@@ -176,17 +200,39 @@ export default function Library() {
                 </DialogActions>
             </Dialog>
 
-            {/* success created list */}
+            {/* new list creates notification */}
+            <Dialog open={createdListModal} onClose={handleCloseCreatedModal}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography fontWeight="bold" fontSize="1.25rem">
+                        Notificación
+                    </Typography>
+                    <IconButton edge="end" color="inherit">
+                        <NotificationOutlined />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    {createdStatus ? (
+                        <Typography>La lista se ha creado correctamente</Typography>
+                    ) : (
+                        <ChargingCard />
+                    )}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseCreatedModal} color="primary">
+                        Cerrar
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
 
             <ModalGames
                 list={list}
-                open={openModalGames}
+                openModal={openModalGames}
                 handleClose={handleCloseModal}
                 idList={list.id}
                 setWarningModal={setWarningModal}
             />
-            <ModalNewList open={openModalNewList} handleClose={handleCloseModal} />
+            <ModalNewList open={openModalNewList} handleClose={handleCloseModal} setCreatedListModal = {setCreatedListModal} setCreatedStatus = {setCreatedStatus} />
         </MainCard>
     );
 }

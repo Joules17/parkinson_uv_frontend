@@ -58,6 +58,18 @@ export const useExternalApi = () => {
         await makeRequest({config}); 
     }; 
 
+    const checkListGames = async (id) => {
+        const config = {
+            url: `${apiServerUrl}/api/list/check/${id}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+        
+        const data = await makeRequest({config});
+        return data.is_assigned; 
+    }; 
+
     const getListGames = async (id, setListGames) => {
         const config = {
             url: `${apiServerUrl}/api/list/retreive/${id}`,
@@ -79,12 +91,12 @@ export const useExternalApi = () => {
                 "setting": datos
             }
         }
-        const data = await makeRequest({config})
+        await makeRequest({config})
 
         // console.log(data)
     }
 
-    const createList = async (datos) => {
+    const createList = async (datos, setLog) => {
         const config = {
             url: `${apiServerUrl}/api/list/create`,
             method: 'POST',
@@ -92,10 +104,15 @@ export const useExternalApi = () => {
             data: datos
         }
 
-        const data = await makeRequest({config})
-
-        // console.log(data)
-        console.log('Registrado correctamente')
+        try {
+            await makeRequest({config});
+            // La petición se realizó con éxito
+            setLog(true);
+            console.log('Registrado correctamente');
+        } catch (error) {
+            setLog(false); 
+            console.error('Error al realizar la petición:', error);
+        }
     }
 
     return {
@@ -104,6 +121,7 @@ export const useExternalApi = () => {
         getListGames,
         updateSettingGameList,
         createList, 
-        deleteListGames
+        deleteListGames, 
+        checkListGames
     }
 }

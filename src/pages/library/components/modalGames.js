@@ -32,7 +32,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGameList } from 'store/reducers/gamesListSlice';
 
-const ModalGames = ({ list, open, handleClose, setWarningModal }) => {
+const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
     const gameListState = useSelector((state) => state.gamesList);
     const dispatch = useDispatch();
     const [modifiedList, setModifiedList] = useState(null);
@@ -74,7 +74,7 @@ const ModalGames = ({ list, open, handleClose, setWarningModal }) => {
     };
     return (
         <div>
-            <Modal open={open} onClose={handleClose}>
+            <Modal open={openModal} onClose={handleClose}>
                 <Box sx={{ ...style, width: 800 }}>
                     <Button color="secondary" onClick={handleClose} style={{ position: 'absolute', top: 0, right: 0, height: 40 }}>
                         <CloseOutlined />
@@ -112,7 +112,7 @@ const ModalGames = ({ list, open, handleClose, setWarningModal }) => {
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
                         <Button
                             variant="contained"
-                            onClick={setWarningModal}
+                            onClick={() => setWarningModal(true)}
                             sx={{ mr: '1rem', bgcolor: 'error.main', '&:hover': { bgcolor: 'error.dark' } }}
                                 
                         >
@@ -134,7 +134,7 @@ export default ModalGames;
 
 ModalGames.propTypes = {
     list: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired,
+    openModal: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired, 
     setWarningModal: PropTypes.func.isRequired,
 };

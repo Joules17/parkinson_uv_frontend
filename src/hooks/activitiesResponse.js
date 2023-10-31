@@ -45,6 +45,7 @@ export const useExternalApi = () => {
 
     const deleteActivity = async (id) => {
         const config = {
+            
             url: `${apiServerUrl}/api/activity/delete/${id}`,
             method: 'DELETE',
             headers: {},

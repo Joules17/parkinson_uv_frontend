@@ -1,35 +1,34 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import {
-    Button,
-    Modal,
-    TextField,
-    Box,
-    Divider,
-    ListItemAvatar,
-    ListItemButton,
-    Avatar,
-    Checkbox,
-    ListItemText,
-    Typography
-} from '@mui/material';
-import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
-import UserList from './tables/UserList';
-import MainCard from 'components/MainCard';
-import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
-import { useAuth0 } from '@auth0/auth0-react';
-import { juegos, lista_juegos } from './globals';
-import ModalSelectGames from './modalSelectPatients';
-import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
+// react
+import React, { useEffect, useState } from 'react';
 
+// prop 
+import PropTypes from 'prop-types';
+
+// mui 
+import { Button, Modal, TextField, Box, Divider, ListItemAvatar, ListItemButton, Avatar, Checkbox, ListItemText, Typography } from '@mui/material';
+
+// auth 0 
+import { useAuth0 } from '@auth0/auth0-react';
+
+// api 
+import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
+
+// ant design
+import { CloseOutlined } from '@ant-design/icons';
+
+// project import
+// import { juegos, lista_juegos } from './globals';
+// import ModalSelectGames from './modalSelectPatients';
+
+import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
 
-const ModalNewList = ({ open, handleClose }) => {
+const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus }) => {
     const { user } = useAuth0();
     const { createList } = useListResponse();
     const { getGames } = useGameResponse();
     const [userCharged, setUserCharged] = useState(undefined);
     const [games, setGames] = useState(undefined);
-    const [openNextModal, setOpenNextModal] = useState(false);
     const [checkedItems, setCheckedItems] = React.useState([]);
     const { getTherapist } = useTherapistResponse();
 
@@ -58,8 +57,9 @@ const ModalNewList = ({ open, handleClose }) => {
         setNewList({ ...newList, name: event.target.value });
     };
 
-    const handleListItemClick = (event) => {
+    const handleListItemClick = () => {
         if (userCharged !== undefined) {
+            setCreatedListModal(true); 
             setNewList((prevList) => {
                 const updatedList = { ...prevList, games: checkedItems, id_therapist: userCharged.user_id };
                 saveList(updatedList);
@@ -72,11 +72,6 @@ const ModalNewList = ({ open, handleClose }) => {
         getGames(setGames);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleCloseModal = () => {
-        handleClose();
-        setOpenNextModal(false);
-    };
 
     const handleToggle = (value) => () => {
         const currentIndex = checkedItems.indexOf(value);
@@ -109,7 +104,7 @@ const ModalNewList = ({ open, handleClose }) => {
     };
 
     const saveList = (list) => {
-        createList(list);
+        createList(list, setCreatedStatus);
     };
     return (
         <div>
@@ -156,7 +151,7 @@ const ModalNewList = ({ open, handleClose }) => {
                         <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Siguiente</Button>
                     </Box> */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
-                        <Button variant="contained" onClick={(event) => handleListItemClick(event)}>
+                        <Button variant="contained" onClick={() => handleListItemClick()}>
                             Guardar
                         </Button>
                     </Box>
@@ -168,3 +163,10 @@ const ModalNewList = ({ open, handleClose }) => {
 };
 
 export default ModalNewList;
+
+ModalNewList.propTypes = {
+    open: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    setCreatedListModal: PropTypes.func.isRequired, 
+    setCreatedStatus: PropTypes.func.isRequired
+}; 
