@@ -74,23 +74,23 @@ const RunListGames = () => {
         console.log(startGame)
         switch (startGame.title) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={startGame.setting} />;
+                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id}  />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting} />;
+                return <GameNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting} />;
+                return <GameArtic setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Recuerda y Encuentra":
                 return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting} />;
+                return <LettersVsNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting} />;
+                return <GameLetras setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting} />;
+                return <GameFlechasCongeladas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Letras Marinas":
-                return <GameLetrasMarinas setting={startGame.setting} />;
+                return <GameLetrasMarinas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={startGame.setting} />;
+                return <GameMemoryBubbles setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
             default:
                 return null;
         }

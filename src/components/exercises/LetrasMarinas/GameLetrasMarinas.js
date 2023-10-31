@@ -37,11 +37,11 @@ function GameLetrasMarinas(props) {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
       },
-      scene: [RememberInit, RememberMenu, RememberLoby, RememberRondas, RememberEnd],
+      scene: [LetrasMarinasInit, LetrasMarinasMenu, LetrasMarinasGame, LetrasMarinasEnd],
     }
 
     const game = new Phaser.Game(config);
-    game.scene.start('RememberInit', { setting }, { game });
+    game.scene.start('LetrasMarinasInit', { setting }, { game });
     game.scale.on('enterfullscreen', handleEnterFullScreen);
     game.scale.on('leavefullscreen', handleLeaveFullScreen);
     game.events.on('dataToReactComponent', handleDataFromPhaser);

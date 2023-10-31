@@ -35,7 +35,6 @@ export default class RememberEnd extends Phaser.Scene {
     init(data) {
 
         console.log(data);
-        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total;
         let arreglo = data.info.tiempo_rondas;
         let sum = 0;
@@ -46,6 +45,12 @@ export default class RememberEnd extends Phaser.Scene {
 
         this.tiempo_rondas = promedio.toFixed(2).toString();
         this.number_errores = data.info.errores.toString();
+
+        this.emitDataToReactComponent({
+            tiempo_rondas: this.tiempo_rondas,
+            tiempo_total: this.tiempo_total,
+            errores: this.number_errores
+          })
     }
 
     preload() {

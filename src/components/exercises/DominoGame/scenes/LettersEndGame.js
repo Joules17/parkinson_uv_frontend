@@ -24,7 +24,6 @@ export default class LettersEndGame extends Phaser.Scene {
     }
 
     init (data) {
-        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total.text
         let arreglo = data.info.tiempo_rondas;
         let sum = 0; 
@@ -34,7 +33,12 @@ export default class LettersEndGame extends Phaser.Scene {
         let promedio = sum / arreglo.length;
         this.tiempo_rondas = promedio.toFixed(2).toString();
         this.number_errores = data.info.errores.toString();
-        this.num_rondas = data.info.number_rondas.toString(); 
+        // this.num_rondas = data.info.number_rondas.toString(); 
+        this.emitDataToReactComponent({
+            tiempo_rondas : this.tiempo_rondas,
+            errores : this.number_errores,
+            tiempo_total:  this.tiempo_total
+        })
     }
 
     preload () {}
