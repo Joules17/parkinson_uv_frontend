@@ -17,7 +17,7 @@ export default function ProductHero({logged, loginWithRedirect }) {
     
     const handleStartPage = () => {
         if (logged) {
-            navigate('/dashboard');
+            navigate('/dashboard/default');
         } else {
             loginWithRedirect(); 
         }
