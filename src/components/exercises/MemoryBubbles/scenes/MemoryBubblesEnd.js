@@ -19,10 +19,15 @@ export default class MemoryBubblesEnd extends Phaser.Scene {
     }
     
     init (data) {
-        this.emitDataToReactComponent(data)
         this.tiempo_total = data.info.tiempo_total.substring(8); 
         this.numero_rondas = data.info.numero_rondas;
         this.tiempo_rondas = data.info.tiempo_rondas;
+        this.emitDataToReactComponent({
+            tiempo_rondas : this.tiempo_rondas,
+            errores : this.number_errores,
+            tiempo_total:  this.tiempo_total,
+            numero_rondas: this.numero_rondas
+        })
     }
 
     preload () {}

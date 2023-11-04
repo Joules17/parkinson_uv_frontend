@@ -104,9 +104,9 @@ const ModalLogs = ({ activity, open, handleClose }) => {
                 </ListItemButton>
                 <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
                   <Box sx={{ margin: 2 }}>
-                    {Object.keys(game.log.info).map((key) => (
+                    {Object.keys(game.log).map((key) => (
                       <p key={key}>
-                        <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {game.log.info[key]}
+                        <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {game.log[key]}
                       </p>
                     ))}
                   </Box>
