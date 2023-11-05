@@ -64,7 +64,7 @@ function GameLetrasMarinas(props) {
       }
       createLog(dataLog)
       console.log('Datos recibidos desde Phaser:', data);
-      dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
+      dispatch(markGameAsPlayed({ gameName: "Letras Marinas" })); // Utiliza dispatch aquí
     }
   }
 

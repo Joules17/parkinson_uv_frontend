@@ -63,7 +63,7 @@ function GameArtic(props) {
       }
       createLog(dataLog)
       console.log('Datos recibidos desde Phaser:', data);
-      dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
+      dispatch(markGameAsPlayed({ gameName: "Flechas Articas" })); // Utiliza dispatch aquí
   }
   }
 

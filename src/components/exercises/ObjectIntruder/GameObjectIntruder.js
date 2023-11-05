@@ -65,7 +65,7 @@ function ObjectIntruder(props) {
             }
             createLog(dataLog)
             console.log('Datos recibidos desde Phaser:', data);
-            dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
+            dispatch(markGameAsPlayed({ gameName: "Objeto Intruso" })); // Utiliza dispatch aquí
         }
     }
 

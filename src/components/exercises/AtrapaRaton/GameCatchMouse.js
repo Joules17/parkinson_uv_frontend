@@ -1,20 +1,23 @@
-// Phaser Component
+// react
+import { Component } from 'react';
 import React, { useEffect } from "react";
+// phaser
 import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
+
+// Escenas
+import FlechasInit from 'components/exercises/FlechasCongeladas/scenes/FlechasInit';
+import FlechasMenu from 'components/exercises/FlechasCongeladas/scenes/FlechasMenu';
+import FlechasGame from 'components/exercises/FlechasCongeladas/scenes/FlechasGame';
+import FlechasFin from 'components/exercises/FlechasCongeladas/scenes/FlechasFin';
+import FlechasTuto from 'components/exercises/FlechasCongeladas/scenes/FlechasTuto';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+// Styles
+import 'components/exercises/general_assets/styles.css'
+import CatchMouseInit from './scenes/CatchMouseInit';
 
-// Scenes
-import MemoryBubblesInit from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesInit';
-import MemoryBubblesMenu from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesMenu';
-import MemoryBubblesGame from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesGame';
-import MemoryBubblesEnd from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesEnd';
-
-// css
-import 'components/exercises/general_assets/styles.css';
-
-function GameMemoryBubbles(props) {
+function GameCatchMouse(props) {
     const dispatch = useDispatch();
     const { id, idSession, fromActivity } = props;
     const { createLog } = useLogsResponse()
@@ -36,11 +39,11 @@ function GameMemoryBubbles(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame, MemoryBubblesEnd],
+            scene: [CatchMouseInit],
         }
 
         const game = new Phaser.Game(config);
-        game.scene.start('MemoryBubblesInit', { setting }, { game });
+        game.scene.start('CatchMouseInit', { setting }, { game });
         game.scale.on('enterfullscreen', handleEnterFullScreen);
         game.scale.on('leavefullscreen', handleLeaveFullScreen);
         game.events.on('dataToReactComponent', handleDataFromPhaser);
@@ -63,7 +66,7 @@ function GameMemoryBubbles(props) {
             }
             createLog(dataLog)
             console.log('Datos recibidos desde Phaser:', data);
-            dispatch(markGameAsPlayed({ gameName: "Burbujas de Memoria" })); // Utiliza dispatch aquí
+            dispatch(markGameAsPlayed({ gameName: "Atrapa el ratón" })); // Utiliza dispatch aquí
         }
     }
 
@@ -86,8 +89,8 @@ function GameMemoryBubbles(props) {
     return <div id="phaser-game-container" style={{ height: '600px', width: '800px' }} />;
 }
 
-// class GameMemoryBubbles extends Component {
-//     componentDidMount () {
+// class GameCatchMouse extends Component {
+//     componentDidMount() {
 //         /* eslint-disable */
 //         const { setting } = this.props;
 //         const config = {
@@ -103,13 +106,13 @@ function GameMemoryBubbles(props) {
 //             },
 //             scale: {
 //                 mode: Phaser.Scale.FIT,
-//                 autoCenter: Phaser.Scale.CENTER_BOTH // Centrado vertical y horizontal
+//                 autoCenter: Phaser.Scale.CENTER_BOTH
 //             },
-//             scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame, MemoryBubblesEnd],
+//             scene: [FlechasInit, FlechasMenu, FlechasTuto, FlechasGame, FlechasFin],
 //         }
 
 //         this.game = new Phaser.Game(config);
-//         this.game.scene.start('MemoryBubblesInit', {setting});
+//         this.game.scene.start('FlechasInit', { setting });
 //         this.game.scale.on('enterfullscreen', this.handleEnterFullScreen, this);
 //         this.game.scale.on('leavefullscreen', this.handleLeaveFullScreen, this);
 //     }
@@ -120,7 +123,7 @@ function GameMemoryBubbles(props) {
 //         this.game.destroy(true);
 //     }
 
-//     handleEnterFullScreen () {
+//     handleEnterFullScreen() {
 //         const gameContainer = document.getElementById('phaser-game-container');
 //         gameContainer.style.width = window.innerWidth + 'px';
 //         gameContainer.style.height = window.innerHeight + 'px';
@@ -128,19 +131,18 @@ function GameMemoryBubbles(props) {
 //         gameContainer.style.alignItems = 'center';
 //     }
 
-//     handleLeaveFullScreen () {
+//     handleLeaveFullScreen() {
 //         const gameContainer = document.getElementById('phaser-game-container');
 
 //         // Restablecer las dimensiones del contenedor
 //         gameContainer.style.width = `${this.game.config.width}px`;
 //         gameContainer.style.height = `${this.game.config.height}px`;
-//         gameContainer.style.justifyContent = 'unset';
-//         gameContainer.style.alignItems = 'unset';
+//         this.game.scale.resize(this.game.config.width, this.game.config.height);
 //     }
 
-//     render () {
-//         return <div id="phaser-game-container" style = {{ height: '600px', width: '800px'}} />;
+//     render() {
+//         return <div id="phaser-game-container" style={{ height: '600px', width: '800px' }} />;
 //     }
 // }
 
-export default GameMemoryBubbles;
+export default GameCatchMouse; 

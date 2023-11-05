@@ -65,7 +65,7 @@ function GameFlechasCongeladas(props) {
             }
             createLog(dataLog)
             console.log('Datos recibidos desde Phaser:', data);
-            dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
+            dispatch(markGameAsPlayed({ gameName: "Flechas Congeladas" })); // Utiliza dispatch aquí
         }
     }
 
