@@ -22,8 +22,8 @@ export default class RememberLoby extends Phaser.Scene {
         this.lista_tablero = undefined;
         this.flag = false;
         this.fin_del_lobby = false;
-        this.score = undefined;
-        this.counter = undefined;
+        this.score = 0;
+        this.counter = 0;
 
         // button
         this.go_button = undefined;

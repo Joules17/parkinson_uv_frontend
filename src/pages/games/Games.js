@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+// prop
+import PropTypes from 'prop-types';
+
 // material-ui
 // import Button from '@mui/material/Button';
 // import Modal from '@mui/material/Modal';
@@ -57,7 +60,8 @@ const CardComponent = ({ card }) => {
     const handleFormSubmit = (config) => {
         const settings = {}
         // general rounds 
-        settings['rondas'] = config.rondas; 
+        settings['rondas'] = config.rondas;
+        settings['tries'] = config.tries;  
         
 
         // only letter soup games: 
@@ -223,3 +227,7 @@ const Games = () => {
 };
 
 export default Games;
+
+CardComponent.propTypes = {
+    card: PropTypes.object.isRequired, 
+}

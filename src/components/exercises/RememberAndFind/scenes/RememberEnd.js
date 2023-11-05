@@ -130,22 +130,6 @@ export default class RememberEnd extends Phaser.Scene {
     }
 
     // Customs functions
-
-    move_upside(spt, position, duration, escena) {
-        spt.originalY = spt.originalY - position;
-        this.tweens.add({
-            targets: spt,
-            y: spt.y - position,
-            duration: duration,
-            ease: 'Power2',
-            yoyo: false,
-            repeat: 0,
-            onComplete: function () {
-                escena.flag = true;
-            }
-        });
-    }
-
     aparecer(obj, scene) {
         this.tweens.add({
             targets: obj,

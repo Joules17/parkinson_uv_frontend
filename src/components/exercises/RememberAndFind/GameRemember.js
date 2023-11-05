@@ -1,16 +1,25 @@
-import React, { useEffect } from "react";
+// react
+import { useEffect } from 'react';
+
+// prop
+import PropTypes from 'prop-types';
+
+// Phaser
 import Phaser from "phaser";
+
+// others...
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
-
 
 import RememberInit from 'components/exercises/RememberAndFind/scenes/RememberInit'
 import RememberMenu from 'components/exercises/RememberAndFind/scenes/RememberMenu'
 import RememberLoby from 'components/exercises/RememberAndFind/scenes/RememberLoby'
 import RememberRondas from 'components/exercises/RememberAndFind/scenes/RememberRondas'
 import RememberEnd from 'components/exercises/RememberAndFind/scenes/RememberEnd'
+import RememberFailed from 'components/exercises/RememberAndFind/scenes/RememberFailed'
 
+// css
 import 'components/exercises/general_assets/styles.css'
 
 function GameRememberAndFind(props) {
@@ -35,7 +44,7 @@ function GameRememberAndFind(props) {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
       },
-      scene: [RememberInit, RememberMenu, RememberLoby, RememberRondas, RememberEnd],
+      scene: [RememberInit, RememberMenu, RememberLoby, RememberRondas, RememberEnd, RememberFailed],
     }
 
     const game = new Phaser.Game(config);
@@ -50,7 +59,8 @@ function GameRememberAndFind(props) {
       game.scale.off('leavefullscreen', handleLeaveFullScreen);
       game.destroy(true);
     };
-
+    
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   const handleDataFromPhaser = (data) => {
@@ -84,3 +94,10 @@ function GameRememberAndFind(props) {
 }
 
 export default GameRememberAndFind;
+
+
+GameRememberAndFind.propTypes = {
+  id: PropTypes.number.isRequired,
+  idSession: PropTypes.number.isRequired,
+  setting: PropTypes.object.isRequired,
+}

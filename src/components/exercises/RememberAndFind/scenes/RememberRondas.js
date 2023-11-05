@@ -32,6 +32,7 @@ export default class RememberRondas extends Phaser.Scene {
         this.flag_init = undefined;
         this.error_flag = false;
         this.number_rounds = [5, 6, 10, 6];
+        this.tries = 3; 
         this.current_level = 1; 
         this.current_number = 1;
         this.number_errors = 0;
@@ -75,6 +76,11 @@ export default class RememberRondas extends Phaser.Scene {
             this.number_rounds.push(settings.rondas);
         }
 
+        // Number Tries - settings ------------------------------------------------------------------------------------------------------------
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries; 
+        } 
+
         // Figures -----------------------------------------------------------------------------------------------------------------
         this.bushes_sprite = this.add.sprite(100, 620, 'FirstBush').setScale(0.12);
         this.bushes_sprite2 = this.add.sprite(600, 620, 'SecondBush').setScale(0.12);
@@ -105,17 +111,23 @@ export default class RememberRondas extends Phaser.Scene {
 
         // Text -----------------------------------------------------------------------------------------------------------------
         this.text_numberrondas = this.add
-            .text(120, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1], { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(40);
+            .text(110, 540, 'Rondas: ' + this.current_number + '/' + this.number_rounds[this.current_level-1], { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(35);
         this.texto_tiempototal = this.add
             .text(22, 538, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(40);
+            .setFontSize(35);
         this.texto_errores = this.add
-            .text(350, 540, 'ERRORES: ' + this.number_errors, { fontFamily: 'TROUBLE', fill: '#000000' })
-            .setFontSize(40);
+            .text(290, 540, 'ERRORES: ' + this.number_errors, { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(35);
         this.texto_niveles = this.add
-            .text(570, 540, 'Nivel: ' + this.current_level + '/' + this.number_rounds.length, { fontFamily: 'TROUBLE', fill: '#000000'})
-            .setFontSize(40);
+            .text(450, 540, 'Nivel: ' + this.current_level + '/' + this.number_rounds.length, { fontFamily: 'TROUBLE', fill: '#000000'})
+            .setFontSize(35);
+
+        this.texto_intentos = this.add
+            .text(610, 540, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(35);
+
+        this.texto_intentos.setVisible(false); 
         this.texto_niveles.setVisible(false); 
         this.texto_errores.setVisible(false);
         this.texto_tiempototal.setVisible(false);
@@ -146,6 +158,7 @@ export default class RememberRondas extends Phaser.Scene {
     update() {
         if (this.flag_init) {
             this.time.addEvent({ delay: 1000, callback: this.addTime, callbackScope: this, loop: true });
+            this.texto_intentos.setVisible(true);
             this.texto_tiempototal.setVisible(true);
             this.text_numberrondas.setVisible(true);
             this.texto_errores.setVisible(true);
@@ -167,7 +180,9 @@ export default class RememberRondas extends Phaser.Scene {
         }
         if (this.error_flag) {
             this.texto_errores.setText('Errores: ' + this.number_errors);
+            this.texto_intentos.setText('Intentos: ' + this.tries); 
             this.error_flag = false;
+            this.check_lose(); 
         }
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
@@ -221,6 +236,13 @@ export default class RememberRondas extends Phaser.Scene {
 
     setStatus(val) {
         this.flag_game = val;
+    }
+
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings;
+            this.scene.start('RememberFailed', { settings }, {game: this.game});
+        }
     }
 
     // logs
