@@ -1,8 +1,11 @@
 // react
 import { useState } from 'react';
 
+// prop
+import PropTypes from 'prop-types';
+
 // mui 
-import { Grid, TextField, Typography, Divider, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Tooltip, Button, Box, FormControlLabel, FormGroup, Checkbox, FormControl, Alert } from '@mui/material';
+import { Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, ListItemText, Avatar, Box, FormControlLabel, FormGroup, Checkbox, FormControl, Alert } from '@mui/material';
 
 // project imports
 import MainCard from 'components/MainCard';
@@ -30,6 +33,7 @@ const actionSX = {
 
 export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
     const [valueRounds, setValueRounds] = useState(10); 
+    const [valueTries, setValueTries] = useState(3); 
     const [valueLevels, setValueLevels] = useState(1); 
     const [wordsperlevel, setWordsperlevel] = useState(4); 
     const [valueWorldMinLength, setValueWorldMinLength] = useState(2);
@@ -39,6 +43,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
     const [selectedCategories, setSelectedCategories] = useState([]); 
     // Errors
     const [errorRounds, setErrorRounds] = useState(false); 
+    const [errorTries, setErrorTries] = useState(false);
     const [errorLevels, setErrorLevels] = useState(false);
     const [errorWordsPerLevel, setErrorWordsPerLevel] = useState(false);
     const [errorArrowRounds, setErrorArrowRounds] = useState(false);
@@ -56,6 +61,10 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
     const handleRoundsChange = (event) => {
         setValueRounds(event.target.value);
     };
+
+    const handleTriesChange = (event) => {
+        setValueTries(event.target.value);
+    }; 
 
     const handleLevelsChange = (event) => {
         setValueLevels(event.target.value);
@@ -106,6 +115,14 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
             }
         } else {
             setErrorRounds(false); 
+        }
+
+        // Tries Errors 
+        if (isNaN(parseInt(valueTries, 10)) || parseInt(valueTries, 10) < 1) {
+            setErrorTries(true); 
+            return true; 
+        } else {
+            setErrorTries(false);
         }
 
         // Level Erros - Recuerda y Encuentra y Letras Marinas (SI)
@@ -167,6 +184,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         if (!handleCheckErrors()) {
             const config = {
                 rondas: valueRounds,
+                tries: valueTries, 
                 wordsperlevel: wordsperlevel,
                 niveles: valueLevels,
                 longitudPalabra: valueWordLength,
@@ -228,6 +246,20 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                         />
                         </Grid>
                     )}
+                    
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Número de Intentos"
+                            InputProps={{
+                                inputProps: { min: 0 }
+                            }}
+                            value={valueTries}
+                            onChange={handleTriesChange}
+                            fullWidth
+                        />
+                    </Grid>
+
                     {card.title === 'Letras Marinas' && (
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
@@ -337,6 +369,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                         )
                     }
                     {errorRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de rondas. </Alert></Grid>}
+                    {errorTries && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de intentos. </Alert></Grid>}
                     {errorLevels && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de niveles. </Alert></Grid>}
                     {errorWordsPerLevel && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor digite un valor entre 1 a 6 para el numero de palabras por nivel. </Alert></Grid>}
                     {errorArrowRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite valores positivos para los numeros de rondas de Flechas. </Alert></Grid>}
@@ -372,3 +405,9 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
         </MainCard>    
     )
 }
+
+ViewGameForm.propTypes = {
+    card: PropTypes.object.isRequired,
+    handleCloseDialog: PropTypes.func.isRequired,
+    handleFormSubmit: PropTypes.func.isRequired
+};
