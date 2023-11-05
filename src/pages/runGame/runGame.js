@@ -34,23 +34,23 @@ const RunGame = () => {
     const renderGame = () => {
         switch (game) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={setting}/>;
+                return <ObjectIntruder setting={setting} fromActivity={false} />;
             case "Encuentra el número":
-                return <GameNumbers setting={setting}/>;
+                return <GameNumbers setting={setting} fromActivity={false}/>;
             case "Flechas Articas":
-                return <GameArtic setting={setting}/>;
+                return <GameArtic setting={setting} fromActivity={false}/>;
             case "Recuerda y Encuentra":
-                return <GameRememberAndFind setting={setting}/>;
+                return <GameRememberAndFind setting={setting} fromActivity={false}/>;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={setting}/>;
+                return <LettersVsNumbers setting={setting} fromActivity={false}/>;
             case "Palabras Ocultas":
-                return <GameLetras setting={setting}/>;
+                return <GameLetras setting={setting} fromActivity={false}/>;
             case "Flechas Congeladas": 
-                return <GameFlechasCongeladas setting={setting}/>; 
+                return <GameFlechasCongeladas setting={setting} fromActivity={false}/>; 
             case "Letras Marinas": 
-                return <GameLetrasMarinas setting={setting}/>;
+                return <GameLetrasMarinas setting={setting} fromActivity={false}/>;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={setting}/>;
+                return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
             default:
                 return null;
         }

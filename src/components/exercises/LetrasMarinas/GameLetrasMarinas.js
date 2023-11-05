@@ -8,17 +8,17 @@ import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 
 
 // Escenas
-import LetrasMarinasInit from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasInit'; 
-import LetrasMarinasMenu from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasMenu'; 
-import LetrasMarinasGame from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasGame'; 
-import LetrasMarinasEnd from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasEnd'; 
+import LetrasMarinasInit from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasInit';
+import LetrasMarinasMenu from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasMenu';
+import LetrasMarinasGame from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasGame';
+import LetrasMarinasEnd from 'components/exercises/LetrasMarinas/scenes/LetrasMarinasEnd';
 //css
 import 'components/exercises/general_assets/styles.css'
 
 function GameLetrasMarinas(props) {
-  const dispatch = useDispatch(); 
-  const { id, idSession } = props;
-  const {createLog}= useLogsResponse()
+  const dispatch = useDispatch();
+  const { id, idSession, fromActivity } = props;
+  const { createLog } = useLogsResponse()
   useEffect(() => {
     const { setting } = props;
 
@@ -56,14 +56,16 @@ function GameLetrasMarinas(props) {
   }, []);
 
   const handleDataFromPhaser = (data) => {
-    const dataLog = {
-      id_session: idSession,
-      id_game_list: id,
-      log: data
+    if (fromActivity) {
+      const dataLog = {
+        id_session: idSession,
+        id_game_list: id,
+        log: data
+      }
+      createLog(dataLog)
+      console.log('Datos recibidos desde Phaser:', data);
+      dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
     }
-    createLog(dataLog)
-    console.log('Datos recibidos desde Phaser:', data);
-    dispatch(markGameAsPlayed({ gameName: "Letras Marinas" })); // Utiliza dispatch aquí
   }
 
   const handleEnterFullScreen = () => {

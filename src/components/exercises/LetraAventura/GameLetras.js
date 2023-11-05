@@ -16,9 +16,9 @@ import LetrasOver from 'components/exercises/LetraAventura/scenes/LetrasOver';
 //css
 import 'components/exercises/general_assets/styles.css'
 function GameLetras(props) {
-  const dispatch = useDispatch(); 
-  const { id, idSession } = props;
-  const {createLog}= useLogsResponse()
+  const dispatch = useDispatch();
+  const { id, idSession, fromActivity } = props;
+  const { createLog } = useLogsResponse()
   useEffect(() => {
     const { setting } = props;
 
@@ -56,14 +56,16 @@ function GameLetras(props) {
   }, []);
 
   const handleDataFromPhaser = (data) => {
-    const dataLog = {
-      id_session: idSession,
-      id_game_list: id,
-      log: data
+    if (fromActivity) {
+      const dataLog = {
+        id_session: idSession,
+        id_game_list: id,
+        log: data
+      }
+      createLog(dataLog)
+      console.log('Datos recibidos desde Phaser:', data);
+      dispatch(markGameAsPlayed({ gameName: "Letras VS Numeros" })); // Utiliza dispatch aquí
     }
-    createLog(dataLog)
-    console.log('Datos recibidos desde Phaser:', data);
-    dispatch(markGameAsPlayed({ gameName: "Palabras Ocultas" })); // Utiliza dispatch aquí
   }
 
   const handleEnterFullScreen = () => {

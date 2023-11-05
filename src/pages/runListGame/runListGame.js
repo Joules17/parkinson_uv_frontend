@@ -74,23 +74,23 @@ const RunListGames = () => {
         console.log(startGame)
         switch (startGame.title) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id}  />;
+                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameArtic setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Recuerda y Encuentra":
-                return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} />;
+                return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <LettersVsNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameLetras setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameFlechasCongeladas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Letras Marinas":
-                return <GameLetrasMarinas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameLetrasMarinas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} />;
+                return <GameMemoryBubbles setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             default:
                 return null;
         }
