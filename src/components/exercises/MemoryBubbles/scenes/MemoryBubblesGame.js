@@ -26,6 +26,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
 
         // Level Variables
         this.current_level = 1;
+        this.tries = 3; 
         this.number_levels = 10;
         this.number_errors = 0;
 
@@ -52,6 +53,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
 
         if (settings.rondas !== undefined) {
             this.number_levels = parseInt(settings.rondas);
+        }
+
+        // tries 
+        if (settings.tries !== undefined) {
+            this.tries= parseInt(settings.tries);
         }
         // Background
         this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
@@ -82,6 +88,12 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         this.panel_error.fillStyle(0x000000, 0.5);
         this.panel_error.fillRect(325, 0, 135, 40);
 
+        // Panel Tries 
+        this.panel_tries = this.add.graphics();
+        this.panel_tries.fillStyle(0x000000, 0.5);
+        this.panel_tries.fillRect(465, 0, 150, 40);
+
+        this.tries_text = this.add.text(475, 10, 'Intentos: '+this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(30);
         this.error_text = this.add.text(335, 10, 'Errores: '+this.number_errors, { fontFamily: 'TROUBLE', fill: '#ffffff'}).setFontSize(30);
 
         // Panel Options
@@ -156,8 +168,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 // Bad Answer Procedure
                 this.feedback(false);
                 this.number_errors += 1;
+                this.tries -= 1; 
                 this.error_text.setText('Errores: ' + this.number_errors);
+                this.tries_text.setText('Intentos: ' + this.tries);
                 this.sound.play('BadSound');
+                this.check_lose(); 
             }
         });
 
@@ -195,8 +210,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 // Bad Answer Procedure
                 this.feedback(false);
                 this.number_errors += 1;
+                this.tries -= 1; 
                 this.error_text.setText('Errores: ' + this.number_errors);
+                this.tries_text.setText('Intentos: ' + this.tries);
                 this.sound.play('BadSound');
+                this.check_lose(); 
             }
         });
 
@@ -242,7 +260,6 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 this.show_introduction();
             }
         } else {
-            console.log('Estoy llegando aqui? ')
             // the player has won
             this.fin_del_juego = true;
             this.flag = false;
@@ -277,8 +294,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                         // Bad Answer Procedure
                         this.feedback(false);
                         this.number_errors += 1;
+                        this.tries -= 1; 
                         this.error_text.setText('Errores: ' + this.number_errors);
+                        this.tries_text.setText('Intentos: ' + this.tries);
                         this.sound.play('BadSound');
+                        this.check_lose(); 
                     }
                 }
             }
@@ -341,6 +361,13 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 });
             }
         })
+    }
+
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings; 
+            this.scene.start('MemoryBubblesFailed', { settings }, { game: this.game });
+        }
     }
 
     setLog(tiempo_rondas, tiempo_total, number_rondas) {

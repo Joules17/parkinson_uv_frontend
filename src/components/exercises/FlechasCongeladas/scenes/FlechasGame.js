@@ -44,6 +44,7 @@ export default class FlechasGame extends Phaser.Scene {
 
         // Flags 
         this.number_rounds = 30; 
+        this.tries = 3; 
         this.tableros = [];
         this.tablero_actual = undefined
         this.flag = undefined;
@@ -79,9 +80,15 @@ export default class FlechasGame extends Phaser.Scene {
         this.game = this.sys.game
         // Initialize 
         const settings = this.sys.settings.data.settings;
-        console.log('ESTOY LLEGANDO BIEN?', settings)
+
+        // rondas 
         if (settings.rondas !== undefined) {
             this.number_rounds = settings.rondas;
+        }
+
+        // tries 
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries;
         }
 
         // Background 
@@ -105,16 +112,23 @@ export default class FlechasGame extends Phaser.Scene {
             .setFontSize(40);
         this.tiempo_panel = this.add.graphics(); 
         this.tiempo_panel.fillStyle(0x000000, 0.5);
-        this.tiempo_panel.fillRect(15, 550, 90, 100);
+        this.tiempo_panel.fillRect(5, 550, 90, 100);
         this.texto_tiempototal = this.add
             .text(25, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
-            .setFontSize(40);
+            .setFontSize(35);
         this.number_errors_panel = this.add.graphics(); 
         this.number_errors_panel.fillStyle(0x000000, 0.5);
-        this.number_errors_panel.fillRect(590, 550, 200, 100);
+        this.number_errors_panel.fillRect(640, 550, 155, 100);
         this.texto_numbererros = this.add
-            .text(600, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
-            .setFontSize(40);
+            .text(650, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(35);
+
+        this.intentos_panel = this.add.graphics();
+        this.intentos_panel.fillStyle(0x000000, 0.5);
+        this.intentos_panel.fillRect(480, 550, 155, 100);
+        this.texto_intentos = this.add
+            .text(490, 560, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(35);
 
         // Rounds 
         this.levels_global.push(this.level_config); 
@@ -151,7 +165,9 @@ export default class FlechasGame extends Phaser.Scene {
         }
         if (this.error_flag) {
             this.texto_numbererros.setText('Errores: ' + this.errores);
+            this.texto_intentos.setText('Intentos: ' + this.tries);
             this.error_flag = false;
+            this.check_lose(); 
         }
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente'); 
@@ -292,6 +308,14 @@ export default class FlechasGame extends Phaser.Scene {
                 });
             }
         });
+    }
+
+    // check_lose 
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings; 
+            this.scene.start('FlechasFailed', { settings }, { game: this.game });
+        }
     }
 
     // Set Log 

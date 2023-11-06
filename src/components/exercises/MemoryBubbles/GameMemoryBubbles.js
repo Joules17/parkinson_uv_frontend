@@ -1,6 +1,12 @@
 // Phaser Component
-import React, { useEffect } from "react";
+import { useEffect } from 'react';
+
+// Prop Types
+import PropTypes from 'prop-types';
+
+// Phaser
 import Phaser from 'phaser';
+
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
@@ -10,6 +16,7 @@ import MemoryBubblesInit from 'components/exercises/MemoryBubbles/scenes/MemoryB
 import MemoryBubblesMenu from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesMenu';
 import MemoryBubblesGame from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesGame';
 import MemoryBubblesEnd from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesEnd';
+import MemoryBubblesFailed from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesFailed';
 
 // css
 import 'components/exercises/general_assets/styles.css';
@@ -17,7 +24,7 @@ import 'components/exercises/general_assets/styles.css';
 function GameMemoryBubbles(props) {
     const dispatch = useDispatch();
     const { id, idSession, fromActivity } = props;
-    const { createLog } = useLogsResponse()
+    const { createLog } = useLogsResponse();
     useEffect(() => {
         const { setting } = props;
 
@@ -29,15 +36,15 @@ function GameMemoryBubbles(props) {
             physics: {
                 default: 'arcade',
                 arcade: {
-                    debug: false,
-                },
+                    debug: false
+                }
             },
             scale: {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame, MemoryBubblesEnd],
-        }
+            scene: [MemoryBubblesInit, MemoryBubblesMenu, MemoryBubblesGame, MemoryBubblesEnd, MemoryBubblesFailed]
+        };
 
         const game = new Phaser.Game(config);
         game.scene.start('MemoryBubblesInit', { setting }, { game });
@@ -52,6 +59,7 @@ function GameMemoryBubbles(props) {
             game.destroy(true);
         };
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleDataFromPhaser = (data) => {
@@ -60,12 +68,12 @@ function GameMemoryBubbles(props) {
                 id_session: idSession,
                 id_game_list: id,
                 log: data
-            }
-            createLog(dataLog)
+            };
+            createLog(dataLog);
             console.log('Datos recibidos desde Phaser:', data);
-            dispatch(markGameAsPlayed({ gameName: "Burbujas de Memoria" })); // Utiliza dispatch aquí
+            dispatch(markGameAsPlayed({ gameName: 'Burbujas de Memoria' })); // Utiliza dispatch aquí
         }
-    }
+    };
 
     const handleEnterFullScreen = () => {
         const gameContainer = document.getElementById('phaser-game-container');
@@ -74,14 +82,14 @@ function GameMemoryBubbles(props) {
         gameContainer.style.justifyContent = 'center';
         gameContainer.style.alignItems = 'center';
         console.log(gameContainer);
-    }
+    };
 
     const handleLeaveFullScreen = () => {
         const gameContainer = document.getElementById('phaser-game-container');
         gameContainer.style.width = '800px';
         gameContainer.style.height = '600px';
         console.log(gameContainer);
-    }
+    };
 
     return <div id="phaser-game-container" style={{ height: '600px', width: '800px' }} />;
 }
@@ -144,3 +152,10 @@ function GameMemoryBubbles(props) {
 // }
 
 export default GameMemoryBubbles;
+
+GameMemoryBubbles.propTypes = {
+    setting: PropTypes.object.isRequired,
+    id: PropTypes.number,
+    idSession: PropTypes.number,
+    fromActivity: PropTypes.bool
+};

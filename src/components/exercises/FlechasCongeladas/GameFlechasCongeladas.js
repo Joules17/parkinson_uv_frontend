@@ -1,6 +1,9 @@
 // react
-import { Component } from 'react';
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
+// prop 
+import PropTypes from 'prop-types';
+
 // phaser
 import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
@@ -11,6 +14,7 @@ import FlechasMenu from 'components/exercises/FlechasCongeladas/scenes/FlechasMe
 import FlechasGame from 'components/exercises/FlechasCongeladas/scenes/FlechasGame';
 import FlechasFin from 'components/exercises/FlechasCongeladas/scenes/FlechasFin';
 import FlechasTuto from 'components/exercises/FlechasCongeladas/scenes/FlechasTuto';
+import FlechasFailed from 'components/exercises/FlechasCongeladas/scenes/FlechasFailed'; 
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 // Styles
@@ -38,7 +42,7 @@ function GameFlechasCongeladas(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [FlechasInit, FlechasMenu, FlechasTuto, FlechasGame, FlechasFin],
+            scene: [FlechasInit, FlechasMenu, FlechasTuto, FlechasGame, FlechasFin, FlechasFailed],
         }
 
         const game = new Phaser.Game(config);
@@ -53,7 +57,7 @@ function GameFlechasCongeladas(props) {
             game.scale.off('leavefullscreen', handleLeaveFullScreen);
             game.destroy(true);
         };
-
+        // eslint-disable-next-line
     }, []);
 
     const handleDataFromPhaser = (data) => {
@@ -145,3 +149,10 @@ function GameFlechasCongeladas(props) {
 // }
 
 export default GameFlechasCongeladas; 
+
+GameFlechasCongeladas.propTypes = {
+    setting: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    idSession: PropTypes.number.isRequired,
+    fromActivity: PropTypes.bool.isRequired
+}; 

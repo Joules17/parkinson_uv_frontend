@@ -75,8 +75,8 @@ export default class LettersMenu extends Phaser.Scene {
             fill: '#eb3724'
         }).setFontSize(50);
 
-        this.start_button.setInteractive();
-        this.tuto_button.setInteractive();
+        this.start_button.setInteractive({ useHandCursor: true });
+        this.tuto_button.setInteractive({ useHandCursor: true });
 
         // --------------------------------------------------------------
         // fullScreenButton
@@ -93,7 +93,7 @@ export default class LettersMenu extends Phaser.Scene {
             this.sound.play('HoverSound')
             this.tweens.add({
                 targets: this.start_button,
-                scale: 1.1,
+                scale: 1.01,
                 duration: 100,
                 ease: 'Power2'
             });
@@ -115,7 +115,7 @@ export default class LettersMenu extends Phaser.Scene {
             this.sound.play('HoverSound')
             this.tweens.add({
                 targets: this.tuto_button,
-                scale: 1.1,
+                scale: 1.01,
                 duration: 100,
                 ease: 'Power2'
             });

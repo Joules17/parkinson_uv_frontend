@@ -46,6 +46,7 @@ export default class ArticGame extends Phaser.Scene {
         // variables
         this.first_rounds = 30; 
         this.second_rounds = 20; 
+        this.tries = 3; 
         
         // flags
         this.number_rounds = this.first_rounds + this.second_rounds
@@ -116,6 +117,11 @@ export default class ArticGame extends Phaser.Scene {
             this.second_rounds = parseInt(settings.rondasSecond);
             this.number_rounds = this.first_rounds + this.second_rounds;
         }
+
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries; 
+        }
+
         // Background ----------------------------------------------------------------------------------------------------------------------
         this.bg = this.add.image(400, 300, 'BgNightSky');
 
@@ -132,16 +138,35 @@ export default class ArticGame extends Phaser.Scene {
         });
 
         // Text title ------------------------------------------------------------------------------------------------------------------------
+        this.panel_numberrondas = this.add.graphics();
+        this.panel_numberrondas.fillStyle(0xffffff, 0.4);
+        this.panel_numberrondas.fillRect(5, 0, 165, 55);
+        this.panel_numberrondas.setVisible(false);
         this.text_numberrondas = this.add
             .text(15, 15, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#ffffff' })
-            .setFontSize(40);
+            .setFontSize(35);
+        this.panel_tiempototal = this.add.graphics();
+        this.panel_tiempototal.fillStyle(0xffffff, 0.4);
+        this.panel_tiempototal.fillRect(5, 550, 90, 60);
+        this.panel_tiempototal.setVisible(false)
         this.texto_tiempototal = this.add
             .text(25, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
-            .setFontSize(40);
+            .setFontSize(35);
+        this.panel_numberrrors = this.add.graphics();
+        this.panel_numberrrors.fillStyle(0xffffff, 0.4);
+        this.panel_numberrrors.fillRect(640, 550, 155, 60);
+        this.panel_numberrrors.setVisible(false); 
         this.texto_numbererros = this.add
-            .text(600, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
-            .setFontSize(40);
+            .text(650, 560, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(35);
 
+        this.panel_numberintentos = this.add.graphics();
+        this.panel_numberintentos.fillStyle(0xffffff, 0.4);
+        this.panel_numberintentos.fillRect(470, 550, 165, 60);
+        this.panel_numberintentos.setVisible(false); 
+        this.texto_numberintentos = this.add
+            .text(480, 560, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(35);
         // Rounds ------------------------------------------------------------------------------------------------------------------------
         this.levels_global.push(this.level_config);
         this.levels_global.push(this.level_config_2);
@@ -173,6 +198,8 @@ export default class ArticGame extends Phaser.Scene {
         }
         if (this.error_flag) {
             this.texto_numbererros.setText('Errores: ' + this.errores);
+            this.texto_numberintentos.setText('Intentos: ' + this.tries);
+            this.check_lose(); 
             this.error_flag = false;
         }
         if (this.storm_flag) {
@@ -396,7 +423,13 @@ export default class ArticGame extends Phaser.Scene {
               });
           }
       });
+    }
 
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings; 
+            this.scene.start('ArticFailed', { settings }, { game: this.game });
+        }
     }
 
     // logs 

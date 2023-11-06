@@ -1,56 +1,68 @@
 // Phaser
-import Phaser from 'phaser'; 
+import Phaser from 'phaser';
+
+// css
 import 'components/exercises/general_assets/styles.css';
 
-// custom classes
+// project import
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
+import SteroidObject from 'components/Factory/SteroidObject';
 
-export default class RememberFailed extends Phaser.Scene {
-    constructor () {
-        super ({ key: 'RememberFailed', backgroundColor: '#3f1651' });
+export default class ObjectFailed extends Phaser.Scene {
+    constructor() {
+        super({ key: 'ObjectFailed', backgroundColor: '#3f1651' });
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
         // paneles
         this.panelStats = undefined;
-        
-        // variables
-        this.pressed = false;
 
-        // grupos 
-        this.frutas_lluviosas = undefined;
-
-        // skins
-        this.skins = ['coco', 'mango', 'banana', 'manzana'];
+        // figuras
+        this.waveOffset = undefined;
+        this.olas = undefined;
     }
 
-    preload () {}
+    preload() {
+        // vars
+        this.waveOffset = 0;
+    }
 
-    create () {
-        this.game = this.sys.game
-        // Background 
+    create() {
+        this.game = this.sys.game;
+        // background color
         this.cameras.main.setBackgroundColor('#e0bc28');
-        this.bg = this.add.sprite(400, 300, 'BgSkye').setDepth(-2);
 
-        // Flag Variable -----------------------------------------------------------------------------------------------
-        this.flag = false 
+        // bg_image
+        this.bg = this.add.sprite(400, 300, 'BgImg');
 
-        // Figuras de fondo --------------------------------------------------------------------------------------------
-        this.bushes_sprite = this.add.sprite(100, 500, 'FirstBush').setScale(0.12);
-        this.bushes_sprite2 = this.add.sprite(600, 500, 'SecondBush').setScale(0.12);
-        
-        this.title = this.add.text(200, 100, '¡Perdiste!', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
+        // vars
+        this.flag = false;
 
+        // figuras
+        this.palmera_der = new SteroidObject({ scene: this, posx: 795, posy: 150, key: 'PalmeraImg' });
+        this.palmera_izq = new SteroidObject({ scene: this, posx: 5, posy: 150, key: 'PalmeraImg' }).setFlipX(true);
+
+        this.palmera_der.setScale(1.4);
+        this.palmera_izq.setScale(1.4);
+
+        this.palmera_der.dance_function(3, 2000);
+        this.palmera_izq.dance_function(-3, 2000);
+
+        // messages
         this.panelStats = this.add.graphics();
         this.panelStats.fillStyle(0xffffff, 1);
         this.panelStats.fillRoundedRect(100, 200, 600, 200, 20); // x, y, ancho, alto, radio de curvatura
-        this.panelStats.setAlpha(0)
+        this.panelStats.setAlpha(0);
 
-        // Mensajes 
+        this.title = this.add.text(200, 100, '¡Perdiste!', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
+
+        // msg
         this.main_message = this.add.text(200, 250, 'ESO FUE UN BUEN INTENTO', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
-        this.second_message = this.add.text(210, 310, 'NO TE RINDAS, SIGUE ASI!', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
-        
-        // button
+        this.second_message = this.add
+            .text(210, 310, 'NO TE RINDAS, SIGUE ASI!', { fontFamily: 'TROUBLE', fill: '#000000' })
+            .setFontSize(50);
+
+        // button 
         this.panel_button = this.add.graphics();
         this.panel_button.fillStyle(0xffffff, 1);
         this.panel_button.lineStyle(2, 0x000000); 
@@ -59,31 +71,29 @@ export default class RememberFailed extends Phaser.Scene {
 
         this.button_message = this.add.text(300, 430, 'VOLVER A JUGAR', {fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(40);
         this.button_message.setInteractive({ useHandCursor: true });
-        // fullscreenButton 
-        new FullScreenBttn(this, 770, 30, 'FullscreenImg'); 
-        
-        // 
-        this.aparecer(this.panelStats, this)
 
-        // Frutas lluviosas
-        this.frutas_lluviosas = this.physics.add.group();
+        this.statsShow(this, false); 
 
-        // Eventos 
-        // Caida de frutas
-        this.timer = this.time.addEvent({
-            delay: 200,
-            callback: function () {
-                var randind = Math.floor(Math.random() * this.skins.length);
-                var fruit = this.add.sprite(Math.random() * 800, -50, this.skins[randind]).setScale(0.1);
-                this.frutas_lluviosas.add(fruit);
-                fruit.setDepth(-1);
-                fruit.body.velocity.y = 100 + Math.random() * 100;
-            },
-            callbackScope: this,
-            loop: true
+        // fullscreen bttn
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+
+        // show
+        this.aparecer(this.panelStats, this);
+
+        // wave interaction
+        this.olas = this.physics.add.group();
+
+        for (let i = 0; i < 10; i++) {
+            this.olas.add(this.add.circle(50 + i * 90, 600, 70, 0xfff4e9de0, 0));
+        }
+
+        this.olas.children.iterate((ball) => {
+            ball.originalY = ball.y;
+            // console.log('aqui estoy', ball.x, ball.y)
+            // ball.setScale(0.1);
         });
 
-        // listeners
+        // listeners 
         this.button_message.on('pointerdown', () => {
             const settings = this.sys.settings.data.settings; 
             this.sound.play('CorrectSound');
@@ -92,7 +102,7 @@ export default class RememberFailed extends Phaser.Scene {
             for (const scene of this.scene.manager.getScenes(false)) {
                 scene.scene.stop();
             }
-            this.scene.start('RememberInit', { setting: settings }, { game: this.game });
+            this.scene.start('ObjectInit', { setting: settings }, { game: this.game });
         }); 
 
         this.button_message.on('pointerover', () => {
@@ -117,36 +127,37 @@ export default class RememberFailed extends Phaser.Scene {
         }); 
     }
 
-    update () {
-        for (let i = 0; i < this.frutas_lluviosas.getChildren().length; i++) {
-            var fruit = this.frutas_lluviosas.getChildren()[i];
-            if (fruit.y > 600) {
-                fruit.destroy(true);
-            }
+    update() {
+        this.waveOffset += 0.01;
+        if (!this.pressed) {
+            this.olas.children.each((child) => {
+                child.y = child.originalY + Math.sin(child.x / 40 + this.waveOffset) * 20;
+            });
         }
-
         if (this.flag) {
-            this.statsShow(this, true); 
-            this.flag = false; 
+            this.statsShow(this, true);
+            this.flag = false;
         }
     }
 
-    // Custom Functions 
-    aparecer (obj, scene) {
+    // custom functions
+    aparecer(obj, scene) {
         this.tweens.add({
-            targets: obj, 
-            alpha: 1, 
-            duration: 1500, 
+            targets: obj,
+            alpha: 1,
+            duration: 1500,
             ease: 'Power2',
             onComplete: function () {
-                scene.flag = true; 
+                scene.flag = true;
             }
-        }); 
+        });
     }
 
     statsShow(scene, value) {
         scene.main_message.setVisible(value);
         scene.second_message.setVisible(value);
+        scene.panel_button.setVisible(value);
+        scene.button_message.setVisible(value);
     }
 
     emitDataToReactComponent(dataToSend) {

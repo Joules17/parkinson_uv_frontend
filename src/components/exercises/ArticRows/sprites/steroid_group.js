@@ -69,6 +69,7 @@ export default class steroid_group extends Phaser.GameObjects.Group {
         this.scene.feedback(false);
         this.scene.sound.play('CrackingSound');
         this.scene.errores += 1; 
+        this.scene.tries -= 1;
         this.scene.error_flag = true; 
         this.scene.set_status(false);
     }

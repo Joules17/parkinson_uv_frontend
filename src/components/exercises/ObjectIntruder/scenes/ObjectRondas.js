@@ -21,6 +21,7 @@ export default class ObjectRondas extends Phaser.Scene {
 
         // config rondas
         this.numberFases = 20;
+        this.tries = 3; 
         this.tableroActual = undefined;
 
         // texto
@@ -75,6 +76,12 @@ export default class ObjectRondas extends Phaser.Scene {
         console.log(this.sys.settings.data)
 
         this.numberFases = settings.rondas
+        
+        // Number Tries - settings 
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries;
+        }
+
         this.tablero_config['category'] = settings.categorias; 
         this.limite = settings.rondas
         this.cameras.main.setBackgroundColor(0xffffff);
@@ -89,6 +96,10 @@ export default class ObjectRondas extends Phaser.Scene {
             .setFontSize(40);
         this.texto_tiempototal = this.add
             .text(710, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
+
+        this.texto_numberintentos = this.add
+            .text(10, 10, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff' })
             .setFontSize(40);
         this.text_numberrondas.setVisible(false);
         this.texto_tiempototal.setVisible(false);
@@ -191,6 +202,13 @@ export default class ObjectRondas extends Phaser.Scene {
     // setters
     setStatus(val) {
         this.flag = val;
+    }
+
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings; 
+            this.scene.start('ObjectFailed', { settings }, { game: this.game });
+        }
     }
 
     // logs

@@ -32,6 +32,7 @@ export default class LettersGame extends Phaser.Scene {
 
         // execution variables
         this.number_rounds = 5;
+        this.tries = 3;  
         this.current_number = 1;
         this.tableros = [];
         this.tablero_actual = undefined;
@@ -62,7 +63,11 @@ export default class LettersGame extends Phaser.Scene {
         // Initialize config --------------------------------------------------
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas
-        console.log(this.number_rounds)
+
+        // Intentos
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries; 
+        } 
 
         // Background --------------------------------------------------
         this.add.sprite(400, 300, 'BgForest');
@@ -83,7 +88,6 @@ export default class LettersGame extends Phaser.Scene {
         this.text_yes.setInteractive();
 
         // --------------------------------------------------------------------------------------------
-
         // no circle
         this.circle_no = this.add.graphics();
         this.circle_no.fillStyle(0x000000, 1);
@@ -106,7 +110,6 @@ export default class LettersGame extends Phaser.Scene {
 
         // --------------------------------------------------------------------------------------------
         // panels
-
         this.panel_izq = this.add.graphics(); 
         this.panel_izq.fillStyle(0x7768ad, 1);
         this.panel_izq.lineStyle(10, 0x000000)
@@ -119,7 +122,6 @@ export default class LettersGame extends Phaser.Scene {
         this.panel_der.fillRect(400, 70, 340, 370);
         this.panel_der.strokeRect(400, 70, 340, 370);
 
-
         // ----------------------------------------------------------------------------------------------------------
         // Titles ---------------------------------------------------------------------------------------------------
         this.panel_stats = this.add.graphics(); 
@@ -129,15 +131,16 @@ export default class LettersGame extends Phaser.Scene {
         this.text_numberrondas = this.add
             .text(320, 15, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#eb3724' })
             .setFontSize(30);
-
         this.texto_tiempototal = this.add
             .text(20, 15, 'TIEMPO: ' + this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#eb3724' })
             .setFontSize(30);
         this.texto_numbererros = this.add
             .text(180, 15, 'Errores: ' + this.errores, { fontFamily: 'TROUBLE', fill: '#eb3724' })
             .setFontSize(30);
-
-        // ----------------------------------------------------------------------------------------------------------1
+        this.texto_numbertries = this.add
+            .text(470, 15, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#eb3724' })
+            .setFontSize(30);
+            // ----------------------------------------------------------------------------------------------------------1
 1        // FullScreen button ----------------------------------------------------------------------------------------
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
@@ -296,15 +299,24 @@ export default class LettersGame extends Phaser.Scene {
 
     incorrect_answer () {
         this.errores += 1;
+        this.tries -= 1; 
         this.texto_numbererros.setText('Errores: ' + this.errores);
+        this.texto_numbertries.setText('Intentos: ' + this.tries);
+        this.check_lose();
         this.sound.play('BadSound');
-
     }
 
     correct_answer() {
         this.sound.play('CorrectSound')
         this.current_number += 1;
         this.flag = true;
+    }
+
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings;
+            this.scene.start('LettersFailed', { settings }, {game: this.game});
+        }
     }
 
     // logs

@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
+// prop
+import PropTypes from 'prop-types';
+
 import Phaser from "phaser";
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
-
-
 
 // Escenas
 import ObjectInit from 'components/exercises/ObjectIntruder/scenes/ObjectIntruderInit';
@@ -12,6 +14,7 @@ import ObjectMenu from 'components/exercises/ObjectIntruder/scenes/ObjectMenu';
 import ObjectLoby from 'components/exercises/ObjectIntruder/scenes/ObjectLoby';
 import ObjectEnd from 'components/exercises/ObjectIntruder/scenes/ObjectEnd';
 import ObjectRondas from 'components/exercises/ObjectIntruder/scenes/ObjectRondas';
+import ObjectFailed from 'components/exercises/ObjectIntruder/scenes/ObjectFailed';
 
 //css
 import 'components/exercises/general_assets/styles.css';
@@ -38,7 +41,7 @@ function ObjectIntruder(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [ObjectInit, ObjectMenu, ObjectLoby, ObjectRondas, ObjectEnd],
+            scene: [ObjectInit, ObjectMenu, ObjectLoby, ObjectRondas, ObjectEnd, ObjectFailed],
         }
 
         const game = new Phaser.Game(config);
@@ -53,7 +56,7 @@ function ObjectIntruder(props) {
             game.scale.off('leavefullscreen', handleLeaveFullScreen);
             game.destroy(true);
         };
-
+        /* eslint-disable react-hooks/exhaustive-deps */
     }, []);
 
     const handleDataFromPhaser = (data) => {
@@ -146,3 +149,10 @@ function ObjectIntruder(props) {
 // }
 
 export default ObjectIntruder;
+
+ObjectIntruder.propTypes = {
+    setting: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    idSession: PropTypes.number.isRequired,
+    fromActivity: PropTypes.bool.isRequired
+}

@@ -24,7 +24,7 @@ import 'components/exercises/general_assets/styles.css'
 
 function GameRememberAndFind(props) {
   const dispatch = useDispatch();
-  const { id, idSession,fromActivity } = props;
+  const { id, idSession, fromActivity } = props;
   const { createLog } = useLogsResponse()
   useEffect(() => {
     const { setting } = props;
@@ -102,4 +102,5 @@ GameRememberAndFind.propTypes = {
   id: PropTypes.number.isRequired,
   idSession: PropTypes.number.isRequired,
   setting: PropTypes.object.isRequired,
+  fromActivity: PropTypes.bool.isRequired,
 }
