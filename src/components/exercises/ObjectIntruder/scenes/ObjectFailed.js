@@ -100,7 +100,11 @@ export default class ObjectFailed extends Phaser.Scene {
 
             // Stop all scenes
             for (const scene of this.scene.manager.getScenes(false)) {
-                scene.scene.stop();
+                // console.log('Hola aqui estoy vamos a ver que sucede, ' + scene.scene.key)
+                if (scene.scene.key === 'ObjectEnd') {
+                    continue; 
+                }
+                scene.scene.stop(); 
             }
             this.scene.start('ObjectInit', { setting: settings }, { game: this.game });
         }); 

@@ -17,6 +17,11 @@ const log = {
 export default class ObjectRondas extends Phaser.Scene {
     constructor() {
         super({ key: 'ObjectRondas', backgroundColor: 0xffffff });
+    }
+
+    preload() {}
+
+    builder () {
         this.blockup, (this.blockdown = undefined);
 
         // config rondas
@@ -67,10 +72,11 @@ export default class ObjectRondas extends Phaser.Scene {
 
         this.limite = 20;
     }
-
-    preload() {}
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // Game --- 
         this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         console.log(this.sys.settings.data)
