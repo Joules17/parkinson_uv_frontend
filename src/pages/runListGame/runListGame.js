@@ -17,6 +17,7 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import ChargingCard from 'components/ChargingCard';
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -132,14 +133,18 @@ const RunListGames = () => {
 
     return (
         <MainCard title={lista_juegos[0].name} darkTitle={true}>
-            <Stack spacing={2}>
-                <Carousel responsive={responsive}>
-                    {cards.map((card, index) => renderCard(card, index))}
-                </Carousel>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {idSession.session_id !== undefined ? renderGame() : "Cargando..."}
-                </div>
-            </Stack>
+            {idSession && idSession.session_id !== undefined ?
+                <Stack spacing={2}>
+                    <Carousel responsive={responsive}>
+                        {cards.map((card, index) => renderCard(card, index))}
+                    </Carousel>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {renderGame()}
+                    </div>
+                </Stack>
+                : <ChargingCard />
+            }
+
         </MainCard>
     )
 
