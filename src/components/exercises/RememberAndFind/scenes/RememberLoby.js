@@ -11,7 +11,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 export default class RememberLoby extends Phaser.Scene {
     constructor() {
         super({ key: 'RememberLoby', backgroundColor: '#3f1651' });
+    }
 
+    preload() { }
+
+    builder () {
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
@@ -45,10 +49,11 @@ export default class RememberLoby extends Phaser.Scene {
             color_wished: undefined
         };
     }
-
-    preload() { }
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // Game --- 
         this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor(0x4e9de0);

@@ -21,6 +21,11 @@ const log = {
 export default class LetrasGame extends Phaser.Scene {
     constructor() {
         super({ key: 'LetrasGame', backgroundColor: '#3f1651' });
+    }
+
+    preload() {}
+
+    builder () {
         this.write_flag = true; 
         // dimensions
         this.worldSizeWidth = 800;
@@ -87,9 +92,11 @@ export default class LetrasGame extends Phaser.Scene {
         };
     }
 
-    preload() {}
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // game ---
         this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas;

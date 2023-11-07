@@ -90,6 +90,9 @@ export default class RememberFailed extends Phaser.Scene {
 
             // Stop all scenes
             for (const scene of this.scene.manager.getScenes(false)) {
+                if (scene.scene.key === 'RememberEnd') {
+                    continue; 
+                }
                 scene.scene.stop();
             }
             this.scene.start('RememberInit', { setting: settings }, { game: this.game });

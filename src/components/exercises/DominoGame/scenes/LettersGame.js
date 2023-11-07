@@ -20,6 +20,11 @@ const log = {
 export default class LettersGame extends Phaser.Scene {
     constructor() {
         super({ key: 'LettersGame', backgroundColor: '#3f1651' });
+    }
+
+    preload() {}
+
+    builder () {
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
@@ -53,12 +58,13 @@ export default class LettersGame extends Phaser.Scene {
             side_selected: undefined,
             correct_option: undefined
         };
-
     }
 
-    preload() {}
-
     create() {
+        // constructor aux
+        this.builder();
+
+        // game
         this.game = this.sys.game
         // Initialize config --------------------------------------------------
         const settings = this.sys.settings.data.settings;

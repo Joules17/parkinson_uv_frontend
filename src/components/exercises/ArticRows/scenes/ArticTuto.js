@@ -11,6 +11,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 export default class ArticTuto extends Phaser.Scene {
     constructor() {
         super({ key: 'ArticTuto', backgroundColor: '#3f1651' });
+    }
+
+    preload() {}
+
+    builder () {
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
@@ -66,9 +71,11 @@ export default class ArticTuto extends Phaser.Scene {
         };
     }
 
-    preload() {}
-
     create() {
+        // constructor aux
+        this.builder();
+
+        // game
         this.game = this.sys.game
         // Background
         this.bg = this.add.image(400, 300, 'BgNightSky');

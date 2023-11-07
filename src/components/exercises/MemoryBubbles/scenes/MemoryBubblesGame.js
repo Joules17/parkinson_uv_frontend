@@ -21,6 +21,11 @@ const log = {
 export default class MemoryBubblesGame extends Phaser.Scene {
     constructor () {
         super({key: 'MemoryBubblesGame', backgroundColor: '#3f1651'});
+    }
+
+    preload () {}
+
+    builder () {
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
@@ -41,10 +46,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         this.tiempo_rondas = [];
         this.tiempo_por_ronda = 0; // sec
     }
-
-    preload () {}
-
     create () {
+        // constructor aux 
+        this.builder();
+
+        // game ---
         this.game = this.sys.game
         // Bounds
         this.physics.world.setBounds(0, 0, this.worldSizeWidth, this.worldSizeHeigth);

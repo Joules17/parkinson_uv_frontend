@@ -19,6 +19,11 @@ const log = {
 export default class FlechasGame extends Phaser.Scene {
     constructor() {
         super({key: 'FlechasGame', backgroundColor: '#3f1651'});
+    }
+
+    preload () {}
+
+    builder () {
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
@@ -74,9 +79,11 @@ export default class FlechasGame extends Phaser.Scene {
         }; 
     }
 
-    preload () {}
-
     create() {
+        // constructor aux
+        this.builder();
+
+        // game ---
         this.game = this.sys.game
         // Initialize 
         const settings = this.sys.settings.data.settings;

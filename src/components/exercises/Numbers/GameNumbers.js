@@ -11,7 +11,8 @@ import NumbersInit from 'components/exercises/Numbers/scenes/NumbersInit';
 import NumbersMenu from 'components/exercises/Numbers/scenes/NumbersMenu';
 import NumbersLoby from 'components/exercises/Numbers/scenes/NumbersLoby';
 import rondas from 'components/exercises/Numbers/scenes/rondas';
-
+import NumbersFailed from 'components/exercises/Numbers/scenes/NumbersFailed';
+import NumbersEnd from 'components/exercises/Numbers/scenes/NumbersEnd'; 
 //css
 import 'components/exercises/general_assets/styles.css';
 
@@ -33,7 +34,7 @@ class GameNumbers extends Component {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [NumbersInit, NumbersMenu, NumbersLoby, rondas]
+            scene: [NumbersInit, NumbersMenu, NumbersLoby, rondas, NumbersFailed, NumbersEnd]
         };
 
         this.game = new Phaser.Game(config);

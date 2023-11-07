@@ -82,6 +82,42 @@ export default class MemoryBubblesFailed extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // listeners
+        this.button_message.on('pointerdown', () => {
+            const settings = this.sys.settings.data.settings; 
+            this.sound.play('CorrectSound');
+
+            // Stop all scenes
+            for (const scene of this.scene.manager.getScenes(false)) {
+                // console.log('Hola aqui estoy vamos a ver que sucede, ' + scene.scene.key)
+                if (scene.scene.key === 'ObjectEnd') {
+                    continue; 
+                }
+                scene.scene.stop(); 
+            }
+            this.scene.start('MemoryBubblesInit', { setting: settings }, { game: this.game });
+        }); 
+
+        this.button_message.on('pointerover', () => {
+            this.button_message.setColor('#e15554');
+            this.tweens.add({
+                targets: this.button_message,
+                scale: 1.01,
+                duration: 100,
+                ease: 'Power2'
+            });
+        }); 
+
+        this.button_message.on('pointerout', () => {
+            this.button_message.setColor('#000000');
+            this.tweens.add({
+                targets: this.button_message,
+                scale: 1,
+                duration: 100,
+                ease: 'Power2'
+            });
+        }); 
     }
 
     update () {
