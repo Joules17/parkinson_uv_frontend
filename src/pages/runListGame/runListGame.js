@@ -29,7 +29,7 @@ const RunListGames = () => {
 
     useEffect(() => {
         if (gameListState) {
-            fetchIdSession(); // Llama a fetchIdSession para obtener idSession
+            fetchIdSession();
         }
         setCargado(true);
     }, []);
@@ -71,26 +71,25 @@ const RunListGames = () => {
 
 
     const renderGame = () => {
-        console.log(startGame)
         switch (startGame.title) {
             case "Objeto Intruso":
                 return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameArtic setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Recuerda y Encuentra":
                 return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <LettersVsNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameLetras setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameFlechasCongeladas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Letras Marinas":
-                return <GameLetrasMarinas setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameLetrasMarinas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={startGame.setting}  id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+                return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             default:
                 return null;
         }
@@ -132,13 +131,13 @@ const RunListGames = () => {
 
 
     return (
-        <MainCard title={lista_juegos[0].name} darkTitle = {true}>
+        <MainCard title={lista_juegos[0].name} darkTitle={true}>
             <Stack spacing={2}>
                 <Carousel responsive={responsive}>
                     {cards.map((card, index) => renderCard(card, index))}
                 </Carousel>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {renderGame()}
+                    {idSession.session_id !== undefined ? renderGame() : "Cargando..."}
                 </div>
             </Stack>
         </MainCard>
