@@ -1,12 +1,10 @@
-import { Card, CardContent, CardMedia, Stack, CardActionArea, Box, Typography } from '@mui/material';
-import Carousel from 'react-multi-carousel';
+import { Box, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
 
 // project import
 import MainCard from 'components/MainCard';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import ObjectIntruder from 'components/exercises/ObjectIntruder/GameObjectIntruder'
 import GameNumbers from 'components/exercises/Numbers/GameNumbers';
 import GameArtic from 'components/exercises/ArticRows/GameArtic';
@@ -16,6 +14,7 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias'; 
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -25,8 +24,7 @@ const RunGame = () => {
     const queryParams = new URLSearchParams(location.search);
     const game = queryParams.get('game');
     const description = queryParams.get('description'); 
-    const gameListState = useSelector((state) => state.gamesList);
-    const [startGame, setStartGame] = useState({})
+    // const gameListState = useSelector((state) => state.gamesList);
 
     const setting = location.state
     // console.log(setting)
@@ -51,6 +49,8 @@ const RunGame = () => {
                 return <GameLetrasMarinas setting={setting} fromActivity={false}/>;
             case "Burbujas de Memoria":
                 return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
+            case "Fotografias Misteriosas":
+                return <GameFotografias setting={setting} fromActivity={false}/>;
             default:
                 return null;
         }

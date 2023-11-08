@@ -17,6 +17,8 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias';
+
 import ChargingCard from 'components/ChargingCard';
 
 // ==============================|| GAMES PAGE ||============================== //
@@ -33,6 +35,7 @@ const RunListGames = () => {
             fetchIdSession();
         }
         setCargado(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchIdSession = async () => {
@@ -91,6 +94,8 @@ const RunListGames = () => {
                 return <GameLetrasMarinas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Burbujas de Memoria":
                 return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Fotografias Misteriosas":
+                return <GameFotografias setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             default:
                 return null;
         }
