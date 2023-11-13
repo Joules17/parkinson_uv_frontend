@@ -15,6 +15,9 @@ import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
 import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias'; 
+import GameCuadrilla from 'components/exercises/CuadrillaLetras/GameCuadrillaLetras'; 
+import GameTe from 'components/exercises/Te/GameTe';
+import GameBubbleParty from 'components/exercises/BubbleParty/GameBubbleParty';
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -51,6 +54,12 @@ const RunGame = () => {
                 return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
             case "Fotografias Misteriosas":
                 return <GameFotografias setting={setting} fromActivity={false}/>;
+            case "Cuadrilla de Letras y Numeros":
+                return <GameCuadrilla setting={setting} fromActivity={false}/>;    
+            case "La hora del té": 
+                return <GameTe setting={setting} fromActivity={false}/>;
+            case "Fiesta de Burbujas": 
+                return <GameBubbleParty setting={setting} fromActivity={false}/>;
             default:
                 return null;
         }

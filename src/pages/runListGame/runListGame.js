@@ -18,6 +18,9 @@ import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
 import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias';
+import GameCuadrilla from 'components/exercises/CuadrillaLetras/GameCuadrillaLetras';
+import GameTe from 'components/exercises/Te/GameTe';
+import GameBubbleParty from 'components/exercises/BubbleParty/GameBubbleParty';
 
 import ChargingCard from 'components/ChargingCard';
 
@@ -96,6 +99,12 @@ const RunListGames = () => {
                 return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Fotografias Misteriosas":
                 return <GameFotografias setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Cuadrilla de Letras y Numeros":
+                return <GameCuadrilla setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "La hora del té":
+                return <GameTe setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Fiesta de Burbujas": 
+                return <GameBubbleParty setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true}/>;
             default:
                 return null;
         }

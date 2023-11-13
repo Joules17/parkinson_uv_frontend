@@ -80,7 +80,7 @@ export default class LettersMenu extends Phaser.Scene {
 
         // --------------------------------------------------------------
         // fullScreenButton
-        new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         // entered buttons
         // start_button

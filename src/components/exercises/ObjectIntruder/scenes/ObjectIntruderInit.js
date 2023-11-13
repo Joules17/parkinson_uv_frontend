@@ -53,7 +53,7 @@ export default class ObjectInit extends Phaser.Scene {
 
     create() {
         this.game = this.sys.game
-        this.add.text(3000, 3000, "", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(20); 
+        this.add.text(3000, 3000, "ESTO ES UN TEXTO DE INICIALIZACION", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(20); 
         this.pass()
     }
 
