@@ -21,7 +21,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
     create () {
         this.game = this.sys.game
         // Background 
-        this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
+        this.bg = this.add.tileSprite(400, 300, 800, 600, 'SeaImg').setDepth(-2).setScrollFactor(0);
 
         // Panel 
         this.title_panel = this.add.graphics(); 
@@ -47,7 +47,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
         this.start_panel.fillRect(335, 480, 140, 70);
 
         this.start_button = this.add.text(350, 495, 'Iniciar', { fontFamily: 'TROUBLE', fill: '#3bb173'}).setFontSize(50)
-        this.start_button.setInteractive();
+        this.start_button.setInteractive({ useHandCursor: true });
 
 
         // Fullscreen button 
@@ -98,6 +98,7 @@ export default class MemoryBubblesMenu extends Phaser.Scene {
     }
 
     update () {
+        this.bg.tilePositionY += 0.1;
         for (let i = 0; i < this.bubble_group.getChildren().length; i++) {
             if (this.bubble_group.getChildren()[i].y < -50) {
                 this.bubble_group.getChildren()[i].destroy(true)

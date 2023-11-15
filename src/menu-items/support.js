@@ -11,16 +11,9 @@ const icons = {
 
 const support = {
     id: 'support',
-    title: 'Ayuda',
+    title: 'Página Principal',
     type: 'group',
     children: [
-        {
-            id: 'configuration',
-            title: 'Configuración',
-            type: 'item',
-            url: '/sample-page',
-            icon: icons.SettingOutlined
-        },
         {
             id: 'logOut',
             title: 'Salir al Landing',

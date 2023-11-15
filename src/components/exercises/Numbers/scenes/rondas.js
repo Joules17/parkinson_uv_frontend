@@ -8,9 +8,10 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 const log = {
     info: {
-        numero_rondas: undefined, 
-        tiempo_rondas: undefined, 
-        tiempo_total: undefined
+        tiempo_total: undefined,
+        tiempo_rondas: undefined,
+        errores: undefined, 
+        rondas: undefined
     }
 }
 
@@ -129,7 +130,7 @@ export default class rondas extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
-            this.setLog(this.tiempo_rondas, this.texto_tiempototal.text, this.numberFases);
+            this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.numberErrors, this.numberFases);
             this.scene.start('NumbersEnd', log, { game: this.game });
             this.fin_del_juego = false;
         }
@@ -167,7 +168,7 @@ export default class rondas extends Phaser.Scene {
             this.gameTimeMin += 1;
         }
 
-        this.texto_tiempototal.setText('Tiempo: ' + this.gameTimeMin + ':' + this.gameTimeSec);
+        this.texto_tiempototal.setText('Tiempo: ' + this.gameTimeMin + ' : ' + this.gameTimeSec);
     }
 
     check_lose() {
@@ -188,9 +189,10 @@ export default class rondas extends Phaser.Scene {
     }
 
     // setLog 
-    setLog(tiempo_rondas, tiempo_total, number_rondas) {
-        log.info.numero_rondas = number_rondas;
-        log.info.tiempo_rondas = tiempo_rondas;
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
         log.info.tiempo_total = tiempo_total;
+        log.info.errores = errores;
+        log.info.rondas = number_rounds; 
     }
 }

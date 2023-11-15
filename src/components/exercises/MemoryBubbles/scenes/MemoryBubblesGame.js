@@ -12,9 +12,10 @@ import SteroidObject from 'components/Factory/SteroidObject';
 // Log 
 const log = {
     info: {
-        numero_rondas: undefined, 
+        tiempo_total: undefined,
         tiempo_rondas: undefined,
-        tiempo_total: undefined
+        errores: undefined, 
+        rondas: undefined
     }
 }
 
@@ -66,7 +67,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
             this.tries= parseInt(settings.tries);
         }
         // Background
-        this.bg = this.add.sprite(400, 300, 'SeaImg').setDepth(-2);
+        this.bg = this.add.tileSprite(400, 300, 800, 600, 'SeaImg').setDepth(-2).setScrollFactor(0);
 
         // Algae
         var change = -1
@@ -237,6 +238,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
     }
 
     update () {
+        this.bg.tilePositionY += 0.1;
         if (this.flag) {
             if (! (this.current_bubble === undefined)) {
                 this.tiempo_rondas.push(this.tiempo_por_ronda);
@@ -248,7 +250,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('TERMINA EL JUEGO')
-            this.setLog(this.tiempo_por_ronda, this.time_text.text, this.current_level-1)
+            this.setLog(this.tiempo_rondas, this.time_text, this.number_errors, this.current_level-1)
             this.scene.start('MemoryBubblesEnd', log, {game: this.game});
             this.fin_del_juego = false;
         }
@@ -281,7 +283,7 @@ export default class MemoryBubblesGame extends Phaser.Scene {
                 this.gameTimeMin += 1;
             }
 
-            this.time_text.setText('Tiempo: ' + this.gameTimeMin + ':' + this.gameTimeSec);
+            this.time_text.setText('Tiempo: ' + this.gameTimeMin + ' : ' + this.gameTimeSec);
         }
     }
 
@@ -376,9 +378,11 @@ export default class MemoryBubblesGame extends Phaser.Scene {
         }
     }
 
-    setLog(tiempo_rondas, tiempo_total, number_rondas) {
-        log.info.numero_rondas = number_rondas;
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
         log.info.tiempo_total = tiempo_total;
-        log.info.tiempo_rondas = tiempo_rondas;
+        log.info.errores = errores;
+        log.info.rondas = number_rounds; 
+        console.log('Se esta enviando: ', tiempo_rondas, tiempo_total, errores, number_rounds)
     }
 }

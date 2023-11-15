@@ -1,13 +1,15 @@
 // assets
-import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined, AppstoreAddOutlined} from '@ant-design/icons';
+import { LineChartOutlined, PlayCircleOutlined, TeamOutlined, UserOutlined, BookOutlined, AppstoreAddOutlined, FileDoneOutlined} from '@ant-design/icons';
 
 // icons
 const icons = {
-    DashboardOutlined,
+    LineChartOutlined,
     PlayCircleOutlined,
+    TeamOutlined, 
     UserOutlined,
-    UnorderedListOutlined,
-    AppstoreAddOutlined
+    BookOutlined,
+    AppstoreAddOutlined, 
+    FileDoneOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== // 
@@ -22,7 +24,15 @@ const dashboard_doctor = {
             title: 'Dashboard',
             type: 'item',
             url: '/dashboard/default',
-            icon: icons.DashboardOutlined,
+            icon: icons.LineChartOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'profile',
+            title: 'Mi Perfil',
+            type: 'item',
+            url: '/my-profile',
+            icon: icons.UserOutlined,
             breadcrumbs: false
         },
         {
@@ -30,7 +40,7 @@ const dashboard_doctor = {
             title: 'Pacientes',
             type: 'item',
             url: '/patients-page',
-            icon: icons.UserOutlined,
+            icon: icons.TeamOutlined,
             breadcrumbs: false
         },
         {
@@ -38,7 +48,7 @@ const dashboard_doctor = {
             title: 'Biblioteca',
             type: 'item',
             url: '/library-page',
-            icon: icons.UnorderedListOutlined,
+            icon: icons.BookOutlined,
             breadcrumbs: false
         },
         {
@@ -51,20 +61,20 @@ const dashboard_doctor = {
         }, 
         {
             id: 'games',
-            title: 'Games',
+            title: 'Galería de Juegos',
             type: 'item',
             url: '/games-page',
             icon: icons.PlayCircleOutlined,
             breadcrumbs: false
         },
         {
-            id: 'profile',
-            title: 'Mi Perfil',
+            id: 'sessions',
+            title: 'Sesiones', 
             type: 'item',
-            url: '/my-profile',
-            icon: icons.UserOutlined,
+            url: '/sessions-page',
+            icon: icons.FileDoneOutlined,
             breadcrumbs: false
-        },
+        }
     ]
 };
 

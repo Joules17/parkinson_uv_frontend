@@ -12,48 +12,44 @@ export default class ObjectEnd extends Phaser.Scene {
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
-        // paneles
-        this.panelStats = undefined;
-
-        // Mensajes
-        this.title = undefined;
-        this.tiempo_total_msg = undefined;
-        this.tiempo_total_log = undefined;
-        this.tiempo_promedio_msg = undefined;
-        this.tiempo_promedio_log = undefined;
-        this.number_rondas_msg = undefined;
-        this.number_rondas_log = undefined;
-
         // figuras
         this.waveOffset = undefined;
         this.olas = undefined;
 
         // variables
         this.pressed = false;
-
-        // log
-        this.tiempo_total = undefined;
-        this.tiempo_rondas = undefined;
-        this.number_rondas = undefined;
     }
 
     init(data) {
-        console.log(data);
-        this.tiempo_total = data.info.tiempo_total;
+        this.tiempo_total = data.info.tiempo_total.text;
+        // Convertir tiempo_total a segundos
+        let tiempoTotalArray = this.tiempo_total.split(' : ');
+        let segundos = parseInt(tiempoTotalArray[0]) * 60 + parseInt(tiempoTotalArray[1]);
+        this.tiempo_total_en_segundos = segundos;
+
         let arreglo = data.info.tiempo_rondas;
         let sum = 0;
-        for (let i = 0; i < arreglo.length; i++) {
-            sum = sum + arreglo[i];
+        for (const elemento of arreglo) {
+            sum = sum + elemento;
         }
         let promedio = sum / arreglo.length;
+        this.tiempo_rondas = promedio;
 
-        this.tiempo_rondas = promedio.toFixed(2).toString();
-        this.number_rondas = data.info.numero_rondas.toString();
+        // Convertir a números
+        this.number_errores = parseInt(data.info.errores);
+        if (this.number_errores === -1) {
+            this.number_errores += 1; 
+        }
+        
+        this.number_rondas = parseInt(data.info.rondas);
+
+        console.log('Se esta guardando: ', this.tiempo_rondas, this.number_errores, this.tiempo_total_en_segundos, this.number_rondas);
 
         this.emitDataToReactComponent({
             tiempo_rondas: this.tiempo_rondas,
-            tiempo_total: this.tiempo_total,
-            numero_rondas: this.number_rondas
+            errores: this.number_errores,
+            tiempo_total: this.tiempo_total_en_segundos,
+            number_rondas: this.number_rondas
         });
     }
 
@@ -83,7 +79,7 @@ export default class ObjectEnd extends Phaser.Scene {
         // -------------------------- PANEL STATS ----------------------------
         this.panelStats = this.add.graphics();
         this.panelStats.fillStyle(0xffffff, 1);
-        this.panelStats.fillRoundedRect(100, 200, 600, 300, 20); // x, y, ancho, alto, radio de curvatura
+        this.panelStats.fillRoundedRect(100, 200, 600, 320, 20); // x, y, ancho, alto, radio de curvatura
         this.panelStats.setAlpha(0);
 
         this.title = this.add.text(200, 100, 'fin del juego', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
@@ -96,6 +92,8 @@ export default class ObjectEnd extends Phaser.Scene {
         this.tiempo_promedio_log = this.add.text(500, 310, this.tiempo_rondas, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50);
         this.number_rondas_msg = this.add.text(150, 370, 'Numero rondas: ', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
         this.number_rondas_log = this.add.text(500, 370, this.number_rondas, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50);
+        this.number_errores_msg = this.add.text(150, 430, 'Numero de errores: ', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(50);
+        this.number_errores_log = this.add.text(500, 430, this.number_errores, { fontFamily: 'TROUBLE', fill: '#1A2E44' }).setFontSize(50);
         this.statsShow(this, false);
 
         // ---------------------
@@ -165,6 +163,8 @@ export default class ObjectEnd extends Phaser.Scene {
         scene.tiempo_promedio_log.setVisible(value);
         scene.number_rondas_msg.setVisible(value);
         scene.number_rondas_log.setVisible(value);
+        scene.number_errores_msg.setVisible(value);
+        scene.number_errores_log.setVisible(value);
     }
 
     emitDataToReactComponent(dataToSend) {

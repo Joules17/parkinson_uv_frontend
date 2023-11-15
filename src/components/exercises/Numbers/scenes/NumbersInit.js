@@ -36,7 +36,7 @@ export default class NumbersInit extends Phaser.Scene {
 
     create () {
         this.cameras.main.setBackgroundColor('#0024ad');
-        this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "ESTO ES UN TEXTO DE INICIALIZACION", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
     }
 

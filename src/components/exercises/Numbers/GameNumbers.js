@@ -68,7 +68,7 @@ class GameNumbers extends Component {
     }
 
     render() {
-        return <div id="phaser-game-container" style={{ height: '600px', width: '800px' }} />;
+        return <div id="phaser-game-container" className="game-container" style={{ height: '600px', width: '800px' }} />;
     }
 }
 

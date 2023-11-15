@@ -22,6 +22,7 @@ const ModalLogs = ({ activity, open, handleClose }) => {
       fetchIdSession(); // Llama a fetchIdSession para obtener idSession
     }
     // setCargado(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activity]);
 
   const fetchIdSession = async () => {
@@ -33,12 +34,13 @@ const ModalLogs = ({ activity, open, handleClose }) => {
     if (idSession) {
       fetchLogs()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idSession])
 
   const fetchLogs = async () => {
     const logs = await getLogs(idSession.session_id);
     setLogs(logs);
-    console.log(logs)
+    // console.log(logs)
   }
 
   const handleItemClick = (id) => {

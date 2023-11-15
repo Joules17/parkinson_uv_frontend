@@ -134,11 +134,12 @@ const CardComponent = ({ card }) => {
     );
 };
 
-function game_type_distribute(games, setAtention, setMemory, setLanguage, setFunctions) {
+function game_type_distribute(games, setAtention, setMemory, setLanguage, setFunctions, setVisoconstructivas) {
     let memory = [];
     let atention = [];
     let language = [];
     let functions = [];
+    let visoconstructivas = []; 
     for (let i in games) {
         let dict = {
             image: games[i].game_picture,
@@ -159,6 +160,9 @@ function game_type_distribute(games, setAtention, setMemory, setLanguage, setFun
             case 'Ejecucion':
                 functions.push(dict);
                 break;
+            case 'Habilidades visoconstructivas': 
+                visoconstructivas.push(dict); 
+                break; 
             default:
                 break;
         }
@@ -167,6 +171,7 @@ function game_type_distribute(games, setAtention, setMemory, setLanguage, setFun
     setAtention(atention);
     setLanguage(language);
     setFunctions(functions);
+    setVisoconstructivas(visoconstructivas);
 }
 
 const Games = () => {
@@ -177,6 +182,7 @@ const Games = () => {
     const [cardsAtention, setAtention] = useState(undefined);
     const [cardsLanguage, setLanguage] = useState(undefined);
     const [cardsFunctions, setFunctions] = useState(undefined);
+    const [cardsVisoconstructivas, setVisoconstructivas] = useState(undefined);
 
     // Llamada a la API para traer los juegos
     useEffect(() => {
@@ -186,7 +192,7 @@ const Games = () => {
 
     // Distribución de los juegos por tipo
     useEffect(() => {
-        game_type_distribute(games, setAtention, setMemory, setLanguage, setFunctions);
+        game_type_distribute(games, setAtention, setMemory, setLanguage, setFunctions, setVisoconstructivas);
     }, [games]);
 
     if (
@@ -194,7 +200,8 @@ const Games = () => {
         cardsMemory === undefined ||
         cardsAtention === undefined ||
         cardsLanguage === undefined ||
-        cardsFunctions === undefined
+        cardsFunctions === undefined ||
+        cardsVisoconstructivas === undefined
     ) {
         return <ChargingCard />;
     } else {
@@ -202,7 +209,8 @@ const Games = () => {
             { title: 'Memoria', list: cardsMemory },
             { title: 'Atencion', list: cardsAtention },
             { title: 'Lenguaje', list: cardsLanguage },
-            { title: 'Funciones ejecutivas', list: cardsFunctions }
+            { title: 'Funciones ejecutivas', list: cardsFunctions },
+            { title: 'Habilidades visoconstructivas', list: cardsVisoconstructivas}
         ];
         return (
             <MainCard title="Juegos" darkTitle={true}>
