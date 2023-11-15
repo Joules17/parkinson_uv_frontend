@@ -91,7 +91,7 @@ function GameMemoryBubbles(props) {
         console.log(gameContainer);
     };
 
-    return <div id="phaser-game-container" style={{ height: '600px', width: '800px' }} />;
+    return <div id="phaser-game-container" className="game-container" style={{ height: '600px', width: '800px' }} />;
 }
 
 // class GameMemoryBubbles extends Component {

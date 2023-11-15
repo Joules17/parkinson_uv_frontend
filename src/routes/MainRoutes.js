@@ -12,6 +12,7 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const PatientsPage = Loadable(lazy(() => import('pages/patients/PatientsPage')));
 const GamesPage = Loadable(lazy(() => import('pages/games/Games')));
+const SessionPage = Loadable(lazy(() => import('pages/session/Session')));
 const Profile = Loadable(lazy(() => import('pages/account/Profile')));
 const LibraryPage = Loadable(lazy(() => import('pages/library/Library')));
 const ActivityPage = Loadable(lazy(() => import('pages/activities/Activities')));
@@ -103,6 +104,10 @@ const MainRoutes = {
         {
             path: 'games-page',
             element: <GamesPage />
+        },
+        {
+            path: 'sessions-page',
+            element: <SessionPage />
         },
         {
             path: 'library-page',

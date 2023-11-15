@@ -13,10 +13,10 @@ const log = {
     info: {
         tiempo_total: undefined,
         tiempo_rondas: undefined,
-        number_rondas: undefined,
-        errores: undefined
+        errores: undefined, 
+        rondas: undefined
     }
-};
+}
 
 export default class LetrasGame extends Phaser.Scene {
     constructor() {
@@ -180,7 +180,7 @@ export default class LetrasGame extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('el juego acabo correctamente');
-            this.set_log(this.tiempo_rondas, this.texto_tiempototal, this.number_rounds, this.errores)
+            this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.errores, this.number_rounds)
             this.scene.start('LetrasOver', log, {game: this.game})
             this.fin_del_juego = false;
         }
@@ -295,7 +295,7 @@ export default class LetrasGame extends Phaser.Scene {
                 this.gameTimeSec = 0;
                 this.gameTimeMin += 1;
             }
-            this.texto_tiempototal.setText(this.gameTimeMin + ':' + this.gameTimeSec);
+            this.texto_tiempototal.setText(this.gameTimeMin + ' : ' + this.gameTimeSec);
         }
     }
 
@@ -307,11 +307,11 @@ export default class LetrasGame extends Phaser.Scene {
             }
         }
     }
-    // logs
-    set_log(tiempo_rondas, tiempo_total, number_rondas, errores) {
-        log.info.tiempo_rondas = tiempo_rondas;
+    // logs 
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
         log.info.tiempo_total = tiempo_total;
-        log.info.number_rondas = number_rondas;
         log.info.errores = errores;
+        log.info.rondas = number_rounds; 
     }
 }

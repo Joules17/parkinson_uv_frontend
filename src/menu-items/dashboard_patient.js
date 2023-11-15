@@ -1,9 +1,9 @@
 // assets
-import { DashboardOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { LineChartOutlined, PlayCircleOutlined, UserOutlined, UnorderedListOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
-    DashboardOutlined,
+    LineChartOutlined,
     PlayCircleOutlined,
     UserOutlined,
     UnorderedListOutlined,
@@ -22,7 +22,7 @@ const dashboard_patient = {
             title: 'Dashboard',
             type: 'item',
             url: '/dashboard/default',
-            icon: icons.DashboardOutlined,
+            icon: icons.LineChartOutlined,
             breadcrumbs: false
         },
         {
@@ -35,7 +35,7 @@ const dashboard_patient = {
         },
         {
             id: 'games',
-            title: 'Games',
+            title: 'Galería de Juegos',
             type: 'item',
             url: '/games-page',
             icon: icons.PlayCircleOutlined,

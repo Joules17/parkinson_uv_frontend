@@ -1,4 +1,4 @@
-// prop
+// prop 
 import PropTypes from 'prop-types';
 
 // mui
@@ -24,8 +24,8 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
     }
 }));
 
-// =============================================== Activities Head
-export default function ActivitiesHead ( {filterWord, onFilterWord, option}) {
+// Sessions Head
+export default function SessionsHead ( {filterWord, onFilterWord, option}) {
     return (
         <StyledSearch
                     value={filterWord}
@@ -40,7 +40,7 @@ export default function ActivitiesHead ( {filterWord, onFilterWord, option}) {
     )
 }
 
-ActivitiesHead.propTypes = {
+SessionsHead.propTypes = {
     filterWord: PropTypes.string.isRequired,
     onFilterWord: PropTypes.func.isRequired,
     option: PropTypes.string.isRequired

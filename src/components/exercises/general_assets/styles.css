@@ -1,4 +1,11 @@
 @font-face {
-    font-family: TROUBLE;
-    src: url('./fonts/Trouble.ttf')
-}
+    font-family: 'Trouble';
+    src: url('./fonts/Trouble.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+  .game-container {
+    font-family: 'Trouble', sans-serif;
+  }
