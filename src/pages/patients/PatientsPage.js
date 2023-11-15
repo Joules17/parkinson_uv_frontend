@@ -1,10 +1,10 @@
 // react 
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState } from 'react';
 
 // material-ui
 // import Button from '@mui/material/Button';
 // import Modal from '@mui/material/Modal';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 // import { PlusOutlined } from '@ant-design/icons';
 
 // project import
@@ -25,44 +25,46 @@ const PatientsPage = () => {
     // auth 0 functions ----------------------------------------------------------------
     const { user } = useAuth0()
     // api responses use-states
-    const [patientsLIST, setPatientsLIST] = useState(undefined); 
-    const [userCharged, setUserCharged ] = useState(undefined); 
+    const [patientsLIST, setPatientsLIST] = useState(undefined);
+    const [userCharged, setUserCharged] = useState(undefined);
     const [isLoading, setLoading] = useState('Cargando Informacion...')
     // api request 
     const { getTherapist, getTherapistPatients } = useTherapistResponse()
 
     // inicializador -----------------------------------------------------
-    
+
     useEffect(() => {
-        getTherapist(user.sub, setUserCharged); 
+        getTherapist(user.sub, setUserCharged);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         if (!(userCharged === undefined)) {
             getTherapistPatients(userCharged.user_id, setPatientsLIST)
-            .then(() => {
-                setLoading('Usuarios')
-            })
+                .then(() => {
+                    setLoading('Usuarios')
+                })
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userCharged])
 
-    if (!(patientsLIST === undefined)) {
+    if (Array.isArray(patientsLIST)) {
         return (
             <MainCard title="Pacientes" darkTitle={true}>
+                <Typography variant="h4" sx={{ mb: 1.5 }}>
+                    Pacientes
+                </Typography>
                 <Grid item xs={12} md={7} lg={8}>
                     <MainCard sx={{ mt: 2 }} content={false} >
-                        <UserList list = {patientsLIST} setList = {setPatientsLIST} loading = {isLoading} setLoading = {setLoading} />
+                        <UserList list={patientsLIST} setList={setPatientsLIST} loading={isLoading} setLoading={setLoading} />
                     </MainCard>
                 </Grid>
             </MainCard>
-        
         );
     } else {
-        return(
+        return (
             <ChargingCard />
-        )
+        );
     }
 }
 

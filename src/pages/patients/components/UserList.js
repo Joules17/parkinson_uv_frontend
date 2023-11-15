@@ -170,7 +170,6 @@ export default function UserList({ list, setList, loading, setLoading }) {
     };
 
     function handleParkinsonPhaseChange(key, therapist_id, patient_id) {
-        console.log('esta llegando esto:', key, therapist_id, patient_id)
         let datos = {
             "id_parkinson_phase": key,
             "id_therapist": therapist_id
@@ -186,7 +185,7 @@ export default function UserList({ list, setList, loading, setLoading }) {
     const filteredUsers = applySortFilter(list, getComparator(order, orderBy), filterName);
     const isNotFound = !filteredUsers.length && !!filterName;
     return (
-        <Card>
+        <Card data-testid="user-list">
             <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} loading={loading} />
             <TableContainer sx={{ minWidth: 800 }}>
                 <Table>
@@ -263,9 +262,9 @@ export default function UserList({ list, setList, loading, setLoading }) {
                                         <SetStatus user_id={user_id} value={user_status} setList={setList} setLoading={setLoading} />
                                     </TableCell>
 
-                                    <TableCell align="right">
+                                    {/* <TableCell align="right">
                                         <ViewProfile user_id = {user_id} tipo = {'2'}/>
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             );
                         })}

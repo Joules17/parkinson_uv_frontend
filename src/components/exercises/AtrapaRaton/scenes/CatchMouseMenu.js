@@ -7,9 +7,9 @@ import 'components/exercises/general_assets/styles.css'
 // Custom Classes Imported: 
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-export default class FlechasMenu extends Phaser.Scene {
+export default class CatchMouseMenu extends Phaser.Scene {
     constructor () {
-        super({ key: 'FlechasMenu', backgroundColor: '#3f1651' });
+        super({ key: 'CatchMouseMenu', backgroundColor: '#3f1651' });
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
@@ -23,7 +23,7 @@ export default class FlechasMenu extends Phaser.Scene {
         this.cursors = undefined;
 
         // Options - scenes selected
-        this.scene_options = ['FlechasGame', 'FlechasTuto']
+        // this.scene_options = ['FlechasGame', 'FlechasTuto']
         this.selected = 0;
     }
 
@@ -32,53 +32,34 @@ export default class FlechasMenu extends Phaser.Scene {
     create () {
         this.game = this.sys.game
         // Background 
-        this.bg = this.add.image(400, 300, 'BgNightSkySnow');
-
-        // Cursors
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        // Emitter
-        this.emiter = this.add.particles(0, -10, 'SnowImg', {
-            x: { min: 0, max: 800 },
-            quantity: 2,
-            lifespan: 2500,
-            gravityY: 200,
-            scale: { start: 0.01, end: 0.001 },
-        });
-
-        // Arrows
-        this.r_arrow = this.add.sprite(300, 345, 'RightArrowImg');
-        this.r_arrow.setScale(0.1)
+        this.bg = this.add.image(400, 300, 'bgTexture');
 
         // Text title
-        this.title = this.add.text(80, 200, "FLECHAS CONGELADAS", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(100)
+        this.title = this.add.text(80, 200, "ATRAPA EL RATON", { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(120)
 
         // Fullscreen bttns
-        new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+        // new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         // Buttons
-        this.start_button = this.add.text(340, 320, "Jugar", {
-            fontFamily: 'TROUBLE',
-            fill: '#ffffff',
-        }).setFontSize(50).setInteractive();
+        this.start_panel = this.add.graphics();
+        this.start_panel.fillStyle(0xffffff, 1);
+        this.start_panel.fillRect(185, 445, 150, 60); 
+        this.start_button = this.add.text(200, 450, 'JUGAR', { fontFamily: 'TROUBLE', fontSize: 60, color: '#000000' }).setInteractive();
 
-        this.tuto_button = this.add.text(340, 400, "Tutorial", {
-            fontFamily: 'TROUBLE',
-            fill: '#ffffff',
-        }).setFontSize(50).setInteractive();
-
-        // Arrows
-        this.animation_movement(this.r_arrow, 'izquierda'); // animation movement
+        this.tutorial_panel = this.add.graphics();
+        this.tutorial_panel.fillStyle(0xffffff, 1);
+        this.tutorial_panel.fillRect(435, 445, 200, 60);
+        this.tuto_button = this.add.text(450, 450, 'Tutorial', { fontFamily: 'TROUBLE', fontSize: 60, color: '#000000' }).setInteractive();
 
         // Events
         this.list_buttons = [this.start_button, this.tuto_button];
         this.setSelected(0); 
 
         // Cursor Listener 
-        this.cursors.up.on('down', () => this.setSelected(0), this);
-        this.cursors.down.on('down', () => this.setSelected(1), this);
-        this.input.keyboard.on('keydown-ENTER', () => this.letsPlay(), this);
-        this.input.keyboard.on('keydown-SPACE', () => this.letsPlay(), this);
+        // this.cursors.up.on('down', () => this.setSelected(0), this);
+        // this.cursors.down.on('down', () => this.setSelected(1), this);
+        // this.input.keyboard.on('keydown-ENTER', () => this.letsPlay(), this);
+        // this.input.keyboard.on('keydown-SPACE', () => this.letsPlay(), this);
 
         // Events 
         // Start Button
@@ -110,17 +91,17 @@ export default class FlechasMenu extends Phaser.Scene {
 
     // Custom Functions
     setSelected(index) {
-        let oposite = (index === 0) ? 1 : 0; 
-        this.selected = index; 
-        this.pointer_out(this.list_buttons[oposite]);
-        this.posy = (index === 0) ? 335 : 400; 
-        this.r_arrow.y = this.posy;
-        this.pointer_over(this.list_buttons[index]);
+        // let oposite = (index === 0) ? 1 : 0; 
+        // this.selected = index; 
+        // this.pointer_out(this.list_buttons[oposite]);
+        // this.posy = (index === 0) ? 335 : 400; 
+        // this.r_arrow.y = this.posy;
+        // this.pointer_over(this.list_buttons[index]);
     }
 
     // Lets Play () 
     letsPlay() {
-        this.sound.play('StartButtonSound'); 
+        // this.sound.play('StartButtonSound'); 
         const settings = this.sys.settings.data.settings;
         this.scene.start(this.scene_options[this.selected], {settings}, {game: this.game});
     }

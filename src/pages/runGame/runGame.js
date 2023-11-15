@@ -16,6 +16,7 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import GameCatchMouse from 'components/exercises/AtrapaRaton/GameCatchMouse';
 
 // ==============================|| GAMES PAGE ||============================== //
 
@@ -51,6 +52,8 @@ const RunGame = () => {
                 return <GameLetrasMarinas setting={setting} fromActivity={false}/>;
             case "Burbujas de Memoria":
                 return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
+            case "Atrapa el ratón":
+                return <GameCatchMouse setting={setting} fromActivity={false}/>
             default:
                 return null;
         }
