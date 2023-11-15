@@ -39,3 +39,9 @@ export default function ActivitiesHead ( {filterWord, onFilterWord, option}) {
                 />
     )
 }
+
+ActivitiesHead.propTypes = {
+    filterWord: PropTypes.string.isRequired,
+    onFilterWord: PropTypes.func.isRequired,
+    option: PropTypes.string.isRequired
+}

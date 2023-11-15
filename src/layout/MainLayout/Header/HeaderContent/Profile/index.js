@@ -26,11 +26,11 @@ import {
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
-import SettingTab from './SettingTab';
+// import SettingTab from './SettingTab';
 
 // assets
 // import avatar1 from 'assets/images/users/avatar-1.png';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 // import { isError } from 'lodash';
 
 // tab panel wrapper
@@ -184,25 +184,10 @@ const Profile = () => {
                                                             label="Perfil"
                                                             {...a11yProps(0)}
                                                         />
-                                                        <Tab
-                                                            sx={{
-                                                                display: 'flex',
-                                                                flexDirection: 'row',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                textTransform: 'capitalize'
-                                                            }}
-                                                            icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                                                            label="Configuración"
-                                                            {...a11yProps(1)}
-                                                        />
                                                     </Tabs>
                                                 </Box>
                                                 <TabPanel value={value} index={0} dir={theme.direction}>
                                                     <ProfileTab handleLogout={handleLogout} />
-                                                </TabPanel>
-                                                <TabPanel value={value} index={1} dir={theme.direction}>
-                                                    <SettingTab />
                                                 </TabPanel>
                                             </>
                                         )}

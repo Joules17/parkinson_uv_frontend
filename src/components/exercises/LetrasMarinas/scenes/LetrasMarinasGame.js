@@ -10,11 +10,11 @@ import Level from '../sprites/Level';
 
 const log = {
     info: {
-        numero_rondas: undefined,
+        tiempo_total: undefined,
         tiempo_rondas: undefined,
-        tiempo_total: undefined
+        errores: undefined, 
     }
-};
+}
 
 export default class LetrasMarinasGame extends Phaser.Scene {
     constructor() {
@@ -50,6 +50,7 @@ export default class LetrasMarinasGame extends Phaser.Scene {
     preload () {}
 
     create () {
+        this.game = this.sys.game
         // Init
         const settings = this.sys.settings.data.settings; 
         console.log(settings, 'Hola')
@@ -223,8 +224,8 @@ export default class LetrasMarinasGame extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente'); 
-            this.setLog(this.tiempo_por_ronda, this.time_text.text, this.number_levels)
-            this.scene.start('LetrasMarinasEnd', log); 
+            this.setLog(this.tiempo_rondas, this.time_text, this.number_levels)
+            this.scene.start('LetrasMarinasEnd', log, {game: this.game}); 
             this.fin_del_juego = false; 
         }
     }
@@ -260,9 +261,9 @@ export default class LetrasMarinasGame extends Phaser.Scene {
         this.time_text.setText('Tiempo: ' + this.gameTimeMin + ' : ' + this.gameTimeSec);
     }
 
-    setLog(tiempo_rondas, tiempo_total, number_rondas) {
-        log.info.numero_rondas = number_rondas;
+    setLog(tiempo_rondas, tiempo_total, number_rounds) {
         log.info.tiempo_rondas = tiempo_rondas;
         log.info.tiempo_total = tiempo_total;
+        log.info.rondas = number_rounds;
     }
 }

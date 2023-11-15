@@ -47,6 +47,7 @@ export default class Level {
     check_win () {
         let aux = true;
         for (let i = 0; i < this.list_bubbles.length; i++) {
+            console.log('Burbuja: ' + i+ ': ' + this.list_bubbles[i].completed); 
             if (!this.list_bubbles[i].completed) {
                 aux = false;
             }

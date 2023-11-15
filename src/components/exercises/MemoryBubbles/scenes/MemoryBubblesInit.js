@@ -25,6 +25,8 @@ import NeutralArrowRight from 'components/exercises/general_assets/images/object
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
 import BadSound from 'components/exercises/general_assets/sounds/bad.wav';
+import BubblePopSound from 'components/exercises/general_assets/sounds/BubblePop.mp3'; 
+import PickBubbleSound from 'components/exercises/general_assets/sounds/PickBubble.mp3'; 
 
 export default class MemoryBubblesInit extends Phaser.Scene {
     constructor () {
@@ -54,16 +56,19 @@ export default class MemoryBubblesInit extends Phaser.Scene {
         this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound);
         this.load.audio('BadSound', BadSound);
+        this.load.audio('BubblePopSound', BubblePopSound);
+        this.load.audio('PickBubbleSound', PickBubbleSound);
     }
 
     create () {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "ESTO ES UN TEXTO DE INICIALIZACION", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
     }
 
     pass () {
         const settings = this.sys.settings.data.setting;
-        this.scene.start('MemoryBubblesMenu', {settings});
+        this.scene.start('MemoryBubblesMenu', {settings}, {game: this.game});
     }
 }

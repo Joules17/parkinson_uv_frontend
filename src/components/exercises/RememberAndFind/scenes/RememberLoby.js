@@ -11,7 +11,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 export default class RememberLoby extends Phaser.Scene {
     constructor() {
         super({ key: 'RememberLoby', backgroundColor: '#3f1651' });
+    }
 
+    preload() { }
+
+    builder () {
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
@@ -22,8 +26,8 @@ export default class RememberLoby extends Phaser.Scene {
         this.lista_tablero = undefined;
         this.flag = false;
         this.fin_del_lobby = false;
-        this.score = undefined;
-        this.counter = undefined;
+        this.score = 0;
+        this.counter = 0;
 
         // button
         this.go_button = undefined;
@@ -45,10 +49,12 @@ export default class RememberLoby extends Phaser.Scene {
             color_wished: undefined
         };
     }
-
-    preload() { }
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // Game --- 
+        this.game = this.sys.game
         // Background ------------------------------------------------------------------------------------------------------------
         this.cameras.main.setBackgroundColor(0x4e9de0);
         this.bg = this.add.sprite(400, 300, 'BgSkye'); 
@@ -126,7 +132,7 @@ export default class RememberLoby extends Phaser.Scene {
             const settings = this.sys.settings.data.settings;
             console.log('ALO? ', settings)
             this.sound.play('CorrectSound');
-            this.scene.start('RememberRondas', { settings });
+            this.scene.start('RememberRondas', { settings }, {game: this.game});
         });
 
         this.go_button.on('pointerover', () => {

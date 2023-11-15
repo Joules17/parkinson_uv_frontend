@@ -45,6 +45,7 @@ export const useExternalApi = () => {
 
     const deleteActivity = async (id) => {
         const config = {
+            
             url: `${apiServerUrl}/api/activity/delete/${id}`,
             method: 'DELETE',
             headers: {},
@@ -54,8 +55,23 @@ export const useExternalApi = () => {
         await makeRequest({config})
     }
 
+    const updateStatusActivity = async (id, status) => {
+        const config = {
+            url: `${apiServerUrl}/api/activity/update/status/${id}`,
+            method: 'PUT',
+            headers: {
+            },
+            data: {
+                "status": status
+            }
+        }
+        const data = await makeRequest({config})
+        console.log(data)
+    }
+    
     return {
         createActivity,
-        deleteActivity
+        deleteActivity,
+        updateStatusActivity
     }
 }

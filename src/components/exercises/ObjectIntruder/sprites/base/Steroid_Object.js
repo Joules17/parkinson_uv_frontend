@@ -103,7 +103,10 @@ export default class SteroidObject extends Phaser.Physics.Arcade.Sprite {
                     } else {
                         console.log('Objeto incorrecto')
                         scene.numberErrors -= 1; 
+                        scene.tries -= 1; 
+                        scene.texto_numberintentos.setText('Intentos: ' + scene.tries); 
                         scene.setStatus(false)
+                        scene.check_lose(); 
                     }
 
                 } else {

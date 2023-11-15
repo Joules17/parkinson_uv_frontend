@@ -50,7 +50,7 @@ const PatientsPage = () => {
 
     if (!(patientsLIST === undefined)) {
         return (
-            <MainCard title="Pacientes" darkTitle="true">
+            <MainCard title="Pacientes" darkTitle={true}>
                 <Grid item xs={12} md={7} lg={8}>
                     <MainCard sx={{ mt: 2 }} content={false} >
                         <UserList list = {patientsLIST} setList = {setPatientsLIST} loading = {isLoading} setLoading = {setLoading} />

@@ -8,19 +8,26 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
 const log = {
     info: {
-        numero_rondas: undefined,
+        tiempo_total: undefined,
         tiempo_rondas: undefined,
-        tiempo_total: undefined
+        errores: undefined, 
+        rondas: undefined
     }
-};
+}; 
 
 export default class ObjectRondas extends Phaser.Scene {
     constructor() {
         super({ key: 'ObjectRondas', backgroundColor: 0xffffff });
+    }
+
+    preload() {}
+
+    builder () {
         this.blockup, (this.blockdown = undefined);
 
         // config rondas
         this.numberFases = 20;
+        this.tries = 3; 
         this.tableroActual = undefined;
 
         // texto
@@ -66,14 +73,22 @@ export default class ObjectRondas extends Phaser.Scene {
 
         this.limite = 20;
     }
-
-    preload() {}
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // Game --- 
+        this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         console.log(this.sys.settings.data)
 
         this.numberFases = settings.rondas
+        
+        // Number Tries - settings 
+        if (settings.tries !== undefined) {
+            this.tries = settings.tries;
+        }
+
         this.tablero_config['category'] = settings.categorias; 
         this.limite = settings.rondas
         this.cameras.main.setBackgroundColor(0xffffff);
@@ -88,6 +103,10 @@ export default class ObjectRondas extends Phaser.Scene {
             .setFontSize(40);
         this.texto_tiempototal = this.add
             .text(710, 560, this.gameTimeMin + ' : ' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#ffffff' })
+            .setFontSize(40);
+
+        this.texto_numberintentos = this.add
+            .text(10, 10, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff' })
             .setFontSize(40);
         this.text_numberrondas.setVisible(false);
         this.texto_tiempototal.setVisible(false);
@@ -113,8 +132,8 @@ export default class ObjectRondas extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('El juego termino correctamente');
-            this.setLog(this.tiempo_rondas, this.texto_tiempototal.text, this.numberFases);
-            this.scene.start('ObjectEnd', log);
+            this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.numberErrors, this.numberFases);
+            this.scene.start('ObjectEnd', log, {game: this.game});
             this.fin_del_juego = false;
         }
     }
@@ -183,7 +202,6 @@ export default class ObjectRondas extends Phaser.Scene {
             this.gameTimeSec = 0;
             this.gameTimeMin += 1;
         }
-
         this.texto_tiempototal.setText(this.gameTimeMin + ' : ' + this.gameTimeSec);
     }
 
@@ -192,10 +210,18 @@ export default class ObjectRondas extends Phaser.Scene {
         this.flag = val;
     }
 
-    // logs
-    setLog(tiempo_rondas, tiempo_total, number_rondas) {
-        log.info.numero_rondas = number_rondas;
-        log.info.tiempo_rondas = tiempo_rondas;
+    check_lose () {
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings; 
+            this.scene.start('ObjectFailed', { settings }, { game: this.game });
+        }
+    }
+
+    // logs 
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
         log.info.tiempo_total = tiempo_total;
+        log.info.errores = errores;
+        log.info.rondas = number_rounds; 
     }
 }

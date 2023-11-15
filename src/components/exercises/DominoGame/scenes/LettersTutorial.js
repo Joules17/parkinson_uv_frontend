@@ -11,6 +11,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn';
 export default class LettersTutorial extends Phaser.Scene {
     constructor() {
         super({key: 'LettersTutorial', backgroundColor: '#3f1651'});
+    }
+
+    preload() {}
+
+    builder () {
         // dimensions
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
@@ -85,9 +90,12 @@ export default class LettersTutorial extends Phaser.Scene {
         }
     }
 
-    preload() {}
-
     create () {
+        // constructor aux
+        this.builder();
+
+        // game ---
+        this.game = this.sys.game
         this.add.sprite(400, 300, 'BgForest');
         
         // fullScreenButton
@@ -219,7 +227,7 @@ export default class LettersTutorial extends Phaser.Scene {
         this.play_button.on('pointerdown', () => {
               const settings = this.sys.settings.data.settings;
               this.sound.play('CorrectSound')
-              this.scene.start('LettersGame', {settings})
+              this.scene.start('LettersGame', {settings}, {game: this.game})
         }); 
       
         this.play_button.on('pointerover', () => {

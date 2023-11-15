@@ -27,31 +27,31 @@ const AuthFooter = () => {
                         variant="subtitle2"
                         color="secondary"
                         component={Link}
-                        href="https://material-ui.com/store/contributors/codedthemes/"
+                        href="https://www.univalle.edu.co"
                         target="_blank"
                         underline="hover"
                     >
-                        MUI Templates
+                        Universidad del Valle
                     </Typography>
                     <Typography
                         variant="subtitle2"
                         color="secondary"
                         component={Link}
-                        href="https://codedthemes.com"
+                        href="https://www.parkinsoncolombia.org"
                         target="_blank"
                         underline="hover"
                     >
-                        Privacy Policy
+                        Fundacion Parkinson de Colombia
                     </Typography>
                     <Typography
                         variant="subtitle2"
                         color="secondary"
                         component={Link}
-                        href="https://codedthemes.support-hub.io/"
+                        href="https://www.parkinsoncolombia.org/paginas/contactenos"
                         target="_blank"
                         underline="hover"
                     >
-                        Support
+                        Contáctenos
                     </Typography>
                 </Stack>
             </Stack>

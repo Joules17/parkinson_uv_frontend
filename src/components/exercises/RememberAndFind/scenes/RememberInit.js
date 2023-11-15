@@ -54,14 +54,15 @@ export default class RememberInit extends Phaser.Scene {
     }
 
     create () {
+        this.game = this.sys.game
         this.cameras.main.setBackgroundColor('#3f1651');
-        this.add.text(3000,3000, "", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
+        this.add.text(3000,3000, "ESTO ES UN TEXTO DE INICIALIZACION", { fontFamily : 'TROUBLE', fill: '#ffffff'}).setFontSize(20)
         this.pass()
     } 
 
     pass () {
         const settings = this.sys.settings.data.setting;
         console.log(settings, 'y aqui? ')
-        this.scene.start('RememberMenu', {settings})
+        this.scene.start('RememberMenu', {settings}, {game: this.game})
     }
 }

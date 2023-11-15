@@ -2,6 +2,7 @@ import { Card, CardContent, CardMedia, Typography, Stack, CardActionArea } from 
 import Carousel from 'react-multi-carousel';
 import { lista_juegos } from 'pages/library/components/globals';
 import 'react-multi-carousel/lib/styles.css';
+import { useExternalApi as useSessionResponse } from 'hooks/sessionResponse';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -16,33 +17,45 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias';
+import GameCuadrilla from 'components/exercises/CuadrillaLetras/GameCuadrillaLetras';
+import GameTe from 'components/exercises/Te/GameTe';
+import GameBubbleParty from 'components/exercises/BubbleParty/GameBubbleParty';
+
+import ChargingCard from 'components/ChargingCard';
 
 // ==============================|| GAMES PAGE ||============================== //
 
 const RunListGames = () => {
     const gameListState = useSelector((state) => state.gamesList);
-    const [games, setGames] = useState({})
+    const { getIdSession } = useSessionResponse()
+    const [idSession, setIdSession] = useState()
     const [startGame, setStartGame] = useState({})
     const [cargado, setCargado] = useState(false);
 
     useEffect(() => {
+        if (gameListState) {
+            fetchIdSession();
+        }
         setCargado(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        setGames(gameListState.gamesList.games)
-    }, [gameListState]);
+    const fetchIdSession = async () => {
+        const idSessionValue = await getIdSession(gameListState?.gamesList.id_activity, gameListState?.gamesList.id_patient);
+        setIdSession(idSessionValue);
+    }
 
-    // useEffect(() => {
-    //     setStartGame(games[0])
-
-    // }, [games]);
     const cards = gameListState?.gamesList.games.map((game) => ({
         image: game.game_picture,
         title: game.name,
         description: game.dominio,
-        setting: game.setting
+        setting: game.setting,
+        active: game.is_played,
+        id: game.id_game_list,
     }));
+
+    console.log(gameListState)
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -65,26 +78,33 @@ const RunListGames = () => {
 
 
     const renderGame = () => {
-        console.log(startGame.title)
         switch (startGame.title) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={startGame.setting}/>;
+                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting}/>;
+                return <GameNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting}/>;
+                return <GameArtic setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Recuerda y Encuentra":
-                return <GameRememberAndFind setting={startGame.setting}/>;
+                return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting}/>;
+                return <LettersVsNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting}/>;
+                return <GameLetras setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting}/>;
-            case "Letras Marinas": 
-                return <GameLetrasMarinas setting={startGame.setting}/>;
+                return <GameFlechasCongeladas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Letras Marinas":
+                return <GameLetrasMarinas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={startGame.setting}/>;
+                return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Fotografias Misteriosas":
+                return <GameFotografias setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Cuadrilla de Letras y Numeros":
+                return <GameCuadrilla setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "La hora del té":
+                return <GameTe setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} />;
+            case "Fiesta de Burbujas": 
+                return <GameBubbleParty setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true}/>;
             default:
                 return null;
         }
@@ -93,20 +113,24 @@ const RunListGames = () => {
 
     const renderCard = (card, index) => {
         return (
-            <Card key={index} sx={{ maxWidth: 230 }}>
-                <CardActionArea onClick={() => setStartGame({title: card.title, setting: card.setting})}>
-                    <CardMedia
-                        component="img"
-                        height="90"
-                        image={card.image}
-                        alt={card.title}
-                    />
-                    <CardContent>
-                        <Typography variant="h5">{card.title}</Typography>
-                        <Typography variant="body2">{card.description}</Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+            <div style={card.active ? { pointerEvents: 'none' } : {}}>
+                <Card key={index} sx={{ maxWidth: 230 }} style={card.active ? { backgroundColor: '#f5f5f5' } : {}}>
+                    <CardActionArea onClick={() => setStartGame({ title: card.title, setting: card.setting, id: card.id })}>
+                        <CardMedia
+                            component="img"
+                            height="90"
+                            image={card.image}
+                            alt={card.title}
+                            style={card.active ? { filter: 'grayscale(100%)' } : {}}
+                        />
+                        <CardContent>
+                            <Typography variant="h5">{card.title}</Typography>
+                            <Typography variant="body2">{card.description}</Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </div>
+
         );
     };
 
@@ -122,15 +146,19 @@ const RunListGames = () => {
 
 
     return (
-        <MainCard title={lista_juegos[0].name} darkTitle>
-            <Stack spacing={2}>
-                <Carousel responsive={responsive}>
-                    {cards.map((card, index) => renderCard(card, index))}
-                </Carousel>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {renderGame()}
-                </div>
-            </Stack>
+        <MainCard title={lista_juegos[0].name} darkTitle={true}>
+            {idSession && idSession.session_id !== undefined ?
+                <Stack spacing={2}>
+                    <Carousel responsive={responsive}>
+                        {cards.map((card, index) => renderCard(card, index))}
+                    </Carousel>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {renderGame()}
+                    </div>
+                </Stack>
+                : <ChargingCard />
+            }
+
         </MainCard>
     )
 

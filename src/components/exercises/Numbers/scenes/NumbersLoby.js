@@ -1,23 +1,19 @@
 // phaser library
 import Phaser from 'phaser';
-import '../styles.css'
+import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported: 
 import TableroRenewed from '../sprites/base/TableroRenewed';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 
-// assets imports
-import fullscreen from '../assets/img/fullscreen.png'
-import flecha from '../assets/design/flecha.png'
-
-// import sounds 
-import good from '../assets/music/correct.wav'
-import bad from '../assets/music/bad.wav'
-import hover from '../assets/music/hover.mp3'
-
 export default class NumbersLoby extends Phaser.Scene {
   constructor() {
     super({ key: 'NumbersLoby', backgroundColor: '#0024ad' });
+  }
+
+  preload() {}
+
+  builder () {
     this.eventFinished = false;
     this.worldSizeWidth = 800;
     this.worldSizeHeigth = 600;
@@ -55,19 +51,11 @@ export default class NumbersLoby extends Phaser.Scene {
       actual: true, // propiedad visible del tablero 
     }
   }
-
-  preload() {
-    // images
-    this.load.image('flechaImg', flecha)
-    this.load.image('fullscreenImg', fullscreen)
-
-    // audio
-    this.load.audio('bad', bad)
-    this.load.audio('good', good)
-    this.load.audio('hover', hover)
-  }
-
   create() {
+    // constructor aux 
+    this.builder(); 
+
+    // game ---
     this.cameras.main.setBackgroundColor(0x0024ad);
 
     // -----------------------
@@ -91,7 +79,7 @@ export default class NumbersLoby extends Phaser.Scene {
     this.victory_message.setVisible(false)
 
     // fullScreenButton ---------------------------------------------------------------------------------------------------
-    new FullScreenBttn(this, 770, 30, 'fullscreenImg');
+    new FullScreenBttn(this, 770, 30, 'FullscreenImg');
     
     // prettier button 
     this.button_continue = this.add.text(355, 545, "jugar", {
@@ -104,14 +92,14 @@ export default class NumbersLoby extends Phaser.Scene {
 
     this.button_continue.on('pointerdown', () => {
       if (this.victory_message.visible && this.button_continue.visible) {
-        this.sound.play('good')
+        this.sound.play('CorrectSound')
         const settings = this.sys.settings.data.settings; 
         this.scene.start('rondas', {settings})
       }
     })
 
     this.button_continue.on('pointerover', () => {
-      this.sound.play('hover')
+      this.sound.play('HoverSound')
       this.tweens.add({
         targets: this.button_continue,
         scaleX: 1.1,
@@ -200,7 +188,7 @@ export default class NumbersLoby extends Phaser.Scene {
           scene.eventFinished = true;
           scene.explanatory_text = scene.add.text(610, 360, "Haz click sobre el", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(28)
           scene.explanatory_text2 = scene.add.text(610, 390, "numero igual a este:", { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(26)
-          scene.flecha = scene.add.image(700, 450, "flechaImg")
+          scene.flecha = scene.add.image(700, 450, "ArrowImg")
           scene.flecha.setScale(0.1)
         }
       }

@@ -1,56 +1,77 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Modal, TextField, Box, Divider, ListItemAvatar, ListItemButton, Avatar, Checkbox, ListItemText, Typography } from '@mui/material';
-import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
-import UserList from './tables/UserList';
-import MainCard from 'components/MainCard';
-import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse'
-import { useAuth0 } from '@auth0/auth0-react';
-import { juegos, lista_juegos } from './globals';
-import ModalSelectGames from './modalSelectPatients';
+// react
+import React, { useEffect, useState } from 'react';
 
+// prop 
+import PropTypes from 'prop-types';
+
+// mui 
+import { Button, Modal, TextField, Box, Divider, ListItemAvatar, ListItemButton, Avatar, Checkbox, ListItemText, Typography } from '@mui/material';
+
+// auth 0 
+import { useAuth0 } from '@auth0/auth0-react';
+
+// api 
+import { useExternalApi as useTherapistResponse } from 'hooks/therapistResponse';
+
+// ant design
+import { CloseOutlined } from '@ant-design/icons';
+
+// project import
+// import { juegos, lista_juegos } from './globals';
+// import ModalSelectGames from './modalSelectPatients';
+
+import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
 
-const ModalNewList = ({ open, handleClose }) => {
+const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus }) => {
+    const { user } = useAuth0();
+    const { createList } = useListResponse();
     const { getGames } = useGameResponse();
+    const [userCharged, setUserCharged] = useState(undefined);
     const [games, setGames] = useState(undefined);
-    const [openNextModal, setOpenNextModal] = useState(false);
     const [checkedItems, setCheckedItems] = React.useState([]);
-    const { getTherapist, getTherapistPatients } = useTherapistResponse()
+    const { getTherapist } = useTherapistResponse();
 
     const [newList, setNewList] = useState({
         name: '',
-        games: [],
+        games: []
     });
 
     useEffect(() => {
+        getTherapist(user.sub, setUserCharged);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (open) {
-          setCheckedItems([]);
-          setNewList({
-            name: '',
-            games: [],
-          });
+            setCheckedItems([]);
+            setNewList({
+                name: '',
+                games: []
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [open]);
+    }, [open]);
 
     const handleNameChange = (event) => {
         setNewList({ ...newList, name: event.target.value });
     };
 
-    const handleListItemClick = (event) => {
-        setNewList({ ...newList, games: checkedItems });
-        setOpenNextModal(true);
+    const handleListItemClick = () => {
+        if (userCharged !== undefined) {
+            setCreatedListModal(true); 
+            setNewList((prevList) => {
+                const updatedList = { ...prevList, games: checkedItems, id_therapist: userCharged.user_id };
+                saveList(updatedList);
+                return updatedList;
+            });
+        }
     };
 
     useEffect(() => {
         getGames(setGames);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleCloseModal = () => {
-        handleClose()
-        setOpenNextModal(false);
-    };
 
     const handleToggle = (value) => () => {
         const currentIndex = checkedItems.indexOf(value);
@@ -79,17 +100,17 @@ const ModalNewList = ({ open, handleClose }) => {
         pt: 2,
         px: 4,
         pb: 3,
-        overflowY: 'auto', // Habilitar la barra de desplazamiento vertical
+        overflowY: 'auto' // Habilitar la barra de desplazamiento vertical
+    };
+
+    const saveList = (list) => {
+        createList(list, setCreatedStatus);
     };
     return (
         <div>
             <Modal open={open} onClose={handleClose}>
                 <Box sx={{ ...style, width: 800 }}>
-                    <Button
-                        color="secondary"
-                        onClick={handleClose}
-                        style={{ position: 'absolute', top: 0, right: 0, height: 40 }}
-                    >
+                    <Button color="secondary" onClick={handleClose} style={{ position: 'absolute', top: 0, right: 0, height: 40 }}>
                         <CloseOutlined />
                     </Button>
                     <div style={{ margin: '8px' }}>
@@ -106,13 +127,9 @@ const ModalNewList = ({ open, handleClose }) => {
                         <h3 style={{ paddingTop: '10px' }}>Escoge los juegos para tu lista: </h3>
                         <Box sx={{ maxHeight: '320px', overflow: 'auto' }}>
                             {games?.map((game) => (
-                                <>
+                                <div key={game.id}>
                                     <ListItemButton key={game.id} onClick={handleToggle(game.id)}>
-                                        <Checkbox
-                                            checked={checkedItems.indexOf(game.id) !== -1}
-                                            tabIndex={-1}
-                                            disableRipple
-                                        />
+                                        <Checkbox checked={checkedItems.indexOf(game.id) !== -1} tabIndex={-1} disableRipple />
                                         <ListItemAvatar>
                                             <Avatar src={game.game_picture} />
                                         </ListItemAvatar>
@@ -126,14 +143,19 @@ const ModalNewList = ({ open, handleClose }) => {
                                         />
                                     </ListItemButton>
                                     <Divider />
-                                </>
+                                </div>
                             ))}
                         </Box>
                     </div>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
                         <Button variant="contained" onClick={(event) => handleListItemClick(event)}>Siguiente</Button>
+                    </Box> */}
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
+                        <Button variant="contained" onClick={() => handleListItemClick()}>
+                            Guardar
+                        </Button>
                     </Box>
-                    <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} />
+                    {/* <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} /> */}
                 </Box>
             </Modal>
         </div>
@@ -141,3 +163,10 @@ const ModalNewList = ({ open, handleClose }) => {
 };
 
 export default ModalNewList;
+
+ModalNewList.propTypes = {
+    open: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    setCreatedListModal: PropTypes.func.isRequired, 
+    setCreatedStatus: PropTypes.func.isRequired
+}; 

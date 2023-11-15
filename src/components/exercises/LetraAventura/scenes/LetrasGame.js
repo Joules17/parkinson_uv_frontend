@@ -13,14 +13,19 @@ const log = {
     info: {
         tiempo_total: undefined,
         tiempo_rondas: undefined,
-        number_rondas: undefined,
-        errores: undefined
+        errores: undefined, 
+        rondas: undefined
     }
-};
+}
 
 export default class LetrasGame extends Phaser.Scene {
     constructor() {
         super({ key: 'LetrasGame', backgroundColor: '#3f1651' });
+    }
+
+    preload() {}
+
+    builder () {
         this.write_flag = true; 
         // dimensions
         this.worldSizeWidth = 800;
@@ -35,6 +40,7 @@ export default class LetrasGame extends Phaser.Scene {
 
         // vars
         this.number_rounds = 20;
+        this.tries = 3; // intentos
         this.tableros = [];
         this.tablero_actual = undefined;
         this.flag = undefined;
@@ -86,11 +92,20 @@ export default class LetrasGame extends Phaser.Scene {
         };
     }
 
-    preload() {}
-
     create() {
+        // constructor aux 
+        this.builder(); 
+
+        // game ---
+        this.game = this.sys.game
         const settings = this.sys.settings.data.settings;
         this.number_rounds = settings.rondas;
+
+        // Tries
+        if (settings.tries !== undefined) { 
+            this.tries = settings.tries; 
+        }
+
         // Initialize Data
         if (settings.longitudPalabra !== undefined) {
             this.number_max = parseInt(settings.longitudPalabra);
@@ -117,11 +132,18 @@ export default class LetrasGame extends Phaser.Scene {
         // text
         this.top_panel = this.add.graphics(); 
         this.top_panel.fillStyle(0x3F3464, 0.3);
-        this.top_panel.fillRect(5, 0, 200, 60);
+        this.top_panel.fillRect(5, 0, 150, 45);
 
         this.text_numberrondas = this.add
-            .text(25, 25, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#FFFFFF' })
-            .setFontSize(40);
+            .text(10, 10, 'Rondas: ' + this.current_number + '/' + this.number_rounds, { fontFamily: 'TROUBLE', fill: '#FFFFFF' })
+            .setFontSize(35);
+
+        this.top_secondpanel = this.add.graphics(); 
+        this.top_secondpanel.fillStyle(0x3F3464, 0.3);
+        this.top_secondpanel.fillRect(160, 0, 160, 45);
+        this.text_tries = this.add
+            .text(165, 10, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#FFFFFF' })
+            .setFontSize(35);
         
         this.time_panel = this.add.graphics(); 
         this.time_panel.fillStyle(0x3F3464, 0.3);
@@ -158,8 +180,8 @@ export default class LetrasGame extends Phaser.Scene {
         }
         if (this.fin_del_juego) {
             console.log('el juego acabo correctamente');
-            this.set_log(this.tiempo_rondas, this.texto_tiempototal, this.number_rounds, this.errores)
-            this.scene.start('LetrasOver', log)
+            this.setLog(this.tiempo_rondas, this.texto_tiempototal, this.errores, this.number_rounds)
+            this.scene.start('LetrasOver', log, {game: this.game})
             this.fin_del_juego = false;
         }
     }
@@ -259,6 +281,9 @@ export default class LetrasGame extends Phaser.Scene {
     incorrect_answer() {
         this.sound.play('FailSound');
         this.errores += 1;
+        this.tries -= 1; 
+        this.text_tries.setText('Intentos: ' + this.tries); 
+        this.check_lose(); 
     }
 
     // time
@@ -270,15 +295,23 @@ export default class LetrasGame extends Phaser.Scene {
                 this.gameTimeSec = 0;
                 this.gameTimeMin += 1;
             }
-            this.texto_tiempototal.setText(this.gameTimeMin + ':' + this.gameTimeSec);
+            this.texto_tiempototal.setText(this.gameTimeMin + ' : ' + this.gameTimeSec);
         }
     }
 
-    // logs
-    set_log(tiempo_rondas, tiempo_total, number_rondas, errores) {
-        log.info.tiempo_rondas = tiempo_rondas;
+    check_lose () {
+        if (this.tries <= 0) {
+            if (this.tries <= 0) {
+                const settings = this.sys.settings.data.settings; 
+                this.scene.start('LetrasFailed', { settings }, { game: this.game });
+            }
+        }
+    }
+    // logs 
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
         log.info.tiempo_total = tiempo_total;
-        log.info.number_rondas = number_rondas;
         log.info.errores = errores;
+        log.info.rondas = number_rounds; 
     }
 }

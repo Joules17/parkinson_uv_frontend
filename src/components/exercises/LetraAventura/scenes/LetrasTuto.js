@@ -12,6 +12,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 export default class LetrasTuto extends Phaser.Scene {
     constructor() {
         super({key: 'LetrasTuto', backgroundColor: '#3f1651'});
+    }
+
+    preload () {}
+
+    builder () {
         this.write_flag = true; 
         this.worldSizeWidth = 800; 
         this.worldSizeHeight = 600;
@@ -71,9 +76,12 @@ export default class LetrasTuto extends Phaser.Scene {
         };
     }
 
-    preload () {}
-
     create () {
+        // constructor aux 
+        this.builder();
+
+        // game --- 
+        this.game = this.sys.game
         // Background 
         this.add.image(400, 300, 'BgMint'); 
 
@@ -155,7 +163,7 @@ export default class LetrasTuto extends Phaser.Scene {
         this.button_start_game.on('pointerdown', () => {
             this.sound.play('FlipSound'); 
             const settings = this.sys.settings.data.settings
-            this.scene.start('LetrasGame', {settings}); 
+            this.scene.start('LetrasGame', {settings}, {game: this.game}); 
         }); 
 
         this.button_start_game.on('pointerover', () => {

@@ -13,7 +13,7 @@ export default class Level {
         this.actual = config.actual;
 
         // const
-        this.letter_width = 80;
+        this.letter_width = 90;
         // word
         this.word = undefined;
         // list

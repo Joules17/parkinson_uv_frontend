@@ -12,6 +12,11 @@ import FullScreenBttn from 'components/Factory/FullScreenBttn';
 export default class FlechasTuto extends Phaser.Scene {
     constructor () {
         super({key: 'FlechasTuto', backgroundColor: '#3f1651'});
+    }
+
+    preload () {}
+
+    builder () {
         this.worldSizeWidth = 800;
         this.worldSizeHeight = 600;
 
@@ -44,9 +49,12 @@ export default class FlechasTuto extends Phaser.Scene {
         };
     }
 
-    preload () {}
-
     create () {
+        // constructor aux 
+        this.builder();
+
+        // game --- 
+        this.game = this.sys.game
         // Background 
         this.bg = this.add.image(400, 300, 'BgNightSky')
 
@@ -102,7 +110,7 @@ export default class FlechasTuto extends Phaser.Scene {
         this.play_button.on('pointerdown', () => {
           this.sound.play('StartButtonSound')
           const settings = this.sys.settings.data.settings;
-          this.scene.start('FlechasGame', {settings})
+          this.scene.start('FlechasGame', {settings}, {game: this.game})
         }); 
   
         this.play_button.on('pointerover', () => {

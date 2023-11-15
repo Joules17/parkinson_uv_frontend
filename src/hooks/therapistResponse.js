@@ -140,6 +140,16 @@ export const useExternalApi = () => {
         setActivities(data)
     }
 
+    const getSessionsDetailed = async (id_therapist, setSessions) => {
+        const config = {
+            url: `${apiServerUrl}/api/session/retreive/therapist/${id_therapist}/`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+        const data = await makeRequest({config})
+        setSessions(data)
+    }
     return {
         createTherapistAccount, 
         createTherapist, 
@@ -147,6 +157,7 @@ export const useExternalApi = () => {
         getTherapistPatients,
         updateTherapist, 
         getTherapistDetailed, 
-        getActivitiesDetailed
+        getActivitiesDetailed, 
+        getSessionsDetailed
     }
 }

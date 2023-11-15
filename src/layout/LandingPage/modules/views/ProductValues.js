@@ -22,8 +22,8 @@ function ProductValues() {
         <Typography variant="h2" align="center" color="#ffffff" gutterBottom>
           Actividades a tu disposición
         </Typography>
-        <Typography variant="h6" align="center" color="#ffffff" paragraph>
-          ParkinsonUV ofrece actividades que fortalecen cinco dominios cognitivos: Memoria, Lenguaje, Ejecución, y ...
+        <Typography variant="h5" align="center" color="#ffffff" paragraph>
+          ParkinsonUV ofrece actividades interactivas que estimulan cognitivamente a parcientes.  
         </Typography>
         <div className="logos">
           <div className="logos-slide">
