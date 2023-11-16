@@ -73,7 +73,7 @@ const status = [
 ];
 
 // Dashboard Doctor
-const DashboardDoctor = ({ reports, user }) => {
+const DashboardDoctor = ({ reports, activity_stats, user }) => {
     console.log('Hola soy el doctor0', user);
     const [value, setValue] = useState('today');
     const [slot, setSlot] = useState('week');
@@ -122,7 +122,7 @@ const DashboardDoctor = ({ reports, user }) => {
                         >
                             Listas de Juegos
                         </Button>
-                        
+
                     </Grid>
                     <Grid item xs={12} sm={6} md={3} lg={3}>
                         <Button
@@ -145,7 +145,7 @@ const DashboardDoctor = ({ reports, user }) => {
                         >
                             Sesiones
                         </Button>
-                        
+
                     </Grid>
                     <Grid item xs={12} sm={6} md={3} lg={3}>
                         <Button
@@ -157,7 +157,7 @@ const DashboardDoctor = ({ reports, user }) => {
                         >
                             Ver mi perfil
                         </Button>
-                        
+
                     </Grid>
                 </Grid>
             </Grid>
@@ -167,16 +167,16 @@ const DashboardDoctor = ({ reports, user }) => {
                 <Typography variant="h5">Estadísticas</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total de actividades asignadas" count="4,42,236" percentage={59.3} extra="35,000" />
+                <AnalyticEcommerce title="Total de actividades asignadas" count={activity_stats.total_activities} percentage={activity_stats.total_activities*100/activity_stats.total_activities} extra="35,000" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total de actividades 'en curso' o 'realizadas'" count="78,250" percentage={70.5} extra="8,900" />
+                <AnalyticEcommerce title="Total de actividades en curso" count={activity_stats.total_activities_in_progress} percentage={activity_stats.total_activities_in_progress*100/activity_stats.total_activities} extra="8,900" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total de ejercicios reproducidos" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+                <AnalyticEcommerce title="Total de actividades realizadas" count={activity_stats.total_activities_finished} percentage={activity_stats.total_activities_finished*100/activity_stats.total_activities}  extra="1,943" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total de rondas jugadas" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+                <AnalyticEcommerce title="Total de rondas pendientes" count={activity_stats.total_activities_pending} percentage={activity_stats.total_activities_pending*100/activity_stats.total_activities} extra="$20,395" />
             </Grid>
 
             <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
@@ -195,7 +195,7 @@ const DashboardDoctor = ({ reports, user }) => {
                                 color={slot === 'month' ? 'primary' : 'secondary'}
                                 variant={slot === 'month' ? 'outlined' : 'text'}
                             >
-                                Month
+                                Mensual
                             </Button>
                             <Button
                                 size="small"
@@ -203,7 +203,7 @@ const DashboardDoctor = ({ reports, user }) => {
                                 color={slot === 'week' ? 'primary' : 'secondary'}
                                 variant={slot === 'week' ? 'outlined' : 'text'}
                             >
-                                Week
+                                Semanal
                             </Button>
                         </Stack>
                     </Grid>
@@ -433,7 +433,8 @@ const DashboardDoctor = ({ reports, user }) => {
 
 DashboardDoctor.propTypes = {
     reports: PropTypes.array,
-    user: PropTypes.object
+    activity_stats: PropTypes.object,
+    user: PropTypes.object,
 };
 
 export default DashboardDoctor;

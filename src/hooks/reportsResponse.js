@@ -33,8 +33,21 @@ export const useExternalApi = () => {
         setReports(data)
     }
 
-    
+    const GetStatsByTherapistDetailed = async (id_therapist, setStats) => {
+        const config = {
+            url: `${apiServerUrl}/api/reports/stats/therapist/${id_therapist}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+        setStats(data)
+    }
+
+
     return {
-        GetReportsByTherapistDetailed
+        GetReportsByTherapistDetailed,
+        GetStatsByTherapistDetailed
     }
 }
