@@ -36,7 +36,7 @@ export default class ObjectEnd extends Phaser.Scene {
         this.tiempo_rondas = promedio;
 
         // Convertir a números
-        this.number_errores = parseInt(data.info.errores);
+        this.number_errores = parseInt(data.info.errores)*-1;
         if (this.number_errores === -1) {
             this.number_errores += 1; 
         }
