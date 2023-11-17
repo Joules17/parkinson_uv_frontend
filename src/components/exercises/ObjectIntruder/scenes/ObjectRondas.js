@@ -82,15 +82,25 @@ export default class ObjectRondas extends Phaser.Scene {
         const settings = this.sys.settings.data.settings;
         console.log(this.sys.settings.data)
 
-        this.numberFases = settings.rondas
-        
+        // Number Rounds - settings
+        if (settings.rondas !== undefined) {
+            this.numberFases = settings.rondas
+        }
+    
         // Number Tries - settings 
         if (settings.tries !== undefined) {
-            this.tries = settings.tries;
+            this.tries = parseInt(settings.tries);
         }
 
-        this.tablero_config['category'] = settings.categorias; 
-        this.limite = settings.rondas
+        // Category - settings
+        if (settings.categorias !== undefined) {
+            this.cateogrias = settings.categorias;
+        } else {
+            this.categorias = ['frutas', 'casa', 'comida', 'animales'];
+        }
+
+        this.tablero_config['category'] = this.categorias; 
+        this.limite = this.numberFases
         this.cameras.main.setBackgroundColor(0xffffff);
         // this.initializer();
 
