@@ -43,6 +43,7 @@ const AnalyticEcommerce = ({ title, count, percentage, extra }) => {
                 </Grid>
             </Grid>
         </Stack>
+        {/* 
         <Box sx={{ pt: 2.25 }}>
             <Typography variant="caption" color="textSecondary">
                 You made an extra{' '}
@@ -52,6 +53,7 @@ const AnalyticEcommerce = ({ title, count, percentage, extra }) => {
                 this year
             </Typography>
         </Box>
+        */}
     </MainCard>
 );
 }
