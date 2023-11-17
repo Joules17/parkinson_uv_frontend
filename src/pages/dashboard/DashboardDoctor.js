@@ -38,6 +38,7 @@ import MenuDashboard from './MenuDashboard';
 import PatientReportsAreaChart from './PatientReportsAreaChart';
 import PatientSelection from './PatientSelection';
 import DashboardButton from './DashboardButton';
+import ActivityPieChart from './PieChart';
 
 import brain_icon from './assets/brainy.svg';
 // assets
@@ -116,7 +117,7 @@ const status = [
 // Dashboard Doctor
 const DashboardDoctor = ({ reports, activity_stats, user }) => {
     // console.log('Hola soy el doctor', user);
-
+    // console.log('Estas son las actividades', activity_stats)
     // patients options
     const uniquePatientIds = new Set();
 
@@ -273,7 +274,7 @@ const DashboardDoctor = ({ reports, activity_stats, user }) => {
                             <Typography variant="h3">De un total de {activity_stats.total_activities} actividades: </Typography>
                         </Stack>
                     </Box>
-                    <MonthlyBarChart />
+                    <ActivityPieChart activityStats={activity_stats} />
                 </MainCard>
             </Grid>
 

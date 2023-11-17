@@ -45,9 +45,36 @@ export const useExternalApi = () => {
         setStats(data)
     }
 
+    const GetReportsByPatientDetailed = async (id_patient, setReports) => {
+        const config = {
+            url: `${apiServerUrl}/api/reports/retreive/patient/${id_patient}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+
+        setReports(data)
+    }
+
+    const GetStatsByPatientDetailed = async (id_patient, setStats) => {
+        const config = {
+            url: `${apiServerUrl}/api/reports/stats/patient/${id_patient}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+
+        const data = await makeRequest({config})
+        setStats(data)
+    }
+
 
     return {
         GetReportsByTherapistDetailed,
-        GetStatsByTherapistDetailed
+        GetStatsByTherapistDetailed, 
+        GetReportsByPatientDetailed,
+        GetStatsByPatientDetailed
     }
 }

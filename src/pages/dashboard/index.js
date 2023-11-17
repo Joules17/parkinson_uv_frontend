@@ -11,7 +11,7 @@ import DashboardPatient from './DashboardPatient';
 // api
 import { useExternalApi as useReportResponse } from 'hooks/reportsResponse'
 import { useExternalApi as useTherapistResponse} from 'hooks/therapistResponse'
-
+import { useExternalApi as usePatientResponse} from 'hooks/patientResponse'
 // DashboardDefault
 
 const DashboardDefault = () => {
@@ -19,8 +19,9 @@ const DashboardDefault = () => {
     const { user } = useAuth0();
 
     // api request
-    const { GetReportsByTherapistDetailed, GetStatsByTherapistDetailed } = useReportResponse();
+    const { GetReportsByTherapistDetailed, GetStatsByTherapistDetailed, GetReportsByPatientDetailed, GetStatsByPatientDetailed } = useReportResponse();
     const { getTherapistDetailed } = useTherapistResponse();
+    const { getPatientDetailed } = usePatientResponse();
 
     // login vars
     const [tipo, setTipo] = useState(null)
@@ -40,11 +41,13 @@ const DashboardDefault = () => {
     useEffect(() => {
         if (user_id !== null && tipo !== null) {
             if (tipo === '1') {
-                GetReportsByTherapistDetailed(user_id, setReports)
-                getTherapistDetailed(user_id, setUserInfo)
-                GetStatsByTherapistDetailed(user_id, setStats)
+                GetReportsByTherapistDetailed(user_id, setReports);
+                getTherapistDetailed(user_id, setUserInfo);
+                GetStatsByTherapistDetailed(user_id, setStats);
             } else {
-                console.log('Trabajar en la vista para paciente despues')
+                getPatientDetailed(user_id, setUserInfo)
+                GetReportsByPatientDetailed(user_id, setReports); 
+                GetStatsByPatientDetailed(user_id, setStats);
             }
         }
         // eslint-disable-next-line
@@ -53,15 +56,11 @@ const DashboardDefault = () => {
     console.log('***************** REPORTES ****************')
     console.log(reports)
     if (tipo === null || user_id === null || reports === undefined || userInfo === null || stats === undefined) {
-        return (
-            <ChargingCard />
-        )
+        return <ChargingCard />
     } else if (tipo === '1') {
-        return (
-            <DashboardDoctor reports = {reports} activity_stats = {stats} user = {userInfo}/>
-        )
+        return <DashboardDoctor reports = {reports} activity_stats = {stats} user = {userInfo}/>
     } else {
-        <DashboardPatient reports = {reports} user = {userInfo}/>
+        return <DashboardPatient reports = {reports} activity_stats = {stats} user = {userInfo}/>
     }
 
 };
