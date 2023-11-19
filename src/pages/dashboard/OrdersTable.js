@@ -61,19 +61,19 @@ const headCells = [
         id: 'id',
         align: 'center',
         disablePadding: false,
-        label: 'Número Documento'
+        label: 'Id. Reporte'
+    },
+    {
+        id: 'date',
+        align: 'center',
+        disablePadding: true,
+        label: 'Fecha'
     },
     {
         id: 'name',
         align: 'center',
-        disablePadding: true,
-        label: 'Nombre'
-    },
-    {
-        id: 'age',
-        align: 'center',
         disablePadding: false,
-        label: 'Edad'
+        label: 'Nombre de Paciente'
     },
     {
         id: 'gender',
@@ -82,22 +82,40 @@ const headCells = [
         label: 'Género'
     },
     {
-        id: 'contact',
+        id: 'phase',
         align: 'center',
         disablePadding: false,
-        label: 'Contacto'
+        label: 'Fase de Parkinson'
     },
     {
-        id: 'observations',
+        id: 'total_time_played',
         align: 'center',
         disablePadding: false,
-        label: 'Observaciones'
+        label: 'Tiempo total jugado (en segundos)'
+    }, 
+    {
+        id: 'total_games_played', 
+        align: 'center',
+        disablePadding: false,
+        label: 'Total de juegos ejecutados'
+    }, 
+    {
+        id: 'total_errors', 
+        align: 'center',
+        disablePadding: false,
+        label: 'Total de errores'
+    },
+    {
+        id: 'total_rounds_played', 
+        align: 'center',
+        disablePadding: false,
+        label: 'Total de rondas jugadas'
     }
 ];
 
-// ==============================|| ORDER TABLE - HEADER ||============================== //
+// OrderTable
 
-function OrderTableHead({ order, orderBy }) {
+function OrderTableHead({ order, orderBy}) {
     return (
         <TableHead>
             <TableRow>
@@ -118,7 +136,7 @@ function OrderTableHead({ order, orderBy }) {
 
 OrderTableHead.propTypes = {
     order: PropTypes.string,
-    orderBy: PropTypes.string
+    orderBy: PropTypes.string, 
 };
 
 // ==============================|| ORDER TABLE - STATUS ||============================== //
@@ -159,9 +177,9 @@ OrderStatus.propTypes = {
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable() {
+export default function OrderTable({reports}) {
     const [order] = useState('asc');
-    const [orderBy] = useState('trackingNo');
+    const [orderBy] = useState('id');
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
@@ -175,6 +193,7 @@ export default function OrderTable() {
                     position: 'relative',
                     display: 'block',
                     maxWidth: '100%',
+                    maxHeight: '500px',
                     '& td, & th': { whiteSpace: 'nowrap' }
                 }}
             >
@@ -191,8 +210,8 @@ export default function OrderTable() {
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                            const isItemSelected = isSelected(row.trackingNo);
+                        {stableSort(reports, getComparator(order, orderBy)).map((row, index) => {
+                            const isItemSelected = isSelected(row.id);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
@@ -202,22 +221,22 @@ export default function OrderTable() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.trackingNo}
+                                    key={row.id}
                                     selected={isItemSelected}
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
                                         <Link color="secondary" component={RouterLink} to="">
-                                            {row.trackingNo}
+                                            {row.id}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
-                                    <TableCell align="left">
-                                        <OrderStatus status={row.carbs} />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                                    </TableCell>
+                                    <TableCell align="left">{row.date_created}</TableCell>
+                                    <TableCell align="left">{row.patient_name} {row.patient_lastname}</TableCell>
+                                    <TableCell align="left"> {row.patient_gender}</TableCell>
+                                    <TableCell align="right">{row.patient_parkinson_phase}</TableCell>
+                                    <TableCell align="right">{row.total_played_time}</TableCell>
+                                    <TableCell align="right">{row.total_games_played}</TableCell>
+                                    <TableCell align="right">{row.total_errors}</TableCell>
+                                    <TableCell align="right">{row.total_rounds_played}</TableCell>
                                 </TableRow>
                             );
                         })}
@@ -227,3 +246,9 @@ export default function OrderTable() {
         </Box>
     );
 }
+
+OrderTable.propTypes = {
+    reports: PropTypes.arrayOf(PropTypes.object)
+}
+
+

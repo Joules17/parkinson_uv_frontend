@@ -5,14 +5,14 @@ import { LineChartOutlined, PlayCircleOutlined, TeamOutlined, UserOutlined, Book
 const icons = {
     LineChartOutlined,
     PlayCircleOutlined,
-    TeamOutlined, 
+    TeamOutlined,
     UserOutlined,
     BookOutlined,
-    AppstoreAddOutlined, 
+    AppstoreAddOutlined,
     FileDoneOutlined
 };
 
-// ==============================|| MENU ITEMS - DASHBOARD ||============================== // 
+// ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
 const dashboard_doctor = {
     id: 'group-dashboard',
@@ -52,13 +52,13 @@ const dashboard_doctor = {
             breadcrumbs: false
         },
         {
-            id: 'activities', 
-            title: 'Actividades', 
+            id: 'activities',
+            title: 'Actividades',
             type: 'item',
             url: '/activities-page',
             icon: icons.AppstoreAddOutlined,
             breadcrumbs: false
-        }, 
+        },
         {
             id: 'games',
             title: 'Galería de Juegos',
@@ -69,7 +69,7 @@ const dashboard_doctor = {
         },
         {
             id: 'sessions',
-            title: 'Sesiones', 
+            title: 'Sesiones',
             type: 'item',
             url: '/sessions-page',
             icon: icons.FileDoneOutlined,

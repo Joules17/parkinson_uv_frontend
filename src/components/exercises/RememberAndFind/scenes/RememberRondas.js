@@ -76,8 +76,33 @@ export default class RememberRondas extends Phaser.Scene {
         // Number_Rounds - settings ------------------------------------------------------------------------------------------------------------
         const settings = this.sys.settings.data.settings;
         this.number_rounds = [];
-        for (let i = 0; i < settings.niveles; i++) {
-            this.number_rounds.push(settings.rondas);
+        
+        // rondas 
+        if (settings.rondas !== undefined) {
+            this.rondas = parseInt(settings.rondas)    
+        } else {
+            this.rondas = 5; 
+        }
+
+        // niveles 
+        if (settings.niveles !== undefined) {
+            this.niveles = parseInt(settings.niveles); 
+        } else {
+            this.niveles = 1; 
+        }
+
+        // categorias 
+        if (settings.categorias !== undefined) {    
+            this.categorias = settings.categorias;
+        } else {
+            this.categorias = ['frutas', 'casa', 'comida', 'animales'];
+        }
+
+        console.log(this.niveles, this.rondas, 'que passaaaaaaaa', typeof this.niveles, typeof this.rondas)
+
+        // niveles
+        for (let i = 0; i < this.niveles; i++) {
+            this.number_rounds.push(this.rondas);
         }
 
         // Number Tries - settings ------------------------------------------------------------------------------------------------------------
@@ -148,9 +173,9 @@ export default class RememberRondas extends Phaser.Scene {
         this.lista_tablero = [];
         let board;
 
-        for (let i = 0; i < settings.niveles; i++) {
-            this.tableros_config[i]['number_objects'] = settings.rondas;
-            this.tableros_config[i]['category'] = settings.categorias;
+        for (let i = 0; i < this.niveles; i++) {
+            this.tableros_config[i]['number_objects'] = this.rondas;
+            this.tableros_config[i]['category'] = this.categorias;
             board = new Board(this.tableros_config[i]);
             if (i !== 0) {
                 this.lista_tablero.push('cambio');

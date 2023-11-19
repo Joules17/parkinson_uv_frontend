@@ -31,6 +31,7 @@ const RunListGames = () => {
     const { getIdSession } = useSessionResponse()
     const [idSession, setIdSession] = useState()
     const [startGame, setStartGame] = useState({})
+    // eslint-disable-next-line no-unused-vars
     const [cargado, setCargado] = useState(false);
 
     useEffect(() => {
@@ -113,8 +114,8 @@ const RunListGames = () => {
 
     const renderCard = (card, index) => {
         return (
-            <div style={card.active ? { pointerEvents: 'none' } : {}}>
-                <Card key={index} sx={{ maxWidth: 230 }} style={card.active ? { backgroundColor: '#f5f5f5' } : {}}>
+            <div key={index} style={card.active ? { pointerEvents: 'none' } : {}}>
+                <Card sx={{ maxWidth: 230 }} style={card.active ? { backgroundColor: '#f5f5f5' } : {}}>
                     <CardActionArea onClick={() => setStartGame({ title: card.title, setting: card.setting, id: card.id })}>
                         <CardMedia
                             component="img"

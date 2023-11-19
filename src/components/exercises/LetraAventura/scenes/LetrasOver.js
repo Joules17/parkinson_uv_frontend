@@ -35,7 +35,7 @@ export default class LetrasOver extends Phaser.Scene {
             sum = sum + elemento;
         }
         let promedio = sum / arreglo.length;
-        this.tiempo_rondas = promedio.toFixed(2);
+        this.tiempo_rondas = parseInt(promedio.toFixed(2));
 
         // Convertir a números
         this.number_errores = parseInt(data.info.errores);
@@ -43,12 +43,40 @@ export default class LetrasOver extends Phaser.Scene {
 
         console.log('Se esta guardando: ', this.tiempo_rondas, this.number_errores, this.tiempo_total_en_segundos, this.number_rondas);
 
-        this.emitDataToReactComponent({
-            tiempo_rondas: this.tiempo_rondas,
-            errores: this.number_errores,
-            tiempo_total: this.tiempo_total_en_segundos,
-            number_rondas: this.number_rondas
-        });
+        this.sending_data(); 
+    }
+    
+    sending_data () {
+        // cleaning data
+        let deliver_flag = true; 
+        if (this.tiempo_rondas === undefined || this.tiempo_rondas === null || isNaN(this.tiempo_rondas)) {
+            this.tiempo_rondas = 0;
+            deliver_flag = false; 
+        }
+        if (this.number_errores === undefined || this.number_errores === null || isNaN(this.number_errores)) {
+            this.number_errores = 0;
+            deliver_flag = false;
+        }
+        if (this.tiempo_total_en_segundos === undefined || this.tiempo_total_en_segundos === null || isNaN(this.tiempo_total_en_segundos)) {
+            this.tiempo_total_en_segundos = 0;
+            deliver_flag = false; 
+        }
+        if (this.number_rondas === undefined || this.number_rondas === null || isNaN(this.number_rondas)) {
+            this.number_rondas = 0;
+            deliver_flag = false; 
+        }
+
+        // sending data
+        if (deliver_flag) {
+            this.emitDataToReactComponent({
+                tiempo_rondas: this.tiempo_rondas,
+                errores: this.number_errores,
+                tiempo_total: this.tiempo_total_en_segundos,
+                number_rondas: this.number_rondas
+            });
+        } else {
+            console.log('No se guarda Log debido a errores durante la partida - Juego sin configurar reproducido ')
+        }  
     }
 
     preload() {
