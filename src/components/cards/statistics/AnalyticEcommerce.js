@@ -60,7 +60,7 @@ const AnalyticEcommerce = ({ title, count, percentage, extra }) => {
 
 AnalyticEcommerce.propTypes = {
     title: PropTypes.string,
-    count: PropTypes.string,
+    count: PropTypes.number,
     percentage: PropTypes.number,
     extra: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
 };

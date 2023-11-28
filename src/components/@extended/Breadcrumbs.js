@@ -33,7 +33,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     }, [navigation, location.pathname]);
 
     if (location.pathname === '/breadcrumbs') {
-        location.pathname = '/dashboard/analytics';
+        location.pathname = '/dashboard/default';
     }
 
     let mainContent = null;
