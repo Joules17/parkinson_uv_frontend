@@ -50,8 +50,8 @@ export default class FotografiasLobby extends Phaser.Scene {
         this.second_message = this.add.text(
             150,             // Posición X
             180,             // Posición Y
-            'Al hacer clic en "Continuar", se mostraran cinco \n\nimagenes en secuencia. ' +
-            'Recuerda las imagenes y\n\nsu orden ya que se tendras que organizarlas al\n\nfinal.', {
+            'Al hacer clic en "Continuar", se mostraran tres \n\nimagenes en secuencia. ' +
+            'Recuerda las imagenes y\n\nsu orden ya que tendras que organizarlas al\n\nfinal.', {
                 fontFamily: 'TROUBLE',   // Fuente de texto
                 fill: '#000000',         // Color del texto
                 fontSize: 30             // Tamaño de fuente
@@ -64,8 +64,9 @@ export default class FotografiasLobby extends Phaser.Scene {
 
         // listeners 
         this.button_text.on('pointerdown', () => {
+            const settings = this.sys.settings.data.settings;
             this.sound.play('CorrectSound'); 
-            this.scene.start('FotografiasLobbySecond', {settings: this.settings}, {game: this.game});
+            this.scene.start('FotografiasLobbySecond', {settings}, {game: this.game});
         });
 
         this.button_text.on('pointerover', () => {

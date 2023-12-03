@@ -12,6 +12,7 @@ import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 import FotografiasInit from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasInit';
 import FotografiasMenu from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasMenu'; 
 import FotografiasLobby from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasLobby';
+import FotografiasLobbySecond from "components/exercises/FotografiasMisteriosas/scenes/FotografiasLobbySecond";
 import FotografiasGame from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasGame';
 import FotografiasEnd from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasEnd';
 import FotografiasFailed from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasFailed'; 
@@ -41,7 +42,7 @@ function GameFotografias(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [FotografiasInit, FotografiasMenu, FotografiasLobby, FotografiasGame, FotografiasEnd, FotografiasFailed],
+            scene: [FotografiasInit, FotografiasMenu, FotografiasLobby, FotografiasLobbySecond, FotografiasGame, FotografiasEnd, FotografiasFailed],
         }
 
         const game = new Phaser.Game(config);

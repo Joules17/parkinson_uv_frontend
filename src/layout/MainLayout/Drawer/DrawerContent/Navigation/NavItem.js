@@ -16,7 +16,7 @@ const NavItem = ({ item, level }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.menu);
-    console.log('Open Item State:', menu.openItem);
+    // console.log('Open Item State:', menu.openItem);
     const { drawerOpen, openItem } = menu;
     const location = useLocation();
 
