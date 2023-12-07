@@ -54,7 +54,7 @@ const DashboardDefault = () => {
     }, [user_id, tipo])
 
     console.log('***************** REPORTES ****************')
-    console.log(reports)
+    console.log(reports, stats, userInfo)
     if (tipo === null || user_id === null || reports === undefined || userInfo === null || stats === undefined) {
         return <ChargingCard />
     } else if (tipo === '1') {

@@ -94,7 +94,7 @@ export default class ObjectRondas extends Phaser.Scene {
 
         // Category - settings
         if (settings.categorias !== undefined) {
-            this.cateogrias = settings.categorias;
+            this.categorias = settings.categorias;
         } else {
             this.categorias = ['frutas', 'casa', 'comida', 'animales'];
         }

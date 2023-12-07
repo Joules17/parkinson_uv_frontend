@@ -91,7 +91,7 @@ export default class CuadrillaMenu extends Phaser.Scene {
         // start_button
         this.start_button.on('pointerdown', () => {
             this.sound.play('CorrectSound')
-            this.fade([this.pino_der, this.pino_izq, this.red_circle, this.main_circle, this.title, this.start_button, this.tuto_button, this.panel_start, this.panel_tuto], 2000, this, 'game')
+            this.fade([this.pino_der, this.pino_izq, this.red_panel, this.main_panel, this.title, this.second_title, this.start_button, this.tuto_button, this.panel_start, this.panel_tuto], 2000, this, 'game')
         });
 
         this.start_button.on('pointerover', () => {
@@ -138,7 +138,7 @@ export default class CuadrillaMenu extends Phaser.Scene {
         });
         this.tuto_button.on('pointerdown', () => {
             this.sound.play('CorrectSound')
-            this.fade([this.pino_der, this.pino_izq, this.red_circle, this.main_circle, this.title, this.start_button, this.tuto_button, this.panel_start, this.panel_tuto], 2000, this, 'tuto')
+            this.fade([this.pino_der, this.pino_izq, this.red_circle, this.main_panel, this.red_panel, this.title, this.second_title, this.start_button, this.tuto_button, this.panel_start, this.panel_tuto], 2000, this, 'tuto')
         });
 
     }
@@ -147,12 +147,12 @@ export default class CuadrillaMenu extends Phaser.Scene {
         this.movement_bg.tilePositionY -= 0.5;
         if (this.game_flag) {
             const settings = this.sys.settings.data.settings;
-            this.scene.start('CuadrillaGame', { settings }, { game: this.game })
+            this.scene.start('CuadrillaMain', { settings }, { game: this.game })
             this.game_flag = false;
         }
         if (this.tuto_flag) {
             const settings = this.sys.settings.data.settings;
-            this.scene.start('CuadrillaTutorial', { settings }, { game: this.game })
+            this.scene.start('CuadrillaTuto', { settings }, { game: this.game })
             this.tuto_flag = false;
         }
     }

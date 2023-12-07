@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -16,38 +16,37 @@ const NavItem = ({ item, level }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.menu);
+    // console.log('Open Item State:', menu.openItem);
     const { drawerOpen, openItem } = menu;
+    const location = useLocation();
 
     let itemTarget = '_self';
     if (item.target) {
         itemTarget = '_blank';
     }
 
-    let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };
-    if (item?.external) {
-        listItemProps = { component: 'a', href: item.url, target: itemTarget };
-    }
+    const listItemProps = {
+        component: forwardRef((props, ref) => (
+            <Link ref={ref} {...props} to={item.url} target={itemTarget} />
+        )),
+    };
 
     const itemHandler = (id) => {
+        console.log('Item Handler Called with ID:', id);
         dispatch(activeItem({ openItem: [id] }));
     };
 
     const Icon = item.icon;
     const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
 
-    const isSelected = openItem.findIndex((id) => id === item.id) > -1;
+    const isSelected = openItem.includes(item.id) || location.pathname === item.url;
 
-    // active menu item on page load
     useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
+        if (isSelected) {
             dispatch(activeItem({ openItem: [item.id] }));
         }
         // eslint-disable-next-line
-    }, []);
+    }, [isSelected, dispatch, item.id]);
 
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
@@ -64,7 +63,7 @@ const NavItem = ({ item, level }) => {
                 py: !drawerOpen && level === 1 ? 1.25 : 1,
                 ...(drawerOpen && {
                     '&:hover': {
-                        bgcolor: 'primary.lighter'
+                        bgcolor: 'primary.lighter',
                     },
                     '&.Mui-selected': {
                         bgcolor: 'primary.lighter',
@@ -72,21 +71,21 @@ const NavItem = ({ item, level }) => {
                         color: iconSelectedColor,
                         '&:hover': {
                             color: iconSelectedColor,
-                            bgcolor: 'primary.lighter'
-                        }
-                    }
+                            bgcolor: 'primary.lighter',
+                        },
+                    },
                 }),
                 ...(!drawerOpen && {
                     '&:hover': {
-                        bgcolor: 'transparent'
+                        bgcolor: 'transparent',
                     },
                     '&.Mui-selected': {
                         '&:hover': {
-                            bgcolor: 'transparent'
+                            bgcolor: 'transparent',
                         },
-                        bgcolor: 'transparent'
-                    }
-                })
+                        bgcolor: 'transparent',
+                    },
+                }),
             }}
         >
             {itemIcon && (
@@ -101,16 +100,16 @@ const NavItem = ({ item, level }) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             '&:hover': {
-                                bgcolor: 'secondary.lighter'
-                            }
+                                bgcolor: 'secondary.lighter',
+                            },
                         }),
                         ...(!drawerOpen &&
                             isSelected && {
                                 bgcolor: 'primary.lighter',
                                 '&:hover': {
-                                    bgcolor: 'primary.lighter'
-                                }
-                            })
+                                    bgcolor: 'primary.lighter',
+                                },
+                            }),
                     }}
                 >
                     {itemIcon}
@@ -140,7 +139,7 @@ const NavItem = ({ item, level }) => {
 
 NavItem.propTypes = {
     item: PropTypes.object,
-    level: PropTypes.number
+    level: PropTypes.number,
 };
 
 export default NavItem;

@@ -148,7 +148,7 @@ function AppAppBar() {
                       underline="none"
                       component={LinkRouter}
                       disabled={!logged}
-                      to={'dashboard'}
+                      to={'dashboard/default'}
                       sx={{ rightLink, fontSize: 18, color: "#000000" }}
                     >
                       {'Dashboard'}
@@ -172,7 +172,7 @@ function AppAppBar() {
                       onClose={handleMenu}
                       sx={{ zIndex: 9999 }}
                     >
-                      <MenuItem component={LinkRouter} disabled={!logged} to={'dashboard'}
+                      <MenuItem component={LinkRouter} disabled={!logged} to={'dashboard/default'}
                       >
                         Dashboard
                       </MenuItem>
