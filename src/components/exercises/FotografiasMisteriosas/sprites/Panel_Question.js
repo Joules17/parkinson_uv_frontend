@@ -31,7 +31,7 @@ export default class Panel_Question extends Phaser.GameObjects.Group {
     
         textObject.on('pointerover', () => {
             textObject.setColor('#ff69b4');
-            this.scene.sound.play('HoverSound'); 
+            this.scene.sound.play('HoverSound', {volume: 0.2}); 
         }); 
 
         textObject.on('pointerout', () => {
@@ -82,6 +82,6 @@ export default class Panel_Question extends Phaser.GameObjects.Group {
             this.scene.first_option.setText('');
             this.scene.second_option.setText('');
             this.scene.third_option.setText('');
-        }
+        } 
     }
 }

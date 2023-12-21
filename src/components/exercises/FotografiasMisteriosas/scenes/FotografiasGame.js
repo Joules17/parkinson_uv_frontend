@@ -82,8 +82,8 @@ export default class FotografiasGame extends Phaser.Scene {
         }
 
         // number_levels 
-        if (settings.number_levels !== undefined) {
-            this.number_levels = parseInt(settings.number_levels);
+        if (settings.niveles !== undefined) {
+            this.number_levels = parseInt(settings.niveles);
         }
 
         // categorias 
@@ -191,11 +191,16 @@ export default class FotografiasGame extends Phaser.Scene {
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         // Level Object
-        this.levelObj = new LevelObj(this.default_config); 
+        console.log(this.number_levels, 'number_levels')
+        this.levels = []; 
+        for (let i = 0; i < this.number_levels; i++) {
+            this.levels.push(new LevelObj(this.default_config));
+        }
+
+        this.levelObj = this.levels[this.current_level-1]; 
 
         this.shade_circle.setAlpha(1);
         this.base_circle.setAlpha(1); 
-
         // CountDown 
         this.count_back(3, () => {
             this.flashScreen(); 
