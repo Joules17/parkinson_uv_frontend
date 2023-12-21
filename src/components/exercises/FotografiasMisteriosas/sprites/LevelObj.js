@@ -16,11 +16,11 @@ export default class LevelObj {
         this.final_matrix = undefined;
         this.final_not_matrix = undefined;
 
-        // questions 
+        // questions
         this.final_questions = undefined;
-        this.panel_question_gen_array = []; 
+        this.panel_question_gen_array = [];
         this.sprite_group = this.scene.add.group();
-        this.current_index = 0; 
+        this.current_index = 0;
         this.crear_matriz();
     }
 
@@ -48,37 +48,37 @@ export default class LevelObj {
         };
     }
 
-    get_random_object (array, used_objects) {
+    get_random_object(array, used_objects) {
         let randomObject;
         do {
             randomObject = array[Math.floor(Math.random() * array.length)];
-        } while (used_objects.some(item => item[0] === randomObject));
+        } while (used_objects.some((item) => item[0] === randomObject));
 
         return randomObject;
     }
-    
+
     gen_questions() {
         const final_questions = [];
-    
+
         for (let i = 0; i < this.final_matrix.length; i++) {
             let questions = [];
             questions.push([this.final_matrix[i], true]);
-    
+
             while (questions.length < 3) {
                 questions.push([this.get_random_object(this.final_not_matrix, questions), false]);
             }
-    
+
             questions.sort(() => Math.random() - 0.5);
             final_questions.push(questions);
         }
-    
+
         return final_questions;
     }
 
     crear_matriz() {
         console.log('genera sprt');
         this.gen_objects(this.category, this.objects, this.number_objects);
-        this.final_questions = this.gen_questions(this.final_matrix, this.final_not_matrix); 
+        this.final_questions = this.gen_questions(this.final_matrix, this.final_not_matrix);
         const sprites = [];
 
         // arreglo para ir sacando los objetos
@@ -98,15 +98,17 @@ export default class LevelObj {
             sprites.push(objSprt);
         }
 
-        // create questions 
+        // create questions
         for (let j = 0; j < this.final_questions.length; j++) {
-            this.panel_question_gen_array.push(new Panel_Question({
-                scene: this.scene,
-                level: this,
-                order: j + 1, 
-                questions: this.final_questions[j],
-                active: false,
-            }));    
+            this.panel_question_gen_array.push(
+                new Panel_Question({
+                    scene: this.scene,
+                    level: this,
+                    order: j + 1,
+                    questions: this.final_questions[j],
+                    active: false
+                })
+            );
         }
     }
 
@@ -119,7 +121,7 @@ export default class LevelObj {
             delay: 2000,
             callback: () => {
                 const objetoActual = this.sprite_group.children.entries[index];
-                this.scene.sound.play('CameraSound')
+                this.scene.sound.play('CameraSound');
                 objetoActual.setVisible(true);
                 displayedObjects.push(objetoActual);
 
@@ -132,8 +134,8 @@ export default class LevelObj {
                 if (index === this.number_objects) {
                     this.scene.time.delayedCall(2000, () => {
                         timer.remove();
-                        this.scene.objectsDisplayed(displayedObjects); 
-                        this.panel_question_gen_array[this.current_index].mostrar(); 
+                        this.scene.objectsDisplayed(displayedObjects);
+                        this.panel_question_gen_array[this.current_index].mostrar();
                     });
                 }
             },
@@ -145,22 +147,38 @@ export default class LevelObj {
     mostrarSiguientePregunta() {
         if (this.current_index < this.panel_question_gen_array.length - 1) {
             if (this.scene.scene.key === 'FotografiasGame') {
-                console.log(this.scene, 'QUE PUTAS PASA')
+                console.log(this.scene, 'QUE PUTAS PASA');
                 // Time Settings
-                this.scene.tiempo_rondas.push(this.scene.tiempo_por_ronda); 
+                this.scene.tiempo_rondas.push(this.scene.tiempo_por_ronda);
                 this.scene.tiempo_por_ronda = 0;
-                this.scene.current_round++; 
-                // Level Settings 
-                this.scene.text_level.setText('Nivel: ' + this.scene.current_level + '-' + this.scene.current_round)
-            // ---
+                this.scene.current_round++;
+                // Level Settings
+                this.scene.text_level.setText('Nivel: ' + this.scene.current_level + '-' + this.scene.current_round);
+                // ---
             }
-            
+
             this.current_index++;
-            this.panel_question_gen_array[this.current_index].mostrar(); 
+            this.panel_question_gen_array[this.current_index].mostrar();
         } else {
             console.log('¡No hay más preguntas!');
-            this.scene.show_questions(0); 
-            this.scene.show_last_message(); 
+            this.scene.show_questions(0);
+            if (this.scene.scene.key === 'FotografiasGame') {
+                this.scene.current_level++;
+                if (this.scene.current_level === this.scene.number_levels+1) {
+                    this.scene.show_last_message();
+                } else {
+                    this.scene.levelObj = this.scene.levels[this.scene.current_level-1];
+                    this.scene.text_level.setText('Nivel: ' + this.scene.current_level + '-' + this.scene.current_round++);
+                    this.scene.shade_circle.setAlpha(1);
+                    this.scene.base_circle.setAlpha(1); 
+                    this.scene.count_back(3, () => {
+                        this.scene.flashScreen();
+                        this.scene.levelObj.show_objects();
+                    });
+                }
+            } else {
+                this.scene.show_last_message();
+            }
         }
     }
 }
