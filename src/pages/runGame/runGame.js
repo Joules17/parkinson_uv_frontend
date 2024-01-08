@@ -53,10 +53,8 @@ const RunGame = () => {
                 return <GameLetrasMarinas setting={setting} fromActivity={false}/>;
             case "Burbujas de Memoria":
                 return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
-<<<<<<< HEAD
             case "Atrapa el ratón":
                 return <GameCatchMouse setting={setting} fromActivity={false}/>
-=======
             case "Fotografias Misteriosas":
                 return <GameFotografias setting={setting} fromActivity={false}/>;
             case "Cuadrilla de Letras y Numeros":
@@ -65,7 +63,6 @@ const RunGame = () => {
                 return <GameTe setting={setting} fromActivity={false}/>;
             case "Fiesta de Burbujas": 
                 return <GameBubbleParty setting={setting} fromActivity={false}/>;
->>>>>>> 2688210ea7273cebc2c9c6b3dc8698a2d46e6346
             default:
                 return null;
         }

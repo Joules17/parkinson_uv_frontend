@@ -19,7 +19,7 @@ export const useExternalApi = () => {
             return error.message
         }
     }
-    
+
 
     const getListGamesAll = async (setListGames) => {
         const config = {
@@ -28,8 +28,8 @@ export const useExternalApi = () => {
             headers: {},
             data: {}
         }
-        const data = await makeRequest({config})
-        
+        const data = await makeRequest({ config })
+
         // 
         setListGames(data)
     }
@@ -41,7 +41,7 @@ export const useExternalApi = () => {
             headers: {},
             data: {}
         }
-        const data = await makeRequest({config})
+        const data = await makeRequest({ config })
 
         // 
         setListGames(data)
@@ -55,8 +55,8 @@ export const useExternalApi = () => {
             data: {}
         }
 
-        await makeRequest({config}); 
-    }; 
+        await makeRequest({ config });
+    };
 
     const checkListGames = async (id) => {
         const config = {
@@ -65,10 +65,10 @@ export const useExternalApi = () => {
             headers: {},
             data: {}
         }
-        
-        const data = await makeRequest({config});
-        return data.is_assigned; 
-    }; 
+
+        const data = await makeRequest({ config });
+        return data.is_assigned;
+    };
 
     const getListGames = async (id, setListGames) => {
         const config = {
@@ -77,7 +77,7 @@ export const useExternalApi = () => {
             headers: {},
             data: {}
         }
-        const data = await makeRequest({config})
+        const data = await makeRequest({ config })
 
         setListGames(data)
     }
@@ -91,12 +91,12 @@ export const useExternalApi = () => {
                 "setting": datos
             }
         }
-        await makeRequest({config})
+        await makeRequest({ config })
 
         // console.log(data)
     }
 
-    const createList = async (datos, setLog) => {
+    const createList = async (datos, setLog, dataResponse) => {
         const config = {
             url: `${apiServerUrl}/api/list/create`,
             method: 'POST',
@@ -105,13 +105,19 @@ export const useExternalApi = () => {
         }
 
         try {
-            await makeRequest({config});
+            const response = await makeRequest({ config });
+
             // La petición se realizó con éxito
             setLog(true);
             console.log('Registrado correctamente');
+            dataResponse(response);
         } catch (error) {
-            setLog(false); 
+            setLog(false);
             console.error('Error al realizar la petición:', error);
+
+            if (error.response) {
+                console.error('Response de error:', error.response.data);
+            }
         }
     }
 
@@ -120,8 +126,8 @@ export const useExternalApi = () => {
         getListGamesDetailed,
         getListGames,
         updateSettingGameList,
-        createList, 
-        deleteListGames, 
+        createList,
+        deleteListGames,
         checkListGames
     }
 }

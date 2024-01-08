@@ -51,9 +51,6 @@ const PatientsPage = () => {
     if (Array.isArray(patientsLIST)) {
         return (
             <MainCard title="Pacientes" darkTitle={true}>
-                <Typography variant="h4" sx={{ mb: 1.5 }}>
-                    Pacientes
-                </Typography>
                 <Grid item xs={12} md={7} lg={8}>
                     <MainCard sx={{ mt: 2 }} content={false} >
                         <UserList list={patientsLIST} setList={setPatientsLIST} loading={isLoading} setLoading={setLoading} />

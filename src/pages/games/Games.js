@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // material-ui
 // import Button from '@mui/material/Button';
 // import Modal from '@mui/material/Modal';
-import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea, Dialog, DialogContent, DialogTitle, DialogActions, Button, IconButton} from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Divider, Stack, CardActionArea, Dialog, DialogContent, DialogTitle, DialogActions, Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -45,34 +45,35 @@ const responsive = {
 };
 
 const CardComponent = ({ card }) => {
+    console.log(card)
     const navigate = useNavigate();
     // ----------------------------|| MODAL - DIALOG FORM ||---------------------------- //
-    const [open, setOpen] = useState(false); 
+    const [open, setOpen] = useState(false);
 
     const handleOpenDialog = () => {
-        setOpen(true); 
-    }; 
+        setOpen(true);
+    };
 
-    const handleCloseDialog = () => {   
-        setOpen(false); 
-    }; 
+    const handleCloseDialog = () => {
+        setOpen(false);
+    };
 
     const handleFormSubmit = (config) => {
         const settings = {}
         // general rounds 
         settings['rondas'] = config.rondas;
-        settings['tries'] = config.tries;  
-        
+        settings['tries'] = config.tries;
+
 
         // only letter soup games: 
         if (card.title === 'Letras Marinas') {
-            settings['wordsperlevel'] = config.wordsperlevel; 
+            settings['wordsperlevel'] = config.wordsperlevel;
         }
-        
+
         // only levels games: 
         if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
-            settings['niveles'] = config.niveles; 
-        } 
+            settings['niveles'] = config.niveles;
+        }
 
         // only categories games: 
         if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
@@ -81,56 +82,55 @@ const CardComponent = ({ card }) => {
 
         // only word length games:
         if (card.title === 'Palabras Ocultas') {
-            settings['longitudMinPalabra'] = config.longitudMinPalabra; 
-            settings['longitudPalabra'] = config.longitudPalabra; 
+            settings['longitudMinPalabra'] = config.longitudMinPalabra;
+            settings['longitudPalabra'] = config.longitudPalabra;
         }
 
         // only Artic Arrow game: 
         if (card.title === 'Flechas Articas') {
-            settings['rondasFirst'] = config.rondasFirstArrow; 
+            settings['rondasFirst'] = config.rondasFirstArrow;
             settings['rondasSecond'] = config.rondasSecondArrow;
         }
 
         console.log('Se envia las siguientes settings: ', settings)
         navigate(`/run-game?game=${card.title}&description=${card.description}`, {
             state: settings
-        }); 
-        setOpen(false); 
-    }; 
+        });
+        setOpen(false);
+    };
 
     // ------------------------------------------------------------------------------------
     return (
         <>
-        <Card sx={{ maxWidth: 230 }}>
-            <CardActionArea onClick={handleOpenDialog}>
-                <CardMedia component="img" height="150" image={card.image} alt={card.title} />
-                <CardContent>
-                    <Typography variant="h5">{card.title}</Typography>
-                    <Typography variant="body2">{card.description}</Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
-        <Dialog open={open} onClose={handleCloseDialog}>
-            <DialogTitle sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                <Typography fontWeight="bold" variant="1.25rem">
-                    Configuracion - {card.title}
-                </Typography>       
-                <IconButton edge='end' color='inherit'>
-                    <EditOutlined />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <ViewGameForm card = {card} handleCloseDialog = {handleCloseDialog} handleFormSubmit = {handleFormSubmit}/>   
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleCloseDialog} color="primary">
-                    Cerrar
-                </Button>
-            </DialogActions>
-
-        </Dialog>
+            <Card sx={{ maxWidth: 230 }}>
+                <CardActionArea onClick={handleOpenDialog}>
+                    <CardMedia component="img" height="150" image={card.image} alt={card.title} />
+                    <CardContent>
+                        <Typography variant="h5">{card.title}</Typography>
+                        <Typography variant="body2">{card.description}</Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+            <Dialog open={open} onClose={handleCloseDialog}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography fontWeight="bold" variant="1.25rem">
+                        Configuracion - {card.title}
+                    </Typography>
+                    <IconButton edge='end' color='inherit'>
+                        <EditOutlined />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <ViewGameForm card={card} handleCloseDialog={handleCloseDialog} handleFormSubmit={handleFormSubmit} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Cerrar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
-        
+
     );
 };
 
@@ -139,7 +139,7 @@ function game_type_distribute(games, setAtention, setMemory, setLanguage, setFun
     let atention = [];
     let language = [];
     let functions = [];
-    let visoconstructivas = []; 
+    let visoconstructivas = [];
     for (let i in games) {
         let dict = {
             image: games[i].game_picture,
@@ -160,9 +160,9 @@ function game_type_distribute(games, setAtention, setMemory, setLanguage, setFun
             case 'Ejecucion':
                 functions.push(dict);
                 break;
-            case 'Habilidades visoconstructivas': 
-                visoconstructivas.push(dict); 
-                break; 
+            case 'Habilidades visoconstructivas':
+                visoconstructivas.push(dict);
+                break;
             default:
                 break;
         }
@@ -174,10 +174,10 @@ function game_type_distribute(games, setAtention, setMemory, setLanguage, setFun
     setVisoconstructivas(visoconstructivas);
 }
 
-const Games = () => {
+const Games = ({initGames}) => {
     const { getGames } = useGameResponse();
 
-    const [games, setGames] = useState(undefined);
+    const [games, setGames] = useState(initGames);
     const [cardsMemory, setMemory] = useState(undefined);
     const [cardsAtention, setAtention] = useState(undefined);
     const [cardsLanguage, setLanguage] = useState(undefined);
@@ -186,7 +186,9 @@ const Games = () => {
 
     // Llamada a la API para traer los juegos
     useEffect(() => {
-        getGames(setGames);
+        if (initGames === undefined) {
+            getGames(setGames);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -210,14 +212,14 @@ const Games = () => {
             { title: 'Atencion', list: cardsAtention },
             { title: 'Lenguaje', list: cardsLanguage },
             { title: 'Funciones ejecutivas', list: cardsFunctions },
-            { title: 'Habilidades visoconstructivas', list: cardsVisoconstructivas}
+            { title: 'Habilidades visoconstructivas', list: cardsVisoconstructivas }
         ];
         return (
             <MainCard title="Juegos" darkTitle={true}>
                 <Stack spacing={2}>
                     {cardList.map((card) =>
                         card.list.length !== 0 ? (
-                            <div key= {card.title}>
+                            <div key={card.title}>
                                 <Typography variant="h5">{card.title}</Typography>
                                 <Carousel responsive={responsive}>
                                     {card.list.map((cardItem, index) => (
@@ -237,5 +239,5 @@ const Games = () => {
 export default Games;
 
 CardComponent.propTypes = {
-    card: PropTypes.object.isRequired, 
+    card: PropTypes.object.isRequired,
 }

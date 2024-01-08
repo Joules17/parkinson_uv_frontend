@@ -13,9 +13,9 @@ import { Stack, Typography, IconButton, Tooltip } from '@mui/material';
 import Dot from 'components/@extended/Dot';
 
 // ================================== ASSETS ==============================================
-import {  UserDeleteOutlined, UserAddOutlined } from '@ant-design/icons';
+import { UserDeleteOutlined, UserAddOutlined } from '@ant-design/icons';
 
-export default function AssignStatus ({ user_id, value, parkinson_phase, setList, setLoading}) {
+export default function AssignStatus({ user_id, value, parkinson_phase, setList, setLoading }) {
     // api 
     const { updatePatientAssignee } = usePatientResponse()
     const { getTherapistPatients } = useTherapistResponse()
@@ -26,7 +26,7 @@ export default function AssignStatus ({ user_id, value, parkinson_phase, setList
     const handleAssignClick = (id_user, id_therapist, id_parkinson_phase, setList) => {
         setLoading('Cargando...')
         var data = {
-            id_therapist: id_therapist, 
+            id_therapist: id_therapist,
             id_parkinson_phase: id_parkinson_phase
         }
 
@@ -36,7 +36,7 @@ export default function AssignStatus ({ user_id, value, parkinson_phase, setList
                 setLoading('Usuarios')
             })
     }
-    
+
     let color;
     let title;
     let titleSuggest;
@@ -53,15 +53,15 @@ export default function AssignStatus ({ user_id, value, parkinson_phase, setList
         <Stack direction="row" spacing={1} alignItems="center">
             <Dot color={color} />
             <Typography>{title}</Typography>
-            <Tooltip title = {titleSuggest}>
-                {value === '111' ? 
-                <IconButton style={{ color: 'green' }} onClick = {() => handleAssignClick(user_id, user.sub, parkinson_phase, setList)} >
-                    <UserAddOutlined />
-                </IconButton>
-                :
-                <IconButton style={{ color: 'red' }} onClick = {() => handleAssignClick(user_id, '111', parkinson_phase, setList)} >
-                    <UserDeleteOutlined/>
-                </IconButton>
+            <Tooltip title={titleSuggest}>
+                {value === '111' ?
+                    <IconButton style={{ color: 'green' }} onClick={() => handleAssignClick(user_id, user.sub, parkinson_phase, setList)} >
+                        <UserAddOutlined />
+                    </IconButton>
+                    :
+                    <IconButton style={{ color: 'red' }} onClick={() => handleAssignClick(user_id, '111', parkinson_phase, setList)} >
+                        <UserDeleteOutlined />
+                    </IconButton>
                 }
             </Tooltip>
         </Stack>
@@ -69,7 +69,7 @@ export default function AssignStatus ({ user_id, value, parkinson_phase, setList
 };
 
 AssignStatus.propTypes = {
-    user_id: PropTypes.string, 
+    user_id: PropTypes.string,
     value: PropTypes.string,
     parkinson_phase: PropTypes.number,
     setList: PropTypes.func,

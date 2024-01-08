@@ -38,7 +38,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useExternalApi as useListGameResponse } from 'hooks/listGamesResponse';
 
 // ==============================|| LIBRARY PAGE ||============================== //
-export default function Library() {
+export default function Library({ initList }) {
     // api
     const { getListGamesDetailed, deleteListGames, checkListGames } = useListGameResponse();
 
@@ -49,7 +49,7 @@ export default function Library() {
     const dispatch = useDispatch();
 
     // vars
-    const [listGames, setListGames] = useState(undefined);
+    const [listGames, setListGames] = useState(initList);
     const [onLoading, setOnLoading] = useState(true);
     const [warningModal, setWarningModal] = useState(false);
     const [deletedStatus, setDeletedStatus] = useState(false);
@@ -87,7 +87,7 @@ export default function Library() {
 
         const isAssigned = await checkListGames(list.id);
         if (isAssigned) {
-            setFailedStatus(true); 
+            setFailedStatus(true);
         } else {
             deleteListGames(list.id).then(() => {
                 getListGamesDetailed(user.sub, setListGames).then(() => {
@@ -107,15 +107,24 @@ export default function Library() {
     };
 
     const handleCloseCreatedModal = () => {
-        setCreatedListModal(false); 
-        setCreatedStatus(false); 
-        
-    }; 
+        setCreatedListModal(false);
+        setCreatedStatus(false);
+
+    };
     // useEffects ----------------------------
     useEffect(() => {
-        getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
+        if (initList === undefined) {
+            getListGamesDetailed(user.sub, setListGames).then(() => setOnLoading(false));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onLoading]);
+
+    useEffect(() => {
+        if (createdStatus) {
+          setOpenModalGames(true);
+          handleCloseCreatedModal()
+        }
+      }, [createdStatus]);
 
     // render
     return (
@@ -202,26 +211,9 @@ export default function Library() {
 
             {/* new list creates notification */}
             <Dialog open={createdListModal} onClose={handleCloseCreatedModal}>
-                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography fontWeight="bold" fontSize="1.25rem">
-                        Notificación
-                    </Typography>
-                    <IconButton edge="end" color="inherit">
-                        <NotificationOutlined />
-                    </IconButton>
-                </DialogTitle>
                 <DialogContent>
-                    {createdStatus ? (
-                        <Typography>La lista se ha creado correctamente</Typography>
-                    ) : (
-                        <ChargingCard />
-                    )}
+                    <ChargingCard />
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseCreatedModal} color="primary">
-                        Cerrar
-                    </Button>
-                </DialogActions>
             </Dialog>
 
 
@@ -232,7 +224,7 @@ export default function Library() {
                 idList={list.id}
                 setWarningModal={setWarningModal}
             />
-            <ModalNewList open={openModalNewList} handleClose={handleCloseModal} setCreatedListModal = {setCreatedListModal} setCreatedStatus = {setCreatedStatus} />
+            <ModalNewList open={openModalNewList} handleClose={handleCloseModal} setCreatedListModal={setCreatedListModal} setCreatedStatus={setCreatedStatus} setList={setList} />
         </MainCard>
     );
 }

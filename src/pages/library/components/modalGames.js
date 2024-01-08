@@ -31,8 +31,11 @@ import { Link } from 'react-router-dom';
 // dispatch
 import { useDispatch, useSelector } from 'react-redux';
 import { setGameList } from 'store/reducers/gamesListSlice';
+import { DialogContent } from '../../../../node_modules/@mui/material/index';
+import ViewGameForm from 'pages/games/ViewGameForm';
 
 const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
+    console.log(list)
     const gameListState = useSelector((state) => state.gamesList);
     const dispatch = useDispatch();
     const [modifiedList, setModifiedList] = useState(null);
@@ -55,6 +58,46 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
         dispatch(setGameList({ gamesList: modifiedList ? modifiedList : list }));
     };
 
+    const handleFormSubmit = (config) => {
+        const settings = {}
+        // general rounds 
+        settings['rondas'] = config.rondas;
+        settings['tries'] = config.tries;
+
+
+        // only letter soup games: 
+        if (card.title === 'Letras Marinas') {
+            settings['wordsperlevel'] = config.wordsperlevel;
+        }
+
+        // only levels games: 
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
+            settings['niveles'] = config.niveles;
+        }
+
+        // only categories games: 
+        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
+            settings['categorias'] = config.categorias;
+        }
+
+        // only word length games:
+        if (card.title === 'Palabras Ocultas') {
+            settings['longitudMinPalabra'] = config.longitudMinPalabra;
+            settings['longitudPalabra'] = config.longitudPalabra;
+        }
+
+        // only Artic Arrow game: 
+        if (card.title === 'Flechas Articas') {
+            settings['rondasFirst'] = config.rondasFirstArrow;
+            settings['rondasSecond'] = config.rondasSecondArrow;
+        }
+
+        console.log('Se envia las siguientes settings: ', settings)
+        navigate(`/run-game?game=${card.title}&description=${card.description}`, {
+            state: settings
+        });
+        setOpen(false);
+    };
 
     const style = {
         position: 'absolute',
@@ -80,41 +123,54 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
                         <CloseOutlined />
                     </Button>
                     <h2>{list.name}</h2>
-                    <List >
-                        {list.games?.map((game) => (
-                            <div key = {game.id}>
-                                <ListItemButton key={game.id} onClick={() => handleItemClick(game.id)}>
-                                    <ListItemAvatar>
-                                        <Avatar src={game.game_picture} />
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={
-                                            <Typography variant="h5" component="div">
-                                                {game.name}
-                                            </Typography>
-                                        }
-                                        secondary={`Dominio: ${game.id_type}`}
-                                    />
-                                    {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
-                                </ListItemButton>
-                                <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
-                                    <SettingsGameForm
-                                        typeForm={game.name}
-                                        list={list}
-                                        onListUpdate={handleListUpdate}
-                                        idGame={game.id_game_list}
-                                    />
-                                </Collapse>
-                                <Divider />
-                            </div>
-                        ))}
+                    <List>
+                        {list.games?.map((game) => {
+                            // Realizar la conversión del formato antes de pasar al componente ViewGameForm
+                            const transformedData = {
+                                "id": game.id,
+                                "image": game.game_picture,
+                                "title": game.name,
+                                "description": game.description
+                            };
+
+                            return (
+                                <div key={game.id}>
+                                    <ListItemButton key={game.id} onClick={() => handleItemClick(game.id)}>
+                                        <ListItemAvatar>
+                                            <Avatar src={game.game_picture} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={
+                                                <Typography variant="h5" component="div">
+                                                    {game.name}
+                                                </Typography>
+                                            }
+                                            secondary={`Dominio: ${game.id_type}`}
+                                        />
+                                        {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
+                                    </ListItemButton>
+                                    <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
+                                        {/* <SettingsGameForm
+                                            typeForm={game.name}
+                                            list={list}
+                                            onListUpdate={handleListUpdate}
+                                            idGame={game.id_game_list}
+                                        /> */}
+                                        <DialogContent>
+                                            <ViewGameForm card={transformedData} handleFormSubmit={handleFormSubmit} fromLibrary={true}/>
+                                        </DialogContent>
+                                    </Collapse>
+                                    <Divider />
+                                </div>
+                            );
+                        })}
                     </List>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
                         <Button
                             variant="contained"
                             onClick={() => setWarningModal(true)}
                             sx={{ mr: '1rem', bgcolor: 'error.main', '&:hover': { bgcolor: 'error.dark' } }}
-                                
+
                         >
                             Eliminar Lista
                         </Button>
@@ -135,6 +191,6 @@ export default ModalGames;
 ModalGames.propTypes = {
     list: PropTypes.object.isRequired,
     openModal: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired, 
+    handleClose: PropTypes.func.isRequired,
     setWarningModal: PropTypes.func.isRequired,
 };
