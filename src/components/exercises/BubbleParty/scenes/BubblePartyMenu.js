@@ -1,44 +1,44 @@
-// Phaser 
-import Phaser from 'phaser'; 
+// Phaser
+import Phaser from 'phaser';
 
 // Styles
 import 'components/exercises/general_assets/styles.css'
 
-// Custom Classes imported 
+// Custom Classes imported
 import SteroidObject from 'components/Factory/SteroidObject';
 import FullScreenBttn from 'components/Factory/FullScreenBttn';
 
 export default class BubblePartyMenu extends Phaser.Scene {
     constructor () {
         super({ key: 'BubblePartyMenu', backgroundColor: '#3f1651'});
-        this.worldSizeWidth = 800;  
+        this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
     }
 
     preload () {
-        this.waveOffset = 0;    
+        this.waveOffset = 0;
     }
 
     create () {
         this.game = this.sys.game
-        // Background 
+        // Background
         this.bg = this.add.tileSprite(400, 300, 800, 600, 'SeaImg').setDepth(-2).setScrollFactor(0);
 
-        this.algae_der = new SteroidObject({scene: this, posx: -10, posy: 350, key: 'AlgaeRedImg'}).dance_function(-5, 5000); 
+        this.algae_der = new SteroidObject({scene: this, posx: -10, posy: 350, key: 'AlgaeRedImg'}).dance_function(-5, 5000);
         this.algae_izq = new SteroidObject({scene: this, posx: 810, posy: 350, key: 'AlgaeGreenImg'}).dance_function(5, 5000);
 
-        
-        // Panel 
-        this.title_panel = this.add.graphics(); 
+
+        // Panel
+        this.title_panel = this.add.graphics();
         this.title_panel.fillStyle(0xffffff, 0.9);
         this.title_panel.fillRect(50, 200, 690, 100);
-        this.title = this.add.text(60, 210, 'FIESTA DE BURBUJAS', {fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(110); 
-        
-        
-        this.crab = new SteroidObject({scene: this, posx: 700, posy: 450, key: 'CrabImg'}).setScale(0.1).dance_function(3, 2000);
-        
+        this.title = this.add.text(60, 210, 'FIESTA DE BURBUJAS', {fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(110);
 
-        // wave 
+
+        this.crab = new SteroidObject({scene: this, posx: 700, posy: 450, key: 'CrabImg'}).setScale(0.1).dance_function(3, 2000);
+
+
+        // wave
         this.olas = this.physics.add.group();
 
         for (let i = 0; i < 10; i++) {
@@ -51,8 +51,8 @@ export default class BubblePartyMenu extends Phaser.Scene {
             // ball.setScale(0.1);
         });
 
-        // Start_Panel 
-        this.start_panel = this.add.graphics(); 
+        // Start_Panel
+        this.start_panel = this.add.graphics();
         this.start_panel.fillStyle(0x000000, 1);
         this.start_panel.fillRect(335, 320, 140, 70);
 
@@ -60,31 +60,31 @@ export default class BubblePartyMenu extends Phaser.Scene {
         this.start_button.setInteractive({ useHandCursor: true });
 
 
-        // Fullscreen button 
+        // Fullscreen button
         new FullScreenBttn(this, 770, 30, 'FullscreenImg')
 
-        // Event: 
+        // Event:
         // Bubble Party!
         this.bubble_group = this.physics.add.group();
 
         this.timer = this.time.addEvent({
-            delay: 200, 
+            delay: 200,
             callback: function() {
                 var bubble = this.add.sprite(Math.random()*800, 650, 'BubbleImg').setScale(0.1)
                 this.bubble_group.add(bubble)
-                bubble.setDepth(-1); 
-                bubble.body.velocity.y = -100 - Math.random()*100;        
-            }, 
-            callbackScope: this, 
+                bubble.setDepth(-1);
+                bubble.body.velocity.y = -100 - Math.random()*100;
+            },
+            callbackScope: this,
             loop: true
-        }); 
+        });
 
-        // Listener 
+        // Listener
         this.start_button.on('pointerdown', () => {
-            const settings = this.sys.settings.data.settings; 
-            this.sound.play('CorrectSound'); 
-            this.scene.start('MemoryBubblesGame', { settings }); 
-        }); 
+            const settings = this.sys.settings.data.settings;
+            this.sound.play('CorrectSound');
+            this.scene.start('BubblePartyGame', { settings });
+        });
 
         this.start_button.on('pointerover', () => {
             this.sound.play('HoverSound');
@@ -93,8 +93,8 @@ export default class BubblePartyMenu extends Phaser.Scene {
                 scale: 1.06,
                 duration: 100,
                 ease: 'Power2'
-            }); 
-        }); 
+            });
+        });
 
         this.start_button.on('pointerout', () => {
             this.tweens.add({
@@ -102,8 +102,8 @@ export default class BubblePartyMenu extends Phaser.Scene {
                 scale: 1,
                 duration: 100,
                 ease: 'Power2'
-            }); 
-        }); 
+            });
+        });
 
     }
 
