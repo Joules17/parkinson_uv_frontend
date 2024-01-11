@@ -15,6 +15,8 @@ import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
 import BubblePartyInit from 'components/exercises/BubbleParty/scenes/BubblePartyInit';
 import BubblePartyMenu from 'components/exercises/BubbleParty/scenes/BubblePartyMenu';
 import BubblePartyGame from 'components/exercises/BubbleParty/scenes/BubblePartyGame';
+import BubblePartyFailed from 'components/exercises/BubbleParty/scenes/BubblePartyFailed';
+import BubblePartyEnd from 'components/exercises/BubbleParty/scenes/BubblePartyEnd';
 
 // css
 import 'components/exercises/general_assets/styles.css';
@@ -41,7 +43,7 @@ function GameBubbleParty(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [BubblePartyInit, BubblePartyMenu, BubblePartyGame]
+            scene: [BubblePartyInit, BubblePartyMenu, BubblePartyGame, BubblePartyFailed, BubblePartyEnd]
         };
 
         const game = new Phaser.Game(config);

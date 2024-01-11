@@ -45,4 +45,12 @@ export default class extends Phaser.GameObjects.Container {
         this.figure.setVisible(this.visible);
         this.bubble_sprite.setVisible(this.visible);
     }
+
+    hide () {
+        this.set_visible(false); 
+    }
+
+    show () {
+        this.set_visible(true);
+    }
 }

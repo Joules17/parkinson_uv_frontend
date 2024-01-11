@@ -105,7 +105,6 @@ export default class BubblePartyGame extends Phaser.Scene {
 
         // Panel Game
         this.create_boards();
-        this.tablero = new Tablero({ scene: this, filas: 5, columnas: 5, answer_option: 'cerdo', visible: true })
 
         // Gen Buttons
         this.gen_buttons();
@@ -156,10 +155,10 @@ export default class BubblePartyGame extends Phaser.Scene {
         this.reveal_text.on('pointerdown', () => {
             if (this.tablero.check_complete()) {
                 this.sound.play('GoodSound')
-                console.log('Excelente!');
+                this.win_procedure(); 
             } else {
                 this.sound.play('BadSound');
-                console.log('Mala respuesta');
+                this.error_procedure(); 
             }
         });
 
@@ -240,7 +239,9 @@ export default class BubblePartyGame extends Phaser.Scene {
             this.tableros.push(tablero_aux);
         }
 
-
+        // current tablero
+        this.tablero = this.tableros.shift(); 
+        this.tablero.show(); 
     }
 
     get_random_words(bubbleList, numTotalWords) {
@@ -271,6 +272,42 @@ export default class BubblePartyGame extends Phaser.Scene {
         return words;
     }
 
+    // win_procedure 
+    win_procedure () {
+        this.tablero.hide(); 
+        
+        // level update 
+        this.current_level += 1;
+        this.tiempo_rondas.push(this.tiempo_por_ronda);
+        this.tiempo_por_ronda = 0;
+        this.rounds_text.setText('RONDAS: ' + this.current_level + '/' + this.number_fases);
+        
+        // check if game is over
+        if (this.tableros.length === 0) {
+            // game over 
+            console.log('TERMINA EL JUEGO')
+            this.setLog(this.tiempo_rondas, this.time_text, this.number_errors, this.current_level-1)
+            this.scene.start('BubblePartyEnd', log, {game: this.game});
+        } else {
+            // no yet 
+            this.tablero = this.tableros.shift();
+            this.tablero.show();
+        }
+    }
+
+    // error procedure 
+    error_procedure () {
+        this.tries -= 1;
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings;
+            this.scene.start('BubblePartyFailed', { settings }, {game: this.game});
+        } else {
+            this.number_errors += 1;
+            this.tries_text.setText('INTENTOS: ' + this.tries);
+            this.errors_text.setText('ERRORES: ' + this.number_errors);
+        }
+    }
+
     // timer
     addTime() {
         if (!this.introduction_time) {
@@ -283,6 +320,15 @@ export default class BubblePartyGame extends Phaser.Scene {
 
             this.time_text.setText('TIEMPO: ' + this.gameTimeMin + ':' + this.gameTimeSec);
         }
+    }
+
+    // setLog 
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
+        log.info.tiempo_total = tiempo_total;
+        log.info.errores = errores;
+        log.info.rondas = number_rounds; 
+        console.log('Se esta enviando: ', tiempo_rondas, tiempo_total, errores, number_rounds)
     }
 }
 

@@ -141,8 +141,22 @@ export default class Tablero {
     }
 
     hide () {
+        this.visible = false; 
         this.figure.setVisible(false);
-        // continua aqui
+        for (let fila = 0; fila < this.filas; fila++) {
+            for (let columna = 0; columna < this.columnas; columna++) {
+                this.matriz[fila][columna].hide();
+            }
+        }
+    }
 
+    show () {
+        this.visible = true; 
+        this.figure.setVisible(true);
+        for (let fila = 0; fila < this.filas; fila++) {
+            for (let columna = 0; columna < this.columnas; columna++) {
+                this.matriz[fila][columna].show();
+            }
+        }
     }
 }
