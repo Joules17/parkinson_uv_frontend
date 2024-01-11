@@ -69,14 +69,19 @@ const CardComponent = ({ card }) => {
         if (card.title === 'Letras Marinas') {
             settings['wordsperlevel'] = config.wordsperlevel;
         }
-
-        // only levels games: 
-        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
-            settings['niveles'] = config.niveles;
+        
+        // only photography games: 
+        if (card.title === 'Fotografias Misteriosas') {
+            settings['number_objects'] = config.number_objects; 
         }
+        
+        // only levels games: 
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') {
+            settings['niveles'] = config.niveles; 
+        } 
 
         // only categories games: 
-        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
+        if (card.title === 'Objeto Intruso' || card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') {
             settings['categorias'] = config.categorias;
         }
 

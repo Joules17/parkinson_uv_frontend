@@ -6,18 +6,9 @@ import 'components/exercises/general_assets/styles.css';
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 import LevelObj from 'components/exercises/FotografiasMisteriosas/sprites/LevelObj.js';
 
-const log = {
-    info: {
-        tiempo_total:  undefined, 
-        tiempo_rondas: undefined,
-        errores: undefined,
-        number_objects: undefined,
-        number_levels: undefined
-    }
-}
-export default class FotografiasGame extends Phaser.Scene {
+export default class FotografiasLobbySecond extends Phaser.Scene {
     constructor() {
-        super({ key: 'FotografiasGame', backgroundColor: '#3f1651' });
+        super({ key: 'FotografiasLobbySecond', backgroundColor: '#3f1651' });
     }
 
     preload() {}
@@ -26,31 +17,7 @@ export default class FotografiasGame extends Phaser.Scene {
         // vars
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
-
-        // timers 
-        this.gameTimeSec = 0; 
-        this.gameTimeMin = 0;
-        this.tiempo_rondas = [];
-        this.tiempo_por_ronda = 0; 
-
-        // execution variables 
-        this.number_objects = 5; 
-        this.tries = 3; 
-        this.number_levels = 1; 
-        this.current_round = 1;
-        this.current_level = 1;  
-        this.tablero_actual = undefined; 
-        this.errores = 0; 
-        this.fin_del_juego = false; 
-        this.fase_asking = false; 
-
-        // config 
-        this.default_config = {
-            scene: this, 
-            number_objects: 5, 
-            category: ['frutas', 'comida', 'casa'],
-            actual: true, 
-        }; 
+        
     }
 
     flashScreen() {
@@ -72,59 +39,19 @@ export default class FotografiasGame extends Phaser.Scene {
         // game --- 
         this.game = this.sys.game;
         this.bg = this.add.sprite(400, 300, 'BgRed');
-
-        //  initialize config 
-        const settings = this.sys.settings.data.settings; 
-        
-        // number_objects
-        if (settings.number_objects !== undefined) {
-            this.number_objects = parseInt(settings.number_objects);
-        }
-
-        // number_levels 
-        if (settings.niveles !== undefined) {
-            this.number_levels = parseInt(settings.niveles);
-        }
-
-        // categorias 
-        if (settings.categorias !== undefined) {
-            this.categorias = settings.categorias; 
-        } else {
-            this.categorias = ['frutas', 'comida', 'casa'];
-        }
-
-        // tries
-        if (settings.tries !== undefined) {
-            this.tries = parseInt(settings.tries);
-        }
-        
-        // config 
-        this.default_config['number_objects'] = this.number_objects;
-        this.default_config['category'] = this.categorias;
-
         
         // Rollo Up 
+        this.rollo_up = this.add.tileSprite(400, 40, 3000, 269, 'RolloImg').setScale(0.3).setScrollFactor(0);
         this.rollo_down = this.add.tileSprite(400, 560, 3000, 269, 'RolloImg').setScale(0.3).setScrollFactor(0);
         
-        // Stats
-        // Panels
-        this.panel_tiempo = this.add.graphics();
-        this.panel_tiempo.fillStyle(0x000000, 0.5);
-        this.panel_tiempo.fillRect(10, 0, 190, 50);
+        // Panel Title 
+        this.panel_title = this.add.graphics();
+        this.panel_title.fillStyle(0x000000, 1);
+        this.panel_title.fillRect(270, 0, 280, 80);
 
-        this.panel_level = this.add.graphics();
-        this.panel_level.fillStyle(0x000000, 0.5);
-        this.panel_level.fillRect(205, 0, 190, 50);
+        // Title
+        this.title = this.add.text(300, 15, 'TUTORIAL', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(80);
 
-        this.panel_errores = this.add.graphics();
-        this.panel_errores.fillStyle(0x000000, 0.5);
-        this.panel_errores.fillRect(400, 0, 190, 50);
-
-        // Text
-        this.text_tiempo = this.add.text(20, 10, 'Tiempo: 0:0', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40);
-        this.text_level = this.add.text(215, 10, 'Nivel: ' + this.current_level + '-'+ this.current_round, { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40);
-        this.text_intentos = this.add.text(410, 10, 'Intentos: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(40);
-        // --
         this.shade_circle = this.add.graphics();
         this.shade_circle.fillStyle(0x000000, 1);
         this.shade_circle.fillCircle(400, 310, 200);
@@ -135,6 +62,7 @@ export default class FotografiasGame extends Phaser.Scene {
 
         this.base_circle.setAlpha(0);
         this.shade_circle.setAlpha(0);
+
 
         // questions 
         this.panel_question_shade = this.add.graphics();
@@ -191,29 +119,24 @@ export default class FotografiasGame extends Phaser.Scene {
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
         // Level Object
-        console.log(this.number_levels, 'number_levels')
-        this.levels = []; 
-        for (let i = 0; i < this.number_levels; i++) {
-            this.levels.push(new LevelObj(this.default_config));
-        }
-
-        this.levelObj = this.levels[this.current_level-1]; 
+        this.levelObj = new LevelObj({
+            scene: this,
+            number_objects: 3,
+            category: ['frutas', 'comida', 'casa'],
+            actual: true,
+        });
 
         this.shade_circle.setAlpha(1);
         this.base_circle.setAlpha(1); 
+
         // CountDown 
         this.count_back(3, () => {
             this.flashScreen(); 
             this.levelObj.show_objects(); 
         });
-
-        // Timer 
-        this.time.addEvent({delay: 1000, callback: this.addTime, callbackScope: this, loop: true});
     }
 
     objectsDisplayed(displayedObjects) {
-        // comienza fase de preguntas 
-        this.fase_asking = true;
         // Ocultar círculo y otros elementos
         this.shade_circle.setAlpha(0);
         this.base_circle.setAlpha(0);
@@ -253,43 +176,58 @@ export default class FotografiasGame extends Phaser.Scene {
     }
 
     show_last_message() {
-        console.log('El juego termino exitosamente')
-        this.setLog(this.tiempo_rondas, this.text_tiempo, this.errores, this.number_objects, this.number_levels)
-        this.scene.start('FotografiasEnd', log, {game: this.game}) 
-    }
+        this.last_message = this.add.graphics();
+        this.last_message.fillStyle(0xffffff, 1);
+        this.last_message.lineStyle(2, 0x000000); 
+        this.last_message.fillRect(100, 180, 600, 250);
+        this.last_message.strokeRect(100, 180, 600, 250);
 
-    check_failure () {
-        if (this.tries <= 0 ) {
-            console.log('Juego fallado')
+        this.first_message = this.add.text(140, 200, 'TUTORIAL ACABADO', { fontFamily: 'TROUBLE', fill: '#3bb173', stroke: '#000000', strokeThickness: 4 }).setFontSize(90); 
+        this.second_message = this.add.text(220, 280, 'Seleccione una opcion', { fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(50); 
+
+        this.repeat_sprite = this.add.sprite(140, 400, 'RepeatImg').setScale(0.1); 
+        this.repeat_message = this.add.text(180, 385, 'Repetir tutorial', { fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(40); 
+    
+        this.play_sprite = this.add.sprite(550, 400, 'PlayImg').setScale(0.1);
+        this.play_message = this.add.text(590, 385, 'Jugar', { fontFamily: 'TROUBLE', fill: '#000000'}).setFontSize(40);
+        
+        this.repeat_message.setInteractive({ useHandCursor: true });
+        
+        this.repeat_message.on('pointerdown', () => {
+            this.sound.play('CorrectSound'); 
             const settings = this.sys.settings.data.settings;
-            this.scene.start('FotografiasFailed', {settings}, {game: this.game}); 
-        }
-    }
+            this.scene.start('FotografiasLobby', {settings}, {game: this.game}); 
+        }); 
 
-    addTime () {
-        if (this.fase_asking) {
-            this.gameTimeSec += 1;
-            this.tiempo_por_ronda += 1; 
-            if (this.gameTimeSec === 60) {
-                this.gameTimeSec = 0;
-                this.gameTimeMin += 1;
-            }
+        this.repeat_message.on('pointerover', () => {
+            this.repeat_message.setColor('#3bb173');
+            this.sound.play('HoverSound'); 
+        }); 
 
-            this.text_tiempo.setText('TIEMPO: ' + this.gameTimeMin + ':' + this.gameTimeSec);
-        }
+        this.repeat_message.on('pointerout', () => {
+            this.repeat_message.setColor('#000000');
+        });
+
+        this.play_message.setInteractive({ useHandCursor: true });
+
+        this.play_message.on('pointerdown', () => {
+            this.sound.play('CorrectSound'); 
+            const settings = this.sys.settings.data.settings;
+            this.scene.start('FotografiasGame', {settings}, {game: this.game}); 
+        }); 
+
+        this.play_message.on('pointerover', () => {
+            this.play_message.setColor('#3bb173');
+            this.sound.play('HoverSound'); 
+        }); 
+
+        this.play_message.on('pointerout', () => {
+            this.play_message.setColor('#000000');
+        }); 
     }
 
     update() {
+        this.rollo_up.tilePositionX -= 0.5;
         this.rollo_down.tilePositionX += 0.5;
-    }
-
-
-    // logs 
-    setLog (tiempo_rondas, tiempo_total, errores, number_objects, number_levels) {
-        log.info.tiempo_rondas = tiempo_rondas;
-        log.info.tiempo_total = tiempo_total;
-        log.info.errores = errores;
-        log.info.number_objects = number_objects;
-        log.info.number_levels = number_levels;
     }
 }

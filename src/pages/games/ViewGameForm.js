@@ -31,18 +31,20 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit, fromLibrary }) {
-    const [valueRounds, setValueRounds] = useState(10);
-    const [valueTries, setValueTries] = useState(3);
-    const [valueLevels, setValueLevels] = useState(1);
-    const [wordsperlevel, setWordsperlevel] = useState(4);
+export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
+    const [valueRounds, setValueRounds] = useState(10); 
+    const [valueObjects, setValueObjects] = useState(5); 
+    const [valueTries, setValueTries] = useState(3); 
+    const [valueLevels, setValueLevels] = useState(1); 
+    const [wordsperlevel, setWordsperlevel] = useState(4); 
     const [valueWorldMinLength, setValueWorldMinLength] = useState(2);
     const [valueWordLength, setValueWordLength] = useState(10);
     const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(10);
     const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(10);
     const [selectedCategories, setSelectedCategories] = useState([]);
     // Errors
-    const [errorRounds, setErrorRounds] = useState(false);
+    const [errorRounds, setErrorRounds] = useState(false); 
+    const [errorObjects, setErrorObjects] = useState(false); 
     const [errorTries, setErrorTries] = useState(false);
     const [errorLevels, setErrorLevels] = useState(false);
     const [errorWordsPerLevel, setErrorWordsPerLevel] = useState(false);
@@ -61,6 +63,10 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
     const handleRoundsChange = (event) => {
         setValueRounds(event.target.value);
     };
+
+    const handleObjectsChange = (event) => {
+        setValueObjects(event.target.value);
+    }; 
 
     const handleTriesChange = (event) => {
         setValueTries(event.target.value);
@@ -105,7 +111,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
     const handleCheckErrors = () => {
 
         // Rounds Errors  - Flechas Articas y Flechas Marinas (NO)
-        if (card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas') {
+        if (card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas' && card.title !== 'Fotografias Misteriosas') {
             if (isNaN(parseInt(valueRounds, 10)) || parseInt(valueRounds, 10) < 1) {
                 setErrorRounds(true);
                 return true;
@@ -117,6 +123,18 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
             setErrorRounds(false);
         }
 
+        // Objects Errors - Fotografias Misteriosas (SI) 
+        if (card.title === 'Fotografias Misteriosas') {
+            if (isNaN(parseInt(valueObjects, 10)) || parseInt(valueObjects, 10) < 1) {
+                setErrorObjects(true);
+                return true; 
+            } else {
+                setErrorObjects(false); 
+            }
+        } else {
+            setErrorObjects(false); 
+        }
+
         // Tries Errors 
         if (isNaN(parseInt(valueTries, 10)) || parseInt(valueTries, 10) < 1) {
             setErrorTries(true);
@@ -126,7 +144,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
         }
 
         // Level Erros - Recuerda y Encuentra y Letras Marinas (SI)
-        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') {
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') {
             if (isNaN(parseInt(valueLevels, 10)) || parseInt(valueLevels, 10) < 1) {
                 setErrorLevels(true);
                 return true;
@@ -168,7 +186,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
         }
 
         // Categories -  Recuerda y Encuentra, Objeto Intruso, Letras Marinas
-        if (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas') {
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') {
             if (selectedCategories.length === 0) {
                 setErrorCategories(true);
                 return true;
@@ -184,7 +202,8 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
         if (!handleCheckErrors()) {
             const config = {
                 rondas: valueRounds,
-                tries: valueTries,
+                tries: valueTries, 
+                number_objects: valueObjects,
                 wordsperlevel: wordsperlevel,
                 niveles: valueLevels,
                 longitudPalabra: valueWordLength,
@@ -252,7 +271,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
                             Especificaciones
                         </Typography>
                     </Grid>
-                    {(card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas') && (
+                    {(card.title !== 'Flechas Articas' && card.title !== 'Letras Marinas' && card.title !== 'Fotografias Misteriosas') && (
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <TextField
                                 type="number"
@@ -267,6 +286,21 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
                         </Grid>
                     )}
 
+                    {(card.title === 'Fotografias Misteriosas') && (
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            type="number"
+                            label="Número de Objetos"
+                            InputProps={{
+                                inputProps: { min: 0 }
+                            }}
+                            value={valueObjects}
+                            onChange={handleObjectsChange}
+                            fullWidth
+                        />
+                        </Grid>
+                    )}
+                    
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <TextField
                             type="number"
@@ -320,7 +354,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
                             </Grid>
                         </>
                     )}
-                    {(card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas') && (
+                    {(card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') && (
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <TextField
                                 type="number"
@@ -377,7 +411,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
                         </>
                     )}
                     {
-                        (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas') &&
+                        (card.title === 'Recuerda y Encuentra' || card.title === 'Objeto Intruso' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') &&
                         (
                             <Grid item xs={12} sm={12} md={12} lg={12}>
                                 <Typography fontWeight="bold" variant="1.25rem">
@@ -403,6 +437,7 @@ export default function ViewGameForm({ card, handleCloseDialog, handleFormSubmit
                         )
                     }
                     {errorRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de rondas. </Alert></Grid>}
+                    {errorObjects && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de objetos. </Alert></Grid>}
                     {errorTries && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de intentos. </Alert></Grid>}
                     {errorLevels && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite un valor positivo para el numero de niveles. </Alert></Grid>}
                     {errorWordsPerLevel && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor digite un valor entre 1 a 6 para el numero de palabras por nivel. </Alert></Grid>}
