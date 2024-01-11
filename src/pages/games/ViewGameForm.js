@@ -31,7 +31,7 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
+export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit, fromLibrary}) {
     const [valueRounds, setValueRounds] = useState(10); 
     const [valueObjects, setValueObjects] = useState(5); 
     const [valueTries, setValueTries] = useState(3); 
