@@ -10,6 +10,7 @@ import { Grid, TextField, Typography, List, ListItemAvatar, ListItemButton, List
 // project imports
 import MainCard from 'components/MainCard';
 import ChargingCard from 'components/ChargingCard';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 
 // icons 
 import { PlayCircleOutlined } from '@ant-design/icons';
@@ -31,7 +32,8 @@ const actionSX = {
     transform: 'none'
 };
 
-export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit, fromLibrary}) {
+export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}) {
+    const { updateSettingGameList } = useGameListResponse()
     const [valueRounds, setValueRounds] = useState(10); 
     const [valueObjects, setValueObjects] = useState(5); 
     const [valueTries, setValueTries] = useState(3); 
@@ -230,8 +232,8 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit,
                 categorias: selectedCategories
             }
             updateSettingGameList(card.id, config)
-            onListUpdate(modifiedList);
-            handleCloseDialog();
+            // onListUpdate(modifiedList);
+            // handleCloseDialog();
         }
     };
     // ------------------------------------------------------------- RENDER ------------------------------------------------------------- //
@@ -242,7 +244,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit,
         <MainCard content={false}>
             <Grid item xs={12} >
                 <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                    {!fromLibrary && (
+                    {(
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <Typography fontWeight="bold" variant="1.25rem">
                                 Juego Seleccionado
@@ -443,7 +445,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit,
                     {errorWordsPerLevel && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor digite un valor entre 1 a 6 para el numero de palabras por nivel. </Alert></Grid>}
                     {errorArrowRounds && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, digite valores positivos para los numeros de rondas de Flechas. </Alert></Grid>}
                     {errorCategories && <Grid item xs={12}><Alert severity="error" sx={{ marginBottom: '10px' }}>Por favor, seleccione al menos una categoria. </Alert></Grid>}
-                    {!fromLibrary ? (
+                    {(
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <List component='nav' sx={{
                                 px: 0,
@@ -470,11 +472,13 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit,
                                 </ListItemButton>
                             </List>
                         </Grid>
-                    ) : (
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
-                            <Button variant="contained" onClick={handleFormSubmitSetting}>Guardar Cambios</Button>
-                        </Box>
-                    )}
+                    ) 
+                    // : (
+                    //     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
+                    //         <Button variant="contained" onClick={handleFormSubmitSetting}>Guardar Cambios</Button>
+                    //     </Box>
+                    // )
+                }
                 </Grid>
             </Grid>
         </MainCard>

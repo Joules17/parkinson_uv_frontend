@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, MenuItem, Box, FormControlLabel, FormGroup, Checkbox, FormLabel, FormControl } from '@mui/material';
+import { Button, TextField, Grid, Box, FormControlLabel, FormGroup, Checkbox, FormLabel, FormControl } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 
@@ -8,29 +8,97 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
    const [newSettings, setNewSettings] = useState(undefined)
    const gameListState = useSelector((state) => state.gamesList);
    const [modifiedList, setModifiedList] = useState(gameListState.gamesList);
+   const [selectedCategories, setSelectedCategories] = useState([]);
    const objetos = [
       { value: "frutas", label: "Frutas" },
       { value: "comida", label: "Alimentos" },
-      { value: "casa", label: "Objetos del hogar" }
+      { value: "casa", label: "Objetos del hogar" },
+      { value: "animales", label: "Animales" }
    ]
 
    const selectedGame = modifiedList.games.find((juego) => juego.name === typeForm);
-   const valueRounds = selectedGame ? selectedGame.setting.rondas : 1;
+   // const valueRounds = selectedGame ? selectedGame.setting.rondas : 1;
+   // const valueObjects = selectedGame ? selectedGame.setting.rondas : 1;
+   // const valueObjects = selectedGame ? selectedGame.setting.rondas : 1;
 
+   const [valueRounds, setValueRounds] = useState(selectedGame ? selectedGame.setting.rondas : 10);
+   const [valueObjects, setValueObjects] = useState(selectedGame ? selectedGame.setting.number_objects : 5);
+   const [valueTries, setValueTries] = useState(selectedGame ? selectedGame.setting.tries : 3);
+   const [valueLevels, setValueLevels] = useState(selectedGame ? selectedGame.setting.niveles : 3);
+   const [valueWorldMinLength, setValueWorldMinLength] = useState(selectedGame ? selectedGame.setting.longitudMinPalabra : 2);
+   const [valueWordLength, setValueWordLength] = useState(selectedGame ? selectedGame.setting.longitudPalabra : 10);
+   const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(selectedGame ? selectedGame.setting.rondasFirstArrow : 10);
+   const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(selectedGame ? selectedGame.setting.rondasSecondArrow : 10);
+   const [wordsperlevel, setWordsperlevel] = useState(selectedGame ? selectedGame.setting.wordsperlevel :4); 
 
-   const handleRoundsChange = (event) => {
-      const selectedRounds = event.target.value;
-      setNewSettings({ "rondas": selectedRounds })
+   const handleSettingChange = (event, settingKey) => {
+      const selectedValue = event.target.value;
+      setNewSettings(prevSettings => ({
+         ...prevSettings,
+         [settingKey]: selectedValue,
+      }));
       const updatedList = JSON.parse(JSON.stringify(modifiedList));
       updatedList.games.forEach((juego) => {
          if (juego.name === typeForm) {
-            juego.setting.rondas = selectedRounds;
+            juego.setting[settingKey] = selectedValue;
          }
       });
       setModifiedList(updatedList);
+      console.log(modifiedList)
+   };
+
+   const handleRoundsChange = (event) => {
+      handleSettingChange(event, 'rondas');
+   };
+
+   const handleObjectsChange = (event) => {
+      handleSettingChange(event, 'number_objects');
+   };
+
+   const handleTriesChange = (event) => {
+      handleSettingChange(event, 'tries');
+   };
+
+   const handleLevelsChange = (event) => {
+      handleSettingChange(event, 'niveles');
+   };
+
+   const handleValueWorldMinLength = (event) => {
+      handleSettingChange(event, 'longitudMinPalabra');
+   }
+
+   const handleValueWorldLength = (event) => {
+      handleSettingChange(event, 'longitudPalabra');
+   };
+
+   const handleValueFirstRoundArrow = (event) => {
+      handleSettingChange(event, 'rondasFirstArrow');
+   };
+
+   const handleValueSecondRoundArrow = (event) => {
+      handleSettingChange(event, 'rondasSecondArrow');
+   };
+
+   const handleWordsPerLevelChange = (event) => {
+      handleSettingChange(event, 'wordsperlevel');
+   };
+
+   const handleCheckboxChange = (event) => {
+      const optionValue = event.target.value;
+      setSelectedCategories((prevSelectedOptions) => {
+         if (prevSelectedOptions.includes(optionValue)) {
+            return prevSelectedOptions.filter((value) => value !== optionValue);
+         } else {
+            return [...prevSelectedOptions, optionValue];
+         }
+      });
    };
 
    const handleFormSubmit = () => {
+      setNewSettings(prevSettings => ({
+         ...prevSettings,
+         categorias: selectedCategories,
+      }));
       updateSettingGameList(idGame, newSettings)
       onListUpdate(modifiedList);
    };
@@ -52,27 +120,132 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
                   InputProps={{
                      inputProps: { min: 0 }
                   }}
-                  InputLabelProps={{
-                     style: { fontSize: '18.5px' } // Ajusta el tamaño de fuente según tus necesidades
-                  }}
                   value={valueRounds}
-                  onChange={handleRoundsChange} />
-               {/* Opciones de cada juego */}
-               {typeForm === "Frutas Locas" && (
-                  <FormControl>
+                  onChange={handleRoundsChange}
+               />
+
+               <TextField
+                  type="number"
+                  label="Número de Intentos"
+                  InputProps={{
+                     inputProps: { min: 0 }
+                  }}
+                  value={valueTries}
+                  onChange={handleTriesChange}
+                  fullWidth
+               />
+
+               {(typeForm === "Recuerda y Encuentra" || typeForm === 'Objeto Intruso' || typeForm === 'Letras Marinas' || typeForm === 'Fotografias Misteriosas') && (
+                  <FormControl fullWidth>
                      <FormLabel component='legend' >
-                        Objetos
+                        Categorías
                      </FormLabel>
                      <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
                         {objetos.map((option) => (
                            <FormControlLabel
                               key={option.value}
-                              control={<Checkbox sx={{ ml: 1 }} />}
+                              control={<Checkbox
+                                 checked={selectedCategories.includes(option.value)}
+                                 onChange={handleCheckboxChange}
+                                 value={option.value}
+                              />}
                               label={option.label}
                            />
                         ))}
                      </FormGroup>
                   </FormControl>
+
+               )}
+
+               {(typeForm === 'Fotografias Misteriosas') && (
+                  <TextField
+                     type="number"
+                     label="Número de Objetos"
+                     InputProps={{
+                        inputProps: { min: 0 }
+                     }}
+                     value={valueObjects}
+                     onChange={handleObjectsChange}
+                     fullWidth
+                  />
+               )}
+
+               {(typeForm === 'Recuerda y Encuentra' || typeForm === 'Letras Marinas' || typeForm === 'Fotografias Misteriosas') && (
+                  <TextField
+                     type="number"
+                     label="Numero de Niveles"
+                     InputProps={{
+                        inputProps: { min: 0 }
+                     }}
+                     value={valueLevels}
+                     onChange={handleLevelsChange}
+                     fullWidth
+                  />
+               )}
+
+               {typeForm === 'Palabras Ocultas' && (
+                  <>
+                     <TextField
+                        type="number"
+                        label="Longitud Minima de palabras"
+                        InputProps={{
+                           inputProps: { min: 2, max: 10 }
+                        }}
+                        value={valueWorldMinLength}
+                        onChange={handleValueWorldMinLength}
+                        fullWidth
+                     />
+                     <TextField
+                        type="number"
+                        label="Longitud Maxima de palabras"
+                        InputProps={{
+                           inputProps: { min: 2, max: 10 }
+                        }}
+                        value={valueWordLength}
+                        onChange={handleValueWorldLength}
+                        fullWidth
+                     />
+                  </>
+               )}
+
+               {typeForm === 'Flechas Articas' && (
+                  <>
+                     <TextField
+                        type="number"
+                        label="Número de Rondas del Primer Nivel"
+                        InputProps={{
+                           inputProps: { min: 0 }
+                        }}
+                        value={valueFirstRoundArrow}
+                        onChange={handleValueFirstRoundArrow}
+                        fullWidth
+                     />
+                     <TextField
+                        type="number"
+                        label="Número de Rondas del Segundo Nivel"
+                        InputProps={{
+                           inputProps: { min: 0 }
+                        }}
+                        value={valueSecondRoundArrow}
+                        onChange={handleValueSecondRoundArrow}
+                        fullWidth
+                     />
+                  </>
+               )}
+
+               {typeForm === 'Letras Marinas' && (
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                     <TextField
+                        type="number"
+                        label="Numero de palabras por nivel"
+                        InputProps={{
+                           inputProps: { min: 0, max: 6 }
+                        }}
+                        value={wordsperlevel}
+                        onChange={handleWordsPerLevelChange}
+                        fullWidth
+                     />
+                  </Grid>
                )}
             </div>
          </Box>

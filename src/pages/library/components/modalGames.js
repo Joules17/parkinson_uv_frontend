@@ -150,15 +150,15 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
                                         {expandedItem === game.id ? <UpOutlined /> : <DownOutlined />}
                                     </ListItemButton>
                                     <Collapse in={expandedItem === game.id} timeout="auto" unmountOnExit>
-                                        {/* <SettingsGameForm
+                                        <SettingsGameForm
                                             typeForm={game.name}
                                             list={list}
                                             onListUpdate={handleListUpdate}
                                             idGame={game.id_game_list}
-                                        /> */}
-                                        <DialogContent>
-                                            <ViewGameForm card={transformedData} handleFormSubmit={handleFormSubmit} fromLibrary={true}/>
-                                        </DialogContent>
+                                        />
+                                        {/* <DialogContent>
+                                            <ViewGameForm card={transformedData} handleFormSubmit={handleFormSubmit}/>
+                                        </DialogContent> */}
                                     </Collapse>
                                     <Divider />
                                 </div>
