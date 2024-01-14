@@ -18,6 +18,7 @@ const LibraryPage = Loadable(lazy(() => import('pages/library/Library')));
 const ActivityPage = Loadable(lazy(() => import('pages/activities/Activities')));
 const MyActivitiesPage = Loadable(lazy(() => import('pages/activities/MyActivities')));
 const RunListGames = Loadable(lazy(() => import('pages/runListGame/runListGame')));
+const RunLibraryListGames = Loadable(lazy(() => import('pages/runListGame/runLibraryListGame')));
 const RunGame = Loadable(lazy(() => import('pages/runGame/runGame')));
 
 // Phaser Games
@@ -96,6 +97,10 @@ const MainRoutes = {
         {
             path: 'run-list-games',
             element: <RunListGames />
+        },
+        {
+            path: 'run-library-list-games',
+            element: <RunLibraryListGames />
         },
         {
             path: 'run-game',

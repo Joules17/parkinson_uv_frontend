@@ -91,7 +91,7 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
             settings['rondasSecond'] = config.rondasSecondArrow;
         }
 
-        // console.log('Se envia las siguientes settings: ', settings)
+        console.log('Se envia las siguientes settings: ', settings)
         navigate(`/run-game?game=${card.title}&description=${card.description}`, {
             state: settings
         });
@@ -173,7 +173,7 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
                         >
                             Eliminar Lista
                         </Button>
-                        <Link to="/run-list-games">
+                        <Link to="/run-library-list-games">
                             <Button variant="contained" onClick={initListGames}>
                                 Iniciar games
                             </Button>
