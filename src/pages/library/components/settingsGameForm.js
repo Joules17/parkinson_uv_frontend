@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Box, FormControlLabel, FormGroup, Checkbox, FormLabel, FormControl } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
@@ -21,30 +21,48 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
    // const valueObjects = selectedGame ? selectedGame.setting.rondas : 1;
    // const valueObjects = selectedGame ? selectedGame.setting.rondas : 1;
 
-   const [valueRounds, setValueRounds] = useState(selectedGame ? selectedGame.setting.rondas : 10);
-   const [valueObjects, setValueObjects] = useState(selectedGame ? selectedGame.setting.number_objects : 5);
-   const [valueTries, setValueTries] = useState(selectedGame ? selectedGame.setting.tries : 3);
-   const [valueLevels, setValueLevels] = useState(selectedGame ? selectedGame.setting.niveles : 3);
-   const [valueWorldMinLength, setValueWorldMinLength] = useState(selectedGame ? selectedGame.setting.longitudMinPalabra : 2);
-   const [valueWordLength, setValueWordLength] = useState(selectedGame ? selectedGame.setting.longitudPalabra : 10);
-   const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(selectedGame ? selectedGame.setting.rondasFirstArrow : 10);
-   const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(selectedGame ? selectedGame.setting.rondasSecondArrow : 10);
-   const [wordsperlevel, setWordsperlevel] = useState(selectedGame ? selectedGame.setting.wordsperlevel :4); 
+
+   const [valueRounds, setValueRounds] = useState(10);
+   const [valueObjects, setValueObjects] = useState(5);
+   const [valueTries, setValueTries] = useState(3);
+   const [valueLevels, setValueLevels] = useState(3);
+   const [valueWorldMinLength, setValueWorldMinLength] = useState(2);
+   const [valueWordLength, setValueWordLength] = useState(10);
+   const [valueFirstRoundArrow, setValueFirstRoundArrow] = useState(10);
+   const [valueSecondRoundArrow, setValueSecondRoundArrow] = useState(10);
+   const [wordsperlevel, setWordsperlevel] = useState(4);
+
+   useEffect(() => {
+      if (selectedGame && selectedGame.setting) {
+         setValueRounds(selectedGame.setting.rondas || 10);
+         setValueObjects(selectedGame.setting.number_objects || 5);
+         setValueTries(selectedGame.setting.tries || 3)
+         setValueLevels(selectedGame.setting.niveles || 3)
+         setValueWorldMinLength(selectedGame.setting.longitudMinPalabra || 2)
+         setValueWordLength(selectedGame.setting.longitudPalabra || 10)
+         setValueFirstRoundArrow(selectedGame.setting.rondasFirstArrow || 10)
+         setValueSecondRoundArrow(selectedGame.setting.rondasSecondArrow || 10)
+         setWordsperlevel(selectedGame.setting.wordsperlevel || 4)
+      }
+   }, [selectedGame]);
+
+   useEffect(() => {
+      setModifiedList(gameListState.gamesList)
+   }, [gameListState]);
 
    const handleSettingChange = (event, settingKey) => {
       const selectedValue = event.target.value;
+      const updatedList = JSON.parse(JSON.stringify(modifiedList));
       setNewSettings(prevSettings => ({
          ...prevSettings,
          [settingKey]: selectedValue,
       }));
-      const updatedList = JSON.parse(JSON.stringify(modifiedList));
       updatedList.games.forEach((juego) => {
          if (juego.name === typeForm) {
             juego.setting[settingKey] = selectedValue;
          }
       });
       setModifiedList(updatedList);
-      console.log(modifiedList)
    };
 
    const handleRoundsChange = (event) => {

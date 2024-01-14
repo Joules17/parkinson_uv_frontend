@@ -35,7 +35,6 @@ import { DialogContent } from '../../../../node_modules/@mui/material/index';
 import ViewGameForm from 'pages/games/ViewGameForm';
 
 const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
-    console.log(list)
     const gameListState = useSelector((state) => state.gamesList);
     const dispatch = useDispatch();
     const [modifiedList, setModifiedList] = useState(null);
@@ -92,7 +91,7 @@ const ModalGames = ({ list, openModal, handleClose, setWarningModal }) => {
             settings['rondasSecond'] = config.rondasSecondArrow;
         }
 
-        console.log('Se envia las siguientes settings: ', settings)
+        // console.log('Se envia las siguientes settings: ', settings)
         navigate(`/run-game?game=${card.title}&description=${card.description}`, {
             state: settings
         });
