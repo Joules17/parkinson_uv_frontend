@@ -66,6 +66,10 @@ export default function Library({ initList }) {
     // selected list
     const [list, setList] = useState({});
 
+    useEffect( () => {
+        dispatch(setGameList({ gamesList: list }));
+    }, [list])
+
     // handlers ------------------------------
     const handleCloseModal = () => {
         setOpenModalGames(false);
@@ -78,7 +82,7 @@ export default function Library({ initList }) {
 
     const handleListItemClick = (event, list) => {
         setList(list);
-        dispatch(setGameList({ gamesList: list }));
+        // dispatch(setGameList({ gamesList: list }));
         setOpenModalGames(true);
     };
 

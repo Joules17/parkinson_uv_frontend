@@ -63,6 +63,7 @@ const SettingsGameForm = ({ typeForm, list, onListUpdate, idGame }) => {
          }
       });
       setModifiedList(updatedList);
+      console.log(updatedList)
    };
 
    const handleRoundsChange = (event) => {

@@ -22,11 +22,9 @@ import { CloseOutlined } from '@ant-design/icons';
 
 import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
-import { useDispatch } from 'react-redux';
 
 const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus, setList }) => {
     const { user } = useAuth0();
-    const dispatch = useDispatch();
     const { createList } = useListResponse();
     const { getGames } = useGameResponse();
     const [userCharged, setUserCharged] = useState(undefined);
@@ -65,7 +63,7 @@ const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus
             setNewList((prevList) => {
                 const updatedList = { ...prevList, games: checkedItems, id_therapist: userCharged.user_id };
                 saveList(updatedList);
-                dispatch(setGameList({ gamesList: updatedList }));
+                // dispatch(setGameList({ gamesList: updatedList }));
                 // Guardar lista en el estado 
                 return updatedList;
             });
