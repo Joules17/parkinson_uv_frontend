@@ -39,7 +39,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useExternalApi as usePatientApi } from 'hooks/patientResponse';
 
 // assets
-import { CalendarOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, NotificationOutlined, WarningOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ClockCircleOutlined, CarryOutOutlined, CloseSquareOutlined, OrderedListOutlined, SearchOutlined, NotificationOutlined, WarningOutlined } from '@ant-design/icons';
 
 // avatar style
 const avatarSX = {
@@ -243,11 +243,11 @@ export default function MyActivitiesPage() {
                                         <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
                                             <Avatar
                                                 sx={{
-                                                    color: elem.status === 'Realizado' ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' : 'error.main'),
-                                                    bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter')
+                                                    color: (elem.status === 'Realizado' || elem.status === 'En curso') ? 'success.main' : (elem.status === 'Pendiente' ? 'warning.main' :  (elem.status === 'Caducado' ? 'error.main' : 'warning.main')),
+                                                    bgcolor: elem.status === 'Realizado' ? 'success.lighter' : (elem.status === 'Pendiente' ? 'warning.lighter' : (elem.status === 'Caducado' ? 'error.lighter' : 'warning.lighter'))
                                                 }}
                                             >
-                                                {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : <CloseSquareOutlined />)}
+                                                {elem.status === 'Realizado' ? <CarryOutOutlined /> : (elem.status === 'Pendiente' ? <CalendarOutlined /> : (elem.status === 'Caducado' ? <CloseSquareOutlined /> : <ClockCircleOutlined />))}
                                             </Avatar>
                                             <Avatar alt={elem.therapist_name} src={elem.therapist_picture} />
                                             <Avatar alt={elem.patient_name} src={elem.patient_picture} />
@@ -259,7 +259,7 @@ export default function MyActivitiesPage() {
                                         sx={{ ml: '1rem' }} />
                                     <ListItemSecondaryAction>
                                         <Stack direction="row" alignItems="center">
-                                            <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : 'error')} />
+                                            <Dot color={elem.status === 'Realizado' ? 'success' : (elem.status === 'Pendiente' ? 'warning' : (elem.status === 'Caducado' ? 'error' : 'warning'))} />
                                             <Typography variant="subtitle1" noWrap>
                                                 {elem.status}
                                             </Typography>

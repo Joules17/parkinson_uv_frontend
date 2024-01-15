@@ -168,8 +168,8 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             padding: 1
                         }}>
                             <Avatar alt={data.status} sx={{
-                                color: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' :  'error.main'),
-                                bgcolor: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter'),
+                                color: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' :  (data.status === 'Caducado' ? 'error.main' : 'warning.main')),
+                                bgcolor: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : (data.status === 'Caducado' ? 'error.lighter' : 'warning.lighter')),
                                 mr: '1rem'
 
                             }}

@@ -33,7 +33,7 @@ export default class ObjectEnd extends Phaser.Scene {
             sum = sum + elemento;
         }
         let promedio = sum / arreglo.length;
-        this.tiempo_rondas = promedio;
+        this.tiempo_rondas = promedio.toFixed(2);
 
         // Convertir a números
         this.number_errores = parseInt(data.info.errores)*-1;

@@ -78,7 +78,7 @@ const ActivityPieChart = ({ activityStats }) => {
     const { primary, secondary } = theme.palette.text;
 
     const [series, setSeries] = useState([activityStats.total_activities_pending, activityStats.total_activities_in_progress, activityStats.total_activities_finished, activityStats.total_activities_lost]);
-
+    console.log('HOLA:', activityStats.total_activities_lost)
     const [options, setOptions] = useState(pieChartOptions);
 
     useEffect(() => {
