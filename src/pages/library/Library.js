@@ -88,7 +88,6 @@ export default function Library({ initList }) {
 
     const handleDeleteList = async () => {
         setSuccessDeleteModal(true);
-
         const isAssigned = await checkListGames(list.id);
         if (isAssigned) {
             setFailedStatus(true);

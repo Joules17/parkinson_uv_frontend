@@ -8,6 +8,8 @@ import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
+
 
 // Escenas
 import LetrasInit from 'components/exercises/LetraAventura/scenes/LetrasInit';
@@ -21,8 +23,10 @@ import LetrasFailed from 'components/exercises/LetraAventura/scenes/LetrasFailed
 import 'components/exercises/general_assets/styles.css';
 function GameLetras(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse();
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -67,6 +71,7 @@ function GameLetras(props) {
                 log: data
             };
             createLog(dataLog);
+            markGameListAsPlayed(idList,id)
             console.log('Datos recibidos desde Phaser:', data);
             dispatch(markGameAsPlayed({ gameName: 'Palabras Ocultas' })); // Utiliza dispatch aquí
         }

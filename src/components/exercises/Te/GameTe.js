@@ -10,6 +10,7 @@ import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 
 // Scenes
 import TeInit from 'components/exercises/Te/scenes/TeInit';
@@ -20,8 +21,10 @@ import 'components/exercises/general_assets/styles.css';
 
 function GameTe(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse();
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -67,6 +70,7 @@ function GameTe(props) {
                 log: data
             };
             createLog(dataLog);
+            markGameListAsPlayed(idList,id)
             console.log('Datos recibidos desde Phaser:', data);
             dispatch(markGameAsPlayed({ gameName: 'La hora del té' })); // Utiliza dispatch aquí
         }

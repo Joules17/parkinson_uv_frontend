@@ -7,6 +7,7 @@ import Phaser from "phaser";
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 
 // Escenas
 import FotografiasInit from 'components/exercises/FotografiasMisteriosas/scenes/FotografiasInit';
@@ -22,8 +23,10 @@ import 'components/exercises/general_assets/styles.css';
 
 function GameFotografias(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse()
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -68,6 +71,7 @@ function GameFotografias(props) {
                 log: data
             }
             createLog(dataLog)
+            markGameListAsPlayed(idList,id)
             console.log('Datos recibidos desde Phaser:', data);
             dispatch(markGameAsPlayed({ gameName: "Fotografias Misteriosas" })); // Utiliza dispatch aquí
         }

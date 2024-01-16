@@ -10,6 +10,8 @@ import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
+
 
 // Scenes
 import MemoryBubblesInit from 'components/exercises/MemoryBubbles/scenes/MemoryBubblesInit';
@@ -23,8 +25,10 @@ import 'components/exercises/general_assets/styles.css';
 
 function GameMemoryBubbles(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse();
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -70,6 +74,7 @@ function GameMemoryBubbles(props) {
                 log: data
             };
             createLog(dataLog);
+            markGameListAsPlayed(idList,id)
             console.log('Datos recibidos desde Phaser:', data);
             dispatch(markGameAsPlayed({ gameName: 'Burbujas de Memoria' })); // Utiliza dispatch aquí
         }

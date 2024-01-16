@@ -96,6 +96,17 @@ export const useExternalApi = () => {
         // console.log(data)
     }
 
+    const markGameListAsPlayed = async (id_list, id_game_list ) => {
+        const config = {
+            url: `${apiServerUrl}/api/list/game/played/${id_list}/${id_game_list}`,
+            method: 'GET',
+            headers: {},
+            data: {}
+        }
+        const data = await makeRequest({ config })
+
+    }
+
     const createList = async (datos, setLog, dataResponse) => {
         const config = {
             url: `${apiServerUrl}/api/list/create`,
@@ -128,6 +139,7 @@ export const useExternalApi = () => {
         updateSettingGameList,
         createList,
         deleteListGames,
-        checkListGames
+        checkListGames,
+        markGameListAsPlayed
     }
 }
