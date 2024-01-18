@@ -1,8 +1,23 @@
-import { Card, CardContent, CardMedia, Typography, Stack, CardActionArea } from '@mui/material';
+import { 
+    Card, 
+    CardContent, 
+    CardMedia, 
+    Typography, 
+    Stack, 
+    CardActionArea, 
+    Dialog,
+    DialogTitle,    
+    DialogContent,
+    DialogActions,
+    Button
+} from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import { lista_juegos } from 'pages/library/components/globals';
 import 'react-multi-carousel/lib/styles.css';
 import { useExternalApi as useSessionResponse } from 'hooks/sessionResponse';
+import { useExternalApi as useActivityResponse } from 'hooks/activitiesResponse';
+import { useNavigate } from 'react-router-dom'
+import { areAllGamesPlayed } from 'store/reducers/gamesListSlice';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -28,11 +43,40 @@ import ChargingCard from 'components/ChargingCard';
 
 const RunListGames = () => {
     const gameListState = useSelector((state) => state.gamesList);
+    const navigate = useNavigate();
     const { getIdSession } = useSessionResponse()
+    const { updateStatusActivity } = useActivityResponse();
     const [idSession, setIdSession] = useState()
     const [startGame, setStartGame] = useState({})
     // eslint-disable-next-line no-unused-vars
     const [cargado, setCargado] = useState(false);
+    const allGamesPlayed = useSelector((state) => state.gamesList.gamesList.games.every((game) => game.is_played));
+    const [openFinishModal, setOpenFinishModal] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenFinishModal = () => {
+        setOpenFinishModal(true);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseFinishModal = async () => {
+        try {
+            const status = "Realizado"
+            await updateStatusActivity(gameListState?.gamesList.id_activity, status);
+            navigate('/my-activities-page');
+            setOpenFinishModal(false);
+        } catch (error) {
+            console.error("Error al actualizar el estado o crear la sesión:", error);
+            return;
+        }
+    };
+
+    useEffect(() => {
+        console.log(allGamesPlayed)
+        if (allGamesPlayed && !isModalOpen) {
+            handleOpenFinishModal();
+        }
+    }, [allGamesPlayed, isModalOpen]);
 
     useEffect(() => {
         if (gameListState) {
@@ -58,7 +102,6 @@ const RunListGames = () => {
 
     const idList = gameListState?.gamesList.id
 
-    console.log(gameListState)
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -83,31 +126,31 @@ const RunListGames = () => {
     const renderGame = () => {
         switch (startGame.title) {
             case "Objeto Intruso":
-                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <ObjectIntruder setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Encuentra el número":
-                return <GameNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Flechas Articas":
-                return <GameArtic setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameArtic setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Recuerda y Encuentra":
-                return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameRememberAndFind setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Letras VS Numeros":
-                return <LettersVsNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <LettersVsNumbers setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Palabras Ocultas":
-                return <GameLetras setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameLetras setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Flechas Congeladas":
-                return <GameFlechasCongeladas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameFlechasCongeladas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Letras Marinas":
-                return <GameLetrasMarinas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameLetrasMarinas setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Burbujas de Memoria":
-                return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameMemoryBubbles setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Fotografias Misteriosas":
-                return <GameFotografias setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameFotografias setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "Cuadrilla de Letras y Numeros":
-                return <GameCuadrilla setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameCuadrilla setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             case "La hora del té":
-                return <GameTe setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
-            case "Fiesta de Burbujas": 
-                return <GameBubbleParty setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList}/>;
+                return <GameTe setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
+            case "Fiesta de Burbujas":
+                return <GameBubbleParty setting={startGame.setting} id={startGame.id} idSession={idSession.session_id} fromActivity={true} idList={idList} />;
             default:
                 return null;
         }
@@ -149,22 +192,38 @@ const RunListGames = () => {
 
 
     return (
-        <MainCard title={lista_juegos[0].name} darkTitle={true}>
-            {idSession && idSession.session_id !== undefined ?
-                <Stack spacing={2}>
-                    <Carousel responsive={responsive}>
-                        {cards.map((card, index) => renderCard(card, index))}
-                    </Carousel>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        {renderGame()}
-                    </div>
-                </Stack>
-                : <ChargingCard />
-            }
+        <>
+            <MainCard title={lista_juegos[0].name} darkTitle={true}>
+                {idSession && idSession.session_id !== undefined ?
+                    <Stack spacing={2}>
+                        <Carousel responsive={responsive}>
+                            {cards.map((card, index) => renderCard(card, index))}
+                        </Carousel>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {renderGame()}
+                        </div>
+                    </Stack>
+                    : <ChargingCard />
+                }
 
-        </MainCard>
+            </MainCard>
+            <Dialog open={openFinishModal} onClose={handleCloseFinishModal}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography fontWeight="bold" fontSize="1.25rem">
+                        ¡Felicitaciones!
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography>La actividad se ha completado correctamente.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseFinishModal} color="primary">
+                        Regresar a Actividades
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     )
-
 };
 
 export default RunListGames;

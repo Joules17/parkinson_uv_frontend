@@ -1,7 +1,7 @@
 // gameListReducer.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {gamesList: {}};
+const initialState = { gamesList: {} };
 
 const gamesListSlice = createSlice({
   name: 'gameList',
@@ -18,7 +18,7 @@ const gamesListSlice = createSlice({
     markGameAsPlayed: (state, action) => {
       const { gameName } = action.payload;
       const { games } = state.gamesList;
-      
+
       // Encuentra el juego por nombre
       const gameToMarkAsPlayed = games.find((game) => game.name === gameName);
       console.log(gameName)
@@ -26,9 +26,15 @@ const gamesListSlice = createSlice({
         gameToMarkAsPlayed.is_played = true;
       }
     },
+
+    areAllGamesPlayed: (state) => {
+      const { games } = state.gamesList;
+      return games.every((game) => game.is_played === true);
+    },
+
   },
 });
 
-export const { setGameList, resetGameList, markGameAsPlayed } = gamesListSlice.actions;
+export const { setGameList, resetGameList, markGameAsPlayed, areAllGamesPlayed } = gamesListSlice.actions;
 
 export default gamesListSlice.reducer;
