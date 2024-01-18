@@ -18,13 +18,17 @@ import ArticFailed from 'components/exercises/ArticRows/scenes/ArticFailed';
 
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
+
 //css
 import 'components/exercises/general_assets/styles.css';
 
 function GameArtic(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse();
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -69,6 +73,7 @@ function GameArtic(props) {
                 log: data
             };
             createLog(dataLog);
+            markGameListAsPlayed(idList,id)
             console.log('Datos recibidos desde Phaser:', data);
             dispatch(markGameAsPlayed({ gameName: 'Flechas Articas' })); // Utiliza dispatch aquí
         }

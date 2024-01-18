@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 
+
 // Escenas
 import FlechasInit from 'components/exercises/FlechasCongeladas/scenes/FlechasInit';
 import FlechasMenu from 'components/exercises/FlechasCongeladas/scenes/FlechasMenu';
@@ -17,13 +18,17 @@ import FlechasTuto from 'components/exercises/FlechasCongeladas/scenes/FlechasTu
 import FlechasFailed from 'components/exercises/FlechasCongeladas/scenes/FlechasFailed'; 
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
+
 // Styles
 import 'components/exercises/general_assets/styles.css'
 
 function GameFlechasCongeladas(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse()
+    const { markGameListAsPlayed } = useGameListResponse()
+
     useEffect(() => {
         const { setting } = props;
 
@@ -69,6 +74,7 @@ function GameFlechasCongeladas(props) {
             }
             createLog(dataLog)
             console.log('Datos recibidos desde Phaser:', data);
+            markGameListAsPlayed(idList,id)
             dispatch(markGameAsPlayed({ gameName: "Flechas Congeladas" })); // Utiliza dispatch aquí
         }
     }

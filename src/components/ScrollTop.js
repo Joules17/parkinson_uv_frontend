@@ -9,18 +9,21 @@ const ScrollTop = ({ children }) => {
     const { pathname } = location;
 
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-        });
+        // Verifica si window está definido antes de llamar a scrollTo
+        if (typeof window !== 'undefined') {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }
     }, [pathname]);
 
     return children || null;
 };
 
 ScrollTop.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
 export default ScrollTop;

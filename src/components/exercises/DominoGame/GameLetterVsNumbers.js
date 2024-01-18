@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 // phaser
 import Phaser from 'phaser';
 import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
-
 // scenes
 import LettersInit from 'components/exercises/DominoGame/scenes/LettersInit';
 import LettersMenu from 'components/exercises/DominoGame/scenes/LettersMenu';
@@ -17,13 +16,16 @@ import LettersFailed from 'components/exercises/DominoGame/scenes/LettersFailed'
 
 import { useDispatch } from 'react-redux';
 import { useExternalApi as useLogsResponse } from 'hooks/logsResponse';
+import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
+
 // css
 import 'components/exercises/general_assets/styles.css';
 
 function LettersVsNumbers(props) {
     const dispatch = useDispatch();
-    const { id, idSession, fromActivity } = props;
+    const { id, idSession, fromActivity, idList } = props;
     const { createLog } = useLogsResponse();
+    const { markGameListAsPlayed } = useGameListResponse()
     useEffect(() => {
         const { setting } = props;
 
@@ -69,6 +71,7 @@ function LettersVsNumbers(props) {
             };
             createLog(dataLog);
             console.log('Datos recibidos desde Phaser:', data);
+            markGameListAsPlayed(idList,id)
             dispatch(markGameAsPlayed({ gameName: 'Letras VS Numeros' })); // Utiliza dispatch aquí
         }
     };

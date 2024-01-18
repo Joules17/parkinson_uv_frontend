@@ -34,7 +34,7 @@ const actionSX = {
 
 export default function ViewActivity({ data, handleOpenWarningModal, type, handleViewSession }) {
     const { updateStatusActivity } = useActivityResponse();
-    const { createSession } = useSessionResponse();
+    const { createSession } = useSessionResponse(); //REVISAR ESTE PROCESO
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [listGames, setListGames] = useState(null);
@@ -45,26 +45,31 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const handleButtonClick = () => {
-        console.log(data)
-        if(data.status == "Pendiente"){
-            const status = "En curso"
+    const handleButtonClick = async () => {
+        console.log(data);
+    
+        if (data.status == "Pendiente") {
+            const status = "En curso";
             const dataSession = {
                 date_start: new Date(),
                 id_activity: data.id,
                 id_patient: data.id_patient,
-                id_therapist: data.id_therapist
+                id_therapist: data.id_therapist,
+            };
+    
+            try {
+                await updateStatusActivity(data.id, status);
+                await createSession(dataSession);
+            } catch (error) {
+                console.error("Error al actualizar el estado o crear la sesión:", error);
+                return;
             }
-
-            // Fecha de ahora para iniciar la session
-            updateStatusActivity(data.id, status)
-            createSession(dataSession)
         }
-
-        if(listGames !== null){
-            listGames.id_activity= data.id
-            listGames.id_patient= data.id_patient
-            dispatch(setGameList({ "gamesList": listGames  }))
+    
+        if (listGames !== null) {
+            listGames.id_activity = data.id;
+            listGames.id_patient = data.id_patient;
+            dispatch(setGameList({ gamesList: listGames }));
             navigate('/run-list-games');
         }
     };
@@ -168,8 +173,8 @@ export default function ViewActivity({ data, handleOpenWarningModal, type, handl
                             padding: 1
                         }}>
                             <Avatar alt={data.status} sx={{
-                                color: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' :  'error.main'),
-                                bgcolor: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : 'error.lighter'),
+                                color: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.main' : (data.status === 'Pendiente' ? 'warning.main' :  (data.status === 'Caducado' ? 'error.main' : 'warning.main')),
+                                bgcolor: (data.status === 'Realizado' || data.status === 'En curso') ? 'success.lighter' : (data.status === 'Pendiente' ? 'warning.lighter' : (data.status === 'Caducado' ? 'error.lighter' : 'warning.lighter')),
                                 mr: '1rem'
 
                             }}

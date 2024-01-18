@@ -14,6 +14,7 @@ import LettersVsNumbers from 'components/exercises/DominoGame/GameLetterVsNumber
 import GameLetras from 'components/exercises/LetraAventura/GameLetras';
 import GameLetrasMarinas from 'components/exercises/LetrasMarinas/GameLetrasMarinas';
 import GameMemoryBubbles from 'components/exercises/MemoryBubbles/GameMemoryBubbles';
+import GameCatchMouse from 'components/exercises/AtrapaRaton/GameCatchMouse';
 import GameFotografias from 'components/exercises/FotografiasMisteriosas/GameFotografias'; 
 import GameCuadrilla from 'components/exercises/CuadrillaLetras/GameCuadrillaLetras'; 
 import GameTe from 'components/exercises/Te/GameTe';
@@ -52,6 +53,8 @@ const RunGame = () => {
                 return <GameLetrasMarinas setting={setting} fromActivity={false}/>;
             case "Burbujas de Memoria":
                 return <GameMemoryBubbles setting={setting} fromActivity={false}/>;
+            case "Atrapa el ratón":
+                return <GameCatchMouse setting={setting} fromActivity={false}/>
             case "Fotografias Misteriosas":
                 return <GameFotografias setting={setting} fromActivity={false}/>;
             case "Cuadrilla de Letras y Numeros":

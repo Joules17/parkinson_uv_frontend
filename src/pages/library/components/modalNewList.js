@@ -23,7 +23,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { useExternalApi as useListResponse } from 'hooks/listGamesResponse';
 import { useExternalApi as useGameResponse } from 'hooks/gameResponse';
 
-const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus }) => {
+const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus, setList }) => {
     const { user } = useAuth0();
     const { createList } = useListResponse();
     const { getGames } = useGameResponse();
@@ -63,6 +63,8 @@ const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus
             setNewList((prevList) => {
                 const updatedList = { ...prevList, games: checkedItems, id_therapist: userCharged.user_id };
                 saveList(updatedList);
+                // dispatch(setGameList({ gamesList: updatedList }));
+                // Guardar lista en el estado 
                 return updatedList;
             });
         }
@@ -104,7 +106,7 @@ const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus
     };
 
     const saveList = (list) => {
-        createList(list, setCreatedStatus);
+        createList(list, setCreatedStatus, setList);
     };
     return (
         <div>
@@ -152,7 +154,7 @@ const ModalNewList = ({ open, handleClose, setCreatedListModal, setCreatedStatus
                     </Box> */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1, pt: 1 }}>
                         <Button variant="contained" onClick={() => handleListItemClick()}>
-                            Guardar
+                            Siguiente
                         </Button>
                     </Box>
                     {/* <ModalSelectGames open={openNextModal} handleClose={handleCloseModal} newList={newList} /> */}

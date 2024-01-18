@@ -33,7 +33,7 @@ export default class LetrasMarinasEnd extends Phaser.Scene {
             sum = sum + elemento;
         }
         let promedio = sum / arreglo.length;
-        this.tiempo_rondas = promedio;
+        this.tiempo_rondas = promedio.toFixed(2);
 
         // Convertir a números
         this.number_rondas = parseInt(data.info.rondas);
