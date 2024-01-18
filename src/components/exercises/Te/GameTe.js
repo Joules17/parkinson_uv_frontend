@@ -15,6 +15,7 @@ import { useExternalApi as useGameListResponse } from 'hooks/listGamesResponse'
 // Scenes
 import TeInit from 'components/exercises/Te/scenes/TeInit';
 import TeMenu from 'components/exercises/Te/scenes/TeMenu';
+import TeGame from 'components/exercises/Te/scenes/TeGame'; 
 
 // css
 import 'components/exercises/general_assets/styles.css';
@@ -43,7 +44,7 @@ function GameTe(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [TeInit, TeMenu]
+            scene: [TeInit, TeMenu, TeGame]
         };
 
         const game = new Phaser.Game(config);

@@ -6,11 +6,10 @@ import 'components/exercises/general_assets/styles.css'
 
 // custom classes imported:
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
-import SteroidObject from 'components/Factory/SteroidObject.js';
 
-export default class TeMenu extends Phaser.Scene {
+export default class TeGame extends Phaser.Scene {
     constructor() {
-        super({ key: 'TeMenu', backgroundColor: '#3f1651' });
+        super({ key: 'TeGame', backgroundColor: '#3f1651' });
         this.worldSizeWidth = 800;
         this.worldSizeHeigth = 600;
 
