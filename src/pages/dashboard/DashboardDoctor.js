@@ -135,7 +135,7 @@ const DashboardDoctor = ({ reports, activity_stats, user }) => {
                         <AnalyticEcommerce
                             title="Total de actividades asignadas"
                             count={activity_stats.total_activities}
-                            percentage={(activity_stats.total_activities * 100) / activity_stats.total_activities}
+                            percentage={((activity_stats.total_activities * 100) / activity_stats.total_activities).toFixed(2)}
                             extra="35,000"
                         />
                     </Grid>
@@ -143,7 +143,7 @@ const DashboardDoctor = ({ reports, activity_stats, user }) => {
                         <AnalyticEcommerce
                             title="Total de actividades en curso"
                             count={activity_stats.total_activities_in_progress}
-                            percentage={(activity_stats.total_activities_in_progress * 100) / activity_stats.total_activities}
+                            percentage={((activity_stats.total_activities_in_progress * 100) / activity_stats.total_activities).toFixed(2)}
                             extra="8,900"
                         />
                     </Grid>
@@ -151,7 +151,7 @@ const DashboardDoctor = ({ reports, activity_stats, user }) => {
                         <AnalyticEcommerce
                             title="Total de actividades realizadas"
                             count={activity_stats.total_activities_finished}
-                            percentage={(activity_stats.total_activities_finished * 100) / activity_stats.total_activities}
+                            percentage={((activity_stats.total_activities_finished * 100) / activity_stats.total_activities).toFixed(2)}
                             extra="1,943"
                         />
                     </Grid>
@@ -159,7 +159,7 @@ const DashboardDoctor = ({ reports, activity_stats, user }) => {
                         <AnalyticEcommerce
                             title="Total de rondas pendientes"
                             count={activity_stats.total_activities_pending}
-                            percentage={(activity_stats.total_activities_pending * 100) / activity_stats.total_activities}
+                            percentage={((activity_stats.total_activities_pending * 100) / activity_stats.total_activities).toFixed(2)}
                             extra="$20,395"
                         />
                     </Grid>

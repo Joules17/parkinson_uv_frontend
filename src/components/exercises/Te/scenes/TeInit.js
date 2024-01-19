@@ -1,4 +1,4 @@
-// Phaser 
+// Phaser
 import Phaser from 'phaser'
 
 // Styles
@@ -6,11 +6,12 @@ import 'components/exercises/general_assets/styles.css'
 
 // Bgs
 import ClockBgImg from 'components/exercises/general_assets/images/textures/clock_texture.png'
+import TeGameBgImg from 'components/exercises/general_assets/images/textures/te_texture.png'
 import ClockShapeImg from 'components/exercises/general_assets/images/objects/others/ClockShape.png'
 // images
 import FullscreenImg from 'components/exercises/general_assets/images/objects/others/fullscreen.png'
 
-// audio 
+// audio
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
 import BadSound from 'components/exercises/general_assets/sounds/bad.wav';
@@ -25,6 +26,7 @@ export default class TeInit extends Phaser.Scene {
         // Img
         this.load.image('ClockBgImg', ClockBgImg);
         this.load.image('ClockShapeImg', ClockShapeImg);
+        this.load.image('TeGameBgImg', TeGameBgImg);
         this.load.image('FullscreenImg', FullscreenImg);
 
         // sounds
@@ -43,6 +45,6 @@ export default class TeInit extends Phaser.Scene {
     pass () {
         const settings = this.sys.settings.data.setting;
         // console.log('Llego bien?', settings)
-        this.scene.start('TeMenu', {settings}, {game: this.game})
+        this.scene.start('TeGame', {settings}, {game: this.game})
     }
 }

@@ -69,6 +69,32 @@ export default class TeMenu extends Phaser.Scene {
         
         this.start_button.setInteractive({ useHandCursor: true }); 
 
+        // event buttons 
+        this.start_button.on('pointerdown', () => {
+            const settings = this.sys.settings.data.settings; 
+            this.sound.play('CorrectSound'); 
+            this.scene.start('TeGame', { settings }, {game: this.game}); 
+        }); 
+
+        this.start_button.on('pointerover', () => {
+            this.sound.play('HoverSound'); 
+            this.tweens.add({
+                targets: this.start_button,
+                scale: 1.06,
+                duration: 100,
+                ease: 'Power2'
+            }); 
+        })
+
+        this.start_button.on('pointerout', () => {
+            this.tweens.add({
+                targets: this.start_button,
+                scale: 1,
+                duration: 100,
+                ease: 'Power2'
+            }); 
+        })
+
         // Fullscreen
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
 
