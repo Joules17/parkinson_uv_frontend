@@ -22,43 +22,43 @@ export default class TeGame extends Phaser.Scene {
     preload() { }
 
     builder () {
-        // config rondas 
+        // config rondas
         this.worldSizeHeigth = 600;
         this.worldSizeWidth = 800;
 
-        // level variables 
+        // level variables
         this.current_level = 1;
         this.number_fases = 5;
-        this.tries = 3; 
-        this.number_errors = 0; 
+        this.tries = 3;
+        this.number_errors = 0;
 
-        // tablero 
-        this.current_tablero = undefined; 
+        // tablero
+        this.current_tablero = undefined;
 
-        // timers 
-        this.gameTimeSec = 0; 
+        // timers
+        this.gameTimeSec = 0;
         this.gameTimeMin = 0;
-        this.tiempo_rondas = []; 
+        this.tiempo_rondas = [];
         this.tiempo_por_ronda = 0; // seconds
     }
 
     create() {
-        // builder 
-        this.builder(); 
+        // builder
+        this.builder();
 
-        // game 
+        // game
         this.game = this.sys.game
-        const settings = this.sys.settings.data.settings; 
-        console.log(this.sys.settings.data); 
+        const settings = this.sys.settings.data.settings;
+        console.log(this.sys.settings.data);
 
-        // number rounds - settings 
+        // number rounds - settings
         if (settings.rondas !== undefined) {
-            this.number_fases = parseInt(settings.rondas); 
-        } 
+            this.number_fases = parseInt(settings.rondas);
+        }
 
         // number tries - settings
         if (settings.tries !== undefined) {
-            this.tries = parseInt(settings.tries); 
+            this.tries = parseInt(settings.tries);
         }
 
         // Background --------------------------------------------------
@@ -78,38 +78,127 @@ export default class TeGame extends Phaser.Scene {
         this.center_dot.fillCircle(590, 337, 10);
 
         // Panels
-        // rounds 
+        // rounds
         this.panel_rounds = this.add.graphics();
         this.panel_rounds.fillStyle(0xffffff, 0.5);
         this.panel_rounds.fillRect(10, 550, 200, 50);
 
         this.rounds_text = this.add.text(15, 560, 'RONDAS: ' + this.current_level + '/' + this.number_fases, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
-        // time 
+        // time
         this.panel_time = this.add.graphics();
         this.panel_time.fillStyle(0xffffff, 0.5);
         this.panel_time.fillRect(215, 550, 180, 50);
 
         this.time_text = this.add.text(220, 560, 'TIEMPO: ' +  this.gameTimeMin + ':' + this.gameTimeSec, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
-        // errors 
+        // errors
         this.panel_errors = this.add.graphics();
         this.panel_errors.fillStyle(0xffffff, 0.5);
         this.panel_errors.fillRect(400, 550, 170, 50);
 
         this.errors_text = this.add.text(405, 560, 'ERRORES: ' + this.number_errors, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
-        // tries 
+        // tries
         this.panel_tries = this.add.graphics();
         this.panel_tries.fillStyle(0xffffff, 0.5);
         this.panel_tries.fillRect(575, 550, 180, 50);
 
         this.tries_text = this.add.text(580, 560, 'INTENTOS: ' + this.tries, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
-        
-        // question 
-        this.panel_question = this.add.graphics(); 
+
+        // question
+        this.panel_question = this.add.graphics();
         this.panel_question.fillStyle(0x000000, 0.5);
-        this.panel_question.fillRect(50, 20, 700, 100);
+        this.panel_question.fillRect(50, 15, 700, 80);
+
+        this.question = this.add.text(200, 35, 'DIGITA LA HORA DEL TE', {fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(60);
+
+        // clock panel
+        this.panel_base_clock = this.add.graphics();
+        this.panel_base_clock.fillStyle(0xFF0000, 1);
+        this.panel_base_clock.fillRoundedRect(25, 195, 310, 110, 10);
+        this.panel_clock = this.add.graphics();
+        this.panel_clock.fillStyle(0xffffff, 1);
+        this.panel_clock.fillRoundedRect(30, 200, 300, 100, 10);
+
+
+        // current_hour
+        this.current_hour = this.add.text(65, 215, '0 1 : 3 0', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
+
+        // buttons
+        this.up_hour_button = this.add.sprite(100, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true});
+
+        this.up_hour_button.on('pointerdown', () => {
+            this.sound.play('BubblePopSound');
+        })
+
+        this.up_hour_button.on('pointerover', () => {
+            this.sound.play('HoverSound');
+        });
+
+        this.down_hour_button = this.add.sprite(100, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true});
+
+        this.down_hour_button.on('pointerdown', () => {
+            this.sound.play('BubblePopSound');
+        });
+
+        this.down_hour_button.on('pointerover', () => {
+            this.sound.play('HoverSound');
+        });
+
+        this.up_min_button = this.add.sprite(260, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true});
+
+        this.up_min_button.on('pointerdown', () => {
+            this.sound.play('BubblePopSound');
+        });
+
+        this.up_min_button.on('pointerover', () => {
+            this.sound.play('HoverSound');
+        });
+
+        this.down_min_button = this.add.sprite(260, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true});
+
+        this.down_min_button.on('pointerdown', () => {
+            this.sound.play('BubblePopSound');
+        });
+
+        this.down_min_button.on('pointerover', () => {
+            this.sound.play('HoverSound');
+        });
+
+        // panel reveal
+        this.panel_reveal = this.add.graphics();
+        this.panel_reveal.lineStyle(10, 0xe15554);
+        this.panel_reveal.strokeRect(70, 400, 230, 60);
+        this.panel_reveal.fillStyle(0x000000, 1);
+        this.panel_reveal.setAlpha(0.9)
+        this.panel_reveal.fillRect(70, 400, 230, 60);
+
+        this.check_button = this.add.text(100, 410, 'COMPROBAR', { fontFamily: 'TROUBLE', fill: '#e15554' }).setFontSize(50).setInteractive({ useHandCursor: true});
+
+        this.check_button.on('pointerdown', () => {
+            console.log('HOLA')
+        });
+
+        this.check_button.on('pointerover', () => {
+            this.sound.play('HoverSound');
+            this.tweens.add({
+                targets: this.check_button,
+                scale: 1.01,
+                duration: 100,
+                ease: 'Power2'
+            });
+        });
+
+        this.check_button.on('pointerout', () => {
+            this.tweens.add({
+                targets: this.check_button,
+                scale: 1,
+                duration: 100,
+                ease: 'Power2'
+            })
+        });
+
 
 
         this.clocky = new Clock({
@@ -124,9 +213,30 @@ export default class TeGame extends Phaser.Scene {
 
         // Fullscreen
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
+
+        // timer
+        this.time.addEvent({
+            delay: 1000,
+            callback: this.addTime,
+            callbackScope: this,
+            loop: true
+        });
     }
 
 
     update() {
+    }
+
+    addTime () {
+        if (!this.introduction_time) {
+            this.gameTimeSec += 1;
+            this.tiempo_por_ronda += 1;
+            if (this.gameTimeSec === 59) {
+                this.gameTimeSec = 0;
+                this.gameTimeMin += 1;
+            }
+
+            this.time_text.setText('TIEMPO: ' + this.gameTimeMin + ':' + this.gameTimeSec);
+        }
     }
 }
