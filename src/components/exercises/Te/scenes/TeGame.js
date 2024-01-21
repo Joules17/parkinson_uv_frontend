@@ -211,7 +211,7 @@ export default class TeGame extends Phaser.Scene {
             posx: 590,
             posy: 337,
             hour: 3,
-            min: 59
+            min: 45
         })
 
         this.clocky.update_hands();
@@ -239,7 +239,8 @@ export default class TeGame extends Phaser.Scene {
         if (direction === 'up') {
             hours  = (hours + 1) % 12 || 12;
         } else {
-            hours = (hours - 1 + 12) % 12 + 1;
+            hours = (hours - 1 + 12) % 12;
+            hours = hours === 0 ? 12 : hours;
         }
 
         const hours_text = hours.toString();
@@ -255,8 +256,29 @@ export default class TeGame extends Phaser.Scene {
 
 
     change_min(direction) {
-
+        let min_aux = this.current_min.split(' ');
+        let minutes = parseInt(min_aux[1] + min_aux[2]);
+    
+        if (direction === 'up') {
+            minutes = (minutes + 5) % 60;
+        } else {
+            if (minutes === 0) {
+                minutes = 55; // Si los minutos son 00 y se reduce, establecer en 55
+            } else {
+                minutes = (minutes - 5 + 60) % 60;
+            }
+        }
+    
+        const minutes_text = minutes.toString();
+        if (minutes < 10) {
+            this.current_min = ' 0 ' + minutes;
+        } else {
+            this.current_min = ' ' + minutes_text[0] + ' ' + minutes_text[1];
+        }
+    
+        this.current_time.setText(this.current_hour + ':' + this.current_min);
     }
+
     addTime() {
         if (!this.introduction_time) {
             this.gameTimeSec += 1;
