@@ -21,7 +21,7 @@ export default class TeGame extends Phaser.Scene {
 
     preload() { }
 
-    builder () {
+    builder() {
         // config rondas
         this.worldSizeHeigth = 600;
         this.worldSizeWidth = 800;
@@ -83,35 +83,35 @@ export default class TeGame extends Phaser.Scene {
         this.panel_rounds.fillStyle(0xffffff, 0.5);
         this.panel_rounds.fillRect(10, 550, 200, 50);
 
-        this.rounds_text = this.add.text(15, 560, 'RONDAS: ' + this.current_level + '/' + this.number_fases, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
+        this.rounds_text = this.add.text(15, 560, 'RONDAS: ' + this.current_level + '/' + this.number_fases, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
         // time
         this.panel_time = this.add.graphics();
         this.panel_time.fillStyle(0xffffff, 0.5);
         this.panel_time.fillRect(215, 550, 180, 50);
 
-        this.time_text = this.add.text(220, 560, 'TIEMPO: ' +  this.gameTimeMin + ':' + this.gameTimeSec, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
+        this.time_text = this.add.text(220, 560, 'TIEMPO: ' + this.gameTimeMin + ':' + this.gameTimeSec, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
         // errors
         this.panel_errors = this.add.graphics();
         this.panel_errors.fillStyle(0xffffff, 0.5);
         this.panel_errors.fillRect(400, 550, 170, 50);
 
-        this.errors_text = this.add.text(405, 560, 'ERRORES: ' + this.number_errors, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
+        this.errors_text = this.add.text(405, 560, 'ERRORES: ' + this.number_errors, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
         // tries
         this.panel_tries = this.add.graphics();
         this.panel_tries.fillStyle(0xffffff, 0.5);
         this.panel_tries.fillRect(575, 550, 180, 50);
 
-        this.tries_text = this.add.text(580, 560, 'INTENTOS: ' + this.tries, {fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
+        this.tries_text = this.add.text(580, 560, 'INTENTOS: ' + this.tries, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(40);
 
         // question
         this.panel_question = this.add.graphics();
         this.panel_question.fillStyle(0x000000, 0.5);
         this.panel_question.fillRect(50, 15, 700, 80);
 
-        this.question = this.add.text(200, 35, 'DIGITA LA HORA DEL TE', {fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(60);
+        this.question = this.add.text(200, 35, 'DIGITA LA HORA DEL TE', { fontFamily: 'TROUBLE', fill: '#ffffff' }).setFontSize(60);
 
         // clock panel
         this.panel_base_clock = this.add.graphics();
@@ -121,45 +121,50 @@ export default class TeGame extends Phaser.Scene {
         this.panel_clock.fillStyle(0xffffff, 1);
         this.panel_clock.fillRoundedRect(30, 200, 300, 100, 10);
 
-
-        // current_hour
-        this.current_hour = this.add.text(65, 215, '0 1 : 3 0', { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
+        // current hour
+        this.current_hour = '0 1 '
+        this.current_min = ' 3 0'
+        this.current_time = this.add.text(65, 215, this.current_hour+':'+this.current_min, { fontFamily: 'TROUBLE', fill: '#000000' }).setFontSize(100);
 
         // buttons
-        this.up_hour_button = this.add.sprite(100, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true});
+        this.up_hour_button = this.add.sprite(100, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true });
 
         this.up_hour_button.on('pointerdown', () => {
             this.sound.play('BubblePopSound');
-        })
+            this.change_hour('up');
+        });
 
         this.up_hour_button.on('pointerover', () => {
             this.sound.play('HoverSound');
         });
 
-        this.down_hour_button = this.add.sprite(100, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true});
+        this.down_hour_button = this.add.sprite(100, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true });
 
         this.down_hour_button.on('pointerdown', () => {
             this.sound.play('BubblePopSound');
+            this.change_hour('down');
         });
 
         this.down_hour_button.on('pointerover', () => {
             this.sound.play('HoverSound');
         });
 
-        this.up_min_button = this.add.sprite(260, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true});
+        this.up_min_button = this.add.sprite(260, 160, 'ArrowUpImg').setScale(0.02).setInteractive({ useHandCursor: true });
 
         this.up_min_button.on('pointerdown', () => {
             this.sound.play('BubblePopSound');
+            this.change_min('up')
         });
 
         this.up_min_button.on('pointerover', () => {
             this.sound.play('HoverSound');
         });
 
-        this.down_min_button = this.add.sprite(260, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true});
+        this.down_min_button = this.add.sprite(260, 340, 'ArrowDownImg').setScale(0.02).setInteractive({ useHandCursor: true });
 
         this.down_min_button.on('pointerdown', () => {
             this.sound.play('BubblePopSound');
+            this.change_min('down');
         });
 
         this.down_min_button.on('pointerover', () => {
@@ -174,7 +179,7 @@ export default class TeGame extends Phaser.Scene {
         this.panel_reveal.setAlpha(0.9)
         this.panel_reveal.fillRect(70, 400, 230, 60);
 
-        this.check_button = this.add.text(100, 410, 'COMPROBAR', { fontFamily: 'TROUBLE', fill: '#e15554' }).setFontSize(50).setInteractive({ useHandCursor: true});
+        this.check_button = this.add.text(100, 410, 'COMPROBAR', { fontFamily: 'TROUBLE', fill: '#e15554' }).setFontSize(50).setInteractive({ useHandCursor: true });
 
         this.check_button.on('pointerdown', () => {
             console.log('HOLA')
@@ -227,7 +232,32 @@ export default class TeGame extends Phaser.Scene {
     update() {
     }
 
-    addTime () {
+    change_hour(direction) {
+        let hour_aux = this.current_hour.split(' ');
+        let hours = parseInt(hour_aux[0]+hour_aux[1]);
+
+        if (direction === 'up') {
+            hours  = (hours + 1) % 12 || 12;
+        } else {
+            hours = (hours - 1 + 12) % 12 + 1;
+        }
+
+        const hours_text = hours.toString();
+        if (hours < 10) {
+            this.current_hour = '0 ' + hours + ' ';
+        } else {
+            this.current_hour = hours_text[0] + ' ' + hours_text[1] + ' ';
+        }
+
+        this.current_time.setText(this.current_hour + ':' + this.current_min);
+
+    }
+
+
+    change_min(direction) {
+
+    }
+    addTime() {
         if (!this.introduction_time) {
             this.gameTimeSec += 1;
             this.tiempo_por_ronda += 1;
