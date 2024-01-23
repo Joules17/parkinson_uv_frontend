@@ -17,6 +17,7 @@ import ArrowDownImg from 'components/exercises/general_assets/images/objects/arr
 // audio
 import HoverSound from 'components/exercises/general_assets/sounds/hover.mp3'
 import CorrectSound from 'components/exercises/general_assets/sounds/correct.wav'
+import GoodSound from 'components/exercises/general_assets/sounds/good.mp3'
 import BadSound from 'components/exercises/general_assets/sounds/bad.wav';
 import BubblePopSound from 'components/exercises/general_assets/sounds/BubblePop.mp3';
 
@@ -37,6 +38,7 @@ export default class TeInit extends Phaser.Scene {
         // sounds
         this.load.audio('HoverSound', HoverSound);
         this.load.audio('CorrectSound', CorrectSound);
+        this.load.audio('GoodSound', GoodSound);
         this.load.audio('BadSound', BadSound);
         this.load.audio('BubblePopSound', BubblePopSound);
     }
@@ -51,6 +53,6 @@ export default class TeInit extends Phaser.Scene {
     pass () {
         const settings = this.sys.settings.data.setting;
         // console.log('Llego bien?', settings)
-        this.scene.start('TeGame', {settings}, {game: this.game})
+        this.scene.start('TeMenu', {settings}, {game: this.game})
     }
 }

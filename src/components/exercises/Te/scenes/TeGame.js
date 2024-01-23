@@ -8,6 +8,15 @@ import 'components/exercises/general_assets/styles.css'
 import FullScreenBttn from 'components/Factory/FullScreenBttn.js';
 import Clock from 'components/exercises/Te/sprites/Clock.js';
 
+const log = {
+    info: {
+        tiempo_total: undefined,
+        tiempo_rondas: undefined,
+        errores: undefined,
+        rondas: undefined
+    }
+};
+
 export default class TeGame extends Phaser.Scene {
     constructor() {
         super({ key: 'TeGame', backgroundColor: '#3f1651' });
@@ -182,7 +191,13 @@ export default class TeGame extends Phaser.Scene {
         this.check_button = this.add.text(100, 410, 'COMPROBAR', { fontFamily: 'TROUBLE', fill: '#e15554' }).setFontSize(50).setInteractive({ useHandCursor: true });
 
         this.check_button.on('pointerdown', () => {
-            console.log('HOLA')
+            if (this.current_clock.check_complete()) {
+                this.sound.play('GoodSound'); 
+                this.win_procedure(); 
+            } else {
+                this.sound.play('BadSound'); 
+                this.error_procedure(); 
+            }
         });
 
         this.check_button.on('pointerover', () => {
@@ -204,17 +219,8 @@ export default class TeGame extends Phaser.Scene {
             })
         });
 
-
-
-        this.clocky = new Clock({
-            scene: this,
-            posx: 590,
-            posy: 337,
-            hour: 3,
-            min: 45
-        })
-
-        this.clocky.update_hands();
+        // creating clocks 
+        this.create_clocks(); 
 
         // Fullscreen
         new FullScreenBttn(this, 770, 30, 'FullscreenImg');
@@ -230,6 +236,30 @@ export default class TeGame extends Phaser.Scene {
 
 
     update() {
+    }
+
+    create_clocks () {
+        this.clocks = []; 
+
+        for (let i = 0; i < this.number_fases; i++) {
+            const hour = Math.floor(Math.random() * 12) + 1;
+            const minute = Math.floor(Math.random() * 12) * 5; 
+
+            const clock_aux = new Clock ({
+                scene: this, 
+                posx: 590, 
+                posy: 337, 
+                hour: hour, 
+                min: minute,
+                visible: false
+            }); 
+
+            this.clocks.push(clock_aux);
+        }
+
+        // current clock 
+        this.current_clock = this.clocks.shift(); 
+        this.current_clock.show(); 
     }
 
     change_hour(direction) {
@@ -279,6 +309,39 @@ export default class TeGame extends Phaser.Scene {
         this.current_time.setText(this.current_hour + ':' + this.current_min);
     }
 
+    win_procedure () {
+        this.current_clock.hide(); 
+
+        // level update 
+        this.current_level += 1;
+        this.tiempo_rondas.push(this.tiempo_por_ronda); 
+        this.tiempo_por_ronda = 0; 
+        this.rounds_text.setText('RONDAS: ' + this.current_level + '/' + this.number_fases);
+
+        // check if its the last clock 
+        if (this.clocks.length === 0) {
+            console.log('TERMINA EL JUEGO'); 
+            this.setLog(this.tiempo_rondas, this.time_text, this.number_errors, this.current_level-1)
+            this.scene.start('TeEnd', log, {game: this.game}); 
+        } else {
+            // no yet 
+            this.current_clock = this.clocks.shift();
+            this.current_clock.show();
+        }
+    }
+
+    error_procedure () {
+        this.tries -= 1; 
+        if (this.tries <= 0) {
+            const settings = this.sys.settings.data.settings;
+            this.scene.start('TeFailed', { settings }, {game: this.game});
+        } else {
+            this.number_errors += 1;
+            this.tries_text.setText('INTENTOS: ' + this.tries);
+            this.errors_text.setText('ERRORES: ' + this.number_errors);
+        }
+    }
+
     addTime() {
         if (!this.introduction_time) {
             this.gameTimeSec += 1;
@@ -290,5 +353,14 @@ export default class TeGame extends Phaser.Scene {
 
             this.time_text.setText('TIEMPO: ' + this.gameTimeMin + ':' + this.gameTimeSec);
         }
+    }
+
+    // setLog 
+    setLog(tiempo_rondas, tiempo_total, errores, number_rounds) {
+        log.info.tiempo_rondas = tiempo_rondas; 
+        log.info.tiempo_total = tiempo_total;
+        log.info.errores = errores;
+        log.info.rondas = number_rounds; 
+        console.log('Se esta enviando: ', tiempo_rondas, tiempo_total, errores, number_rounds)
     }
 }
