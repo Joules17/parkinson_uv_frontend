@@ -76,7 +76,7 @@ const CardComponent = ({ card }) => {
         }
         
         // only levels games: 
-        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas') {
+        if (card.title === 'Recuerda y Encuentra' || card.title === 'Letras Marinas' || card.title === 'Fotografias Misteriosas' || card.title === 'Atrapa el ratón') {
             settings['niveles'] = config.niveles; 
         } 
 

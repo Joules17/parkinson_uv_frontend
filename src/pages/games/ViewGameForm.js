@@ -218,6 +218,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
             handleCloseDialog();
         }
     };
+
     const handleFormSubmitSetting = () => {
         if (!handleCheckErrors()) {
             const config = {
@@ -376,7 +377,7 @@ export default function ViewGameForm({card, handleCloseDialog, handleFormSubmit}
                                 type="number"
                                 label="Niveles"
                                 InputProps={{
-                                    inputProps: { min: 1 }
+                                    inputProps: { min: 1, max:5 }
                                 }}
                                 value={valueLevels}
                                 onChange={handleLevelsChange}

@@ -98,8 +98,6 @@ export default class RememberRondas extends Phaser.Scene {
             this.categorias = ['frutas', 'casa', 'comida', 'animales'];
         }
 
-        console.log(this.niveles, this.rondas, 'que passaaaaaaaa', typeof this.niveles, typeof this.rondas)
-
         // niveles
         for (let i = 0; i < this.niveles; i++) {
             this.number_rounds.push(this.rondas);

@@ -8,7 +8,7 @@ import { markGameAsPlayed } from 'store/reducers/gamesListSlice';
 // Escenas
 import CatchMouseInit from './scenes/CatchMouseInit';
 import CatchMouseMenu from './scenes/CatchMouseMenu';
-import FlechasGame from 'components/exercises/FlechasCongeladas/scenes/FlechasGame';
+import CatchMouseGame from './scenes/CatchMouseGame';
 import FlechasFin from 'components/exercises/FlechasCongeladas/scenes/FlechasFin';
 import FlechasTuto from 'components/exercises/FlechasCongeladas/scenes/FlechasTuto';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,7 @@ function GameCatchMouse(props) {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [CatchMouseInit, CatchMouseMenu],
+            scene: [CatchMouseInit, CatchMouseMenu, CatchMouseGame],
         }
 
         const game = new Phaser.Game(config);

@@ -31,13 +31,6 @@ export default class CatchMouseInit extends Phaser.Scene {
         this.load.image('redImg', redImg);
         this.load.image('trapImg', trapImg);
 
-        // Figures
-        // this.load.image('TriangleImg', TriangleImg);
-        // this.load.image('CircleImg', CircleImg);
-        // this.load.image('StarImg', StarImg);
-        // this.load.image('SquareImg', SquareImg);
-        // this.load.image('RhombusImg', RhombusImg);
-
         // sounds
         // this.load.audio('HoverSound', HoverSound);
         // this.load.audio('CorrectSound', CorrectSound);

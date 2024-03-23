@@ -25,7 +25,7 @@ export default class CatchMouseMenu extends Phaser.Scene {
         this.cursors = undefined;
 
         // Options - scenes selected
-        // this.scene_options = ['FlechasGame', 'FlechasTuto']
+        this.scene_options = ['CatchMouseGame', 'CatchMouseTuto']
         this.selected = 0;
     }
 
@@ -89,16 +89,9 @@ export default class CatchMouseMenu extends Phaser.Scene {
 
         // Events 
         // Start Button
-        this.start_button.on('pointerover', () => {
-            this.setSelected(0);
-        });
 
         this.start_button.on('pointerdown', () => {
             this.letsPlay();
-        });
-
-        this.start_button.on('pointerout', () => {
-            this.pointer_out(this.start_button);
         });
 
         // Tuto Button 
@@ -106,13 +99,6 @@ export default class CatchMouseMenu extends Phaser.Scene {
             this.letsPlay();
         });
 
-        this.tuto_button.on('pointerover', () => {
-            this.setSelected(1);
-        });
-
-        this.tuto_button.on('pointerout', () => {
-            this.pointer_out(this.tuto_button);
-        });
     }
 
     // Custom Functions
